@@ -8,11 +8,6 @@ const dimensions = {
     height,
 }
 
-const color = {
-    color,
-    backgroundType, // Color
-}
-
 const element = {
     type,     // Text | Image | Primitive
     position,
@@ -29,25 +24,44 @@ const text = {
 
 const image = {
     ...element,
-    backgroundType, // Image
     src,
 }
 
 const primitive = {
     ...element,
     primitiveType, // Rectangle | Circle | Triangle
-    stroke,
     fill,
+    stroke,
+}
+
+const background = {
+    type, // Solid | Image
+}
+
+const solidBackground = {
+    ...background,
+    color,
+}
+
+const imageBackground = {
+    ...background,
+    src,
 }
 
 const slide = {
     background,
-    elements,
+    elements, // []element
 }
 
 const presentation = {
     title,
-    slides,
+    slides, // []slide
+}
+
+// TODO: store diffs instead of full states
+const history = {
+    states, // []presentation
+    currentStateIndex,
 }
 
 const editor = {
@@ -56,9 +70,4 @@ const editor = {
     selectedSlides,
     selectedElements,
     history,
-}
-
-const history = {
-    states,
-    currentState,
 }
