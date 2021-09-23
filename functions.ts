@@ -43,8 +43,9 @@ function setPresentationTitle(presentation: Presentation, title: string): Presen
     };
 }
 
-function addSlide(editor: Editor, slide: Slide): Editor {
+function addSlide(editor: Editor): Editor {
     const slides: Slide[] = editor.presentation.slides.slice();
+    const slide: Slide = createNewSlide();
 
     let currentSlideIndex: number = 0;
     for (let i = 0; i < slides.length; ++i) {
@@ -57,6 +58,7 @@ function addSlide(editor: Editor, slide: Slide): Editor {
 
     return {
         ...editor,
+        currentSlide: { ...slide },
         presentation: {
             ...editor.presentation,
             slides: slides,
