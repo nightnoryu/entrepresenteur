@@ -85,7 +85,7 @@ type Editor = {
     presentation: Presentation;
     currentSlide: Slide;
     selectedSlideIDs: UUID[];
-    selectedElements: number[];
+    selectedElementIDs: UUID[];
     // TODO: history
 }
 

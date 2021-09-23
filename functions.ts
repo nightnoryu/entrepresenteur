@@ -24,7 +24,7 @@ function createEditor(presentation: Presentation): Editor {
         presentation: presentation,
         currentSlide: presentation.slides[0],
         selectedSlideIDs: [],
-        selectedElements: [],
+        selectedElementIDs: [],
     };
 }
 
@@ -155,9 +155,9 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
     };
 }
 
-function removeElements(editor: Editor, elementIDs: UUID): Editor {
+function removeElements(editor: Editor): Editor {
     const elements: SlideElement[] = editor.currentSlide.elements.slice();
-    const newElements = elements.filter(element => !elementIDs.includes(element.id));
+    const newElements = elements.filter(element => !editor.selectedElementIDs.includes(element.id));
 
     const currentSlide = {
         ...editor.currentSlide,
