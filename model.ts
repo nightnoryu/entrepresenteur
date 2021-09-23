@@ -8,6 +8,8 @@ type Dimensions = {
     height: number;
 }
 
+type UUID = string
+
 enum ElementType {
     TEXT,
     IMAGE,
@@ -15,6 +17,7 @@ enum ElementType {
 }
 
 type SlideElement = {
+    id: UUID;
     type: ElementType;
     position: Position;
     dimensions: Dimensions;
@@ -54,33 +57,34 @@ enum BackgroundType {
 }
 
 type Background = {
-    type: BackgroundType,
+    type: BackgroundType;
 }
 
 type SolidBackground = Background & {
     type: BackgroundType.SOLID;
-    color: string,
+    color: string;
 }
 
 type ImageBackground = Background & {
     type: BackgroundType.SOLID;
-    src: string,
+    src: string;
 }
 
 type Slide = {
-    background: Background,
+    id: UUID;
+    background: Background;
     elements: SlideElement[];
 }
 
 type Presentation = {
-    title: string,
-    slides: Slide[],
+    title: string;
+    slides: Slide[];
 }
 
 type Editor = {
     presentation: Presentation;
-    currentSlide: number;
-    selectedSlides: number[];
+    currentSlide: Slide;
+    selectedSlideIDs: UUID[];
     selectedElements: number[];
     // TODO: history
 }
@@ -88,6 +92,7 @@ type Editor = {
 export {
     Position,
     Dimensions,
+    UUID,
     ElementType,
     SlideElement,
     TextElement,
