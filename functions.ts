@@ -1,4 +1,4 @@
-import { Background, BackgroundType, Dimensions, Editor, ElementType, Position, Presentation, Slide, SlideElement, UUID } from "./model";
+import { Background, BackgroundType, Dimensions, Editor, ElementType, Position, Presentation, PrimitiveElement, PrimitiveType, Slide, SlideElement, TextElement, UUID } from "./model";
 import { generateUUID, replaceCurrentSlideInSlides } from "./utils";
 
 function createNewSlide(): Slide {
@@ -206,6 +206,96 @@ function addText(editor: Editor, position: Position, dimensions: Dimensions, val
     };
 }
 
+function setTextValue(editor: Editor, textElementID: UUID, value: string): Editor {
+    const elements: SlideElement[] = [];
+    for (const element of editor.currentSlide.elements) {
+        if (element.id === textElementID && element.type === ElementType.TEXT) {
+            elements.push({
+                ...(element as TextElement),
+                value: value,
+            } as SlideElement);
+        } else {
+            elements.push(element);
+        }
+    }
+    
+    const currentSlide = {
+        ...editor.currentSlide,
+        elements: elements,
+    }
+
+    const slides = replaceCurrentSlideInSlides(editor.presentation.slides, currentSlide);
+
+    return {
+        ...editor,
+        currentSlide: currentSlide,
+        presentation: {
+            ...editor.presentation,
+            slides: slides,
+        },
+    };
+}
+
+function setTextFont(editor: Editor, textElementID: UUID, font: string): Editor {
+    const elements: SlideElement[] = [];
+    for (const element of editor.currentSlide.elements) {
+        if (element.id === textElementID && element.type === ElementType.TEXT) {
+            elements.push({
+                ...(element as TextElement),
+                font: font,
+            } as SlideElement);
+        } else {
+            elements.push(element);
+        }
+    }
+    
+    const currentSlide = {
+        ...editor.currentSlide,
+        elements: elements,
+    }
+
+    const slides = replaceCurrentSlideInSlides(editor.presentation.slides, currentSlide);
+
+    return {
+        ...editor,
+        currentSlide: currentSlide,
+        presentation: {
+            ...editor.presentation,
+            slides: slides,
+        },
+    };
+}
+
+function setTextSize(editor: Editor, textElementID: UUID, size: number): Editor {
+    const elements: SlideElement[] = [];
+    for (const element of editor.currentSlide.elements) {
+        if (element.id === textElementID && element.type === ElementType.TEXT) {
+            elements.push({
+                ...(element as TextElement),
+                size: size,
+            } as SlideElement);
+        } else {
+            elements.push(element);
+        }
+    }
+    
+    const currentSlide = {
+        ...editor.currentSlide,
+        elements: elements,
+    }
+
+    const slides = replaceCurrentSlideInSlides(editor.presentation.slides, currentSlide);
+
+    return {
+        ...editor,
+        currentSlide: currentSlide,
+        presentation: {
+            ...editor.presentation,
+            slides: slides,
+        },
+    };
+}
+
 function addImage(editor: Editor, position: Position, dimensions: Dimensions, src: string): Editor {
     const elements: SlideElement[] = editor.currentSlide.elements.slice();
     elements.push({
@@ -244,6 +334,95 @@ function moveElement(editor: Editor, elementID: UUID, position: Position): Edito
         }
     }
 
+    const currentSlide = {
+        ...editor.currentSlide,
+        elements: elements,
+    }
+
+    const slides = replaceCurrentSlideInSlides(editor.presentation.slides, currentSlide);
+
+    return {
+        ...editor,
+        currentSlide: currentSlide,
+        presentation: {
+            ...editor.presentation,
+            slides: slides,
+        },
+    };
+}
+
+function addPrimitive(editor: Editor, position: Position, dimensions: Dimensions, primitiveType: PrimitiveType): Editor {
+    const elements: SlideElement[] = editor.currentSlide.elements.slice();
+    elements.push({
+        id: generateUUID(),
+        type: ElementType.PRIMITIVE,
+        position: position,
+        dimensions: dimensions,
+        primitiveType: primitiveType,
+        fill: '#FFFFFF',
+        stroke: '#000000',
+    } as SlideElement);
+
+    const currentSlide = {
+        ...editor.currentSlide,
+        elements: elements,
+    }
+
+    const slides = replaceCurrentSlideInSlides(editor.presentation.slides, currentSlide);
+
+    return {
+        ...editor,
+        currentSlide: currentSlide,
+        presentation: {
+            ...editor.presentation,
+            slides: slides,
+        },
+    };
+}
+
+function setPrimitiveFillColor(editor: Editor, primitiveElementID: UUID, fill: string): Editor {
+    const elements: SlideElement[] = [];
+    for (const element of editor.currentSlide.elements) {
+        if (element.id === primitiveElementID && element.type === ElementType.PRIMITIVE) {
+            elements.push({
+                ...(element as PrimitiveElement),
+                fill: fill,
+            } as SlideElement);
+        } else {
+            elements.push(element);
+        }
+    }
+    
+    const currentSlide = {
+        ...editor.currentSlide,
+        elements: elements,
+    }
+
+    const slides = replaceCurrentSlideInSlides(editor.presentation.slides, currentSlide);
+
+    return {
+        ...editor,
+        currentSlide: currentSlide,
+        presentation: {
+            ...editor.presentation,
+            slides: slides,
+        },
+    };
+}
+
+function setPrimitiveStrokeColor(editor: Editor, primitiveElementID: UUID, stroke: string): Editor {
+    const elements: SlideElement[] = [];
+    for (const element of editor.currentSlide.elements) {
+        if (element.id === primitiveElementID && element.type === ElementType.PRIMITIVE) {
+            elements.push({
+                ...(element as PrimitiveElement),
+                stroke: stroke,
+            } as SlideElement);
+        } else {
+            elements.push(element);
+        }
+    }
+    
     const currentSlide = {
         ...editor.currentSlide,
         elements: elements,
