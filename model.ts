@@ -1,73 +1,104 @@
-const position = {
-    x,
-    y,
+type Position = {
+    x: number;
+    y: number;
 }
 
-const dimensions = {
-    width,
-    height,
+type Dimensions = {
+    width: number;
+    height: number;
 }
 
-const element = {
-    type,     // Text | Image | Primitive
-    position,
-    dimensions,
+enum ElementType {
+    TEXT,
+    IMAGE,
+    PRIMITIVE,
 }
 
-const text = {
-    ...element,
-    value,
-    size,
-    font,
-    color,
+type SlideElement = {
+    type: ElementType;
+    position: Position;
+    dimensions: Dimensions;
 }
 
-const image = {
-    ...element,
-    src,
+type TextElement = SlideElement & {
+    type: ElementType.TEXT;
+    value: string;
+    size: number;
+    font: string;
+    color: string;
 }
 
-const primitive = {
-    ...element,
-    primitiveType, // Rectangle | Circle | Triangle
-    fill,
-    stroke,
+type ImageElement = SlideElement & {
+    type: ElementType.IMAGE;
+    src: string;
 }
 
-const background = {
-    type, // Solid | Image
+enum PrimitiveType {
+    RECTANGLE,
+    SQUARE,
+    ELLIPSE,
+    CIRCLE,
+    TRIANGLE,
 }
 
-const solidBackground = {
-    ...background,
-    color,
+type PrimitiveElement = SlideElement & {
+    type: ElementType.PRIMITIVE;
+    primitiveType: PrimitiveType;
+    fill: string;
+    stroke: string;
 }
 
-const imageBackground = {
-    ...background,
-    src,
+enum BackgroundType {
+    SOLID,
+    IMAGE,
 }
 
-const slide = {
-    background,
-    elements, // []element
+type Background = {
+    type: BackgroundType,
 }
 
-const presentation = {
-    title,
-    slides, // []slide
+type SolidBackground = Background & {
+    type: BackgroundType.SOLID;
+    color: string,
 }
 
-// TODO: store diffs instead of full states
-const history = {
-    states, // []presentation
-    currentStateIndex,
+type ImageBackground = Background & {
+    type: BackgroundType.SOLID;
+    src: string,
 }
 
-const editor = {
-    presentation,
-    currentSlide,
-    selectedSlides,
-    selectedElements,
-    history,
+type Slide = {
+    background: Background,
+    elements: SlideElement[];
+}
+
+type Presentation = {
+    title: string,
+    slides: Slide[],
+}
+
+type Editor = {
+    presentation: Presentation;
+    currentSlide: number;
+    selectedSlides: number[];
+    selectedElements: number[];
+    // TODO: history
+}
+
+export {
+    Position,
+    Dimensions,
+    ElementType,
+    SlideElement,
+    TextElement,
+    ImageElement,
+    PrimitiveType,
+    PrimitiveElement,
+    BackgroundType,
+    Background,
+    SolidBackground,
+    ImageBackground,
+    Slide,
+    Presentation,
+    Editor,
 }
