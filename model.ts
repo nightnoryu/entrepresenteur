@@ -16,14 +16,16 @@ enum ElementType {
     PRIMITIVE,
 }
 
-type SlideElement = {
+type SlideElement = TextElement | ImageElement | PrimitiveElement
+
+type GenericSlideElement = {
     id: UUID;
     type: ElementType;
     position: Position;
     dimensions: Dimensions;
 }
 
-type TextElement = SlideElement & {
+type TextElement = GenericSlideElement & {
     type: ElementType.TEXT;
     value: string;
     size: number;
@@ -31,7 +33,7 @@ type TextElement = SlideElement & {
     color: string;
 }
 
-type ImageElement = SlideElement & {
+type ImageElement = GenericSlideElement & {
     type: ElementType.IMAGE;
     src: string;
 }
@@ -44,7 +46,8 @@ enum PrimitiveType {
     TRIANGLE,
 }
 
-type PrimitiveElement = SlideElement & {
+// TODO: union primitive type, type for each primitive type
+type PrimitiveElement = GenericSlideElement & {
     type: ElementType.PRIMITIVE;
     primitiveType: PrimitiveType;
     fill: string;
@@ -56,17 +59,19 @@ enum BackgroundType {
     IMAGE,
 }
 
-type Background = {
+type Background = SolidBackground | ImageBackground
+
+type GenericBackground = {
     type: BackgroundType;
 }
 
-type SolidBackground = Background & {
+type SolidBackground = GenericBackground & {
     type: BackgroundType.SOLID;
     color: string;
 }
 
-type ImageBackground = Background & {
-    type: BackgroundType.SOLID;
+type ImageBackground = GenericBackground & {
+    type: BackgroundType.IMAGE;
     src: string;
 }
 

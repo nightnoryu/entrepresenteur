@@ -7,7 +7,7 @@ function createNewSlide(): Slide {
         background: {
             type: BackgroundType.SOLID,
             color: '#FFFFFF',
-        } as Background,
+        },
         elements: [],
     };
 }
@@ -121,7 +121,7 @@ function setSlideBackgroundColor(editor: Editor, color: string): Editor {
         background: {
             type: BackgroundType.SOLID,
             color: color,
-        } as Background,
+        },
     };
 
     const slides = replaceCurrentSlideInSlides(editor.presentation.slides, currentSlide);
@@ -142,7 +142,7 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
         background: {
             type: BackgroundType.IMAGE,
             src: src,
-        } as Background,
+        },
     };
 
     const slides = replaceCurrentSlideInSlides(editor.presentation.slides, currentSlide);
@@ -189,7 +189,7 @@ function addText(editor: Editor, position: Position, dimensions: Dimensions, val
         size: 10,
         font: 'Calibri',
         color: '#000000',
-    } as SlideElement);
+    });
 
     const currentSlide = {
         ...editor.currentSlide,
@@ -213,9 +213,9 @@ function setTextValue(editor: Editor, textElementID: UUID, value: string): Edito
     for (const element of editor.currentSlide.elements) {
         if (element.id === textElementID && element.type === ElementType.TEXT) {
             elements.push({
-                ...(element as TextElement),
+                ...element,
                 value: value,
-            } as SlideElement);
+            });
         } else {
             elements.push(element);
         }
@@ -243,9 +243,9 @@ function setTextFont(editor: Editor, textElementID: UUID, font: string): Editor 
     for (const element of editor.currentSlide.elements) {
         if (element.id === textElementID && element.type === ElementType.TEXT) {
             elements.push({
-                ...(element as TextElement),
+                ...element,
                 font: font,
-            } as SlideElement);
+            });
         } else {
             elements.push(element);
         }
@@ -273,9 +273,9 @@ function setTextSize(editor: Editor, textElementID: UUID, size: number): Editor 
     for (const element of editor.currentSlide.elements) {
         if (element.id === textElementID && element.type === ElementType.TEXT) {
             elements.push({
-                ...(element as TextElement),
+                ...element,
                 size: size,
-            } as SlideElement);
+            });
         } else {
             elements.push(element);
         }
@@ -306,7 +306,7 @@ function addImage(editor: Editor, position: Position, dimensions: Dimensions, sr
         position: position,
         dimensions: dimensions,
         src: src,
-    } as SlideElement);
+    });
 
     const currentSlide = {
         ...editor.currentSlide,
@@ -363,7 +363,7 @@ function addPrimitive(editor: Editor, position: Position, dimensions: Dimensions
         primitiveType: primitiveType,
         fill: '#FFFFFF',
         stroke: '#000000',
-    } as SlideElement);
+    });
 
     const currentSlide = {
         ...editor.currentSlide,
@@ -387,9 +387,9 @@ function setPrimitiveFillColor(editor: Editor, primitiveElementID: UUID, fill: s
     for (const element of editor.currentSlide.elements) {
         if (element.id === primitiveElementID && element.type === ElementType.PRIMITIVE) {
             elements.push({
-                ...(element as PrimitiveElement),
+                ...element,
                 fill: fill,
-            } as SlideElement);
+            });
         } else {
             elements.push(element);
         }
@@ -417,9 +417,9 @@ function setPrimitiveStrokeColor(editor: Editor, primitiveElementID: UUID, strok
     for (const element of editor.currentSlide.elements) {
         if (element.id === primitiveElementID && element.type === ElementType.PRIMITIVE) {
             elements.push({
-                ...(element as PrimitiveElement),
+                ...element,
                 stroke: stroke,
-            } as SlideElement);
+            });
         } else {
             elements.push(element);
         }
