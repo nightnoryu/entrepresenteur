@@ -1,3 +1,5 @@
+import { UUID } from './uuid';
+
 type Position = {
     x: number;
     y: number;
@@ -7,8 +9,6 @@ type Dimensions = {
     width: number;
     height: number;
 }
-
-type UUID = string
 
 enum ElementType {
     TEXT,
@@ -40,13 +40,10 @@ type ImageElement = GenericSlideElement & {
 
 enum PrimitiveType {
     RECTANGLE,
-    SQUARE,
     ELLIPSE,
-    CIRCLE,
     TRIANGLE,
 }
 
-// TODO: union primitive type, type for each primitive type
 type PrimitiveElement = GenericSlideElement & {
     type: ElementType.PRIMITIVE;
     primitiveType: PrimitiveType;
@@ -88,7 +85,6 @@ type Presentation = {
 
 type Editor = {
     presentation: Presentation;
-    currentSlide: Slide;
     selectedSlideIDs: UUID[];
     selectedElementIDs: UUID[];
     // TODO: history
@@ -97,7 +93,6 @@ type Editor = {
 export {
     Position,
     Dimensions,
-    UUID,
     ElementType,
     SlideElement,
     TextElement,
