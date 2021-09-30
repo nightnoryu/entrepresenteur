@@ -1,5 +1,5 @@
-import { Background, BackgroundType, Dimensions, Editor, ElementType, Position, Presentation, PrimitiveElement, PrimitiveType, Slide, SlideElement, TextElement, UUID } from "./model";
-import { generateUUID, replaceCurrentSlideInSlides } from "./utils";
+import { BackgroundType, Dimensions, Editor, ElementType, Position, Presentation, PrimitiveType, Slide, SlideElement, } from "./model";
+import { UUID, generateUUID } from "./uuid";
 
 function createNewSlide(): Slide {
     return {
@@ -22,8 +22,7 @@ function createNewPresentation(): Presentation {
 function createEditor(presentation: Presentation): Editor {
     return {
         presentation: presentation,
-        currentSlide: presentation.slides[0],
-        selectedSlideIDs: [],
+        selectedSlideIDs: [presentation.slides[0].id],
         selectedElementIDs: [],
     };
 }
@@ -49,7 +48,7 @@ function addSlide(editor: Editor): Editor {
 
     let currentSlideIndex: number = 0;
     for (let i = 0; i < slides.length; ++i) {
-        if (slides[i].id === editor.currentSlide.id) {
+        if (slides[i].id === editor.selectedSlideIDs[0]) {
             currentSlideIndex = i;
         }
     }
@@ -58,7 +57,6 @@ function addSlide(editor: Editor): Editor {
 
     return {
         ...editor,
-        currentSlide: { ...slide },
         presentation: {
             ...editor.presentation,
             slides: slides,
@@ -101,17 +99,17 @@ function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
 
 function setCurrentSlide(editor: Editor, slideID: UUID): Editor {
     const slides: Slide[] = editor.presentation.slides.slice();
-    let currentSlide: Slide;
+    let currentSlideID: UUID;
 
     for (const slide of slides) {
         if (slide.id === slideID) {
-            currentSlide = { ...slide };
+            currentSlideID = slide.id
         }
     }
 
     return {
         ...editor,
-        currentSlide: currentSlide,
+        selectedSlideIDs: [currentSlideID],
     };
 }
 
