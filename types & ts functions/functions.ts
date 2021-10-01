@@ -6,7 +6,7 @@ function createNewSlide(): Slide {
         id: generateUUID(),
         background: {
             type: BackgroundType.SOLID,
-            color: '#FFFFFF',
+            color: '#FFF',
         },
         elements: [],
     };
