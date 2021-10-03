@@ -1,129 +1,132 @@
+import {Dimensions, Editor, Position, Presentation, PrimitiveType} from "../types & ts functions/model";
+import {UUID} from "../types & ts functions/uuid";
+
 /**
- * @returns Slide
+ * @returns {Slide}
  */
 function createNewSlide() { }
 
 /**
- * @returns Presentation
+ * @returns {Presentation}
  */
 function createNewPresentation() { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function createEditor() { }
+function createEditor(presentation: Presentation) { }
 
 /**
- * @returns Presentation
+ * @returns {Presentation}
  */
-function loadPresentation() { }
+function loadPresentation(file: string) { }
 
 /**
- * @returns string
+ * @returns {string}
  */
-function savePresentation() { }
+function savePresentation(presentation: Presentation) { }
 
 /**
- * @returns Presentation
+ * @returns {Presentation}
  */
-function setPresentationTitle() { }
+function setPresentationTitle(presentation: Presentation, title: string) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function addSlide() { }
+function addSlide(editor: Editor) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function removeSlides() { }
+function removeSlides(editor: Editor) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function changeSlidesOrder() { }
+function changeSlidesOrder(editor: Editor, slideIDs: UUID[]) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function setCurrentSlide() { }
+function setCurrentSlide(editor: Editor, slideID: UUID) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function setSlideBackgroundColor() { }
+function setSlideBackgroundColor(editor: Editor, color: string) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function setSlideBackgroundImage() { }
+function setSlideBackgroundImage(editor: Editor, src: string) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function removeElements() { }
+function removeElements(editor: Editor) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function addText() { }
+function addText(editor: Editor, position: Position, dimensions: Dimensions, value: string) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function setTextValue() { }
+function setTextValue(editor: Editor, textElementID: UUID, value: string) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function setTextFont() { }
+function setTextFont(editor: Editor, textElementID: UUID, font: string) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function setTextSize() { }
+function setTextSize(editor: Editor, textElementID: UUID, size: number) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function addImage() { }
+function addImage(editor: Editor, position: Position, dimensions: Dimensions, src: string) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function moveElement() { }
+function moveElement(editor: Editor, elementID: UUID, position: Position) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function addPrimitive() { }
+function addPrimitive(editor: Editor, position: Position, dimensions: Dimensions, primitiveType: PrimitiveType) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function setPrimitiveFillColor() { }
+function setPrimitiveFillColor(editor: Editor, primitiveElementID: UUID, fill: string) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function setPrimitiveStrokeColor() { }
+function setPrimitiveStrokeColor(editor: Editor, primitiveElementID: UUID, stroke: string) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function resizeElement() { }
+function resizeElement(editor: Editor, elementID: UUID, dimensions: Dimensions) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function undo() { }
+function undo(editor) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function redo() { }
+function redo(editor) { }
 
 /**
- * @returns Editor
+ * @returns {Editor}
  */
-function exportPresentation() { }
+function exportPresentation(presentation) { }
