@@ -1,0 +1,4 @@
+/**
+ * @returns Slide
+ */
+function createNewSlide() { }
