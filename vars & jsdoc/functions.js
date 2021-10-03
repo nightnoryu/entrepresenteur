@@ -1,6 +1,3 @@
-import {Dimensions, Editor, Position, Presentation, PrimitiveType} from "../types & ts functions/model";
-import {UUID} from "../types & ts functions/uuid";
-
 /**
  * @returns {Slide}
  */
@@ -12,109 +9,158 @@ function createNewSlide() { }
 function createNewPresentation() { }
 
 /**
+ * @param {Presentation} presentation
  * @returns {Editor}
  */
-function createEditor(presentation: Presentation) { }
+function createEditor(presentation) { }
 
 /**
+ * @param {string} file
  * @returns {Presentation}
  */
-function loadPresentation(file: string) { }
+function loadPresentation(file) { }
 
 /**
+ * @param {Presentation} presentation
  * @returns {string}
  */
-function savePresentation(presentation: Presentation) { }
+function savePresentation(presentation) { }
 
 /**
+ * @param {Presentation} presentation
+ * @param {title} string
  * @returns {Presentation}
  */
-function setPresentationTitle(presentation: Presentation, title: string) { }
+function setPresentationTitle(presentation, string) { }
 
 /**
+ * @param {Editor} editor
  * @returns {Editor}
  */
-function addSlide(editor: Editor) { }
+function addSlide(editor) { }
 
 /**
+ * @param {Editor} editor
  * @returns {Editor}
  */
-function removeSlides(editor: Editor) { }
+function removeSlides(editor) { }
 
 /**
+ * @param {Editor} editor
+ * @param {UUID[]} slideIDs
  * @returns {Editor}
  */
-function changeSlidesOrder(editor: Editor, slideIDs: UUID[]) { }
+function changeSlidesOrder(editor, slideIDs) { }
 
 /**
+ * @param {Editor} editor
+ * @param {UUID} slideID
  * @returns {Editor}
  */
-function setCurrentSlide(editor: Editor, slideID: UUID) { }
+function setCurrentSlide(editor, slideID) { }
 
 /**
+ * @param {Editor} editor
+ * @param {string} color
  * @returns {Editor}
  */
-function setSlideBackgroundColor(editor: Editor, color: string) { }
+function setSlideBackgroundColor(editor, color) { }
 
 /**
+ * @param {Editor} editor
+ * @param {string} src
  * @returns {Editor}
  */
-function setSlideBackgroundImage(editor: Editor, src: string) { }
+function setSlideBackgroundImage(editor, src) { }
 
 /**
+ * @param {Editor} editor
  * @returns {Editor}
  */
-function removeElements(editor: Editor) { }
+function removeElements(editor) { }
 
 /**
+ * @param {Editor} editor
+ * @param {Position} position
+ * @param {Dimensions} dimensions
+ * @param {string} value
  * @returns {Editor}
  */
-function addText(editor: Editor, position: Position, dimensions: Dimensions, value: string) { }
+function addText(editor, position, dimensions, value) { }
 
 /**
+ * @param {Editor} editor
+ * @param {UUID} textElementID
+ * @param {string} value
  * @returns {Editor}
  */
-function setTextValue(editor: Editor, textElementID: UUID, value: string) { }
+function setTextValue(editor, textElementID, value) { }
 
 /**
+ * @param {Editor} editor
+ * @param {UUID} textElementID
+ * @param {string} font
  * @returns {Editor}
  */
-function setTextFont(editor: Editor, textElementID: UUID, font: string) { }
+function setTextFont(editor, textElementID, font) { }
 
 /**
+ * @param {Editor} editor
+ * @param {UUID} textElementID
+ * @param {number} size
  * @returns {Editor}
  */
-function setTextSize(editor: Editor, textElementID: UUID, size: number) { }
+function setTextSize(editor, textElementID, size) { }
 
 /**
+ * @param {Editor} editor
+ * @param {Position} position
+ * @param {Dimensions} dimensions
+ * @param {string} src
  * @returns {Editor}
  */
-function addImage(editor: Editor, position: Position, dimensions: Dimensions, src: string) { }
+function addImage(editor, position, dimensions, src) { }
 
 /**
+ * @param {Editor} editor
+ * @param {UUID} elementID
+ * @param {Position} position
  * @returns {Editor}
  */
-function moveElement(editor: Editor, elementID: UUID, position: Position) { }
+function moveElement(editor, elementID, position) { }
 
 /**
+ * @param {Editor} editor
+ * @param {Position} position
+ * @param {Dimensions} dimensions
+ * @param {PrimitiveType} primitiveType
  * @returns {Editor}
  */
-function addPrimitive(editor: Editor, position: Position, dimensions: Dimensions, primitiveType: PrimitiveType) { }
+function addPrimitive(editor, position, dimensions, primitiveType) { }
 
 /**
+ * @param {Editor} editor
+ * @param {UUID} primitiveElementID
+ * @param {string} fill
  * @returns {Editor}
  */
-function setPrimitiveFillColor(editor: Editor, primitiveElementID: UUID, fill: string) { }
+function setPrimitiveFillColor(editor, primitiveElementID, fill) { }
 
 /**
+ * @param {Editor} editor
+ * @param {UUID} primitiveElementID
+ * @param {string} stroke
  * @returns {Editor}
  */
-function setPrimitiveStrokeColor(editor: Editor, primitiveElementID: UUID, stroke: string) { }
+function setPrimitiveStrokeColor(editor, primitiveElementID, stroke) { }
 
 /**
+ * @param {Editor} editor
+ * @param {UUID} elementID
+ * @param {Dimensions} dimensions
  * @returns {Editor}
  */
-function resizeElement(editor: Editor, elementID: UUID, dimensions: Dimensions) { }
+function resizeElement(editor, elementID, dimensions) { }
 
 /**
  * @returns {Editor}
