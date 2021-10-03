@@ -28,10 +28,10 @@ function savePresentation(presentation) { }
 
 /**
  * @param {Presentation} presentation
- * @param {title} string
+ * @param {string} title
  * @returns {Presentation}
  */
-function setPresentationTitle(presentation, string) { }
+function setPresentationTitle(presentation, title) { }
 
 /**
  * @param {Editor} editor
@@ -163,16 +163,19 @@ function setPrimitiveStrokeColor(editor, primitiveElementID, stroke) { }
 function resizeElement(editor, elementID, dimensions) { }
 
 /**
+ * @param {} editor
  * @returns {Editor}
  */
 function undo(editor) { }
 
 /**
+ * @param {} editor
  * @returns {Editor}
  */
 function redo(editor) { }
 
 /**
+ * @param {} presentation
  * @returns {Editor}
  */
 function exportPresentation(presentation) { }
