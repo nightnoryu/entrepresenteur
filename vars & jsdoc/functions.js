@@ -163,19 +163,19 @@ function setPrimitiveStrokeColor(editor, primitiveElementID, stroke) { }
 function resizeElement(editor, elementID, dimensions) { }
 
 /**
- * @param {} editor
+ * @param {Editor} editor
  * @returns {Editor}
  */
 function undo(editor) { }
 
 /**
- * @param {} editor
+ * @param {Editor} editor
  * @returns {Editor}
  */
 function redo(editor) { }
 
 /**
- * @param {} presentation
- * @returns {Editor}
+ * @param {Presentation} presentation
+ * @returns {PDF}
  */
 function exportPresentation(presentation) { }
