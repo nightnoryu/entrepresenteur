@@ -20,9 +20,14 @@ function createNewPresentation(): Presentation {
 }
 
 function createEditor(presentation: Presentation): Editor {
+    let selectedSlideIDs: Array<UUID> = [];
+    if (presentation.slides.length > 0) {
+        selectedSlideIDs = [presentation.slides[0].id];
+    }
+
     return {
         presentation: presentation,
-        selectedSlideIDs: [presentation.slides[0].id],
+        selectedSlideIDs: selectedSlideIDs,
         selectedElementIDs: [],
     };
 }
@@ -48,6 +53,7 @@ function addSlide(editor: Editor): Editor {
 
     let currentSlideIndex: number = 0;
     for (let i = 0; i < slides.length; ++i) {
+        // TODO: What if selectedSlideIDs is empty?
         if (slides[i].id === editor.selectedSlideIDs[0]) {
             currentSlideIndex = i;
         }
@@ -99,7 +105,8 @@ function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
 
 function setCurrentSlide(editor: Editor, slideID: UUID): Editor {
     const slides: Slide[] = editor.presentation.slides.slice();
-    let currentSlideID: UUID;
+    // TODO: What if selectedSlideIDs is empty?
+    let currentSlideID: UUID = editor.selectedSlideIDs[0];
 
     for (const slide of slides) {
         if (slide.id === slideID) {
@@ -114,19 +121,24 @@ function setCurrentSlide(editor: Editor, slideID: UUID): Editor {
 }
 
 function setSlideBackgroundColor(editor: Editor, color: string): Editor {
-    const currentSlide: Slide = {
-        ...editor.currentSlide,
-        background: {
+    // TODO: What if selectedSlideIDs is empty?
+    const selectedSlideID = editor.selectedSlideIDs[0];
+    const slides = editor.presentation.slides.slice();
+
+    for (let i = 0; i < slides.length; ++i) {
+      if (slides[i].id === selectedSlideID) {
+        slides[i] = {
+          ...slides[i],
+          background: {
             type: BackgroundType.SOLID,
             color: color,
-        },
-    };
-
-    const slides = replaceCurrentSlideInSlides(editor.presentation.slides, currentSlide);
+          }
+        }
+      }
+    }
 
     return {
         ...editor,
-        currentSlide: currentSlide,
         presentation: {
             ...editor.presentation,
             slides: slides,
@@ -135,19 +147,24 @@ function setSlideBackgroundColor(editor: Editor, color: string): Editor {
 }
 
 function setSlideBackgroundImage(editor: Editor, src: string): Editor {
-    const currentSlide: Slide = {
-        ...editor.currentSlide,
-        background: {
+    // TODO: What if selectedSlideIDs is empty?
+    const selectedSlideID = editor.selectedSlideIDs[0];
+    const slides = editor.presentation.slides.slice();
+
+    for (let i = 0; i < slides.length; ++i) {
+      if (slides[i].id === selectedSlideID) {
+        slides[i] = {
+          ...slides[i],
+          background: {
             type: BackgroundType.IMAGE,
             src: src,
-        },
-    };
-
-    const slides = replaceCurrentSlideInSlides(editor.presentation.slides, currentSlide);
+          }
+        }
+      }
+    }
 
     return {
         ...editor,
-        currentSlide: currentSlide,
         presentation: {
             ...editor.presentation,
             slides: slides,
