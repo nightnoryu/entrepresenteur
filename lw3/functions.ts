@@ -32,12 +32,12 @@ function createEditor(presentation: Presentation): Editor {
     };
 }
 
-function loadPresentation(file: string): Presentation {
-    return JSON.parse(file);
+function serializePresentation(presentation: Presentation): string {
+    return JSON.stringify(presentation);
 }
 
-function savePresentation(presentation: Presentation): string {
-    return JSON.stringify(presentation);
+function unserializePresentation(json: string): Presentation {
+    return JSON.parse(json);
 }
 
 function setPresentationTitle(presentation: Presentation, title: string): Presentation {
@@ -48,17 +48,10 @@ function setPresentationTitle(presentation: Presentation, title: string): Presen
 }
 
 function addSlide(editor: Editor): Editor {
-    const slides: Slide[] = editor.presentation.slides.slice();
-    const slide: Slide = createNewSlide();
+    const slides = editor.presentation.slides.slice();
+    const slide = createNewSlide();
 
-    let currentSlideIndex: number = 0;
-    for (let i = 0; i < slides.length; ++i) {
-        // TODO: What if selectedSlideIDs is empty?
-        if (slides[i].id === editor.selectedSlideIDs[0]) {
-            currentSlideIndex = i;
-        }
-    }
-
+    const currentSlideIndex = slides.findIndex(slide => slide.id === editor.selectedSlideIDs[0]);
     slides.splice(currentSlideIndex, 0, slide);
 
     return {
@@ -71,7 +64,7 @@ function addSlide(editor: Editor): Editor {
 }
 
 function removeSlides(editor: Editor): Editor {
-    const slides: Array<Slide> = editor.presentation.slides.slice();
+    const slides = editor.presentation.slides.slice();
 
     let newSelectedSlidesIDs: Array<UUID> = [];
     for (let i = 0; i < slides.length - 1; ++i) {
@@ -185,7 +178,7 @@ function removeElements(editor: Editor): Editor {
 
     for (let i = 0; i < slides.length; ++i) {
         if (slides[i].id === selectedSlideID) {
-            const elements: Array<SlideElement> = slides[i].elements.filter(element => !editor.selectedElementIDs.includes(element.id));
+            const elements = slides[i].elements.filter(element => !editor.selectedElementIDs.includes(element.id));
 
             slides[i] = {
                 ...slides[i],
@@ -214,7 +207,7 @@ function addText(editor: Editor, position: Position, dimensions: Dimensions, val
 
     for (let i = 0; i < slides.length; ++i) {
         if (slides[i].id === selectedSlideID) {
-            const elements: Array<SlideElement> = slides[i].elements.slice();
+            const elements = slides[i].elements.slice();
             elements.push({
                 id: generateUUID(),
                 type: ElementType.TEXT,
@@ -254,9 +247,9 @@ function setTextValue(editor: Editor, value: string): Editor {
 
     for (let i = 0; i < slides.length; ++i) {
         if (slides[i].id === selectedSlideID) {
-            const elements: Array<SlideElement> = slides[i].elements.slice();
+            const elements = slides[i].elements.slice();
             for (let j = 0; j < elements.length; ++j) {
-                const element: SlideElement = elements[j];
+                const element = elements[j];
                 if (element.type === ElementType.TEXT && element.id === selectedElementID) {
                     elements[j] = {
                         ...element,
@@ -289,9 +282,9 @@ function setTextFont(editor: Editor, font: string): Editor {
 
     for (let i = 0; i < slides.length; ++i) {
         if (slides[i].id === selectedSlideID) {
-            const elements: Array<SlideElement> = slides[i].elements.slice();
+            const elements = slides[i].elements.slice();
             for (let j = 0; j < elements.length; ++j) {
-                const element: SlideElement = elements[j];
+                const element = elements[j];
                 if (element.type === ElementType.TEXT && element.id === selectedElementID) {
                     elements[j] = {
                         ...element,
@@ -324,9 +317,9 @@ function setTextSize(editor: Editor, size: number): Editor {
 
     for (let i = 0; i < slides.length; ++i) {
         if (slides[i].id === selectedSlideID) {
-            const elements: Array<SlideElement> = slides[i].elements.slice();
+            const elements = slides[i].elements.slice();
             for (let j = 0; j < elements.length; ++j) {
-                const element: SlideElement = elements[j];
+                const element = elements[j];
                 if (element.type === ElementType.TEXT && element.id === selectedElementID) {
                     elements[j] = {
                         ...element,
@@ -358,7 +351,7 @@ function addImage(editor: Editor, position: Position, dimensions: Dimensions, sr
 
     for (let i = 0; i < slides.length; ++i) {
         if (slides[i].id === selectedSlideID) {
-            const elements: Array<SlideElement> = slides[i].elements.slice();
+            const elements = slides[i].elements.slice();
             elements.push({
                 id: generateUUID(),
                 type: ElementType.IMAGE,
@@ -395,7 +388,7 @@ function moveElement(editor: Editor, position: Position): Editor {
 
     for (let i = 0; i < slides.length; ++i) {
         if (slides[i].id === selectedSlideID) {
-            const elements: Array<SlideElement> = slides[i].elements.slice();
+            const elements = slides[i].elements.slice();
             for (let j = 0; j < elements.length; ++j) {
                 if (elements[j].id === selectedElementID) {
                     elements[i] = {
@@ -428,7 +421,7 @@ function addPrimitive(editor: Editor, position: Position, dimensions: Dimensions
 
     for (let i = 0; i < slides.length; ++i) {
         if (slides[i].id === selectedSlideID) {
-            const elements: Array<SlideElement> = slides[i].elements.slice();
+            const elements = slides[i].elements.slice();
             elements.push({
                 id: generateUUID(),
                 type: ElementType.PRIMITIVE,
@@ -467,9 +460,9 @@ function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
 
     for (let i = 0; i < slides.length; ++i) {
         if (slides[i].id === selectedSlideID) {
-            const elements: Array<SlideElement> = slides[i].elements.slice();
+            const elements = slides[i].elements.slice();
             for (let j = 0; j < elements.length; ++j) {
-                const element: SlideElement = elements[j];
+                const element = elements[j];
                 if (element.type === ElementType.PRIMITIVE && element.id === selectedElementID) {
                     elements[j] = {
                         ...element,
@@ -502,9 +495,9 @@ function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
 
     for (let i = 0; i < slides.length; ++i) {
         if (slides[i].id === selectedSlideID) {
-            const elements: Array<SlideElement> = slides[i].elements.slice();
+            const elements = slides[i].elements.slice();
             for (let j = 0; j < elements.length; ++j) {
-                const element: SlideElement = elements[j];
+                const element = elements[j];
                 if (element.type === ElementType.PRIMITIVE && element.id === selectedElementID) {
                     elements[j] = {
                         ...element,
@@ -537,7 +530,7 @@ function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
 
     for (let i = 0; i < slides.length; ++i) {
         if (slides[i].id === selectedSlideID) {
-            const elements: Array<SlideElement> = slides[i].elements.slice();
+            const elements = slides[i].elements.slice();
             for (let j = 0; j < elements.length; ++j) {
                 if (elements[j].id === selectedElementID) {
                     elements[i] = {
