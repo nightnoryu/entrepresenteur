@@ -114,14 +114,10 @@ function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
     slideIDToSlideMap.set(slide.id, slide);
   }
 
-  const newSlides: Slide[] = [];
-
-  for (const slideID of slideIDs) {
+  const newSlides = slideIDs.flatMap(slideID => {
     const optionalSlideID = slideIDToSlideMap.get(slideID);
-    if (optionalSlideID !== undefined) {
-      newSlides.push(optionalSlideID);
-    }
-  }
+    return optionalSlideID !== undefined ? [optionalSlideID] : [];
+  });
 
   return {
     ...editor,
