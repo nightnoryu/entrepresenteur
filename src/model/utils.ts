@@ -1,5 +1,5 @@
 import { Slide } from './model';
-import { UUID, NullUUID } from './uuid';
+import { UUID } from './uuid';
 
 export function findCurrentSlideIndex(
   slides: Array<Slide>,
