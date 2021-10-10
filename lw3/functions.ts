@@ -122,7 +122,7 @@ function selectSlide(editor: Editor, slideID: UUID): Editor {
         if (editor.selectedSlideIDs.includes(slide.id)) {
             return slide.id;
         }
-    });
+    }).filter(selectedSlideID => selectedSlideID !== undefined);
 
     return {
         ...editor,
