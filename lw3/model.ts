@@ -58,16 +58,12 @@ enum BackgroundType {
 
 type Background = SolidBackground | ImageBackground
 
-type GenericBackground = {
-    type: BackgroundType;
-}
-
-type SolidBackground = GenericBackground & {
+type SolidBackground = {
     type: BackgroundType.SOLID;
     color: string;
 }
 
-type ImageBackground = GenericBackground & {
+type ImageBackground = {
     type: BackgroundType.IMAGE;
     src: string;
 }
