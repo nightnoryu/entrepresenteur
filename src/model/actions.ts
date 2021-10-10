@@ -31,7 +31,7 @@ function createNewPresentation(): Presentation {
 }
 
 function createEditor(presentation: Presentation): Editor {
-  let selectedSlideIDs: Array<UUID> = [];
+  let selectedSlideIDs: UUID[] = [];
   if (presentation.slides.length > 0) {
     selectedSlideIDs = [presentation.slides[0].id];
   }
@@ -62,7 +62,7 @@ function setPresentationTitle(
 }
 
 function addSlide(editor: Editor): Editor {
-  let slides: Array<Slide> = [];
+  let slides: Slide[] = [];
   const slide = createNewSlide();
 
   if (slides.length === 0) {
@@ -87,7 +87,7 @@ function addSlide(editor: Editor): Editor {
 function removeSlides(editor: Editor): Editor {
   const slides = editor.presentation.slides.slice();
 
-  let newSelectedSlidesIDs: Array<UUID> = [];
+  let newSelectedSlidesIDs: UUID[] = [];
   for (let i = 0; i < slides.length - 1; ++i) {
     if (slides[i + 1].id === editor.selectedSlideIDs[0]) {
       newSelectedSlidesIDs = [slides[i].id];
