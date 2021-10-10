@@ -7,7 +7,6 @@ import {
   Presentation,
   PrimitiveType,
   Slide,
-  SlideElement,
 } from './types';
 import { UUID, NullUUID, generateUUID } from './uuid';
 import { findCurrentSlideIndex } from './utils';
