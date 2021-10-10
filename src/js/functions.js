@@ -1,83 +1,83 @@
 /**
  * @returns {Slide}
  */
-function createNewSlide() { }
+function createNewSlide() {}
 
 /**
  * @returns {Presentation}
  */
-function createNewPresentation() { }
+function createNewPresentation() {}
 
 /**
  * @param {Presentation} presentation
  * @returns {Editor}
  */
-function createEditor(presentation) { }
+function createEditor(presentation) {}
 
 /**
  * @param {string} file
  * @returns {Presentation}
  */
-function loadPresentation(file) { }
+function loadPresentation(file) {}
 
 /**
  * @param {Presentation} presentation
  * @returns {string}
  */
-function savePresentation(presentation) { }
+function savePresentation(presentation) {}
 
 /**
  * @param {Presentation} presentation
  * @param {string} title
  * @returns {Presentation}
  */
-function setPresentationTitle(presentation, title) { }
+function setPresentationTitle(presentation, title) {}
 
 /**
  * @param {Editor} editor
  * @returns {Editor}
  */
-function addSlide(editor) { }
+function addSlide(editor) {}
 
 /**
  * @param {Editor} editor
  * @returns {Editor}
  */
-function removeSlides(editor) { }
+function removeSlides(editor) {}
 
 /**
  * @param {Editor} editor
  * @param {UUID[]} slideIDs
  * @returns {Editor}
  */
-function changeSlidesOrder(editor, slideIDs) { }
+function changeSlidesOrder(editor, slideIDs) {}
 
 /**
  * @param {Editor} editor
  * @param {UUID} slideID
  * @returns {Editor}
  */
-function setCurrentSlide(editor, slideID) { }
+function setCurrentSlide(editor, slideID) {}
 
 /**
  * @param {Editor} editor
  * @param {string} color
  * @returns {Editor}
  */
-function setSlideBackgroundColor(editor, color) { }
+function setSlideBackgroundColor(editor, color) {}
 
 /**
  * @param {Editor} editor
  * @param {string} src
  * @returns {Editor}
  */
-function setSlideBackgroundImage(editor, src) { }
+function setSlideBackgroundImage(editor, src) {}
 
 /**
  * @param {Editor} editor
  * @returns {Editor}
  */
-function removeElements(editor) { }
+function removeElements(editor) {}
 
 /**
  * @param {Editor} editor
@@ -86,7 +86,7 @@ function removeElements(editor) { }
  * @param {string} value
  * @returns {Editor}
  */
-function addText(editor, position, dimensions, value) { }
+function addText(editor, position, dimensions, value) {}
 
 /**
  * @param {Editor} editor
@@ -94,7 +94,7 @@ function addText(editor, position, dimensions, value) { }
  * @param {string} value
  * @returns {Editor}
  */
-function setTextValue(editor, textElementID, value) { }
+function setTextValue(editor, textElementID, value) {}
 
 /**
  * @param {Editor} editor
@@ -102,7 +102,7 @@ function setTextValue(editor, textElementID, value) { }
  * @param {string} font
  * @returns {Editor}
  */
-function setTextFont(editor, textElementID, font) { }
+function setTextFont(editor, textElementID, font) {}
 
 /**
  * @param {Editor} editor
@@ -110,7 +110,7 @@ function setTextFont(editor, textElementID, font) { }
  * @param {number} size
  * @returns {Editor}
  */
-function setTextSize(editor, textElementID, size) { }
+function setTextSize(editor, textElementID, size) {}
 
 /**
  * @param {Editor} editor
@@ -119,7 +119,7 @@ function setTextSize(editor, textElementID, size) { }
  * @param {string} src
  * @returns {Editor}
  */
-function addImage(editor, position, dimensions, src) { }
+function addImage(editor, position, dimensions, src) {}
 
 /**
  * @param {Editor} editor
@@ -127,7 +127,7 @@ function addImage(editor, position, dimensions, src) { }
  * @param {Position} position
  * @returns {Editor}
  */
-function moveElement(editor, elementID, position) { }
+function moveElement(editor, elementID, position) {}
 
 /**
  * @param {Editor} editor
@@ -136,7 +136,7 @@ function moveElement(editor, elementID, position) { }
  * @param {PrimitiveType} primitiveType
  * @returns {Editor}
  */
-function addPrimitive(editor, position, dimensions, primitiveType) { }
+function addPrimitive(editor, position, dimensions, primitiveType) {}
 
 /**
  * @param {Editor} editor
@@ -144,7 +144,7 @@ function addPrimitive(editor, position, dimensions, primitiveType) { }
  * @param {string} fill
  * @returns {Editor}
  */
-function setPrimitiveFillColor(editor, primitiveElementID, fill) { }
+function setPrimitiveFillColor(editor, primitiveElementID, fill) {}
 
 /**
  * @param {Editor} editor
@@ -152,7 +152,7 @@ function setPrimitiveFillColor(editor, primitiveElementID, fill) { }
  * @param {string} stroke
  * @returns {Editor}
  */
-function setPrimitiveStrokeColor(editor, primitiveElementID, stroke) { }
+function setPrimitiveStrokeColor(editor, primitiveElementID, stroke) {}
 
 /**
  * @param {Editor} editor
@@ -160,22 +160,22 @@ function setPrimitiveStrokeColor(editor, primitiveElementID, stroke) { }
  * @param {Dimensions} dimensions
  * @returns {Editor}
  */
-function resizeElement(editor, elementID, dimensions) { }
+function resizeElement(editor, elementID, dimensions) {}
 
 /**
  * @param {Editor} editor
  * @returns {Editor}
  */
-function undo(editor) { }
+function undo(editor) {}
 
 /**
  * @param {Editor} editor
  * @returns {Editor}
  */
-function redo(editor) { }
+function redo(editor) {}
 
 /**
  * @param {Presentation} presentation
  * @returns {PDF}
  */
-function exportPresentation(presentation) { }
+function exportPresentation(presentation) {}
