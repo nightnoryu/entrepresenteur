@@ -1,12 +1,13 @@
-import { BackgroundType, Dimensions, Editor, ElementType, Position, Presentation, PrimitiveType, Slide, SlideElement, } from "./model";
-import { UUID, generateUUID } from "./uuid";
+import { BackgroundType, Dimensions, Editor, ElementType, Position, Presentation, PrimitiveType, Slide, SlideElement, } from './model';
+import { UUID, generateUUID } from './uuid';
+import { findCurrentSlideIndex } from './utils';
 
 function createNewSlide(): Slide {
     return {
         id: generateUUID(),
         background: {
             type: BackgroundType.SOLID,
-            color: '#FFF',
+            color: '#FFFFFF',
         },
         elements: [],
     };
@@ -48,11 +49,15 @@ function setPresentationTitle(presentation: Presentation, title: string): Presen
 }
 
 function addSlide(editor: Editor): Editor {
-    const slides = editor.presentation.slides.slice();
+    let slides: Array<Slide> = [];
     const slide = createNewSlide();
 
-    const currentSlideIndex = slides.findIndex(slide => slide.id === editor.selectedSlideIDs[0]);
-    slides.splice(currentSlideIndex, 0, slide);
+    if (slides.length === 0) {
+      slides = [slide];
+    } else {
+      const currentSlideIndex = findCurrentSlideIndex(slides, editor.selectedSlideIDs);
+      slides.splice(currentSlideIndex, 0, slide);
+    }
 
     return {
         ...editor,
