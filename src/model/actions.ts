@@ -139,14 +139,9 @@ function selectSlide(editor: Editor, slideID: UUID): Editor {
   let selectedSlideIDs = editor.selectedSlideIDs.slice();
   selectedSlideIDs.push(slideID);
 
-  selectedSlideIDs = editor.presentation.slides
-    .map(slide => {
-      if (editor.selectedSlideIDs.includes(slide.id)) {
-        return slide.id;
-      }
-      return NullUUID;
-    })
-    .filter(selectedSlideID => selectedSlideID !== NullUUID);
+  selectedSlideIDs = editor.presentation.slides.flatMap(slide => {
+    return editor.selectedSlideIDs.includes(slide.id) ? [slide.id] : [];
+  });
 
   return {
     ...editor,
