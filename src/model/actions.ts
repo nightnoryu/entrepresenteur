@@ -8,8 +8,8 @@ import {
   PrimitiveType,
   Slide,
   SlideElement,
-} from './model';
-import { UUID, generateUUID } from './uuid';
+} from './types';
+import { UUID, NullUUID, generateUUID } from './uuid';
 import { findCurrentSlideIndex } from './utils';
 
 function createNewSlide(): Slide {
@@ -114,9 +114,14 @@ function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
     slideIDToSlideMap.set(slide.id, slide);
   }
 
-  const newSlides: Slide[] = slideIDs.map(slideID =>
-    slideIDToSlideMap.get(slideID)
-  );
+  const newSlides: Slide[] = [];
+
+  for (const slideID of slideIDs) {
+    const optionalSlideID = slideIDToSlideMap.get(slideID);
+    if (optionalSlideID !== undefined) {
+      newSlides.push(optionalSlideID);
+    }
+  }
 
   return {
     ...editor,
@@ -143,8 +148,9 @@ function selectSlide(editor: Editor, slideID: UUID): Editor {
       if (editor.selectedSlideIDs.includes(slide.id)) {
         return slide.id;
       }
+      return NullUUID;
     })
-    .filter(selectedSlideID => selectedSlideID !== undefined);
+    .filter(selectedSlideID => selectedSlideID !== NullUUID);
 
   return {
     ...editor,

@@ -1,31 +1,31 @@
 import { UUID } from './uuid';
 
-type Position = {
+export type Position = {
   x: number;
   y: number;
 };
 
-type Dimensions = {
+export type Dimensions = {
   width: number;
   height: number;
 };
 
-enum ElementType {
+export enum ElementType {
   TEXT,
   IMAGE,
   PRIMITIVE,
 }
 
-type SlideElement = TextElement | ImageElement | PrimitiveElement;
+export type SlideElement = TextElement | ImageElement | PrimitiveElement;
 
-type GenericSlideElement = {
+export type GenericSlideElement = {
   id: UUID;
   type: ElementType;
   position: Position;
   dimensions: Dimensions;
 };
 
-type TextElement = GenericSlideElement & {
+export type TextElement = GenericSlideElement & {
   type: ElementType.TEXT;
   value: string;
   size: number;
@@ -33,73 +33,55 @@ type TextElement = GenericSlideElement & {
   color: string;
 };
 
-type ImageElement = GenericSlideElement & {
+export type ImageElement = GenericSlideElement & {
   type: ElementType.IMAGE;
   src: string;
 };
 
-enum PrimitiveType {
+export enum PrimitiveType {
   RECTANGLE,
   ELLIPSE,
   TRIANGLE,
 }
 
-type PrimitiveElement = GenericSlideElement & {
+export type PrimitiveElement = GenericSlideElement & {
   type: ElementType.PRIMITIVE;
   primitiveType: PrimitiveType;
   fill: string;
   stroke: string;
 };
 
-enum BackgroundType {
+export enum BackgroundType {
   SOLID,
   IMAGE,
 }
 
-type Background = SolidBackground | ImageBackground;
+export type Background = SolidBackground | ImageBackground;
 
-type SolidBackground = {
+export type SolidBackground = {
   type: BackgroundType.SOLID;
   color: string;
 };
 
-type ImageBackground = {
+export type ImageBackground = {
   type: BackgroundType.IMAGE;
   src: string;
 };
 
-type Slide = {
+export type Slide = {
   id: UUID;
   background: Background;
   elements: SlideElement[];
 };
 
-type Presentation = {
+export type Presentation = {
   title: string;
   slides: Slide[];
 };
 
-type Editor = {
+export type Editor = {
   presentation: Presentation;
   selectedSlideIDs: UUID[];
   selectedElementIDs: UUID[];
   // TODO: history
-};
-
-export type {
-  Position,
-  Dimensions,
-  ElementType,
-  SlideElement,
-  TextElement,
-  ImageElement,
-  PrimitiveType,
-  PrimitiveElement,
-  BackgroundType,
-  Background,
-  SolidBackground,
-  ImageBackground,
-  Slide,
-  Presentation,
-  Editor,
 };

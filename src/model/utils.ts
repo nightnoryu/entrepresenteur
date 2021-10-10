@@ -1,4 +1,4 @@
-import { Slide } from './model';
+import { Slide } from './types';
 import { UUID } from './uuid';
 
 export function findCurrentSlideIndex(
