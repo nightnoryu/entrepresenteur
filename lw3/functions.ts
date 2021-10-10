@@ -109,6 +109,22 @@ function setCurrentSlide(editor: Editor, slideID: UUID): Editor {
     };
 }
 
+function selectSlide(editor: Editor, slideID: UUID): Editor {
+    let selectedSlideIDs = editor.selectedSlideIDs.slice();
+    selectedSlideIDs.push(slideID);
+
+    selectedSlideIDs = editor.presentation.slides.map(slide => {
+        if (editor.selectedSlideIDs.includes(slide.id)) {
+            return slide.id;
+        }
+    });
+
+    return {
+        ...editor,
+        selectedSlideIDs: selectedSlideIDs,
+    };
+}
+
 function setSlideBackgroundColor(editor: Editor, color: string): Editor {
     if (editor.selectedSlideIDs.length === 0) {
         return { ...editor };
