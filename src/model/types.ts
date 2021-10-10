@@ -86,7 +86,7 @@ type Editor = {
   // TODO: history
 };
 
-export {
+export type {
   Position,
   Dimensions,
   ElementType,
