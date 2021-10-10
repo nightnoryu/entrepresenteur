@@ -262,11 +262,10 @@ function addText(
   }
 
   const selectedSlideID = editor.selectedSlideIDs[0];
-  const slides = editor.presentation.slides.slice();
 
-  for (let i = 0; i < slides.length; ++i) {
-    if (slides[i].id === selectedSlideID) {
-      const elements = slides[i].elements.slice();
+  const slides = editor.presentation.slides.map(slide => {
+    if (slide.id === selectedSlideID) {
+      const elements = slide.elements.slice();
       elements.push({
         id: generateUUID(),
         type: ElementType.TEXT,
@@ -278,13 +277,14 @@ function addText(
         color: '#000000',
       });
 
-      slides[i] = {
-        ...slides[i],
+      return {
+        ...slide,
         elements: elements,
       };
-      break;
     }
-  }
+
+    return slide;
+  });
 
   return {
     ...editor,
@@ -305,27 +305,31 @@ function setTextValue(editor: Editor, value: string): Editor {
 
   const selectedSlideID = editor.selectedSlideIDs[0];
   const selectedElementID = editor.selectedElementIDs[0];
-  const slides = editor.presentation.slides.slice();
 
-  for (let i = 0; i < slides.length; ++i) {
-    if (slides[i].id === selectedSlideID) {
-      const elements = slides[i].elements.slice();
-      for (let j = 0; j < elements.length; ++j) {
-        const element = elements[j];
+  const slides = editor.presentation.slides.map(slide => {
+    if (slide.id === selectedSlideID) {
+      const elements = slide.elements.map(element => {
         if (
-          element.type === ElementType.TEXT &&
+          element.type === ElementType.PRIMITIVE &&
           element.id === selectedElementID
         ) {
-          elements[j] = {
+          return {
             ...element,
             value: value,
           };
-          break;
         }
-      }
-      break;
+
+        return element;
+      });
+
+      return {
+        ...slide,
+        elements: elements,
+      };
     }
-  }
+
+    return slide;
+  });
 
   return {
     ...editor,
@@ -346,27 +350,31 @@ function setTextFont(editor: Editor, font: string): Editor {
 
   const selectedSlideID = editor.selectedSlideIDs[0];
   const selectedElementID = editor.selectedElementIDs[0];
-  const slides = editor.presentation.slides.slice();
 
-  for (let i = 0; i < slides.length; ++i) {
-    if (slides[i].id === selectedSlideID) {
-      const elements = slides[i].elements.slice();
-      for (let j = 0; j < elements.length; ++j) {
-        const element = elements[j];
+  const slides = editor.presentation.slides.map(slide => {
+    if (slide.id === selectedSlideID) {
+      const elements = slide.elements.map(element => {
         if (
-          element.type === ElementType.TEXT &&
+          element.type === ElementType.PRIMITIVE &&
           element.id === selectedElementID
         ) {
-          elements[j] = {
+          return {
             ...element,
             font: font,
           };
-          break;
         }
-      }
-      break;
+
+        return element;
+      });
+
+      return {
+        ...slide,
+        elements: elements,
+      };
     }
-  }
+
+    return slide;
+  });
 
   return {
     ...editor,
@@ -387,27 +395,31 @@ function setTextSize(editor: Editor, size: number): Editor {
 
   const selectedSlideID = editor.selectedSlideIDs[0];
   const selectedElementID = editor.selectedElementIDs[0];
-  const slides = editor.presentation.slides.slice();
 
-  for (let i = 0; i < slides.length; ++i) {
-    if (slides[i].id === selectedSlideID) {
-      const elements = slides[i].elements.slice();
-      for (let j = 0; j < elements.length; ++j) {
-        const element = elements[j];
+  const slides = editor.presentation.slides.map(slide => {
+    if (slide.id === selectedSlideID) {
+      const elements = slide.elements.map(element => {
         if (
           element.type === ElementType.TEXT &&
           element.id === selectedElementID
         ) {
-          elements[j] = {
+          return {
             ...element,
             size: size,
           };
-          break;
         }
-      }
-      break;
+
+        return element;
+      });
+
+      return {
+        ...slide,
+        elements: elements,
+      };
     }
-  }
+
+    return slide;
+  });
 
   return {
     ...editor,
@@ -429,11 +441,10 @@ function addImage(
   }
 
   const selectedSlideID = editor.selectedSlideIDs[0];
-  const slides = editor.presentation.slides.slice();
 
-  for (let i = 0; i < slides.length; ++i) {
-    if (slides[i].id === selectedSlideID) {
-      const elements = slides[i].elements.slice();
+  const slides = editor.presentation.slides.map(slide => {
+    if (slide.id === selectedSlideID) {
+      const elements = slide.elements.slice();
       elements.push({
         id: generateUUID(),
         type: ElementType.IMAGE,
@@ -442,50 +453,14 @@ function addImage(
         src: src,
       });
 
-      slides[i] = {
-        ...slides[i],
+      return {
+        ...slide,
         elements: elements,
       };
-      break;
     }
-  }
 
-  return {
-    ...editor,
-    presentation: {
-      ...editor.presentation,
-      slides: slides,
-    },
-  };
-}
-
-function moveElement(editor: Editor, position: Position): Editor {
-  if (
-    editor.selectedSlideIDs.length === 0 ||
-    editor.selectedElementIDs.length !== 1
-  ) {
-    return { ...editor };
-  }
-
-  const selectedSlideID = editor.selectedSlideIDs[0];
-  const selectedElementID = editor.selectedElementIDs[0];
-  const slides = editor.presentation.slides.slice();
-
-  for (let i = 0; i < slides.length; ++i) {
-    if (slides[i].id === selectedSlideID) {
-      const elements = slides[i].elements.slice();
-      for (let j = 0; j < elements.length; ++j) {
-        if (elements[j].id === selectedElementID) {
-          elements[i] = {
-            ...elements[i],
-            position: position,
-          };
-          break;
-        }
-      }
-      break;
-    }
-  }
+    return slide;
+  });
 
   return {
     ...editor,
@@ -507,11 +482,10 @@ function addPrimitive(
   }
 
   const selectedSlideID = editor.selectedSlideIDs[0];
-  const slides = editor.presentation.slides.slice();
 
-  for (let i = 0; i < slides.length; ++i) {
-    if (slides[i].id === selectedSlideID) {
-      const elements = slides[i].elements.slice();
+  const slides = editor.presentation.slides.map(slide => {
+    if (slide.id === selectedSlideID) {
+      const elements = slide.elements.slice();
       elements.push({
         id: generateUUID(),
         type: ElementType.PRIMITIVE,
@@ -522,13 +496,14 @@ function addPrimitive(
         stroke: '#000000',
       });
 
-      slides[i] = {
-        ...slides[i],
+      return {
+        ...slide,
         elements: elements,
       };
-      break;
     }
-  }
+
+    return slide;
+  });
 
   return {
     ...editor,
@@ -549,27 +524,31 @@ function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
 
   const selectedSlideID = editor.selectedSlideIDs[0];
   const selectedElementID = editor.selectedElementIDs[0];
-  const slides = editor.presentation.slides.slice();
 
-  for (let i = 0; i < slides.length; ++i) {
-    if (slides[i].id === selectedSlideID) {
-      const elements = slides[i].elements.slice();
-      for (let j = 0; j < elements.length; ++j) {
-        const element = elements[j];
+  const slides = editor.presentation.slides.map(slide => {
+    if (slide.id === selectedSlideID) {
+      const elements = slide.elements.map(element => {
         if (
           element.type === ElementType.PRIMITIVE &&
           element.id === selectedElementID
         ) {
-          elements[j] = {
+          return {
             ...element,
             fill: fill,
           };
-          break;
         }
-      }
-      break;
+
+        return element;
+      });
+
+      return {
+        ...slide,
+        elements: elements,
+      };
     }
-  }
+
+    return slide;
+  });
 
   return {
     ...editor,
@@ -590,27 +569,73 @@ function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
 
   const selectedSlideID = editor.selectedSlideIDs[0];
   const selectedElementID = editor.selectedElementIDs[0];
-  const slides = editor.presentation.slides.slice();
 
-  for (let i = 0; i < slides.length; ++i) {
-    if (slides[i].id === selectedSlideID) {
-      const elements = slides[i].elements.slice();
-      for (let j = 0; j < elements.length; ++j) {
-        const element = elements[j];
+  const slides = editor.presentation.slides.map(slide => {
+    if (slide.id === selectedSlideID) {
+      const elements = slide.elements.map(element => {
         if (
           element.type === ElementType.PRIMITIVE &&
           element.id === selectedElementID
         ) {
-          elements[j] = {
+          return {
             ...element,
             stroke: stroke,
           };
-          break;
         }
-      }
-      break;
+
+        return element;
+      });
+
+      return {
+        ...slide,
+        elements: elements,
+      };
     }
+
+    return slide;
+  });
+
+  return {
+    ...editor,
+    presentation: {
+      ...editor.presentation,
+      slides: slides,
+    },
+  };
+}
+
+function moveElement(editor: Editor, position: Position): Editor {
+  if (
+    editor.selectedSlideIDs.length === 0 ||
+    editor.selectedElementIDs.length !== 1
+  ) {
+    return { ...editor };
   }
+
+  const selectedSlideID = editor.selectedSlideIDs[0];
+  const selectedElementID = editor.selectedElementIDs[0];
+
+  const slides = editor.presentation.slides.map(slide => {
+    if (slide.id === selectedSlideID) {
+      const elements = slide.elements.map(element => {
+        if (element.id === selectedElementID) {
+          return {
+            ...element,
+            position: position,
+          };
+        }
+
+        return element;
+      });
+
+      return {
+        ...slide,
+        elements: elements,
+      };
+    }
+
+    return slide;
+  });
 
   return {
     ...editor,
@@ -631,23 +656,28 @@ function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
 
   const selectedSlideID = editor.selectedSlideIDs[0];
   const selectedElementID = editor.selectedElementIDs[0];
-  const slides = editor.presentation.slides.slice();
 
-  for (let i = 0; i < slides.length; ++i) {
-    if (slides[i].id === selectedSlideID) {
-      const elements = slides[i].elements.slice();
-      for (let j = 0; j < elements.length; ++j) {
-        if (elements[j].id === selectedElementID) {
-          elements[i] = {
-            ...elements[i],
+  const slides = editor.presentation.slides.map(slide => {
+    if (slide.id === selectedSlideID) {
+      const elements = slide.elements.map(element => {
+        if (element.id === selectedElementID) {
+          return {
+            ...element,
             dimensions: dimensions,
           };
-          break;
         }
-      }
-      break;
+
+        return element;
+      });
+
+      return {
+        ...slide,
+        elements: elements,
+      };
     }
-  }
+
+    return slide;
+  });
 
   return {
     ...editor,
