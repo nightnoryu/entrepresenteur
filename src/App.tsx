@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 
 class App extends React.Component {
-  render() {
+  render(): JSX.Element {
     return <div className='App'>Hello</div>;
   }
 }
