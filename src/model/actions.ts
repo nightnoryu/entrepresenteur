@@ -99,7 +99,6 @@ function removeSlides(editor: Editor): Editor {
     selectedSlideIDs.push(slides[0].id);
   }
 
-
   return {
     ...editor,
     selectedSlideIDs,
@@ -116,7 +115,7 @@ function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
     slideIDToSlideMap.set(slide.id, slide);
   }
 
-  const newSlides = slideIDs.flatMap(slideID => {
+  const slides = slideIDs.flatMap(slideID => {
     const optionalSlideID = slideIDToSlideMap.get(slideID);
     return optionalSlideID !== undefined ? [optionalSlideID] : [];
   });
@@ -125,7 +124,7 @@ function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: newSlides,
+      slides,
     },
   };
 }
@@ -147,7 +146,7 @@ function selectSlide(editor: Editor, slideID: UUID): Editor {
 
   return {
     ...editor,
-    selectedSlideIDs: selectedSlideIDs,
+    selectedSlideIDs,
   };
 }
 
@@ -165,7 +164,7 @@ function setSlideBackgroundColor(editor: Editor, color: string): Editor {
         ...slides[i],
         background: {
           type: BackgroundType.SOLID,
-          color: color,
+          color,
         },
       };
     }
@@ -175,7 +174,7 @@ function setSlideBackgroundColor(editor: Editor, color: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: slides,
+      slides,
     },
   };
 }
@@ -194,7 +193,7 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
         ...slides[i],
         background: {
           type: BackgroundType.IMAGE,
-          src: src,
+          src,
         },
       };
       break;
@@ -205,7 +204,7 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: slides,
+      slides,
     },
   };
 }
@@ -229,7 +228,7 @@ function removeElements(editor: Editor): Editor {
 
       slides[i] = {
         ...slides[i],
-        elements: elements,
+        elements,
       };
       break;
     }
@@ -239,7 +238,7 @@ function removeElements(editor: Editor): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: slides,
+      slides,
     },
   };
 }
@@ -262,9 +261,9 @@ function addText(
       elements.push({
         id: generateUUID(),
         type: ElementType.TEXT,
-        position: position,
-        dimensions: dimensions,
-        value: value,
+        position,
+        dimensions,
+        value,
         size: 10,
         font: 'Calibri',
         color: '#000000',
@@ -272,7 +271,7 @@ function addText(
 
       return {
         ...slide,
-        elements: elements,
+        elements,
       };
     }
 
@@ -283,7 +282,7 @@ function addText(
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: slides,
+      slides,
     },
   };
 }
@@ -308,7 +307,7 @@ function setTextValue(editor: Editor, value: string): Editor {
         ) {
           return {
             ...element,
-            value: value,
+            value,
           };
         }
 
@@ -317,7 +316,7 @@ function setTextValue(editor: Editor, value: string): Editor {
 
       return {
         ...slide,
-        elements: elements,
+        elements,
       };
     }
 
@@ -328,7 +327,7 @@ function setTextValue(editor: Editor, value: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: slides,
+      slides,
     },
   };
 }
@@ -353,7 +352,7 @@ function setTextFont(editor: Editor, font: string): Editor {
         ) {
           return {
             ...element,
-            font: font,
+            font,
           };
         }
 
@@ -362,7 +361,7 @@ function setTextFont(editor: Editor, font: string): Editor {
 
       return {
         ...slide,
-        elements: elements,
+        elements,
       };
     }
 
@@ -373,7 +372,7 @@ function setTextFont(editor: Editor, font: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: slides,
+      slides,
     },
   };
 }
@@ -398,7 +397,7 @@ function setTextSize(editor: Editor, size: number): Editor {
         ) {
           return {
             ...element,
-            size: size,
+            size,
           };
         }
 
@@ -407,7 +406,7 @@ function setTextSize(editor: Editor, size: number): Editor {
 
       return {
         ...slide,
-        elements: elements,
+        elements,
       };
     }
 
@@ -418,7 +417,7 @@ function setTextSize(editor: Editor, size: number): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: slides,
+      slides,
     },
   };
 }
@@ -441,14 +440,14 @@ function addImage(
       elements.push({
         id: generateUUID(),
         type: ElementType.IMAGE,
-        position: position,
-        dimensions: dimensions,
-        src: src,
+        position,
+        dimensions,
+        src,
       });
 
       return {
         ...slide,
-        elements: elements,
+        elements,
       };
     }
 
@@ -459,7 +458,7 @@ function addImage(
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: slides,
+      slides,
     },
   };
 }
@@ -482,16 +481,16 @@ function addPrimitive(
       elements.push({
         id: generateUUID(),
         type: ElementType.PRIMITIVE,
-        primitiveType: primitiveType,
-        position: position,
-        dimensions: dimensions,
+        primitiveType,
+        position,
+        dimensions,
         fill: '#FFFFFF',
         stroke: '#000000',
       });
 
       return {
         ...slide,
-        elements: elements,
+        elements,
       };
     }
 
@@ -502,7 +501,7 @@ function addPrimitive(
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: slides,
+      slides,
     },
   };
 }
@@ -527,7 +526,7 @@ function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
         ) {
           return {
             ...element,
-            fill: fill,
+            fill,
           };
         }
 
@@ -536,7 +535,7 @@ function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
 
       return {
         ...slide,
-        elements: elements,
+        elements,
       };
     }
 
@@ -547,7 +546,7 @@ function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: slides,
+      slides,
     },
   };
 }
@@ -572,7 +571,7 @@ function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
         ) {
           return {
             ...element,
-            stroke: stroke,
+            stroke,
           };
         }
 
@@ -581,7 +580,7 @@ function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
 
       return {
         ...slide,
-        elements: elements,
+        elements,
       };
     }
 
@@ -592,7 +591,7 @@ function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: slides,
+      slides,
     },
   };
 }
@@ -614,7 +613,7 @@ function moveElement(editor: Editor, position: Position): Editor {
         if (element.id === selectedElementID) {
           return {
             ...element,
-            position: position,
+            position,
           };
         }
 
@@ -623,7 +622,7 @@ function moveElement(editor: Editor, position: Position): Editor {
 
       return {
         ...slide,
-        elements: elements,
+        elements,
       };
     }
 
@@ -634,7 +633,7 @@ function moveElement(editor: Editor, position: Position): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: slides,
+      slides,
     },
   };
 }
@@ -656,7 +655,7 @@ function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
         if (element.id === selectedElementID) {
           return {
             ...element,
-            dimensions: dimensions,
+            dimensions,
           };
         }
 
@@ -665,7 +664,7 @@ function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
 
       return {
         ...slide,
-        elements: elements,
+        elements,
       };
     }
 
@@ -676,7 +675,7 @@ function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: slides,
+      slides,
     },
   };
 }
