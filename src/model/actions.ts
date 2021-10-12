@@ -36,8 +36,8 @@ function createEditor(presentation: Presentation): Editor {
   }
 
   return {
-    presentation: presentation,
-    selectedSlideIDs: selectedSlideIDs,
+    presentation,
+    selectedSlideIDs,
     selectedElementIDs: [],
   };
 }
@@ -56,13 +56,14 @@ function setPresentationTitle(
 ): Presentation {
   return {
     ...presentation,
-    title: title,
+    title,
   };
 }
 
 function addSlide(editor: Editor): Editor {
-  let slides: Slide[] = [];
   const slide = createNewSlide();
+  let slides: Slide[] = [];
+  const selectedSlideIDs = [slide.id];
 
   if (slides.length === 0) {
     slides = [slide];
@@ -71,38 +72,40 @@ function addSlide(editor: Editor): Editor {
       slides,
       editor.selectedSlideIDs
     );
-    slides.splice(currentSlideIndex, 0, slide);
+    if (currentSlideIndex === -1) {
+      slides.splice(0, 0, slide);
+    } else {
+      slides.splice(currentSlideIndex, 0, slide);
+    }
   }
 
   return {
     ...editor,
+    selectedSlideIDs,
     presentation: {
       ...editor.presentation,
-      slides: slides,
+      slides,
     },
   };
 }
 
 function removeSlides(editor: Editor): Editor {
-  const slides = editor.presentation.slides.slice();
-
-  let newSelectedSlidesIDs: UUID[] = [];
-  for (let i = 0; i < slides.length - 1; ++i) {
-    if (slides[i + 1].id === editor.selectedSlideIDs[0]) {
-      newSelectedSlidesIDs = [slides[i].id];
-    }
-  }
-
-  const newSlides = slides.filter(
+  const slides = editor.presentation.slides.filter(
     slide => !editor.selectedSlideIDs.includes(slide.id)
   );
 
+  const selectedSlideIDs: UUID[] = [];
+  if (slides.length > 0) {
+    selectedSlideIDs.push(slides[0].id);
+  }
+
+
   return {
     ...editor,
-    selectedSlideIDs: newSelectedSlidesIDs,
+    selectedSlideIDs,
     presentation: {
       ...editor.presentation,
-      slides: newSlides,
+      slides,
     },
   };
 }
