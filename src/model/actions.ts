@@ -8,7 +8,7 @@ import {
   PrimitiveType,
   Slide,
 } from './types';
-import { UUID, NullUUID, generateUUID } from './uuid';
+import { UUID, generateUUID } from './uuid';
 import { findCurrentSlideIndex } from './utils';
 
 function createNewSlide(): Slide {

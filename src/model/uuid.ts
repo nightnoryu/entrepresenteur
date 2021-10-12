@@ -1,7 +1,5 @@
 export type UUID = string;
 
-export const NullUUID: UUID = '';
-
 export function generateUUID(): UUID {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0;
