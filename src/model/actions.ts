@@ -7,7 +7,7 @@ import {
   Position,
   Presentation,
   PrimitiveType,
-  Slide,
+  Slide,
   SolidBackground,
 } from './types';
 import { UUID, generateUUID } from './uuid';
@@ -164,11 +164,11 @@ function setSlideBackgroundColor(editor: Editor, color: string): Editor {
       return {
         ...slide,
         background,
-      }
+      };
     }
 
     return slide;
-  })
+  });
 
   return {
     ...editor,
@@ -198,7 +198,7 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
         background,
       };
     }
-    
+
     return slide;
   });
 
@@ -223,7 +223,9 @@ function removeElements(editor: Editor): Editor {
 
   const slides = editor.presentation.slides.map(slide => {
     if (slide.id === selectedSlideID) {
-      const elements = slide.elements.filter(element => !editor.selectedElementIDs.includes(element.id));
+      const elements = slide.elements.filter(
+        element => !editor.selectedElementIDs.includes(element.id)
+      );
 
       return {
         ...slide,
