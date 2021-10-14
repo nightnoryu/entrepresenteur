@@ -72,11 +72,7 @@ function addSlide(editor: Editor): Editor {
       slides,
       editor.selectedSlideIDs
     );
-    if (currentSlideIndex === -1) {
-      slides.splice(0, 0, slide);
-    } else {
-      slides.splice(currentSlideIndex, 0, slide);
-    }
+    slides.splice(currentSlideIndex, 0, slide);
   }
 
   return {
@@ -94,9 +90,9 @@ function removeSlides(editor: Editor): Editor {
     slide => !editor.selectedSlideIDs.includes(slide.id)
   );
 
-  const selectedSlideIDs: UUID[] = [];
+  let selectedSlideIDs: UUID[] = [];
   if (slides.length > 0) {
-    selectedSlideIDs.push(slides[0].id);
+    selectedSlideIDs = [slides[0].id];
   }
 
   return {
@@ -137,11 +133,10 @@ function setCurrentSlide(editor: Editor, slideID: UUID): Editor {
 }
 
 function selectSlide(editor: Editor, slideID: UUID): Editor {
-  let selectedSlideIDs = editor.selectedSlideIDs.slice();
-  selectedSlideIDs.push(slideID);
+  let selectedSlideIDs = editor.selectedSlideIDs.concat(slideID);
 
   selectedSlideIDs = editor.presentation.slides.flatMap(slide => {
-    return editor.selectedSlideIDs.includes(slide.id) ? [slide.id] : [];
+    return selectedSlideIDs.includes(slide.id) ? [slide.id] : [];
   });
 
   return {
@@ -257,8 +252,7 @@ function addText(
 
   const slides = editor.presentation.slides.map(slide => {
     if (slide.id === selectedSlideID) {
-      const elements = slide.elements.slice();
-      elements.push({
+      const elements = slide.elements.concat({
         id: generateUUID(),
         type: ElementType.TEXT,
         position,
@@ -436,8 +430,7 @@ function addImage(
 
   const slides = editor.presentation.slides.map(slide => {
     if (slide.id === selectedSlideID) {
-      const elements = slide.elements.slice();
-      elements.push({
+      const elements = slide.elements.concat({
         id: generateUUID(),
         type: ElementType.IMAGE,
         position,
@@ -477,8 +470,7 @@ function addPrimitive(
 
   const slides = editor.presentation.slides.map(slide => {
     if (slide.id === selectedSlideID) {
-      const elements = slide.elements.slice();
-      elements.push({
+      const elements = slide.elements.concat({
         id: generateUUID(),
         type: ElementType.PRIMITIVE,
         primitiveType,
