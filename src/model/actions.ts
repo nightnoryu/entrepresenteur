@@ -3,10 +3,12 @@ import {
   Dimensions,
   Editor,
   ElementType,
+  ImageBackground,
   Position,
   Presentation,
   PrimitiveType,
-  Slide,
+  Slide,
+  SolidBackground,
 } from './types';
 import { UUID, generateUUID } from './uuid';
 import { findCurrentSlideIndex } from './utils';
@@ -151,19 +153,22 @@ function setSlideBackgroundColor(editor: Editor, color: string): Editor {
   }
 
   const selectedSlideID = editor.selectedSlideIDs[0];
-  const slides = editor.presentation.slides.slice();
 
-  for (let i = 0; i < slides.length; ++i) {
-    if (slides[i].id === selectedSlideID) {
-      slides[i] = {
-        ...slides[i],
-        background: {
-          type: BackgroundType.SOLID,
-          color,
-        },
+  const slides = editor.presentation.slides.map(slide => {
+    if (slide.id === selectedSlideID) {
+      const background: SolidBackground = {
+        type: BackgroundType.SOLID,
+        color,
       };
+
+      return {
+        ...slide,
+        background,
+      }
     }
-  }
+
+    return slide;
+  })
 
   return {
     ...editor,
@@ -180,20 +185,22 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
   }
 
   const selectedSlideID = editor.selectedSlideIDs[0];
-  const slides = editor.presentation.slides.slice();
 
-  for (let i = 0; i < slides.length; ++i) {
-    if (slides[i].id === selectedSlideID) {
-      slides[i] = {
-        ...slides[i],
-        background: {
-          type: BackgroundType.IMAGE,
-          src,
-        },
+  const slides = editor.presentation.slides.map(slide => {
+    if (slide.id === selectedSlideID) {
+      const background: ImageBackground = {
+        type: BackgroundType.IMAGE,
+        src,
       };
-      break;
+
+      return {
+        ...slide,
+        background,
+      };
     }
-  }
+    
+    return slide;
+  });
 
   return {
     ...editor,
@@ -213,21 +220,19 @@ function removeElements(editor: Editor): Editor {
   }
 
   const selectedSlideID = editor.selectedSlideIDs[0];
-  const slides = editor.presentation.slides.slice();
 
-  for (let i = 0; i < slides.length; ++i) {
-    if (slides[i].id === selectedSlideID) {
-      const elements = slides[i].elements.filter(
-        element => !editor.selectedElementIDs.includes(element.id)
-      );
+  const slides = editor.presentation.slides.map(slide => {
+    if (slide.id === selectedSlideID) {
+      const elements = slide.elements.filter(element => !editor.selectedElementIDs.includes(element.id));
 
-      slides[i] = {
-        ...slides[i],
+      return {
+        ...slide,
         elements,
       };
-      break;
     }
-  }
+
+    return slide;
+  });
 
   return {
     ...editor,
