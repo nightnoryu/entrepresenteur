@@ -11,7 +11,11 @@ import {
   SolidBackground,
 } from './types';
 import { UUID, generateUUID } from './uuid';
-import { findCurrentSlideIndex } from './utils';
+import {
+  findCurrentSlideIndex,
+  insertAt,
+  selectNearestUnselectedSlide,
+} from './utils';
 
 function createNewSlide(): Slide {
   return {
@@ -32,14 +36,10 @@ function createNewPresentation(): Presentation {
 }
 
 function createEditor(presentation: Presentation): Editor {
-  let selectedSlideIDs: UUID[] = [];
-  if (presentation.slides.length > 0) {
-    selectedSlideIDs = [presentation.slides[0].id];
-  }
-
   return {
     presentation,
-    selectedSlideIDs,
+    selectedSlideIDs:
+      presentation.slides.length > 0 ? [presentation.slides[0].id] : [],
     selectedElementIDs: [],
   };
 }
@@ -64,65 +64,54 @@ function setPresentationTitle(
 
 function addSlide(editor: Editor): Editor {
   const slide = createNewSlide();
-  let slides: Slide[] = [];
-  const selectedSlideIDs = [slide.id];
-
-  if (slides.length === 0) {
-    slides = [slide];
-  } else {
-    const currentSlideIndex = findCurrentSlideIndex(
-      slides,
-      editor.selectedSlideIDs
-    );
-    slides.splice(currentSlideIndex, 0, slide);
-  }
 
   return {
     ...editor,
-    selectedSlideIDs,
+    selectedSlideIDs: [slide.id],
     presentation: {
       ...editor.presentation,
-      slides,
+      slides:
+        editor.presentation.slides.length === 0
+          ? [slide]
+          : insertAt(
+              editor.presentation.slides,
+              slide,
+              findCurrentSlideIndex(
+                editor.presentation.slides,
+                editor.selectedSlideIDs
+              )
+            ),
     },
   };
 }
 
 function removeSlides(editor: Editor): Editor {
-  const slides = editor.presentation.slides.filter(
-    slide => !editor.selectedSlideIDs.includes(slide.id)
-  );
-
-  let selectedSlideIDs: UUID[] = [];
-  if (slides.length > 0) {
-    selectedSlideIDs = [slides[0].id];
-  }
-
   return {
     ...editor,
-    selectedSlideIDs,
+    selectedSlideIDs: [
+      selectNearestUnselectedSlide(
+        editor.presentation.slides,
+        editor.selectedSlideIDs
+      ),
+    ],
     presentation: {
       ...editor.presentation,
-      slides,
+      slides: editor.presentation.slides.filter(
+        slide => !editor.selectedSlideIDs.includes(slide.id)
+      ),
     },
   };
 }
 
 function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
-  const slideIDToSlideMap = new Map<UUID, Slide>();
-  editor.presentation.slides.forEach(slide => {
-    slideIDToSlideMap.set(slide.id, slide);
-  })
-
-  const slides = slideIDs.flatMap(slideID => {
-    const optionalSlideID = slideIDToSlideMap.get(slideID);
-    return optionalSlideID !== undefined ? [optionalSlideID] : [];
-  });
-
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides,
+      slides: slideIDs.flatMap(
+        slideID =>
+          editor.presentation.slides.find(slide => slide.id === slideID) || []
+      ),
     },
   };
 }
@@ -134,6 +123,7 @@ function setCurrentSlide(editor: Editor, slideID: UUID): Editor {
   };
 }
 
+// TODO: refactor
 function selectSlide(editor: Editor, slideID: UUID): Editor {
   let selectedSlideIDs = editor.selectedSlideIDs.concat(slideID);
 
@@ -147,6 +137,7 @@ function selectSlide(editor: Editor, slideID: UUID): Editor {
   };
 }
 
+// TODO: unify in one function, refactor
 function setSlideBackgroundColor(editor: Editor, color: string): Editor {
   if (editor.selectedSlideIDs.length === 0) {
     return { ...editor };
@@ -179,6 +170,7 @@ function setSlideBackgroundColor(editor: Editor, color: string): Editor {
   };
 }
 
+// TODO: unify in one function, refactor
 function setSlideBackgroundImage(editor: Editor, src: string): Editor {
   if (editor.selectedSlideIDs.length === 0) {
     return { ...editor };
@@ -211,6 +203,7 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
   };
 }
 
+// TODO: refactor
 function removeElements(editor: Editor): Editor {
   if (
     editor.selectedSlideIDs.length === 0 ||
