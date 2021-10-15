@@ -109,9 +109,9 @@ function removeSlides(editor: Editor): Editor {
 
 function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
   const slideIDToSlideMap = new Map<UUID, Slide>();
-  for (const slide of editor.presentation.slides) {
+  editor.presentation.slides.forEach(slide => {
     slideIDToSlideMap.set(slide.id, slide);
-  }
+  })
 
   const slides = slideIDs.flatMap(slideID => {
     const optionalSlideID = slideIDToSlideMap.get(slideID);
