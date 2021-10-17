@@ -12,8 +12,9 @@ import {
 } from './types';
 import { UUID, generateUUID } from './uuid';
 import {
-  findCurrentSlideIndex,
+  concatWithSelectedSlideElements,
   insertAt,
+  replaceAt,
   selectNearestUnselectedSlide,
 } from './utils';
 
@@ -75,11 +76,8 @@ function addSlide(editor: Editor): Editor {
           ? [slide]
           : insertAt(
               editor.presentation.slides,
-              slide,
-              findCurrentSlideIndex(
-                editor.presentation.slides,
-                editor.selectedSlideIDs
-              )
+              slide => slide.id === editor.selectedSlideIDs[0],
+              slide
             ),
     },
   };
@@ -123,117 +121,70 @@ function setCurrentSlide(editor: Editor, slideID: UUID): Editor {
   };
 }
 
-// TODO: refactor
 function selectSlide(editor: Editor, slideID: UUID): Editor {
-  let selectedSlideIDs = editor.selectedSlideIDs.concat(slideID);
-
-  selectedSlideIDs = editor.presentation.slides.flatMap(slide => {
-    return selectedSlideIDs.includes(slide.id) ? [slide.id] : [];
-  });
-
   return {
     ...editor,
-    selectedSlideIDs,
+    selectedSlideIDs: editor.presentation.slides.flatMap(slide =>
+      editor.selectedSlideIDs.concat(slideID).includes(slide.id) ? slide.id : []
+    ),
   };
 }
 
-// TODO: unify in one function, refactor
 function setSlideBackgroundColor(editor: Editor, color: string): Editor {
-  if (editor.selectedSlideIDs.length === 0) {
-    return { ...editor };
-  }
-
-  const selectedSlideID = editor.selectedSlideIDs[0];
-
-  const slides = editor.presentation.slides.map(slide => {
-    if (slide.id === selectedSlideID) {
-      const background: SolidBackground = {
-        type: BackgroundType.SOLID,
-        color,
-      };
-
-      return {
-        ...slide,
-        background,
-      };
-    }
-
-    return slide;
-  });
-
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides,
+      slides: replaceAt(
+        editor.presentation.slides,
+        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => ({
+          ...slide,
+          background: {
+            type: BackgroundType.SOLID,
+            color,
+          },
+        })
+      ),
     },
   };
 }
 
-// TODO: unify in one function, refactor
 function setSlideBackgroundImage(editor: Editor, src: string): Editor {
-  if (editor.selectedSlideIDs.length === 0) {
-    return { ...editor };
-  }
-
-  const selectedSlideID = editor.selectedSlideIDs[0];
-
-  const slides = editor.presentation.slides.map(slide => {
-    if (slide.id === selectedSlideID) {
-      const background: ImageBackground = {
-        type: BackgroundType.IMAGE,
-        src,
-      };
-
-      return {
-        ...slide,
-        background,
-      };
-    }
-
-    return slide;
-  });
-
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides,
+      slides: replaceAt(
+        editor.presentation.slides,
+        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => ({
+          ...slide,
+          background: {
+            type: BackgroundType.IMAGE,
+            src,
+          },
+        })
+      ),
     },
   };
 }
 
-// TODO: refactor
 function removeElements(editor: Editor): Editor {
-  if (
-    editor.selectedSlideIDs.length === 0 ||
-    editor.selectedElementIDs.length === 0
-  ) {
-    return { ...editor };
-  }
-
-  const selectedSlideID = editor.selectedSlideIDs[0];
-
-  const slides = editor.presentation.slides.map(slide => {
-    if (slide.id === selectedSlideID) {
-      const elements = slide.elements.filter(
-        element => !editor.selectedElementIDs.includes(element.id)
-      );
-
-      return {
-        ...slide,
-        elements,
-      };
-    }
-
-    return slide;
-  });
-
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides,
+      slides: editor.presentation.slides.map(slide =>
+        slide.id === editor.selectedSlideIDs[0]
+          ? {
+              ...slide,
+              elements: slide.elements.filter(
+                element => !editor.selectedElementIDs.includes(element.id)
+              ),
+            }
+          : { ...slide }
+      ),
     },
   };
 }
@@ -244,39 +195,24 @@ function addText(
   dimensions: Dimensions,
   value: string
 ): Editor {
-  if (editor.selectedSlideIDs.length === 0) {
-    return { ...editor };
-  }
-
-  const selectedSlideID = editor.selectedSlideIDs[0];
-
-  const slides = editor.presentation.slides.map(slide => {
-    if (slide.id === selectedSlideID) {
-      const elements = slide.elements.concat({
-        id: generateUUID(),
-        type: ElementType.TEXT,
-        position,
-        dimensions,
-        value,
-        size: 10,
-        font: 'Calibri',
-        color: '#000000',
-      });
-
-      return {
-        ...slide,
-        elements,
-      };
-    }
-
-    return slide;
-  });
-
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides,
+      slides: concatWithSelectedSlideElements(
+        editor.presentation.slides,
+        editor.selectedSlideIDs,
+        {
+          id: generateUUID(),
+          type: ElementType.TEXT,
+          position,
+          dimensions,
+          value,
+          size: 10,
+          font: 'Calibri',
+          color: '#000000',
+        }
+      ),
     },
   };
 }
@@ -422,36 +358,21 @@ function addImage(
   dimensions: Dimensions,
   src: string
 ): Editor {
-  if (editor.selectedSlideIDs.length === 0) {
-    return { ...editor };
-  }
-
-  const selectedSlideID = editor.selectedSlideIDs[0];
-
-  const slides = editor.presentation.slides.map(slide => {
-    if (slide.id === selectedSlideID) {
-      const elements = slide.elements.concat({
-        id: generateUUID(),
-        type: ElementType.IMAGE,
-        position,
-        dimensions,
-        src,
-      });
-
-      return {
-        ...slide,
-        elements,
-      };
-    }
-
-    return slide;
-  });
-
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides,
+      slides: concatWithSelectedSlideElements(
+        editor.presentation.slides,
+        editor.selectedSlideIDs,
+        {
+          id: generateUUID(),
+          type: ElementType.IMAGE,
+          position,
+          dimensions,
+          src,
+        }
+      ),
     },
   };
 }
@@ -462,38 +383,23 @@ function addPrimitive(
   dimensions: Dimensions,
   primitiveType: PrimitiveType
 ): Editor {
-  if (editor.selectedSlideIDs.length === 0) {
-    return { ...editor };
-  }
-
-  const selectedSlideID = editor.selectedSlideIDs[0];
-
-  const slides = editor.presentation.slides.map(slide => {
-    if (slide.id === selectedSlideID) {
-      const elements = slide.elements.concat({
-        id: generateUUID(),
-        type: ElementType.PRIMITIVE,
-        primitiveType,
-        position,
-        dimensions,
-        fill: '#FFFFFF',
-        stroke: '#000000',
-      });
-
-      return {
-        ...slide,
-        elements,
-      };
-    }
-
-    return slide;
-  });
-
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides,
+      slides: concatWithSelectedSlideElements(
+        editor.presentation.slides,
+        editor.selectedSlideIDs,
+        {
+          id: generateUUID(),
+          type: ElementType.PRIMITIVE,
+          primitiveType,
+          position,
+          dimensions,
+          fill: '#FFFFFF',
+          stroke: '#000000',
+        }
+      ),
     },
   };
 }
