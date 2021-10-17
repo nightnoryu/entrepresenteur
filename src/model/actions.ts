@@ -230,12 +230,14 @@ function setTextValue(editor: Editor, value: string): Editor {
           ...slide,
           elements: replaceAt(
             slide.elements,
-            element => element.type === ElementType.TEXT && element.id === editor.selectedElementIDs[0],
+            element =>
+              element.type === ElementType.TEXT &&
+              element.id === editor.selectedElementIDs[0],
             element => ({
               ...element,
               value,
             })
-          )
+          ),
         })
       ),
     },
@@ -254,12 +256,14 @@ function setTextFont(editor: Editor, font: string): Editor {
           ...slide,
           elements: replaceAt(
             slide.elements,
-            element => element.type === ElementType.TEXT && element.id === editor.selectedElementIDs[0],
+            element =>
+              element.type === ElementType.TEXT &&
+              element.id === editor.selectedElementIDs[0],
             element => ({
               ...element,
               font,
             })
-          )
+          ),
         })
       ),
     },
@@ -278,12 +282,14 @@ function setTextSize(editor: Editor, size: number): Editor {
           ...slide,
           elements: replaceAt(
             slide.elements,
-            element => element.type === ElementType.TEXT && element.id === editor.selectedElementIDs[0],
+            element =>
+              element.type === ElementType.TEXT &&
+              element.id === editor.selectedElementIDs[0],
             element => ({
               ...element,
               size,
             })
-          )
+          ),
         })
       ),
     },
@@ -354,12 +360,14 @@ function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
           ...slide,
           elements: replaceAt(
             slide.elements,
-            element => element.type === ElementType.PRIMITIVE && element.id === editor.selectedElementIDs[0],
+            element =>
+              element.type === ElementType.PRIMITIVE &&
+              element.id === editor.selectedElementIDs[0],
             element => ({
               ...element,
               fill,
             })
-          )
+          ),
         })
       ),
     },
@@ -378,57 +386,43 @@ function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
           ...slide,
           elements: replaceAt(
             slide.elements,
-            element => element.type === ElementType.PRIMITIVE && element.id === editor.selectedElementIDs[0],
+            element =>
+              element.type === ElementType.PRIMITIVE &&
+              element.id === editor.selectedElementIDs[0],
             element => ({
               ...element,
               stroke,
             })
-          )
+          ),
         })
       ),
     },
   };
 }
 
-// TODO: move several elements
-function moveElement(editor: Editor, position: Position): Editor {
-  if (
-    editor.selectedSlideIDs.length === 0 ||
-    editor.selectedElementIDs.length !== 1
-  ) {
-    return { ...editor };
-  }
-
-  const selectedSlideID = editor.selectedSlideIDs[0];
-  const selectedElementID = editor.selectedElementIDs[0];
-
-  const slides = editor.presentation.slides.map(slide => {
-    if (slide.id === selectedSlideID) {
-      const elements = slide.elements.map(element => {
-        if (element.id === selectedElementID) {
-          return {
-            ...element,
-            position,
-          };
-        }
-
-        return element;
-      });
-
-      return {
-        ...slide,
-        elements,
-      };
-    }
-
-    return slide;
-  });
-
+function moveElements(editor: Editor, positionDiff: Position): Editor {
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides,
+      slides: replaceAt(
+        editor.presentation.slides,
+        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => ({
+          ...slide,
+          elements: replaceAt(
+            slide.elements,
+            element => editor.selectedElementIDs.includes(element.id),
+            element => ({
+              ...element,
+              position: {
+                x: element.position.x + positionDiff.x,
+                y: element.position.y + positionDiff.y,
+              },
+            })
+          ),
+        })
+      ),
     },
   };
 }
@@ -450,7 +444,7 @@ function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
               ...element,
               dimensions,
             })
-          )
+          ),
         })
       ),
     },

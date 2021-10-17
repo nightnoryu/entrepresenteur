@@ -2,7 +2,7 @@ import { Slide, SlideElement } from './types';
 import { UUID } from './uuid';
 
 /**
- * Returns a copy of an array with the value inserted in positions where finder 
+ * Returns a copy of an array with the value inserted in positions where finder
  * function returns true
  */
 export function insertAt<T>(
@@ -20,7 +20,7 @@ export function insertAt<T>(
 }
 
 /**
- * Returns a copy of an array replacing values in positions where finder 
+ * Returns a copy of an array replacing values in positions where finder
  * function returns true
  */
 export function replaceAt<T>(
@@ -30,9 +30,7 @@ export function replaceAt<T>(
 ): T[] {
   return arr.reduce(
     (result, value) =>
-      finder(value)
-        ? result.concat(replacer(value))
-        : result.concat(value),
+      finder(value) ? result.concat(replacer(value)) : result.concat(value),
     [] as T[]
   );
 }
