@@ -173,6 +173,7 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
 function removeElements(editor: Editor): Editor {
   return {
     ...editor,
+    selectedElementIDs: [],
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.map(slide =>
@@ -218,136 +219,73 @@ function addText(
 }
 
 function setTextValue(editor: Editor, value: string): Editor {
-  if (
-    editor.selectedSlideIDs.length === 0 ||
-    editor.selectedElementIDs.length !== 1
-  ) {
-    return { ...editor };
-  }
-
-  const selectedSlideID = editor.selectedSlideIDs[0];
-  const selectedElementID = editor.selectedElementIDs[0];
-
-  const slides = editor.presentation.slides.map(slide => {
-    if (slide.id === selectedSlideID) {
-      const elements = slide.elements.map(element => {
-        if (
-          element.type === ElementType.PRIMITIVE &&
-          element.id === selectedElementID
-        ) {
-          return {
-            ...element,
-            value,
-          };
-        }
-
-        return element;
-      });
-
-      return {
-        ...slide,
-        elements,
-      };
-    }
-
-    return slide;
-  });
-
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides,
+      slides: replaceAt(
+        editor.presentation.slides,
+        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => ({
+          ...slide,
+          elements: replaceAt(
+            slide.elements,
+            element => element.type === ElementType.TEXT && element.id === editor.selectedElementIDs[0],
+            element => ({
+              ...element,
+              value,
+            })
+          )
+        })
+      ),
     },
   };
 }
 
 function setTextFont(editor: Editor, font: string): Editor {
-  if (
-    editor.selectedSlideIDs.length === 0 ||
-    editor.selectedElementIDs.length !== 1
-  ) {
-    return { ...editor };
-  }
-
-  const selectedSlideID = editor.selectedSlideIDs[0];
-  const selectedElementID = editor.selectedElementIDs[0];
-
-  const slides = editor.presentation.slides.map(slide => {
-    if (slide.id === selectedSlideID) {
-      const elements = slide.elements.map(element => {
-        if (
-          element.type === ElementType.PRIMITIVE &&
-          element.id === selectedElementID
-        ) {
-          return {
-            ...element,
-            font,
-          };
-        }
-
-        return element;
-      });
-
-      return {
-        ...slide,
-        elements,
-      };
-    }
-
-    return slide;
-  });
-
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides,
+      slides: replaceAt(
+        editor.presentation.slides,
+        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => ({
+          ...slide,
+          elements: replaceAt(
+            slide.elements,
+            element => element.type === ElementType.TEXT && element.id === editor.selectedElementIDs[0],
+            element => ({
+              ...element,
+              font,
+            })
+          )
+        })
+      ),
     },
   };
 }
 
 function setTextSize(editor: Editor, size: number): Editor {
-  if (
-    editor.selectedSlideIDs.length === 0 ||
-    editor.selectedElementIDs.length !== 1
-  ) {
-    return { ...editor };
-  }
-
-  const selectedSlideID = editor.selectedSlideIDs[0];
-  const selectedElementID = editor.selectedElementIDs[0];
-
-  const slides = editor.presentation.slides.map(slide => {
-    if (slide.id === selectedSlideID) {
-      const elements = slide.elements.map(element => {
-        if (
-          element.type === ElementType.TEXT &&
-          element.id === selectedElementID
-        ) {
-          return {
-            ...element,
-            size,
-          };
-        }
-
-        return element;
-      });
-
-      return {
-        ...slide,
-        elements,
-      };
-    }
-
-    return slide;
-  });
-
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides,
+      slides: replaceAt(
+        editor.presentation.slides,
+        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => ({
+          ...slide,
+          elements: replaceAt(
+            slide.elements,
+            element => element.type === ElementType.TEXT && element.id === editor.selectedElementIDs[0],
+            element => ({
+              ...element,
+              size,
+            })
+          )
+        })
+      ),
     },
   };
 }
@@ -405,95 +343,54 @@ function addPrimitive(
 }
 
 function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
-  if (
-    editor.selectedSlideIDs.length === 0 ||
-    editor.selectedElementIDs.length !== 1
-  ) {
-    return { ...editor };
-  }
-
-  const selectedSlideID = editor.selectedSlideIDs[0];
-  const selectedElementID = editor.selectedElementIDs[0];
-
-  const slides = editor.presentation.slides.map(slide => {
-    if (slide.id === selectedSlideID) {
-      const elements = slide.elements.map(element => {
-        if (
-          element.type === ElementType.PRIMITIVE &&
-          element.id === selectedElementID
-        ) {
-          return {
-            ...element,
-            fill,
-          };
-        }
-
-        return element;
-      });
-
-      return {
-        ...slide,
-        elements,
-      };
-    }
-
-    return slide;
-  });
-
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides,
+      slides: replaceAt(
+        editor.presentation.slides,
+        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => ({
+          ...slide,
+          elements: replaceAt(
+            slide.elements,
+            element => element.type === ElementType.PRIMITIVE && element.id === editor.selectedElementIDs[0],
+            element => ({
+              ...element,
+              fill,
+            })
+          )
+        })
+      ),
     },
   };
 }
 
 function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
-  if (
-    editor.selectedSlideIDs.length === 0 ||
-    editor.selectedElementIDs.length !== 1
-  ) {
-    return { ...editor };
-  }
-
-  const selectedSlideID = editor.selectedSlideIDs[0];
-  const selectedElementID = editor.selectedElementIDs[0];
-
-  const slides = editor.presentation.slides.map(slide => {
-    if (slide.id === selectedSlideID) {
-      const elements = slide.elements.map(element => {
-        if (
-          element.type === ElementType.PRIMITIVE &&
-          element.id === selectedElementID
-        ) {
-          return {
-            ...element,
-            stroke,
-          };
-        }
-
-        return element;
-      });
-
-      return {
-        ...slide,
-        elements,
-      };
-    }
-
-    return slide;
-  });
-
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides,
+      slides: replaceAt(
+        editor.presentation.slides,
+        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => ({
+          ...slide,
+          elements: replaceAt(
+            slide.elements,
+            element => element.type === ElementType.PRIMITIVE && element.id === editor.selectedElementIDs[0],
+            element => ({
+              ...element,
+              stroke,
+            })
+          )
+        })
+      ),
     },
   };
 }
 
+// TODO: move several elements
 function moveElement(editor: Editor, position: Position): Editor {
   if (
     editor.selectedSlideIDs.length === 0 ||
@@ -537,57 +434,37 @@ function moveElement(editor: Editor, position: Position): Editor {
 }
 
 function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
-  if (
-    editor.selectedSlideIDs.length === 0 ||
-    editor.selectedElementIDs.length !== 1
-  ) {
-    return { ...editor };
-  }
-
-  const selectedSlideID = editor.selectedSlideIDs[0];
-  const selectedElementID = editor.selectedElementIDs[0];
-
-  const slides = editor.presentation.slides.map(slide => {
-    if (slide.id === selectedSlideID) {
-      const elements = slide.elements.map(element => {
-        if (element.id === selectedElementID) {
-          return {
-            ...element,
-            dimensions,
-          };
-        }
-
-        return element;
-      });
-
-      return {
-        ...slide,
-        elements,
-      };
-    }
-
-    return slide;
-  });
-
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides,
+      slides: replaceAt(
+        editor.presentation.slides,
+        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => ({
+          ...slide,
+          elements: replaceAt(
+            slide.elements,
+            element => element.id === editor.selectedElementIDs[0],
+            element => ({
+              ...element,
+              dimensions,
+            })
+          )
+        })
+      ),
     },
   };
 }
 
+// TODO: implement
 function undo(editor: Editor): Editor {
-  // TODO
   return { ...editor };
 }
 
+// TODO: implement
 function redo(editor: Editor): Editor {
-  // TODO
   return { ...editor };
 }
 
-function exportPresentation(presentation: Presentation): void {
-  // TODO
-}
+function exportPresentation(presentation: Presentation): void {}
