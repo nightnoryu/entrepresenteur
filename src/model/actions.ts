@@ -42,6 +42,10 @@ function createEditor(presentation: Presentation): Editor {
     selectedSlideIDs:
       presentation.slides.length > 0 ? [presentation.slides[0].id] : [],
     selectedElementIDs: [],
+    history: {
+      states: [presentation],
+      currentState: 0,
+    },
   };
 }
 
@@ -461,4 +465,6 @@ function redo(editor: Editor): Editor {
   return { ...editor };
 }
 
-function exportPresentation(presentation: Presentation): void {}
+function exportPresentation(presentation: Presentation): void {
+  // TODO: implement
+}
