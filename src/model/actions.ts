@@ -23,7 +23,7 @@ function createNewSlide(): Slide {
     id: generateUUID(),
     background: {
       type: BackgroundType.SOLID,
-      color: '#FFFFFF',
+      color: '#ffffff',
     },
     elements: [],
   };
@@ -79,10 +79,10 @@ function addSlide(editor: Editor): Editor {
         editor.presentation.slides.length === 0
           ? [slide]
           : insertAt(
-              editor.presentation.slides,
-              slide => slide.id === editor.selectedSlideIDs[0],
-              slide
-            ),
+            editor.presentation.slides,
+            slide => slide.id === editor.selectedSlideIDs[0],
+            slide
+          ),
     },
   };
 }
@@ -183,11 +183,11 @@ function removeElements(editor: Editor): Editor {
       slides: editor.presentation.slides.map(slide =>
         slide.id === editor.selectedSlideIDs[0]
           ? {
-              ...slide,
-              elements: slide.elements.filter(
-                element => !editor.selectedElementIDs.includes(element.id)
-              ),
-            }
+            ...slide,
+            elements: slide.elements.filter(
+              element => !editor.selectedElementIDs.includes(element.id)
+            ),
+          }
           : { ...slide }
       ),
     },
@@ -344,7 +344,7 @@ function addPrimitive(
           primitiveType,
           position,
           dimensions,
-          fill: '#FFFFFF',
+          fill: '#ffffff',
           stroke: '#000000',
         }
       ),

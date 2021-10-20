@@ -46,10 +46,10 @@ export function concatWithSelectedSlideElements(
   return slides.map(slide =>
     slide.id === selectedSlideIDs[0]
       ? {
-          ...slide,
-          elements: slide.elements.concat(element),
-        }
-      : { ...slide }
+        ...slide,
+        elements: slide.elements.concat(element),
+      }
+      : {...slide}
   );
 }
 
