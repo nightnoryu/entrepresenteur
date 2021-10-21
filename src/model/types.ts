@@ -79,9 +79,14 @@ export type Presentation = {
   slides: Slide[];
 };
 
+export type History = {
+  undoStack: Presentation[];
+  redoStack: Presentation[];
+};
+
 export type Editor = {
   presentation: Presentation;
   selectedSlideIDs: UUID[];
   selectedElementIDs: UUID[];
-  // TODO: history
+  history: History;
 };

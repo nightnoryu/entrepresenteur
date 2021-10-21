@@ -1,4 +1,4 @@
-import { Slide, SlideElement } from './types';
+import { History, Presentation, Slide, SlideElement } from './types';
 import { UUID } from './uuid';
 
 /**
@@ -46,9 +46,9 @@ export function concatWithSelectedSlideElements(
   return slides.map(slide =>
     slide.id === selectedSlideIDs[0]
       ? {
-          ...slide,
-          elements: slide.elements.concat(element),
-        }
+        ...slide,
+        elements: slide.elements.concat(element),
+      }
       : { ...slide }
   );
 }
@@ -62,4 +62,18 @@ export function selectNearestUnselectedSlide(
 ): UUID {
   // TODO: implement
   return '';
+}
+
+/**
+ * Returns the modified history after each action, e.g. populates the undo stack and empties the redo stack
+ */
+export function modifyHistoryBeforeAction(
+  history: History,
+  presentation: Presentation
+): History {
+  return {
+    ...history,
+    undoStack: history.undoStack.concat(presentation),
+    redoStack: [],
+  };
 }
