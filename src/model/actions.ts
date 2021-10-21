@@ -3,12 +3,10 @@ import {
   Dimensions,
   Editor,
   ElementType,
-  ImageBackground,
   Position,
   Presentation,
   PrimitiveType,
   Slide,
-  SolidBackground,
 } from './types';
 import { UUID, generateUUID } from './uuid';
 import {
