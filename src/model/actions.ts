@@ -13,7 +13,7 @@ import {
 import { UUID, generateUUID } from './uuid';
 import {
   concatWithSelectedSlideElements,
-  insertAt,
+  insertAt, modifyHistoryBeforeAction,
   replaceAt,
   selectNearestUnselectedSlide,
 } from './utils';
@@ -43,8 +43,8 @@ function createEditor(presentation: Presentation): Editor {
       presentation.slides.length > 0 ? [presentation.slides[0].id] : [],
     selectedElementIDs: [],
     history: {
-      states: [presentation],
-      currentState: 0,
+      undoStack: [],
+      redoStack: [],
     },
   };
 }
@@ -84,6 +84,7 @@ function addSlide(editor: Editor): Editor {
             slide
           ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -102,6 +103,7 @@ function removeSlides(editor: Editor): Editor {
         slide => !editor.selectedSlideIDs.includes(slide.id)
       ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -115,6 +117,7 @@ function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
           editor.presentation.slides.find(slide => slide.id === slideID) || []
       ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -151,6 +154,7 @@ function setSlideBackgroundColor(editor: Editor, color: string): Editor {
         })
       ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -171,6 +175,7 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
         })
       ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -191,6 +196,7 @@ function removeElements(editor: Editor): Editor {
           : { ...slide }
       ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -219,6 +225,7 @@ function addText(
         }
       ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -245,6 +252,7 @@ function setTextValue(editor: Editor, value: string): Editor {
         })
       ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -271,6 +279,7 @@ function setTextFont(editor: Editor, font: string): Editor {
         })
       ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -297,6 +306,7 @@ function setTextSize(editor: Editor, size: number): Editor {
         })
       ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -322,6 +332,7 @@ function addImage(
         }
       ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -349,6 +360,7 @@ function addPrimitive(
         }
       ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -375,6 +387,7 @@ function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
         })
       ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -401,6 +414,7 @@ function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
         })
       ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -428,6 +442,7 @@ function moveElements(editor: Editor, positionDiff: Position): Editor {
         })
       ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -452,17 +467,44 @@ function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
         })
       ),
     },
+    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
-// TODO: implement
 function undo(editor: Editor): Editor {
-  return { ...editor };
+  return {
+    ...editor,
+    presentation:
+      editor.history.undoStack.length > 0
+        ? { ...editor.history.undoStack[-1] }
+        : editor.presentation,
+    history:
+      editor.history.undoStack.length > 0
+        ? {
+          ...editor.history,
+          undoStack: editor.history.undoStack.slice(0, -1),
+          redoStack: editor.history.redoStack.concat({ ...editor.presentation }),
+        }
+        : editor.history,
+  };
 }
 
-// TODO: implement
 function redo(editor: Editor): Editor {
-  return { ...editor };
+  return {
+    ...editor,
+    presentation:
+      editor.history.redoStack.length > 0
+        ? { ...editor.history.redoStack[-1] }
+        : editor.presentation,
+    history:
+      editor.history.redoStack.length > 0
+        ? {
+          ...editor.history,
+          undoStack: editor.history.undoStack.concat(editor.presentation),
+          redoStack: editor.history.redoStack.slice(0, -1),
+        }
+        : editor.history,
+  };
 }
 
 function exportPresentation(presentation: Presentation): void {
