@@ -13,7 +13,8 @@ import {
 import { UUID, generateUUID } from './uuid';
 import {
   concatWithSelectedSlideElements,
-  insertAt, modifyHistoryBeforeAction,
+  insertAt,
+  modifyHistoryBeforeAction,
   replaceAt,
   selectNearestUnselectedSlide,
 } from './utils';
@@ -483,7 +484,9 @@ function undo(editor: Editor): Editor {
         ? {
           ...editor.history,
           undoStack: editor.history.undoStack.slice(0, -1),
-          redoStack: editor.history.redoStack.concat({ ...editor.presentation }),
+          redoStack: editor.history.redoStack.concat({
+            ...editor.presentation,
+          }),
         }
         : editor.history,
   };
