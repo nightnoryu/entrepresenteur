@@ -2,17 +2,16 @@ import { History, Presentation, Slide, SlideElement } from './types';
 import { UUID } from './uuid';
 
 /**
- * Returns a copy of an array with the value inserted in positions where finder
- * function returns true
+ * Returns a copy of an array with the value inserted in positions where predicate function returns true
  */
 export function insertAt<T>(
   arr: T[],
-  finder: (value: T) => boolean,
+  predicate: (value: T) => boolean,
   valueToInsert: T
 ): T[] {
   return arr.reduce(
     (result, value) =>
-      finder(value)
+      predicate(value)
         ? result.concat(valueToInsert, value)
         : result.concat(value),
     [] as T[]
@@ -20,17 +19,18 @@ export function insertAt<T>(
 }
 
 /**
- * Returns a copy of an array replacing values in positions where finder
- * function returns true
+ * Returns a copy of an array replacing values in positions where predicate function returns true
  */
 export function replaceAt<T>(
   arr: T[],
-  finder: (value: T) => boolean,
+  predicate: (value: T) => boolean,
   replacer: (value: T) => T
 ): T[] {
   return arr.reduce(
     (result, value) =>
-      finder(value) ? result.concat(replacer(value)) : result.concat(value),
+      predicate(value)
+        ? result.concat(replacer(value))
+        : result.concat(value),
     [] as T[]
   );
 }
