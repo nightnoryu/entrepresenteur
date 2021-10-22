@@ -81,7 +81,7 @@ export type Presentation = {
 
 export type History = {
   undoStack: Presentation[];
-  redoStack: Presentation[];
+  prevState: number;
 };
 
 export type Editor = {

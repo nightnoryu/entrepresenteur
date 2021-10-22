@@ -43,7 +43,7 @@ function createEditor(presentation: Presentation): Editor {
     selectedElementIDs: [],
     history: {
       undoStack: [],
-      redoStack: [],
+      prevState: -1,
     },
   };
 }
@@ -471,41 +471,13 @@ function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
 }
 
 function undo(editor: Editor): Editor {
-  return {
-    ...editor,
-    presentation:
-      editor.history.undoStack.length > 0
-        ? { ...editor.history.undoStack[-1] }
-        : editor.presentation,
-    history:
-      editor.history.undoStack.length > 0
-        ? {
-          ...editor.history,
-          undoStack: editor.history.undoStack.slice(0, -1),
-          redoStack: editor.history.redoStack.concat({
-            ...editor.presentation,
-          }),
-        }
-        : editor.history,
-  };
+  // TODO: remake with single array
+  return { ...editor };
 }
 
 function redo(editor: Editor): Editor {
-  return {
-    ...editor,
-    presentation:
-      editor.history.redoStack.length > 0
-        ? { ...editor.history.redoStack[-1] }
-        : editor.presentation,
-    history:
-      editor.history.redoStack.length > 0
-        ? {
-          ...editor.history,
-          undoStack: editor.history.undoStack.concat(editor.presentation),
-          redoStack: editor.history.redoStack.slice(0, -1),
-        }
-        : editor.history,
-  };
+  // TODO: remake with single array
+  return { ...editor };
 }
 
 function exportPresentation(presentation: Presentation): void {

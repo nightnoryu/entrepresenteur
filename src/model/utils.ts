@@ -74,6 +74,6 @@ export function modifyHistoryBeforeAction(
   return {
     ...history,
     undoStack: history.undoStack.concat(presentation),
-    redoStack: [],
+    prevState: history.prevState + 1,
   };
 }
