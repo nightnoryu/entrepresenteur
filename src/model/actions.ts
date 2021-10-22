@@ -12,6 +12,8 @@ import { UUID, generateUUID } from './uuid';
 import {
   concatWithSelectedSlideElements,
   insertAt,
+  isCurrentElement,
+  isCurrentSlide,
   modifyHistoryBeforeAction,
   replaceAt,
   selectNearestUnselectedSlide,
@@ -79,7 +81,7 @@ function addSlide(editor: Editor): Editor {
           ? [slide]
           : insertAt(
             editor.presentation.slides,
-            slide => slide.id === editor.selectedSlideIDs[0],
+            slide => isCurrentSlide(slide, editor.selectedSlideIDs),
             slide
           ),
     },
@@ -143,7 +145,7 @@ function setSlideBackgroundColor(editor: Editor, color: string): Editor {
       ...editor.presentation,
       slides: replaceAt(
         editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
         slide => ({
           ...slide,
           background: {
@@ -164,7 +166,7 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
       ...editor.presentation,
       slides: replaceAt(
         editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
         slide => ({
           ...slide,
           background: {
@@ -185,7 +187,7 @@ function removeElements(editor: Editor): Editor {
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.map(slide =>
-        slide.id === editor.selectedSlideIDs[0]
+        isCurrentSlide(slide, editor.selectedSlideIDs)
           ? {
             ...slide,
             elements: slide.elements.filter(
@@ -235,14 +237,14 @@ function setTextValue(editor: Editor, value: string): Editor {
       ...editor.presentation,
       slides: replaceAt(
         editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
         slide => ({
           ...slide,
           elements: replaceAt(
             slide.elements,
             element =>
               element.type === ElementType.TEXT &&
-              element.id === editor.selectedElementIDs[0],
+              isCurrentElement(element, editor.selectedElementIDs),
             element => ({
               ...element,
               value,
@@ -262,14 +264,14 @@ function setTextFont(editor: Editor, font: string): Editor {
       ...editor.presentation,
       slides: replaceAt(
         editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
         slide => ({
           ...slide,
           elements: replaceAt(
             slide.elements,
             element =>
               element.type === ElementType.TEXT &&
-              element.id === editor.selectedElementIDs[0],
+              isCurrentElement(element, editor.selectedElementIDs),
             element => ({
               ...element,
               font,
@@ -289,14 +291,14 @@ function setTextSize(editor: Editor, size: number): Editor {
       ...editor.presentation,
       slides: replaceAt(
         editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
         slide => ({
           ...slide,
           elements: replaceAt(
             slide.elements,
             element =>
               element.type === ElementType.TEXT &&
-              element.id === editor.selectedElementIDs[0],
+              isCurrentElement(element, editor.selectedElementIDs),
             element => ({
               ...element,
               size,
@@ -370,14 +372,14 @@ function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
       ...editor.presentation,
       slides: replaceAt(
         editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
         slide => ({
           ...slide,
           elements: replaceAt(
             slide.elements,
             element =>
               element.type === ElementType.PRIMITIVE &&
-              element.id === editor.selectedElementIDs[0],
+              isCurrentElement(element, editor.selectedElementIDs),
             element => ({
               ...element,
               fill,
@@ -397,14 +399,14 @@ function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
       ...editor.presentation,
       slides: replaceAt(
         editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
         slide => ({
           ...slide,
           elements: replaceAt(
             slide.elements,
             element =>
               element.type === ElementType.PRIMITIVE &&
-              element.id === editor.selectedElementIDs[0],
+              isCurrentElement(element, editor.selectedElementIDs),
             element => ({
               ...element,
               stroke,
@@ -424,7 +426,7 @@ function moveElements(editor: Editor, positionDiff: Position): Editor {
       ...editor.presentation,
       slides: replaceAt(
         editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
         slide => ({
           ...slide,
           elements: replaceAt(
@@ -452,12 +454,12 @@ function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
       ...editor.presentation,
       slides: replaceAt(
         editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
+        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
         slide => ({
           ...slide,
           elements: replaceAt(
             slide.elements,
-            element => element.id === editor.selectedElementIDs[0],
+            element => isCurrentElement(element, editor.selectedElementIDs),
             element => ({
               ...element,
               dimensions,

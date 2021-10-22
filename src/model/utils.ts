@@ -44,13 +44,27 @@ export function concatWithSelectedSlideElements(
   element: SlideElement
 ): Slide[] {
   return slides.map(slide =>
-    slide.id === selectedSlideIDs[0]
+    isCurrentSlide(slide, selectedSlideIDs)
       ? {
         ...slide,
         elements: slide.elements.concat(element),
       }
       : { ...slide }
   );
+}
+
+export function isCurrentSlide(
+  slide: Slide,
+  selectedSlideIDs: UUID[]
+): boolean {
+  return slide.id === selectedSlideIDs[0];
+}
+
+export function isCurrentElement(
+  element: SlideElement,
+  selectedElementIDs: UUID[]
+): boolean {
+  return element.id === selectedElementIDs[0];
 }
 
 /**
