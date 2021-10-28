@@ -1,39 +1,5 @@
-import { History, Presentation, Slide, SlideElement } from './types';
+import { ActionFunction, Editor, History, Slide, SlideElement } from './types';
 import { UUID } from './uuid';
-
-/**
- * Returns a copy of an array with the value inserted in positions where finder
- * function returns true
- */
-export function insertAt<T>(
-  arr: T[],
-  finder: (value: T) => boolean,
-  valueToInsert: T
-): T[] {
-  return arr.reduce(
-    (result, value) =>
-      finder(value)
-        ? result.concat(valueToInsert, value)
-        : result.concat(value),
-    [] as T[]
-  );
-}
-
-/**
- * Returns a copy of an array replacing values in positions where finder
- * function returns true
- */
-export function replaceAt<T>(
-  arr: T[],
-  finder: (value: T) => boolean,
-  replacer: (value: T) => T
-): T[] {
-  return arr.reduce(
-    (result, value) =>
-      finder(value) ? result.concat(replacer(value)) : result.concat(value),
-    [] as T[]
-  );
-}
 
 /**
  * Returns new slide list with the element appended to the element list of the slide at the specified index
@@ -44,7 +10,7 @@ export function concatWithSelectedSlideElements(
   element: SlideElement
 ): Slide[] {
   return slides.map(slide =>
-    slide.id === selectedSlideIDs[0]
+    isCurrentSlide(slide, selectedSlideIDs)
       ? {
         ...slide,
         elements: slide.elements.concat(element),
@@ -53,27 +19,73 @@ export function concatWithSelectedSlideElements(
   );
 }
 
+export function isCurrentSlide(
+  slide: Slide,
+  selectedSlideIDs: UUID[]
+): boolean {
+  return slide.id === selectedSlideIDs[0];
+}
+
+export function isCurrentElement(
+  element: SlideElement,
+  selectedElementIDs: UUID[]
+): boolean {
+  return element.id === selectedElementIDs[0];
+}
+
 /**
- * Returns ID of the new current slide upon removing all selected slides.
+ * Returns ID of the new current slide upon removing all selected slides
  */
 export function selectNearestUnselectedSlide(
   slides: Slide[],
   selectedSlideIDs: UUID[]
-): UUID {
-  // TODO: implement
-  return '';
+): UUID[] {
+  const firstSelectedSlideIndex = slides.findIndex(slide =>
+    isCurrentSlide(slide, selectedSlideIDs)
+  );
+
+  if (firstSelectedSlideIndex > 0) {
+    return [slides[firstSelectedSlideIndex - 1].id];
+  }
+
+  const newSlides = slides.filter(slide => !selectedSlideIDs.includes(slide.id));
+
+  if (newSlides.length === 0) {
+    return [];
+  }
+
+  return [newSlides[0].id];
 }
 
 /**
- * Returns the modified history after each action, e.g. populates the undo stack and empties the redo stack
+ * Returns wrapper above the action which saves presentation state after applying the action
  */
-export function modifyHistoryBeforeAction(
-  history: History,
-  presentation: Presentation
-): History {
-  return {
-    ...history,
-    undoStack: history.undoStack.concat(presentation),
-    redoStack: [],
+export function stateSaverWrapper(action: ActionFunction): ActionFunction {
+  return (editor: Editor, ...args: never[]): Editor => {
+    const newEditorState = action(editor, ...args);
+    return {
+      ...newEditorState,
+      history: {
+        ...newEditorState.history,
+        undoStack: isRedoAvailable(newEditorState.history)
+          ? newEditorState.history.undoStack
+            .slice(newEditorState.history.currentState, -1)
+            .concat(newEditorState.presentation)
+          : newEditorState.history.undoStack.concat(
+            newEditorState.presentation
+          ),
+        currentState: newEditorState.history.currentState + 1,
+      },
+    };
   };
+}
+
+/**
+ * Returns true if current state allows redoing operations
+ */
+export function isRedoAvailable(history: History): boolean {
+  return (
+    0 <= history.currentState &&
+    history.currentState < history.undoStack.length - 1
+  );
 }

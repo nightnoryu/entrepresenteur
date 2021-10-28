@@ -8,12 +8,12 @@ import {
   PrimitiveType,
   Slide,
 } from './types';
-import { UUID, generateUUID } from './uuid';
+import { generateUUID, UUID } from './uuid';
 import {
   concatWithSelectedSlideElements,
-  insertAt,
-  modifyHistoryBeforeAction,
-  replaceAt,
+  isCurrentElement,
+  isCurrentSlide,
+  isRedoAvailable,
   selectNearestUnselectedSlide,
 } from './utils';
 
@@ -43,7 +43,7 @@ function createEditor(presentation: Presentation): Editor {
     selectedElementIDs: [],
     history: {
       undoStack: [],
-      redoStack: [],
+      currentState: -1,
     },
   };
 }
@@ -67,42 +67,39 @@ function setPresentationTitle(
 }
 
 function addSlide(editor: Editor): Editor {
-  const slide = createNewSlide();
+  const newSlide = createNewSlide();
 
   return {
     ...editor,
-    selectedSlideIDs: [slide.id],
+    selectedSlideIDs: [newSlide.id],
     presentation: {
       ...editor.presentation,
       slides:
         editor.presentation.slides.length === 0
-          ? [slide]
-          : insertAt(
-            editor.presentation.slides,
-            slide => slide.id === editor.selectedSlideIDs[0],
-            slide
+          ? [newSlide]
+          : editor.presentation.slides.flatMap(slide =>
+            isCurrentSlide(slide, editor.selectedSlideIDs)
+              ? [newSlide, slide]
+              : slide
           ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
 function removeSlides(editor: Editor): Editor {
   return {
     ...editor,
-    selectedSlideIDs: [
+    selectedSlideIDs:
       selectNearestUnselectedSlide(
         editor.presentation.slides,
         editor.selectedSlideIDs
       ),
-    ],
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.filter(
         slide => !editor.selectedSlideIDs.includes(slide.id)
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -116,7 +113,6 @@ function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
           editor.presentation.slides.find(slide => slide.id === slideID) || []
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -141,19 +137,18 @@ function setSlideBackgroundColor(editor: Editor, color: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
-        slide => ({
-          ...slide,
-          background: {
-            type: BackgroundType.SOLID,
-            color,
-          },
-        })
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            background: {
+              type: BackgroundType.SOLID,
+              color,
+            },
+          }
+          : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -162,19 +157,18 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
-        slide => ({
-          ...slide,
-          background: {
-            type: BackgroundType.IMAGE,
-            src,
-          },
-        })
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            background: {
+              type: BackgroundType.IMAGE,
+              src,
+            },
+          }
+          : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -185,7 +179,7 @@ function removeElements(editor: Editor): Editor {
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.map(slide =>
-        slide.id === editor.selectedSlideIDs[0]
+        isCurrentSlide(slide, editor.selectedSlideIDs)
           ? {
             ...slide,
             elements: slide.elements.filter(
@@ -195,7 +189,6 @@ function removeElements(editor: Editor): Editor {
           : { ...slide }
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -224,7 +217,6 @@ function addText(
         }
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -233,25 +225,23 @@ function setTextValue(editor: Editor, value: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
-        slide => ({
-          ...slide,
-          elements: replaceAt(
-            slide.elements,
-            element =>
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
               element.type === ElementType.TEXT &&
-              element.id === editor.selectedElementIDs[0],
-            element => ({
-              ...element,
-              value,
-            })
-          ),
-        })
+              isCurrentElement(element, editor.selectedElementIDs)
+                ? {
+                  ...element,
+                  value,
+                }
+                : element
+            ),
+          }
+          : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -260,25 +250,23 @@ function setTextFont(editor: Editor, font: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
-        slide => ({
-          ...slide,
-          elements: replaceAt(
-            slide.elements,
-            element =>
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
               element.type === ElementType.TEXT &&
-              element.id === editor.selectedElementIDs[0],
-            element => ({
-              ...element,
-              font,
-            })
-          ),
-        })
+              isCurrentElement(element, editor.selectedElementIDs)
+                ? {
+                  ...element,
+                  font,
+                }
+                : element
+            ),
+          }
+          : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -287,25 +275,23 @@ function setTextSize(editor: Editor, size: number): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
-        slide => ({
-          ...slide,
-          elements: replaceAt(
-            slide.elements,
-            element =>
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
               element.type === ElementType.TEXT &&
-              element.id === editor.selectedElementIDs[0],
-            element => ({
-              ...element,
-              size,
-            })
-          ),
-        })
+              isCurrentElement(element, editor.selectedElementIDs)
+                ? {
+                  ...element,
+                  size,
+                }
+                : element
+            ),
+          }
+          : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -331,7 +317,6 @@ function addImage(
         }
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -359,7 +344,6 @@ function addPrimitive(
         }
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -368,25 +352,23 @@ function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
-        slide => ({
-          ...slide,
-          elements: replaceAt(
-            slide.elements,
-            element =>
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
               element.type === ElementType.PRIMITIVE &&
-              element.id === editor.selectedElementIDs[0],
-            element => ({
-              ...element,
-              fill,
-            })
-          ),
-        })
+              isCurrentElement(element, editor.selectedElementIDs)
+                ? {
+                  ...element,
+                  fill,
+                }
+                : element
+            ),
+          }
+          : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -395,25 +377,23 @@ function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
-        slide => ({
-          ...slide,
-          elements: replaceAt(
-            slide.elements,
-            element =>
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
               element.type === ElementType.PRIMITIVE &&
-              element.id === editor.selectedElementIDs[0],
-            element => ({
-              ...element,
-              stroke,
-            })
-          ),
-        })
+              isCurrentElement(element, editor.selectedElementIDs)
+                ? {
+                  ...element,
+                  stroke,
+                }
+                : element
+            ),
+          }
+          : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -422,26 +402,25 @@ function moveElements(editor: Editor, positionDiff: Position): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
-        slide => ({
-          ...slide,
-          elements: replaceAt(
-            slide.elements,
-            element => editor.selectedElementIDs.includes(element.id),
-            element => ({
-              ...element,
-              position: {
-                x: element.position.x + positionDiff.x,
-                y: element.position.y + positionDiff.y,
-              },
-            })
-          ),
-        })
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
+              editor.selectedElementIDs.includes(element.id)
+                ? {
+                  ...element,
+                  position: {
+                    x: element.position.x + positionDiff.x,
+                    y: element.position.y + positionDiff.y,
+                  },
+                }
+                : element
+            ),
+          }
+          : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -450,23 +429,22 @@ function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => slide.id === editor.selectedSlideIDs[0],
-        slide => ({
-          ...slide,
-          elements: replaceAt(
-            slide.elements,
-            element => element.id === editor.selectedElementIDs[0],
-            element => ({
-              ...element,
-              dimensions,
-            })
-          ),
-        })
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
+              isCurrentElement(element, editor.selectedElementIDs)
+                ? {
+                  ...element,
+                  dimensions,
+                }
+                : element
+            ),
+          }
+          : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -474,37 +452,31 @@ function undo(editor: Editor): Editor {
   return {
     ...editor,
     presentation:
-      editor.history.undoStack.length > 0
-        ? { ...editor.history.undoStack[-1] }
+      editor.history.currentState > 0
+        ? { ...editor.history.undoStack[editor.history.currentState - 1] }
         : editor.presentation,
-    history:
-      editor.history.undoStack.length > 0
-        ? {
-          ...editor.history,
-          undoStack: editor.history.undoStack.slice(0, -1),
-          redoStack: editor.history.redoStack.concat({
-            ...editor.presentation,
-          }),
-        }
-        : editor.history,
+    history: {
+      ...editor.history,
+      currentState:
+        editor.history.currentState > 0
+          ? editor.history.currentState - 1
+          : editor.history.currentState,
+    },
   };
 }
 
 function redo(editor: Editor): Editor {
   return {
     ...editor,
-    presentation:
-      editor.history.redoStack.length > 0
-        ? { ...editor.history.redoStack[-1] }
-        : editor.presentation,
-    history:
-      editor.history.redoStack.length > 0
-        ? {
-          ...editor.history,
-          undoStack: editor.history.undoStack.concat(editor.presentation),
-          redoStack: editor.history.redoStack.slice(0, -1),
-        }
-        : editor.history,
+    presentation: isRedoAvailable(editor.history)
+      ? { ...editor.history.undoStack[editor.history.currentState + 1] }
+      : editor.presentation,
+    history: {
+      ...editor.history,
+      currentState: isRedoAvailable(editor.history)
+        ? editor.history.currentState + 1
+        : editor.history.currentState,
+    },
   };
 }
 
