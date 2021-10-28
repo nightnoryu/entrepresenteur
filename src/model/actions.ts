@@ -89,12 +89,11 @@ function addSlide(editor: Editor): Editor {
 function removeSlides(editor: Editor): Editor {
   return {
     ...editor,
-    selectedSlideIDs: [
+    selectedSlideIDs:
       selectNearestUnselectedSlide(
         editor.presentation.slides,
         editor.selectedSlideIDs
       ),
-    ],
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.filter(

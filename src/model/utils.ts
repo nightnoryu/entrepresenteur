@@ -34,14 +34,27 @@ export function isCurrentElement(
 }
 
 /**
- * Returns ID of the new current slide upon removing all selected slides.
+ * Returns ID of the new current slide upon removing all selected slides
  */
 export function selectNearestUnselectedSlide(
   slides: Slide[],
   selectedSlideIDs: UUID[]
-): UUID {
-  // TODO: implement
-  return '';
+): UUID[] {
+  const firstSelectedSlideIndex = slides.findIndex(slide =>
+    isCurrentSlide(slide, selectedSlideIDs)
+  );
+
+  if (firstSelectedSlideIndex > 0) {
+    return [slides[firstSelectedSlideIndex - 1].id];
+  }
+
+  const newSlides = slides.filter(slide => !selectedSlideIDs.includes(slide.id));
+
+  if (newSlides.length === 0) {
+    return [];
+  }
+
+  return [newSlides[0].id];
 }
 
 /**
