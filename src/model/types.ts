@@ -79,9 +79,11 @@ export type Presentation = {
   slides: Slide[];
 };
 
+export type ActionFunction = (editor: Editor, ...args: never[]) => Editor;
+
 export type History = {
   undoStack: Presentation[];
-  prevState: number;
+  currentState: number;
 };
 
 export type Editor = {

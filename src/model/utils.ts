@@ -1,4 +1,4 @@
-import { History, Presentation, Slide, SlideElement } from './types';
+import { ActionFunction, Editor, History, Slide, SlideElement } from './types';
 import { UUID } from './uuid';
 
 /**
@@ -45,15 +45,34 @@ export function selectNearestUnselectedSlide(
 }
 
 /**
- * Returns the modified history after each action, e.g. populates the undo stack and empties the redo stack
+ * Returns wrapper above the action which saves presentation state after applying the action
  */
-export function modifyHistoryBeforeAction(
-  history: History,
-  presentation: Presentation
-): History {
-  return {
-    ...history,
-    undoStack: history.undoStack.concat(presentation),
-    prevState: history.prevState + 1,
+export function stateSaverWrapper(action: ActionFunction): ActionFunction {
+  return (editor: Editor, ...args: never[]): Editor => {
+    const newEditorState = action(editor, ...args);
+    return {
+      ...newEditorState,
+      history: {
+        ...newEditorState.history,
+        undoStack: isRedoAvailable(newEditorState.history)
+          ? newEditorState.history.undoStack
+            .slice(newEditorState.history.currentState, -1)
+            .concat(newEditorState.presentation)
+          : newEditorState.history.undoStack.concat(
+            newEditorState.presentation
+          ),
+        currentState: newEditorState.history.currentState + 1,
+      },
+    };
   };
+}
+
+/**
+ * Returns true if current state allows redoing operations
+ */
+export function isRedoAvailable(history: History): boolean {
+  return (
+    0 <= history.currentState &&
+    history.currentState < history.undoStack.length - 1
+  );
 }

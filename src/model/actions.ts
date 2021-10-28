@@ -13,7 +13,7 @@ import {
   concatWithSelectedSlideElements,
   isCurrentElement,
   isCurrentSlide,
-  modifyHistoryBeforeAction,
+  isRedoAvailable,
   selectNearestUnselectedSlide,
 } from './utils';
 
@@ -43,7 +43,7 @@ function createEditor(presentation: Presentation): Editor {
     selectedElementIDs: [],
     history: {
       undoStack: [],
-      prevState: -1,
+      currentState: -1,
     },
   };
 }
@@ -83,7 +83,6 @@ function addSlide(editor: Editor): Editor {
               : slide
           ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -102,7 +101,6 @@ function removeSlides(editor: Editor): Editor {
         slide => !editor.selectedSlideIDs.includes(slide.id)
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -116,7 +114,6 @@ function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
           editor.presentation.slides.find(slide => slide.id === slideID) || []
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -153,7 +150,6 @@ function setSlideBackgroundColor(editor: Editor, color: string): Editor {
           : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -174,7 +170,6 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
           : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -195,7 +190,6 @@ function removeElements(editor: Editor): Editor {
           : { ...slide }
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -224,7 +218,6 @@ function addText(
         }
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -250,7 +243,6 @@ function setTextValue(editor: Editor, value: string): Editor {
           : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -276,7 +268,6 @@ function setTextFont(editor: Editor, font: string): Editor {
           : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -302,7 +293,6 @@ function setTextSize(editor: Editor, size: number): Editor {
           : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -328,7 +318,6 @@ function addImage(
         }
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -356,7 +345,6 @@ function addPrimitive(
         }
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -382,7 +370,6 @@ function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
           : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -408,7 +395,6 @@ function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
           : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -436,7 +422,6 @@ function moveElements(editor: Editor, positionDiff: Position): Editor {
           : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
@@ -461,18 +446,39 @@ function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
           : slide
       ),
     },
-    history: modifyHistoryBeforeAction(editor.history, editor.presentation),
   };
 }
 
 function undo(editor: Editor): Editor {
-  // TODO: remake with single array
-  return { ...editor };
+  return {
+    ...editor,
+    presentation:
+      editor.history.currentState > 0
+        ? { ...editor.history.undoStack[editor.history.currentState - 1] }
+        : editor.presentation,
+    history: {
+      ...editor.history,
+      currentState:
+        editor.history.currentState > 0
+          ? editor.history.currentState - 1
+          : editor.history.currentState,
+    },
+  };
 }
 
 function redo(editor: Editor): Editor {
-  // TODO: remake with single array
-  return { ...editor };
+  return {
+    ...editor,
+    presentation: isRedoAvailable(editor.history)
+      ? { ...editor.history.undoStack[editor.history.currentState + 1] }
+      : editor.presentation,
+    history: {
+      ...editor.history,
+      currentState: isRedoAvailable(editor.history)
+        ? editor.history.currentState + 1
+        : editor.history.currentState,
+    },
+  };
 }
 
 function exportPresentation(presentation: Presentation): void {
