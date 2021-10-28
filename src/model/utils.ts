@@ -2,40 +2,6 @@ import { History, Presentation, Slide, SlideElement } from './types';
 import { UUID } from './uuid';
 
 /**
- * Returns a copy of an array with the value inserted in positions where predicate function returns true
- */
-export function insertAt<T>(
-  arr: T[],
-  predicate: (value: T) => boolean,
-  valueToInsert: T
-): T[] {
-  return arr.reduce(
-    (result, value) =>
-      predicate(value)
-        ? result.concat(valueToInsert, value)
-        : result.concat(value),
-    [] as T[]
-  );
-}
-
-/**
- * Returns a copy of an array replacing values in positions where predicate function returns true
- */
-export function replaceAt<T>(
-  arr: T[],
-  predicate: (value: T) => boolean,
-  replacer: (value: T) => T
-): T[] {
-  return arr.reduce(
-    (result, value) =>
-      predicate(value)
-        ? result.concat(replacer(value))
-        : result.concat(value),
-    [] as T[]
-  );
-}
-
-/**
  * Returns new slide list with the element appended to the element list of the slide at the specified index
  */
 export function concatWithSelectedSlideElements(

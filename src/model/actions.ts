@@ -8,14 +8,12 @@ import {
   PrimitiveType,
   Slide,
 } from './types';
-import { UUID, generateUUID } from './uuid';
+import { generateUUID, UUID } from './uuid';
 import {
   concatWithSelectedSlideElements,
-  insertAt,
   isCurrentElement,
   isCurrentSlide,
   modifyHistoryBeforeAction,
-  replaceAt,
   selectNearestUnselectedSlide,
 } from './utils';
 
@@ -69,20 +67,20 @@ function setPresentationTitle(
 }
 
 function addSlide(editor: Editor): Editor {
-  const slide = createNewSlide();
+  const newSlide = createNewSlide();
 
   return {
     ...editor,
-    selectedSlideIDs: [slide.id],
+    selectedSlideIDs: [newSlide.id],
     presentation: {
       ...editor.presentation,
       slides:
         editor.presentation.slides.length === 0
-          ? [slide]
-          : insertAt(
-            editor.presentation.slides,
-            slide => isCurrentSlide(slide, editor.selectedSlideIDs),
-            slide
+          ? [newSlide]
+          : editor.presentation.slides.flatMap(slide =>
+            isCurrentSlide(slide, editor.selectedSlideIDs)
+              ? [newSlide, slide]
+              : slide
           ),
     },
     history: modifyHistoryBeforeAction(editor.history, editor.presentation),
@@ -143,16 +141,16 @@ function setSlideBackgroundColor(editor: Editor, color: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
-        slide => ({
-          ...slide,
-          background: {
-            type: BackgroundType.SOLID,
-            color,
-          },
-        })
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            background: {
+              type: BackgroundType.SOLID,
+              color,
+            },
+          }
+          : slide
       ),
     },
     history: modifyHistoryBeforeAction(editor.history, editor.presentation),
@@ -164,16 +162,16 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
-        slide => ({
-          ...slide,
-          background: {
-            type: BackgroundType.IMAGE,
-            src,
-          },
-        })
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            background: {
+              type: BackgroundType.IMAGE,
+              src,
+            },
+          }
+          : slide
       ),
     },
     history: modifyHistoryBeforeAction(editor.history, editor.presentation),
@@ -235,22 +233,21 @@ function setTextValue(editor: Editor, value: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
-        slide => ({
-          ...slide,
-          elements: replaceAt(
-            slide.elements,
-            element =>
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
               element.type === ElementType.TEXT &&
-              isCurrentElement(element, editor.selectedElementIDs),
-            element => ({
-              ...element,
-              value,
-            })
-          ),
-        })
+              isCurrentElement(element, editor.selectedElementIDs)
+                ? {
+                  ...element,
+                  value,
+                }
+                : element
+            ),
+          }
+          : slide
       ),
     },
     history: modifyHistoryBeforeAction(editor.history, editor.presentation),
@@ -262,22 +259,21 @@ function setTextFont(editor: Editor, font: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
-        slide => ({
-          ...slide,
-          elements: replaceAt(
-            slide.elements,
-            element =>
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
               element.type === ElementType.TEXT &&
-              isCurrentElement(element, editor.selectedElementIDs),
-            element => ({
-              ...element,
-              font,
-            })
-          ),
-        })
+              isCurrentElement(element, editor.selectedElementIDs)
+                ? {
+                  ...element,
+                  font,
+                }
+                : element
+            ),
+          }
+          : slide
       ),
     },
     history: modifyHistoryBeforeAction(editor.history, editor.presentation),
@@ -289,22 +285,21 @@ function setTextSize(editor: Editor, size: number): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
-        slide => ({
-          ...slide,
-          elements: replaceAt(
-            slide.elements,
-            element =>
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
               element.type === ElementType.TEXT &&
-              isCurrentElement(element, editor.selectedElementIDs),
-            element => ({
-              ...element,
-              size,
-            })
-          ),
-        })
+              isCurrentElement(element, editor.selectedElementIDs)
+                ? {
+                  ...element,
+                  size,
+                }
+                : element
+            ),
+          }
+          : slide
       ),
     },
     history: modifyHistoryBeforeAction(editor.history, editor.presentation),
@@ -370,22 +365,21 @@ function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
-        slide => ({
-          ...slide,
-          elements: replaceAt(
-            slide.elements,
-            element =>
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
               element.type === ElementType.PRIMITIVE &&
-              isCurrentElement(element, editor.selectedElementIDs),
-            element => ({
-              ...element,
-              fill,
-            })
-          ),
-        })
+              isCurrentElement(element, editor.selectedElementIDs)
+                ? {
+                  ...element,
+                  fill,
+                }
+                : element
+            ),
+          }
+          : slide
       ),
     },
     history: modifyHistoryBeforeAction(editor.history, editor.presentation),
@@ -397,22 +391,21 @@ function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
-        slide => ({
-          ...slide,
-          elements: replaceAt(
-            slide.elements,
-            element =>
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
               element.type === ElementType.PRIMITIVE &&
-              isCurrentElement(element, editor.selectedElementIDs),
-            element => ({
-              ...element,
-              stroke,
-            })
-          ),
-        })
+              isCurrentElement(element, editor.selectedElementIDs)
+                ? {
+                  ...element,
+                  stroke,
+                }
+                : element
+            ),
+          }
+          : slide
       ),
     },
     history: modifyHistoryBeforeAction(editor.history, editor.presentation),
@@ -424,23 +417,23 @@ function moveElements(editor: Editor, positionDiff: Position): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
-        slide => ({
-          ...slide,
-          elements: replaceAt(
-            slide.elements,
-            element => editor.selectedElementIDs.includes(element.id),
-            element => ({
-              ...element,
-              position: {
-                x: element.position.x + positionDiff.x,
-                y: element.position.y + positionDiff.y,
-              },
-            })
-          ),
-        })
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
+              editor.selectedElementIDs.includes(element.id)
+                ? {
+                  ...element,
+                  position: {
+                    x: element.position.x + positionDiff.x,
+                    y: element.position.y + positionDiff.y,
+                  },
+                }
+                : element
+            ),
+          }
+          : slide
       ),
     },
     history: modifyHistoryBeforeAction(editor.history, editor.presentation),
@@ -452,20 +445,20 @@ function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: replaceAt(
-        editor.presentation.slides,
-        slide => isCurrentSlide(slide, editor.selectedSlideIDs),
-        slide => ({
-          ...slide,
-          elements: replaceAt(
-            slide.elements,
-            element => isCurrentElement(element, editor.selectedElementIDs),
-            element => ({
-              ...element,
-              dimensions,
-            })
-          ),
-        })
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
+              isCurrentElement(element, editor.selectedElementIDs)
+                ? {
+                  ...element,
+                  dimensions,
+                }
+                : element
+            ),
+          }
+          : slide
       ),
     },
     history: modifyHistoryBeforeAction(editor.history, editor.presentation),
