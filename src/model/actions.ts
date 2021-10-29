@@ -14,8 +14,9 @@ import {
   isCurrentElement,
   isCurrentSlide,
   isRedoAvailable,
+  saveState,
   selectNearestUnselectedSlide,
-} from './utils';
+} from './infrastructure_actions';
 
 function createNewSlide(): Slide {
   return {

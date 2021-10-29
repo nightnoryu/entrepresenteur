@@ -1,4 +1,4 @@
-import { ActionFunction, Editor, History, Slide, SlideElement } from './types';
+import { Editor, History, Presentation, Slide, SlideElement } from './types';
 import { UUID } from './uuid';
 
 /**
@@ -40,9 +40,7 @@ export function selectNearestUnselectedSlide(
   slides: Slide[],
   selectedSlideIDs: UUID[]
 ): UUID[] {
-  const firstSelectedSlideIndex = slides.findIndex(slide =>
-    isCurrentSlide(slide, selectedSlideIDs)
-  );
+  const firstSelectedSlideIndex = slides.findIndex(slide => isCurrentSlide(slide, selectedSlideIDs));
 
   if (firstSelectedSlideIndex > 0) {
     return [slides[firstSelectedSlideIndex - 1].id];
@@ -57,26 +55,16 @@ export function selectNearestUnselectedSlide(
   return [newSlides[0].id];
 }
 
-/**
- * Returns wrapper above the action which saves presentation state after applying the action
- */
-export function stateSaverWrapper(action: ActionFunction): ActionFunction {
-  return (editor: Editor, ...args: never[]): Editor => {
-    const newEditorState = action(editor, ...args);
-    return {
-      ...newEditorState,
-      history: {
-        ...newEditorState.history,
-        undoStack: isRedoAvailable(newEditorState.history)
-          ? newEditorState.history.undoStack
-            .slice(newEditorState.history.currentState, -1)
-            .concat(newEditorState.presentation)
-          : newEditorState.history.undoStack.concat(
-            newEditorState.presentation
-          ),
-        currentState: newEditorState.history.currentState + 1,
-      },
-    };
+export function saveState(editor: Editor): Editor {
+  return {
+    ...editor,
+    history: {
+      ...editor.history,
+      undoStack: isRedoAvailable(editor.history)
+        ? editor.history.undoStack.slice(editor.history.currentState, -1).concat(editor.presentation)
+        : editor.history.undoStack.concat({ ...editor.presentation }),
+      currentState: editor.history.currentState + 1,
+    },
   };
 }
 
