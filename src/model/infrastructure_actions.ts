@@ -1,4 +1,4 @@
-import { Editor, History, Presentation, Slide, SlideElement } from './types';
+import { Editor, History, Slide, SlideElement } from './types';
 import { UUID } from './uuid';
 
 /**
@@ -40,13 +40,17 @@ export function selectNearestUnselectedSlide(
   slides: Slide[],
   selectedSlideIDs: UUID[]
 ): UUID[] {
-  const firstSelectedSlideIndex = slides.findIndex(slide => isCurrentSlide(slide, selectedSlideIDs));
+  const firstSelectedSlideIndex = slides.findIndex(slide =>
+    isCurrentSlide(slide, selectedSlideIDs)
+  );
 
   if (firstSelectedSlideIndex > 0) {
     return [slides[firstSelectedSlideIndex - 1].id];
   }
 
-  const newSlides = slides.filter(slide => !selectedSlideIDs.includes(slide.id));
+  const newSlides = slides.filter(
+    slide => !selectedSlideIDs.includes(slide.id)
+  );
 
   if (newSlides.length === 0) {
     return [];
@@ -61,7 +65,9 @@ export function saveState(editor: Editor): Editor {
     history: {
       ...editor.history,
       undoStack: isRedoAvailable(editor.history)
-        ? editor.history.undoStack.slice(editor.history.currentState, -1).concat(editor.presentation)
+        ? editor.history.undoStack
+          .slice(editor.history.currentState, -1)
+          .concat(editor.presentation)
         : editor.history.undoStack.concat({ ...editor.presentation }),
       currentState: editor.history.currentState + 1,
     },
