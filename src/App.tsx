@@ -9,13 +9,15 @@ type AppProps = {
   editor: Editor;
 }
 
-function App(props: AppProps): JSX.Element {
+function App({ editor }: AppProps): JSX.Element {
+  const currentSlide = editor.presentation.slides.find(slide => editor.selectedSlideIDs.includes(slide.id));
+
   return (
     <div className="app">
-      <Ribbon />
+      <Ribbon title={editor.presentation.title} />
       <div className="app-main">
-        <SlidePanel />
-        <Workspace />
+        <SlidePanel slides={editor.presentation.slides} selectedSlideIDs={editor.selectedSlideIDs} />
+        <Workspace slide={currentSlide} selectedElementIDs={editor.selectedElementIDs} />
       </div>
     </div>
   );
