@@ -14,7 +14,6 @@ import {
   isCurrentElement,
   isCurrentSlide,
   isRedoAvailable,
-  saveState,
   selectNearestUnselectedSlide,
 } from './infrastructure_actions';
 
@@ -90,11 +89,10 @@ function addSlide(editor: Editor): Editor {
 function removeSlides(editor: Editor): Editor {
   return {
     ...editor,
-    selectedSlideIDs:
-      selectNearestUnselectedSlide(
-        editor.presentation.slides,
-        editor.selectedSlideIDs
-      ),
+    selectedSlideIDs: selectNearestUnselectedSlide(
+      editor.presentation.slides,
+      editor.selectedSlideIDs
+    ),
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.filter(

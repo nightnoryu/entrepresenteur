@@ -1,4 +1,4 @@
-import { Editor, History, Presentation, Slide, SlideElement } from './types';
+import { Editor, History, Slide, SlideElement } from './types';
 import { UUID } from './uuid';
 
 /**
@@ -61,7 +61,9 @@ export function saveState(editor: Editor): Editor {
     history: {
       ...editor.history,
       undoStack: isRedoAvailable(editor.history)
-        ? editor.history.undoStack.slice(editor.history.currentState, -1).concat(editor.presentation)
+        ? editor.history.undoStack
+          .slice(editor.history.currentState, -1)
+          .concat(editor.presentation)
         : editor.history.undoStack.concat({ ...editor.presentation }),
       currentState: editor.history.currentState + 1,
     },
