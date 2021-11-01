@@ -1,14 +1,10 @@
 import React from 'react';
 import './Ribbon.css';
 
-type RibbonProps = {
-  title: string;
-}
-
-function Ribbon({ title }: RibbonProps): JSX.Element {
+function Ribbon(): JSX.Element {
   return (
     <div className="ribbon">
-      <h1>{title}</h1>
+      <h1>New presentation</h1>
       <p>Menu</p>
     </div>
   );

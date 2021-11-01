@@ -3,15 +3,8 @@ import Ribbon from './components/ribbon/Ribbon';
 import SlidePanel from './components/slidepanel/SlidePanel';
 import Workspace from './components/workspace/Workspace';
 import './App.css';
-import { Editor } from './model/types';
 
-type AppProps = {
-  editor: Editor;
-}
-
-function App({ editor }: AppProps): JSX.Element {
-  const currentSlide = editor.presentation.slides.find(slide => editor.selectedSlideIDs.includes(slide.id));
-
+function App(): JSX.Element {
   const handleBeforeUnload = (e: Event) => {
     e.preventDefault();
     return e.returnValue = Boolean('');
@@ -27,10 +20,10 @@ function App({ editor }: AppProps): JSX.Element {
 
   return (
     <div className="app">
-      <Ribbon title={editor.presentation.title} />
+      <Ribbon />
       <div className="app-main">
-        <SlidePanel slides={editor.presentation.slides} selectedSlideIDs={editor.selectedSlideIDs} />
-        <Workspace slide={currentSlide} selectedElementIDs={editor.selectedElementIDs} />
+        <SlidePanel />
+        <Workspace />
       </div>
     </div>
   );
