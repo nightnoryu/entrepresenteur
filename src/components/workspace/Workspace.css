@@ -1,6 +1,6 @@
 .workspace
 {
-  width: 75%;
+  width: 75%
 }
 
 .workspace__current-slide
@@ -16,9 +16,4 @@
 
   border: 1px solid black;
   border-radius: 3px;
-}
-
-.workspace__element-view
-{
-  border: 1px solid red;
 }
