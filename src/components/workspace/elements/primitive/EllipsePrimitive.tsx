@@ -13,8 +13,8 @@ function EllipsePrimitive({ ellipsePrimitiveElement }: EllipsePrimitiveProps): J
       <ellipse
         cx={ellipsePrimitiveElement.dimensions.width / 2}
         cy={ellipsePrimitiveElement.dimensions.height / 2}
-        rx={ellipsePrimitiveElement.dimensions.width / 2}
-        ry={ellipsePrimitiveElement.dimensions.height / 2}
+        rx={ellipsePrimitiveElement.dimensions.width / 2 - 1}
+        ry={ellipsePrimitiveElement.dimensions.height / 2 - 1}
         fill={ellipsePrimitiveElement.fill}
         stroke={ellipsePrimitiveElement.stroke}
       />
