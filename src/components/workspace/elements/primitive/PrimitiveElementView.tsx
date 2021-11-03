@@ -24,7 +24,6 @@ function PrimitiveElementView({ element }: PrimitiveElementViewProps): JSX.Eleme
     [PrimitiveType.RECTANGLE, <RectanglePrimitive element={element} />],
     [PrimitiveType.TRIANGLE, <TrianglePrimitive element={element} />],
     [PrimitiveType.ELLIPSE, <EllipsePrimitive element={element} />],
-    [true, <div>Unknown primitive type</div>],
   ]);
 
   return (
