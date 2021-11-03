@@ -8,22 +8,22 @@ import cond from '../../../../common/cond';
 import EllipsePrimitive from './EllipsePrimitive';
 
 type PrimitiveElementViewProps = {
-  primitiveElement: PrimitiveElement;
+  element: PrimitiveElement;
 }
 
-function PrimitiveElementView({ primitiveElement }: PrimitiveElementViewProps): JSX.Element {
+function PrimitiveElementView({ element }: PrimitiveElementViewProps): JSX.Element {
   const primitiveElementStyles = {
-    width: primitiveElement.dimensions.width,
-    height: primitiveElement.dimensions.height,
+    width: element.dimensions.width,
+    height: element.dimensions.height,
 
-    left: primitiveElement.position.x,
-    top: primitiveElement.position.y,
+    left: element.position.x,
+    top: element.position.y,
   };
 
   const primitiveCond = cond([
-    [PrimitiveType.RECTANGLE, <RectanglePrimitive rectanglePrimitiveElement={primitiveElement} />],
-    [PrimitiveType.TRIANGLE, <TrianglePrimitive trianglePrimitiveElement={primitiveElement} />],
-    [PrimitiveType.ELLIPSE, <EllipsePrimitive ellipsePrimitiveElement={primitiveElement} />],
+    [PrimitiveType.RECTANGLE, <RectanglePrimitive element={element} />],
+    [PrimitiveType.TRIANGLE, <TrianglePrimitive element={element} />],
+    [PrimitiveType.ELLIPSE, <EllipsePrimitive element={element} />],
     [true, <div>Unknown primitive type</div>],
   ]);
 
@@ -32,7 +32,7 @@ function PrimitiveElementView({ primitiveElement }: PrimitiveElementViewProps): 
       className="workspace__element-view"
       style={primitiveElementStyles}
     >
-      {primitiveCond(primitiveElement.primitiveType)}
+      {primitiveCond(element.primitiveType)}
     </div>
   );
 }

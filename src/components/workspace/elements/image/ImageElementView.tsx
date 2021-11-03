@@ -4,21 +4,21 @@ import '../ElementView.css';
 import './ImageElementView.css';
 
 type ImageElementViewProps = {
-  imageElement: ImageElement;
+  element: ImageElement;
 }
 
-function ImageElementView({ imageElement }: ImageElementViewProps): JSX.Element {
+function ImageElementView({ element }: ImageElementViewProps): JSX.Element {
   const imageElementStyles = {
-    width: imageElement.dimensions.width - 2,
-    height: imageElement.dimensions.height - 2,
+    width: element.dimensions.width - 2,
+    height: element.dimensions.height - 2,
 
-    left: imageElement.position.x,
-    top: imageElement.position.y,
+    left: element.position.x,
+    top: element.position.y,
   };
 
   return (
     <img
-      src={imageElement.src}
+      src={element.src}
       alt="Image"
       className="workspace__element-view workspace__element-view_image"
       style={imageElementStyles}

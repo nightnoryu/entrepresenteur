@@ -104,11 +104,11 @@ function Workspace(): JSX.Element {
         {initialSlide.elements.map(element => {
           switch (element.type) {
           case ElementType.TEXT:
-            return <TextElementView textElement={element} />;
+            return <TextElementView element={element} />;
           case ElementType.IMAGE:
-            return <ImageElementView imageElement={element} />;
+            return <ImageElementView element={element} />;
           case ElementType.PRIMITIVE:
-            return <PrimitiveElementView primitiveElement={element} />;
+            return <PrimitiveElementView element={element} />;
           }
         })}
       </div>

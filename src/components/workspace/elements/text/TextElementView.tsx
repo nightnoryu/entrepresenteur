@@ -4,20 +4,20 @@ import '../ElementView.css';
 import './TextElementView.css';
 
 type TextElementViewProps = {
-  textElement: TextElement;
+  element: TextElement;
 }
 
-function TextElementView({ textElement }: TextElementViewProps): JSX.Element {
+function TextElementView({ element }: TextElementViewProps): JSX.Element {
   const textElementStyles = {
-    color: textElement.color,
-    fontFamily: textElement.font,
-    fontSize: textElement.size,
+    color: element.color,
+    fontFamily: element.font,
+    fontSize: element.size,
 
-    width: textElement.dimensions.width - 2,
-    height: textElement.dimensions.height - 2,
+    width: element.dimensions.width - 2,
+    height: element.dimensions.height - 2,
 
-    left: textElement.position.x,
-    top: textElement.position.y,
+    left: element.position.x,
+    top: element.position.y,
   };
 
   return (
@@ -25,7 +25,7 @@ function TextElementView({ textElement }: TextElementViewProps): JSX.Element {
       className="workspace__element-view workspace__element-view_text"
       style={textElementStyles}
     >
-      {textElement.value}</div>
+      {element.value}</div>
   );
 }
 
