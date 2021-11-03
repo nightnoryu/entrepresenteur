@@ -1,9 +1,7 @@
 import React from 'react';
 import './Workspace.css';
 import { BackgroundType, ElementType, PrimitiveType, Slide } from '../../model/types';
-import TextElementView from './elements/text/TextElementView';
-import ImageElementView from './elements/image/ImageElementView';
-import PrimitiveElementView from './elements/primitive/PrimitiveElementView';
+import SlideView from '../common/slideview/SlideView';
 
 const initialSlide: Slide = {
   id: 'slide1',
@@ -90,28 +88,9 @@ const initialSlide: Slide = {
 };
 
 function Workspace(): JSX.Element {
-  const slideStyle = initialSlide.background.type == BackgroundType.SOLID
-    ? {
-      backgroundColor: initialSlide.background.color,
-    }
-    : {
-      background: `url(${initialSlide.background.src})`,
-    };
-
   return (
     <div className="workspace">
-      <div className="workspace__current-slide" style={slideStyle}>
-        {initialSlide.elements.map(element => {
-          switch (element.type) {
-          case ElementType.TEXT:
-            return <TextElementView element={element} />;
-          case ElementType.IMAGE:
-            return <ImageElementView element={element} />;
-          case ElementType.PRIMITIVE:
-            return <PrimitiveElementView element={element} />;
-          }
-        })}
-      </div>
+      <SlideView slide={initialSlide} scaleFactor={1} />
     </div>
   );
 }

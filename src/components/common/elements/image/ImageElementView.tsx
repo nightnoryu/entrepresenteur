@@ -9,8 +9,8 @@ type ImageElementViewProps = {
 
 function ImageElementView({ element }: ImageElementViewProps): JSX.Element {
   const imageElementStyles = {
-    width: element.dimensions.width - 2,
-    height: element.dimensions.height - 2,
+    width: element.dimensions.width,
+    height: element.dimensions.height,
 
     left: element.position.x,
     top: element.position.y,

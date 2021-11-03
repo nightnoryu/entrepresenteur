@@ -11,8 +11,8 @@ function RectanglePrimitive({ element }: RectanglePrimitiveProps): JSX.Element {
   return (
     <svg viewBox={svgViewBox} xmlns="http://www.w3.org/2000/svg">
       <rect
-        width={element.dimensions.width - 1}
-        height={element.dimensions.height - 1}
+        width={element.dimensions.width}
+        height={element.dimensions.height}
         fill={element.fill}
         stroke={element.stroke}
       />
