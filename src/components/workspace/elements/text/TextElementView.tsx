@@ -1,6 +1,6 @@
 import React from 'react';
-import { TextElement } from '../../../model/types';
-import './ElementView.css';
+import { TextElement } from '../../../../model/types';
+import '../ElementView.css';
 import './TextElementView.css';
 
 type TextElementViewProps = {
@@ -13,8 +13,8 @@ function TextElementView({ textElement }: TextElementViewProps): JSX.Element {
     fontFamily: textElement.font,
     fontSize: textElement.size,
 
-    width: textElement.dimensions.width,
-    height: textElement.dimensions.height,
+    width: textElement.dimensions.width - 2,
+    height: textElement.dimensions.height - 2,
 
     left: textElement.position.x,
     top: textElement.position.y,

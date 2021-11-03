@@ -1,9 +1,9 @@
 import React from 'react';
 import './Workspace.css';
-import { BackgroundType, ElementType, Slide } from '../../model/types';
-import TextElementView from './elements/TextElementView';
-import ImageElementView from './elements/ImageElementView';
-import PrimitiveElementView from './elements/PrimitiveElementView';
+import { BackgroundType, ElementType, PrimitiveType, Slide } from '../../model/types';
+import TextElementView from './elements/text/TextElementView';
+import ImageElementView from './elements/image/ImageElementView';
+import PrimitiveElementView from './elements/primitive/PrimitiveElementView';
 
 const initialSlide: Slide = {
   id: 'slide1',
@@ -40,6 +40,51 @@ const initialSlide: Slide = {
         height: 100,
       },
       src: 'https://sun9-52.userapi.com/impg/hfp3GegAiTarASchXrdeEHs2mZxuWzSRlZYKwQ/KGBV_Z07zM8.jpg?size=737x647&quality=95&sign=6fed5591ff3f39e8304ea05d3e4cf8d4&type=album',
+    },
+    {
+      id: 'element3',
+      type: ElementType.PRIMITIVE,
+      position: {
+        x: 500,
+        y: 400,
+      },
+      dimensions: {
+        width: 100,
+        height: 100,
+      },
+      primitiveType: PrimitiveType.RECTANGLE,
+      fill: '#ff0000',
+      stroke: '#000000',
+    },
+    {
+      id: 'element4',
+      type: ElementType.PRIMITIVE,
+      position: {
+        x: 100,
+        y: 100,
+      },
+      dimensions: {
+        width: 100,
+        height: 100,
+      },
+      primitiveType: PrimitiveType.TRIANGLE,
+      fill: '#ff0000',
+      stroke: '#000000',
+    },
+    {
+      id: 'element5',
+      type: ElementType.PRIMITIVE,
+      position: {
+        x: 100,
+        y: 400,
+      },
+      dimensions: {
+        width: 100,
+        height: 100,
+      },
+      primitiveType: PrimitiveType.ELLIPSE,
+      fill: '#ff0000',
+      stroke: '#000000',
     },
   ],
 };
