@@ -58,11 +58,11 @@ function SlideView({ slide, scaleFactor }: SlideViewProps): JSX.Element {
         const scaledElement = scaleElement(element, scaleFactor);
         switch (scaledElement.type) {
         case ElementType.TEXT:
-          return <TextElementView element={scaledElement} />;
+          return <TextElementView key={element.id} element={scaledElement} />;
         case ElementType.IMAGE:
-          return <ImageElementView element={scaledElement} />;
+          return <ImageElementView key={element.id} element={scaledElement} />;
         case ElementType.PRIMITIVE:
-          return <PrimitiveElementView element={scaledElement} />;
+          return <PrimitiveElementView key={element.id} element={scaledElement} />;
         }
       })}
     </div>
