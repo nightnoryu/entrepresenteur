@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BackgroundType, Dimensions, ElementType, Slide, SlideElement } from '../../../model/types';
 import TextElementView from '../elements/text/TextElementView';
 import ImageElementView from '../elements/image/ImageElementView';
 import PrimitiveElementView from '../elements/primitive/PrimitiveElementView';
 import './SlideView.css';
+import SettingsContext from '../../../context/SettingsContext';
 
 type SlideViewProps = {
   slide: Slide;
@@ -41,6 +42,10 @@ function scaleElement(element: SlideElement, scaleFactor?: number): SlideElement
 }
 
 function SlideView({ slide, scaleFactor }: SlideViewProps): JSX.Element {
+  // TODO: implement slideview scaling according to the slide sizes ratio
+  const settings = useContext(SettingsContext);
+  console.log(settings.slideViewWidth, settings.slideViewHeight);
+
   const scaledDimensions = getScaledSlideDimensions(slide, scaleFactor);
   const slideStyle = slide.background.type == BackgroundType.SOLID
     ? {
