@@ -4,20 +4,17 @@ import SlidePanel from './components/slidepanel/SlidePanel';
 import Workspace from './components/workspace/Workspace';
 import './App.css';
 import useConfirmLeaving from './hooks/useConfirmLeaving';
-import SettingsContext, { settings } from './context/SettingsContext';
 
 function App(): JSX.Element {
   useConfirmLeaving();
 
   return (
     <div className="app">
-      <SettingsContext.Provider value={settings}>
-        <Ribbon />
-        <div className="app-main">
-          <SlidePanel />
-          <Workspace />
-        </div>
-      </SettingsContext.Provider>
+      <Ribbon />
+      <div className="app-main">
+        <SlidePanel />
+        <Workspace />
+      </div>
     </div>
   );
 }
