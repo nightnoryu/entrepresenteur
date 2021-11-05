@@ -1,16 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 
-function useSlideViewScaleFactor<T extends HTMLElement>(): [React.RefObject<T>, number] {
+function useSlideViewScaleFactor<T extends HTMLElement>(
+  ref: RefObject<T> | null,
+): number {
   const [scaleFactor, setScaleFactor] = useState(1);
-  const ref = useRef<T>(null);
   useEffect(() => {
-    const node = ref.current;
+    const node = ref?.current;
     if (node) {
       setScaleFactor(800 / node.clientWidth);
     }
   }, [ref]);
 
-  return [ref, scaleFactor];
+  return scaleFactor;
 }
 
 export default useSlideViewScaleFactor;

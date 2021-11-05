@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BackgroundType, Dimensions, ElementType, Slide, SlideElement } from '../../../model/types';
 import TextElementView from '../elements/text/TextElementView';
 import ImageElementView from '../elements/image/ImageElementView';
@@ -12,15 +12,12 @@ type SlideViewProps = {
 
 function getScaledSlideDimensions(slide: Slide, scaleFactor?: number): Dimensions {
   if (scaleFactor === undefined) {
-    return {
-      width: 800,
-      height: 600,
-    };
+    return slide.dimensions;
   }
 
   return {
-    width: 800 / scaleFactor,
-    height: 600 / scaleFactor,
+    width: slide.dimensions.width / scaleFactor,
+    height: slide.dimensions.height / scaleFactor,
   };
 }
 
@@ -42,7 +39,7 @@ function scaleElement(element: SlideElement, scaleFactor?: number): SlideElement
 
 function SlideView({ slide, scaleFactor }: SlideViewProps): JSX.Element {
   const scaledDimensions = getScaledSlideDimensions(slide, scaleFactor);
-  const slideStyle = slide.background.type == BackgroundType.SOLID
+  let slideStyle = slide.background.type == BackgroundType.SOLID
     ? {
       backgroundColor: slide.background.color,
       ...scaledDimensions,
@@ -51,6 +48,14 @@ function SlideView({ slide, scaleFactor }: SlideViewProps): JSX.Element {
       background: `url(${slide.background.src})`,
       ...scaledDimensions,
     };
+
+  useEffect(() => {
+    const scaledDimensions = getScaledSlideDimensions(slide, scaleFactor);
+    slideStyle = {
+      ...slideStyle,
+      ...scaledDimensions,
+    };
+  }, [scaleFactor]);
 
   return (
     <div className="slideview" style={slideStyle}>
