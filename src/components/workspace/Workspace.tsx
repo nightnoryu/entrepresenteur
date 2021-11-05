@@ -90,7 +90,9 @@ const initialSlide: Slide = {
 function Workspace(): JSX.Element {
   return (
     <div className="workspace">
-      <SlideView slide={initialSlide} scaleFactor={1} />
+      <div className="workspace__slideview-wrapper">
+        <SlideView slide={initialSlide} scaleFactor={1} />
+      </div>
     </div>
   );
 }
