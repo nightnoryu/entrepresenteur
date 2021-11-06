@@ -1,8 +1,7 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import './Workspace.css';
 import { BackgroundType, ElementType, PrimitiveType, Slide } from '../../model/types';
 import SlideView from '../common/slideview/SlideView';
-import useSlideViewScaleFactor from '../../hooks/useSlideViewScaleFactor';
 
 const initialSlide: Slide = {
   id: 'slide1',
@@ -93,13 +92,10 @@ const initialSlide: Slide = {
 };
 
 function Workspace(): JSX.Element {
-  const ref = useRef(null);
-  const scaleFactor = useSlideViewScaleFactor<HTMLDivElement>(ref);
-
   return (
     <div className="workspace">
-      <div className="workspace__slideview-wrapper" ref={ref}>
-        <SlideView slide={initialSlide} scaleFactor={scaleFactor} />
+      <div className="workspace__slideview-wrapper">
+        <SlideView slide={initialSlide} />
       </div>
     </div>
   );

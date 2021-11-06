@@ -1,24 +1,55 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { BackgroundType, Dimensions, ElementType, Slide, SlideElement } from '../../../model/types';
 import TextElementView from '../elements/text/TextElementView';
 import ImageElementView from '../elements/image/ImageElementView';
 import PrimitiveElementView from '../elements/primitive/PrimitiveElementView';
 import './SlideView.css';
+import useElementDimensions from '../../../hooks/useElementDimensions';
 
 type SlideViewProps = {
   slide: Slide;
-  scaleFactor?: number;
 }
 
-function getScaledSlideDimensions(slide: Slide, scaleFactor?: number): Dimensions {
-  if (scaleFactor === undefined) {
-    return slide.dimensions;
-  }
+function SlideView({ slide }: SlideViewProps): JSX.Element {
+  const slideBackgroundStyle = getSlideBackgroundStyle(slide);
 
-  return {
-    width: slide.dimensions.width / scaleFactor,
-    height: slide.dimensions.height / scaleFactor,
-  };
+  const ref = useRef(null);
+  const dimensions = useElementDimensions(ref);
+
+  return (
+    <div
+      className="slideview"
+      style={slideBackgroundStyle}
+      ref={ref}
+    >
+      {slide.elements.map(element => {
+        const scaleFactor = calculateScaleFactor(dimensions);
+        const scaledElement = scaleElement(element, scaleFactor);
+        switch (scaledElement.type) {
+        case ElementType.TEXT:
+          return <TextElementView key={element.id} element={scaledElement} />;
+        case ElementType.IMAGE:
+          return <ImageElementView key={element.id} element={scaledElement} />;
+        case ElementType.PRIMITIVE:
+          return <PrimitiveElementView key={element.id} element={scaledElement} />;
+        }
+      })}
+    </div>
+  );
+}
+
+function getSlideBackgroundStyle(slide: Slide) {
+  return slide.background.type == BackgroundType.SOLID
+    ? {
+      backgroundColor: slide.background.color,
+    }
+    : {
+      background: `url(${slide.background.src})`,
+    };
+}
+
+function calculateScaleFactor(dimensions: Dimensions): number {
+  return 800 / dimensions.width;
 }
 
 function scaleElement(element: SlideElement, scaleFactor?: number): SlideElement {
@@ -35,35 +66,6 @@ function scaleElement(element: SlideElement, scaleFactor?: number): SlideElement
         y: element.position.y / scaleFactor,
       },
     };
-}
-
-function SlideView({ slide, scaleFactor }: SlideViewProps): JSX.Element {
-  const scaledDimensions = getScaledSlideDimensions(slide, scaleFactor);
-  const slideStyle = slide.background.type == BackgroundType.SOLID
-    ? {
-      backgroundColor: slide.background.color,
-      ...scaledDimensions,
-    }
-    : {
-      background: `url(${slide.background.src})`,
-      ...scaledDimensions,
-    };
-
-  return (
-    <div className="slideview" style={slideStyle}>
-      {slide.elements.map(element => {
-        const scaledElement = scaleElement(element, scaleFactor);
-        switch (scaledElement.type) {
-        case ElementType.TEXT:
-          return <TextElementView key={element.id} element={scaledElement} />;
-        case ElementType.IMAGE:
-          return <ImageElementView key={element.id} element={scaledElement} />;
-        case ElementType.PRIMITIVE:
-          return <PrimitiveElementView key={element.id} element={scaledElement} />;
-        }
-      })}
-    </div>
-  );
 }
 
 export default SlideView;
