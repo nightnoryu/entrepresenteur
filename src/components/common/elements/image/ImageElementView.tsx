@@ -8,22 +8,23 @@ type ImageElementViewProps = {
 }
 
 function ImageElementView({ element }: ImageElementViewProps): JSX.Element {
-  const imageElementStyles = {
-    width: element.dimensions.width,
-    height: element.dimensions.height,
-
-    left: element.position.x,
-    top: element.position.y,
-  };
-
   return (
     <img
       src={element.src}
       alt="Image"
       className="workspace__element-view workspace__element-view_image"
-      style={imageElementStyles}
+      style={getImageElementStyles(element)}
     />
   );
 }
 
 export default ImageElementView;
+
+function getImageElementStyles(element: ImageElement) {
+  return {
+    width: element.dimensions.width,
+    height: element.dimensions.height,
+    left: element.position.x,
+    top: element.position.y,
+  };
+}

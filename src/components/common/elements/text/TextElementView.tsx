@@ -8,25 +8,25 @@ type TextElementViewProps = {
 }
 
 function TextElementView({ element }: TextElementViewProps): JSX.Element {
-  const textElementStyles = {
-    color: element.color,
-    fontFamily: element.font,
-    fontSize: element.size,
-
-    width: element.dimensions.width,
-    height: element.dimensions.height,
-
-    left: element.position.x,
-    top: element.position.y,
-  };
-
   return (
     <div
       className="workspace__element-view workspace__element-view_text"
-      style={textElementStyles}
+      style={getTextElementStyles(element)}
     >
       {element.value}</div>
   );
 }
 
 export default TextElementView;
+
+function getTextElementStyles(element: TextElement) {
+  return {
+    color: element.color,
+    fontFamily: element.font,
+    fontSize: element.size,
+    width: element.dimensions.width,
+    height: element.dimensions.height,
+    left: element.position.x,
+    top: element.position.y,
+  };
+}
