@@ -5,10 +5,6 @@ import SlideView from '../common/slideview/SlideView';
 
 const initialSlide: Slide = {
   id: 'slide1',
-  dimensions: {
-    width: 800,
-    height: 600,
-  },
   background: {
     type: BackgroundType.SOLID,
     color: '#ffffff',

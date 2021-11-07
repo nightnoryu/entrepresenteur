@@ -70,7 +70,6 @@ export type ImageBackground = {
 
 export type Slide = {
   id: UUID;
-  dimensions: Dimensions;
   background: Background;
   elements: SlideElement[];
 };

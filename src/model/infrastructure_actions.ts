@@ -7,10 +7,6 @@ import { generateUUID, UUID } from './uuid';
 export function createNewSlide(): Slide {
   return {
     id: generateUUID(),
-    dimensions: {
-      width: 800,
-      height: 600,
-    },
     background: {
       type: BackgroundType.SOLID,
       color: '#ffffff',
