@@ -1,17 +1,20 @@
 .ribbon
 {
     height: 10vh;
-    background-color: red;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    background: linear-gradient(180deg, #252F3C 0%, #252F3C 100%);
 }
 
 .presentation-name
 {
-    margin-bottom: 25px;
+    margin: 25px;
 }
 
 .menu
 {
-
+    margin-top: 4vh;
 }
 
 .menu a
@@ -44,7 +47,7 @@
 {
     color: black;
     padding: 17px 68px;
-    background-color: white;
+    background-color: #FFD269;
 }
 
 .sub-menu__list
@@ -53,7 +56,7 @@
     display: none;
     position: absolute;
     left: 0;
-    top: 5px;
+    top: 14px;
     padding: 20px 0 0 0;
 }
 
@@ -64,7 +67,7 @@
 
 .sub-menu__list > li
 {
-    background-color: white;
+    background-color: #FFD269;
 }
 
 .sub-menu__link
@@ -79,14 +82,14 @@
     display: none;
     position: absolute;
     top: 0;
-    left: 100%;
+    left: 92%;
     padding: 0 0 0 5px;
     max-width: 250px;
 }
 
 .sub-sub-menu__list > li
 {
-    background-color: white;
+    background-color: #FFD269;
 }
 
 .sub-sub-menu__link
