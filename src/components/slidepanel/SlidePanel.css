@@ -1,17 +1,17 @@
-.b-slidepanel
+.slidepanel
 {
     width: 25%;
     background-color: #fffede;
 }
 
-.b-slidepanel__slide
+.slidepanel__slide
 {
     width: 60%;
     height: 20%;
-    padding: 4% 16% 4% 26%;
+    padding: 4% 16% 4% 24%;
 }
 
-.b-slidepanel__slide::before
+.slidepanel__slide::before
 {
     fill: #d8b077;
     float: left;
@@ -25,12 +25,12 @@
     height: 40px;
 }
 
-.b-slidepanel__slide:hover
+.slidepanel__slide:hover
 {
     background:#fff2ab;
 }
 
-.b-slidepanel__slide-thumbnail
+.slidepanel__slide-thumbnail
 {
     width: 98%;
     height: 87%;

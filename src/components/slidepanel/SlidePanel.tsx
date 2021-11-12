@@ -3,11 +3,11 @@ import './SlidePanel.css';
 
 function SlidePanel(): JSX.Element {
     return (
-        <div className="b-slidepanel">
+        <div className="slidepanel">
             SlidePanel
-            <div className="b-slidepanel__slide">
+            <div className="slidepanel__slide">
                 Slide block
-                <div className='b-slidepanel__slide-thumbnail'>
+                <div className='slidepanel__slide-thumbnail'>
                     thumbnail
                 </div>
             </div>
