@@ -1,52 +1,13 @@
-import {
-  BackgroundType,
-  Dimensions,
-  Editor,
-  ElementType,
-  Position,
-  Presentation,
-  PrimitiveType,
-  Slide,
-} from './types';
+import { BackgroundType, Dimensions, Editor, ElementType, Position, Presentation, PrimitiveType, } from './types';
 import { generateUUID, UUID } from './uuid';
 import {
   concatWithSelectedSlideElements,
+  createNewSlide,
   isCurrentElement,
   isCurrentSlide,
   isRedoAvailable,
   selectNearestUnselectedSlide,
 } from './infrastructure_actions';
-
-function createNewSlide(): Slide {
-  return {
-    id: generateUUID(),
-    background: {
-      type: BackgroundType.SOLID,
-      color: '#ffffff',
-    },
-    elements: [],
-  };
-}
-
-function createNewPresentation(): Presentation {
-  return {
-    title: 'New Presentation',
-    slides: [createNewSlide()],
-  };
-}
-
-function createEditor(presentation: Presentation): Editor {
-  return {
-    presentation,
-    selectedSlideIDs:
-      presentation.slides.length > 0 ? [presentation.slides[0].id] : [],
-    selectedElementIDs: [],
-    history: {
-      undoStack: [],
-      currentState: -1,
-    },
-  };
-}
 
 function serializePresentation(presentation: Presentation): string {
   return JSON.stringify(presentation);
@@ -56,7 +17,7 @@ function unserializePresentation(json: string): Presentation {
   return JSON.parse(json);
 }
 
-function setPresentationTitle(
+export function setPresentationTitle(
   presentation: Presentation,
   title: string
 ): Presentation {
@@ -66,7 +27,7 @@ function setPresentationTitle(
   };
 }
 
-function addSlide(editor: Editor): Editor {
+export function addSlide(editor: Editor): Editor {
   const newSlide = createNewSlide();
 
   return {
@@ -79,7 +40,7 @@ function addSlide(editor: Editor): Editor {
           ? [newSlide]
           : editor.presentation.slides.flatMap(slide =>
             isCurrentSlide(slide, editor.selectedSlideIDs)
-              ? [newSlide, slide]
+              ? [slide, newSlide]
               : slide
           ),
     },

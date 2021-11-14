@@ -1,5 +1,45 @@
-import { Editor, History, Slide, SlideElement } from './types';
-import { UUID } from './uuid';
+import { BackgroundType, Editor, History, Presentation, Slide, SlideElement } from './types';
+import { generateUUID, UUID } from './uuid';
+
+/**
+ * Create default slide
+ */
+export function createNewSlide(): Slide {
+  return {
+    id: generateUUID(),
+    background: {
+      type: BackgroundType.SOLID,
+      color: '#ffffff',
+    },
+    elements: [],
+  };
+}
+
+/**
+ * Create new presentation
+ */
+export function createNewPresentation(): Presentation {
+  return {
+    title: 'New Presentation',
+    slides: [createNewSlide()],
+  };
+}
+
+/**
+ * Create root model object
+ */
+export function createEditor(presentation: Presentation): Editor {
+  return {
+    presentation,
+    selectedSlideIDs:
+      presentation.slides.length > 0 ? [presentation.slides[0].id] : [],
+    selectedElementIDs: [],
+    history: {
+      undoStack: [],
+      currentState: -1,
+    },
+  };
+}
 
 /**
  * Returns new slide list with the element appended to the element list of the slide at the specified index
@@ -40,17 +80,13 @@ export function selectNearestUnselectedSlide(
   slides: Slide[],
   selectedSlideIDs: UUID[]
 ): UUID[] {
-  const firstSelectedSlideIndex = slides.findIndex(slide =>
-    isCurrentSlide(slide, selectedSlideIDs)
-  );
+  const firstSelectedSlideIndex = slides.findIndex(slide => isCurrentSlide(slide, selectedSlideIDs));
 
   if (firstSelectedSlideIndex > 0) {
     return [slides[firstSelectedSlideIndex - 1].id];
   }
 
-  const newSlides = slides.filter(
-    slide => !selectedSlideIDs.includes(slide.id)
-  );
+  const newSlides = slides.filter(slide => !selectedSlideIDs.includes(slide.id));
 
   if (newSlides.length === 0) {
     return [];
