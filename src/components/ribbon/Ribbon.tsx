@@ -1,10 +1,14 @@
 import React from 'react';
 import './Ribbon.css';
 
-function Ribbon(): JSX.Element {
+type RibbonProps = {
+  presentationTitle: string;
+}
+
+function Ribbon({ presentationTitle }: RibbonProps): JSX.Element {
   return (
     <div className="ribbon">
-      <h1 className="presentation-name">New presentation</h1>
+      <h1 className="presentation-name">{presentationTitle}</h1>
       <nav className="menu">
         <ul className="menu__list">
           <li>

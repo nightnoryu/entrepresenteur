@@ -4,16 +4,24 @@ import SlidePanel from './components/slidepanel/SlidePanel';
 import Workspace from './components/workspace/Workspace';
 import './App.css';
 import useConfirmLeaving from './hooks/useConfirmLeaving';
+import { Editor } from './model/types';
+import { isCurrentSlide } from './model/infrastructure_actions';
 
-function App(): JSX.Element {
+type AppProps = {
+  editor: Editor;
+}
+
+function App({ editor }: AppProps): JSX.Element {
+  const currentSlide = editor.presentation.slides.find(slide => isCurrentSlide(slide, editor.selectedSlideIDs));
+
   useConfirmLeaving();
 
   return (
     <div className="app">
-      <Ribbon />
+      <Ribbon presentationTitle={editor.presentation.title} />
       <div className="app-main">
-        <SlidePanel />
-        <Workspace />
+        <SlidePanel slides={editor.presentation.slides} selectedSlideIDs={editor.selectedSlideIDs} />
+        <Workspace slide={currentSlide} selectedElementIDs={editor.selectedElementIDs} />
       </div>
     </div>
   );
