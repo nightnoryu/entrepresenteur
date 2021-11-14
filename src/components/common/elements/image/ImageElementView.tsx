@@ -13,18 +13,14 @@ function ImageElementView({ element }: ImageElementViewProps): JSX.Element {
       src={element.src}
       alt="Image"
       className="workspace__element-view workspace__element-view_image"
-      style={getImageElementStyles(element)}
+      style={{
+        width: element.dimensions.width,
+        height: element.dimensions.height,
+        left: element.position.x,
+        top: element.position.y,
+      }}
     />
   );
 }
 
 export default ImageElementView;
-
-function getImageElementStyles(element: ImageElement) {
-  return {
-    width: element.dimensions.width,
-    height: element.dimensions.height,
-    left: element.position.x,
-    top: element.position.y,
-  };
-}

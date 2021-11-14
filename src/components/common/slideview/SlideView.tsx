@@ -1,10 +1,11 @@
 import React, { useRef } from 'react';
-import { BackgroundType, Dimensions, ElementType, Slide, SlideElement } from '../../../model/types';
+import { ElementType, Slide } from '../../../model/types';
 import TextElementView from '../elements/text/TextElementView';
 import ImageElementView from '../elements/image/ImageElementView';
 import PrimitiveElementView from '../elements/primitive/PrimitiveElementView';
 import './SlideView.css';
 import useElementDimensions from '../../../hooks/useElementDimensions';
+import { calculateScaleFactor, getSlideBackgroundStyle, scaleElement } from '../../../common/componentsFunctions';
 
 type SlideViewProps = {
   slide: Slide;
@@ -36,36 +37,6 @@ function SlideView({ slide }: SlideViewProps): JSX.Element {
       })}
     </div>
   );
-}
-
-function getSlideBackgroundStyle(slide: Slide) {
-  return slide.background.type == BackgroundType.SOLID
-    ? {
-      backgroundColor: slide.background.color,
-    }
-    : {
-      background: `url(${slide.background.src})`,
-    };
-}
-
-function calculateScaleFactor(dimensions: Dimensions): number {
-  return 800 / dimensions.width;
-}
-
-function scaleElement(element: SlideElement, scaleFactor?: number): SlideElement {
-  return scaleFactor === undefined
-    ? element
-    : {
-      ...element,
-      dimensions: {
-        width: element.dimensions.width / scaleFactor,
-        height: element.dimensions.height / scaleFactor,
-      },
-      position: {
-        x: element.position.x / scaleFactor,
-        y: element.position.y / scaleFactor,
-      },
-    };
 }
 
 export default SlideView;
