@@ -15,6 +15,7 @@ function SlideView({ slide }: SlideViewProps): JSX.Element {
 
   const ref = useRef(null);
   const dimensions = useElementDimensions(ref);
+  const scaleFactor = calculateScaleFactor(dimensions);
 
   return (
     <div
@@ -23,7 +24,6 @@ function SlideView({ slide }: SlideViewProps): JSX.Element {
       ref={ref}
     >
       {slide.elements.map(element => {
-        const scaleFactor = calculateScaleFactor(dimensions);
         const scaledElement = scaleElement(element, scaleFactor);
         switch (scaledElement.type) {
         case ElementType.TEXT:
