@@ -1,6 +1,7 @@
 import React from 'react';
 import './SlidePanel.css';
 import { UUID } from '../../model/uuid';
+import SlideView from '../common/slideview/SlideView';
 import { Slide } from '../../model/types';
 
 type SlidePanelProps = {
@@ -11,11 +12,8 @@ type SlidePanelProps = {
 function SlidePanel({ slides, selectedSlideIDs }: SlidePanelProps): JSX.Element {
   return (
     <div className="slidepanel">
-      SlidePanel
       <div className="slidepanel__slide">
-        Slide block
         <div className="slidepanel__slide-thumbnail">
-          thumbnail
         </div>
       </div>
     </div>);
