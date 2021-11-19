@@ -4,6 +4,7 @@ import {Background, Slide, SlideElement} from '../../../../model/types';
 import './SlideThumbnail.css';
 import SlideView from '../../../common/slideview/SlideView';
 import {UUID} from '../../../../model/uuid';
+import {createNewSlide} from '../../../../model/infrastructure_actions';
 
 type SlideThumbnailProps = {
   slide?: Slide;
@@ -15,12 +16,12 @@ type SlideThumbnailProps = {
 };
 
 export function SlideThumbnail({slide, elements, background, index, selected, onSelect }: SlideThumbnailProps) {
-  // const displayedSlide = slide || createNewSlide();
+  const displayedSlide = slide || createNewSlide();
 
   return (
       <div className='slidethumbnail'>
         <span className='slideindex'>{index}</span>
-        {/*<SlideView slide={displayedSlide} />*/}
+        <SlideView slide={displayedSlide} />
       </div>
   );
 }

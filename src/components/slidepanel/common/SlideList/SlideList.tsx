@@ -1,23 +1,24 @@
-import React from "react";
-import {Slide} from "../../../../model/types";
+import React from 'react';
+import {Slide} from '../../../../model/types';
 import {SlideBlock} from '../SlideBlock/SlideBlock';
-import './SlideList.css'
+import './SlideList.css';
 import {SlideThumbnail} from '../SlideThumbnail/SlideThumbnail';
+import {UUID} from '../../../../model/uuid';
 
 type SlideListProps = {
   slides?: Slide[];
-  selectedslides: number[]
+  selectedSlides?: UUID[];
 }
 
-export function SlideList({slides, selectedslides}: SlideListProps) {
+export function SlideList({slides, selectedSlides}: SlideListProps) {
   const slidelist = slides?.map((slide, index) => (
     <SlideThumbnail
-      key={index}
+      key={slide.id}
       index={index + 1}
       background={slide.background}
-      selected={selectedslides.some((id) => id === index)}
-    />))
+      selected={selectedSlides?.includes(slide.id)}
+    />));
   return (
-    <>{slidelist}</>
-  )
+    <div>{slidelist}</div>
+  );
 }

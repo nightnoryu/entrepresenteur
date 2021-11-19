@@ -3,6 +3,7 @@ import './SlidePanel.css';
 import {UUID} from '../../model/uuid';
 import {Slide} from '../../model/types';
 import {SlideBlock} from './common/SlideBlock/SlideBlock';
+import {SlideList} from './common/SlideList/SlideList';
 
 type SlidePanelProps = {
   slides: Slide[];
@@ -12,7 +13,7 @@ type SlidePanelProps = {
 function SlidePanel({slides, selectedSlideIDs}: SlidePanelProps): JSX.Element {
   return (
       <div className="slidepanel">
-          <SlideBlock  />
+          <SlideList />
       </div>);
 }
 
