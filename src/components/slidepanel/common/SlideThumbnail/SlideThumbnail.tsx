@@ -1,20 +1,27 @@
-import React, {JSXElementConstructor} from 'react';
-import  '../../../common/slideview/SlideView';
-import {Slide} from '../../../../model/types';
+import React from 'react';
+import '../../../common/slideview/SlideView';
+import {Background, Slide, SlideElement} from '../../../../model/types';
 import './SlideThumbnail.css';
+import SlideView from '../../../common/slideview/SlideView';
+import {UUID} from '../../../../model/uuid';
 
 type SlideThumbnailProps = {
-    slide: Slide;
+  slide?: Slide;
+  elements?: SlideElement[];
+  background?: Background;
+  index?: number;
+  selected?: boolean;
+  onSelect?: () => void;
 };
 
-function SlideThumbnail({ slide }: SlideThumbnailProps): JSX.Element {
-    return (
-        <div>
+export function SlideThumbnail({slide, elements, background, index, selected, onSelect }: SlideThumbnailProps) {
+  // const displayedSlide = slide || createNewSlide();
 
-        </div>
-    );
+  return (
+      <div className='slidethumbnail'>
+        <span className='slideindex'>{index}</span>
+        {/*<SlideView slide={displayedSlide} />*/}
+      </div>
+  );
 }
-
-export default SlideThumbnail;
-
 

@@ -1,19 +1,21 @@
 import React, {JSXElementConstructor} from 'react';
 import './SlideBlock.css';
-// import {ReactComponent as SlideSVG} from '../images/dots_orange.svg';
-
+import {SlideThumbnail} from '../SlideThumbnail/SlideThumbnail';
+import {selectSlide} from '../../../../model/actions';
 
 type SlideBlockProps = {
-    slidenumber: number;
+  index?: number;
+  selected?: boolean;
+  onSelect?: () => void;
 }
 
-function SlideBlock({ slidenumber }: SlideBlockProps): JSX.Element {
-    return (
-        <div>
-            {/*<div className='slideicon'>*/}
-            {/*    <SlideSVG />*/}
-            {/*</div>*/}
-        </div>
-    );
+export function SlideBlock({index, selected, onSelect}: SlideBlockProps) {
+  return(
+      <div className='slideblock'
+      onClick={(event) =>{
+        onSelect && onSelect();
+      }}>
+        <SlideThumbnail  />
+      </div>
+  );
 }
-export default SlideBlock;
