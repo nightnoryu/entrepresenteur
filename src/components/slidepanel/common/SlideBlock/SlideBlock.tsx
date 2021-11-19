@@ -1,15 +1,20 @@
-import React, {JSXElementConstructor} from 'react';
+import React from 'react';
 import './SlideBlock.css';
+import { SlideThumbnail } from '../SlideThumbnail/SlideThumbnail';
 
 type SlideBlockProps = {
-    slidenumber: Number;
+  index?: number;
+  selected?: boolean;
+  onSelect?: () => void;
 }
 
-function SlideBlock({ slidenumber }: SlideBlockProps): JSX.Element {
-    return (
-        <div className='slideblock'>
-            <p>{slidenumber}</p>
-        </div>
-    )
+export function SlideBlock({ index, selected, onSelect }: SlideBlockProps) {
+  return (
+    <div className="slideblock"
+         onClick={(event) => {
+           onSelect && onSelect();
+         }}>
+      <SlideThumbnail />
+    </div>
+  );
 }
-export default SlideBlock;

@@ -2,6 +2,7 @@ import React from 'react';
 import './SlidePanel.css';
 import { UUID } from '../../model/uuid';
 import { Slide } from '../../model/types';
+import SlideList from './common/SlideList/SlideList';
 
 type SlidePanelProps = {
   slides: Slide[];
@@ -11,13 +12,7 @@ type SlidePanelProps = {
 function SlidePanel({ slides, selectedSlideIDs }: SlidePanelProps): JSX.Element {
   return (
     <div className="slidepanel">
-      SlidePanel
-      <div className="slidepanel__slide">
-        Slide block
-        <div className="slidepanel__slide-thumbnail">
-          thumbnail
-        </div>
-      </div>
+      <SlideList slides={slides} selectedSlides={selectedSlideIDs} />
     </div>);
 }
 
