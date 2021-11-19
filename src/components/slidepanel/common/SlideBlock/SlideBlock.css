@@ -1,5 +1,28 @@
 .slideblock
 {
-    width: 60%;
-    height: 20%;
+  width: 60%;
+  height: 15%;
+  padding: 3% 16% 5% 24%;
+  cursor: pointer;
+}
+
+.slideblock:hover
+{
+  background: #fff2ab;
+  transition: 0.4s;
+}
+
+.slideicon
+{
+  margin-left: -30%;
+  opacity: 0;
+  display: block;
+  float: left;
+  transition: 0.4s;
+}
+
+.slideblock:hover > .slideicon
+{
+  opacity: 1;
+  transition: 0.4s;
 }
