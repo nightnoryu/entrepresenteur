@@ -1,28 +1,24 @@
 import React from 'react';
 import '../../../common/slideview/SlideView';
-import {Background, Slide, SlideElement} from '../../../../model/types';
+import { Slide } from '../../../../model/types';
 import './SlideThumbnail.css';
 import SlideView from '../../../common/slideview/SlideView';
-import {UUID} from '../../../../model/uuid';
-import {createNewSlide} from '../../../../model/infrastructure_actions';
+import { createNewSlide } from '../../../../model/infrastructure_actions';
 
 type SlideThumbnailProps = {
   slide?: Slide;
-  elements?: SlideElement[];
-  background?: Background;
   index?: number;
   selected?: boolean;
   onSelect?: () => void;
 };
 
-export function SlideThumbnail({slide, elements, background, index, selected, onSelect }: SlideThumbnailProps) {
+export function SlideThumbnail({ slide, index, selected, onSelect }: SlideThumbnailProps) {
   const displayedSlide = slide || createNewSlide();
 
   return (
-      <div className='slidethumbnail'>
-        <span className='slideindex'>{index}</span>
-        <SlideView slide={displayedSlide} />
-      </div>
+    <div className="slidethumbnail">
+      <span className="slideindex">{index}</span>
+      <SlideView slide={displayedSlide} />
+    </div>
   );
 }
-

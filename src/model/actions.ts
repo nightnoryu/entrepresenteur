@@ -83,7 +83,7 @@ function setCurrentSlide(editor: Editor, slideID: UUID): Editor {
   };
 }
 
-function selectSlide(editor: Editor, slideID: UUID): Editor {
+export function selectSlide(editor: Editor, slideID: UUID): Editor {
   return {
     ...editor,
     selectedSlideIDs: editor.presentation.slides.flatMap(slide =>

@@ -1,7 +1,6 @@
-import React, {JSXElementConstructor} from 'react';
+import React from 'react';
 import './SlideBlock.css';
-import {SlideThumbnail} from '../SlideThumbnail/SlideThumbnail';
-import {selectSlide} from '../../../../model/actions';
+import { SlideThumbnail } from '../SlideThumbnail/SlideThumbnail';
 
 type SlideBlockProps = {
   index?: number;
@@ -9,13 +8,13 @@ type SlideBlockProps = {
   onSelect?: () => void;
 }
 
-export function SlideBlock({index, selected, onSelect}: SlideBlockProps) {
-  return(
-      <div className='slideblock'
-      onClick={(event) =>{
-        onSelect && onSelect();
-      }}>
-        <SlideThumbnail  />
-      </div>
+export function SlideBlock({ index, selected, onSelect }: SlideBlockProps) {
+  return (
+    <div className="slideblock"
+         onClick={(event) => {
+           onSelect && onSelect();
+         }}>
+      <SlideThumbnail />
+    </div>
   );
 }
