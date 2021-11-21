@@ -8,16 +8,13 @@ type ImageElementViewProps = {
 
 function ImageElementView({ element }: ImageElementViewProps): JSX.Element {
   return (
-    <img
-      src={element.src}
-      alt="Image"
+    <image
+      href={element.src}
+      x={element.position.x}
+      y={element.position.y}
+      width={element.dimensions.width}
+      height={element.dimensions.height}
       className={styles.element}
-      style={{
-        width: element.dimensions.width,
-        height: element.dimensions.height,
-        left: element.position.x,
-        top: element.position.y,
-      }}
     />
   );
 }

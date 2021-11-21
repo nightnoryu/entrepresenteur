@@ -8,19 +8,20 @@ type TextElementViewProps = {
 
 function TextElementView({ element }: TextElementViewProps): JSX.Element {
   return (
-    <div
+    <text
       className={styles.element}
+      x={element.position.x}
+      y={element.position.y}
       style={{
         color: element.color,
         fontFamily: element.font,
         fontSize: element.size,
         width: element.dimensions.width,
         height: element.dimensions.height,
-        left: element.position.x,
-        top: element.position.y,
       }}
     >
-      {element.value}</div>
+      {element.value}
+    </text>
   );
 }
 

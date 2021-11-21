@@ -1,11 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { ElementType, Slide } from '../../../model/types';
 import TextElementView from '../elements/text/TextElementView';
 import ImageElementView from '../elements/image/ImageElementView';
 import PrimitiveElementView from '../elements/primitive/PrimitiveElementView';
-import './SlideView.css';
-import useElementDimensions from '../../../hooks/useElementDimensions';
-import { calculateScaleFactor, getSlideBackgroundStyle, scaleElement } from '../../../common/componentsFunctions';
+import styles from './SlideView.module.css';
+import { getSlideBackgroundStyle } from '../../../common/componentsFunctions';
 
 type SlideViewProps = {
   slide: Slide;
@@ -14,28 +13,23 @@ type SlideViewProps = {
 function SlideView({ slide }: SlideViewProps): JSX.Element {
   const slideBackgroundStyle = getSlideBackgroundStyle(slide);
 
-  const ref = useRef(null);
-  const dimensions = useElementDimensions(ref);
-  const scaleFactor = calculateScaleFactor(dimensions);
-
   return (
-    <div
-      className="slideview"
+    <svg
+      viewBox="0 0 800 600"
+      className={styles.slideview}
       style={slideBackgroundStyle}
-      ref={ref}
     >
       {slide.elements.map(element => {
-        const scaledElement = scaleElement(element, scaleFactor);
-        switch (scaledElement.type) {
+        switch (element.type) {
         case ElementType.TEXT:
-          return <TextElementView key={element.id} element={scaledElement} />;
+          return <TextElementView key={element.id} element={element} />;
         case ElementType.IMAGE:
-          return <ImageElementView key={element.id} element={scaledElement} />;
+          return <ImageElementView key={element.id} element={element} />;
         case ElementType.PRIMITIVE:
-          return <PrimitiveElementView key={element.id} element={scaledElement} />;
+          return <PrimitiveElementView key={element.id} element={element} />;
         }
       })}
-    </div>
+    </svg>
   );
 }
 

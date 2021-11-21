@@ -1,26 +1,21 @@
 import React from 'react';
-import { PrimitiveElement } from '../../../../model/types';
-import styles from '../ElementView.module.css';
-import { selectPrimitive } from '../../../../common/componentsFunctions';
+import { PrimitiveElement, PrimitiveType } from '../../../../model/types';
+import RectanglePrimitive from './RectanglePrimitive';
+import EllipsePrimitive from './EllipsePrimitive';
 
 type PrimitiveElementViewProps = {
   element: PrimitiveElement;
 }
 
 function PrimitiveElementView({ element }: PrimitiveElementViewProps): JSX.Element {
-  return (
-    <div
-      className={styles.element}
-      style={{
-        width: element.dimensions.width,
-        height: element.dimensions.height,
-        left: element.position.x,
-        top: element.position.y,
-      }}
-    >
-      {selectPrimitive(element)}
-    </div>
-  );
+  switch (element.primitiveType) {
+  case PrimitiveType.RECTANGLE:
+    return <RectanglePrimitive element={element} />;
+  case PrimitiveType.TRIANGLE:
+    return <RectanglePrimitive element={element} />;
+  case PrimitiveType.ELLIPSE:
+    return <EllipsePrimitive element={element} />;
+  }
 }
 
 export default PrimitiveElementView;
