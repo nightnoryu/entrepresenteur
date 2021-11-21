@@ -20,8 +20,8 @@ export function calculateEllipseProperties(element: PrimitiveElement) {
 }
 
 export function getTrianglePoints(element: PrimitiveElement): string {
-  const firstPoint = `0,${element.dimensions.height}`;
-  const secondPoint = `${element.dimensions.width / 2},0`;
-  const thirdPoint = `${element.dimensions.width},${element.dimensions.height}`;
+  const firstPoint = `${element.position.x},${element.position.y + element.dimensions.height}`;
+  const secondPoint = `${element.position.x + element.dimensions.width / 2},${element.position.y}`;
+  const thirdPoint = `${element.position.x + element.dimensions.width},${element.position.y + element.dimensions.height}`;
   return `${firstPoint} ${secondPoint} ${thirdPoint}`;
 }

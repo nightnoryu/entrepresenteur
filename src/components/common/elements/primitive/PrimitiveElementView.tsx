@@ -2,6 +2,7 @@ import React from 'react';
 import { PrimitiveElement, PrimitiveType } from '../../../../model/types';
 import RectanglePrimitive from './RectanglePrimitive';
 import EllipsePrimitive from './EllipsePrimitive';
+import TrianglePrimitive from './TrianglePrimitive';
 
 type PrimitiveElementViewProps = {
   element: PrimitiveElement;
@@ -12,7 +13,7 @@ function PrimitiveElementView({ element }: PrimitiveElementViewProps): JSX.Eleme
   case PrimitiveType.RECTANGLE:
     return <RectanglePrimitive element={element} />;
   case PrimitiveType.TRIANGLE:
-    return <RectanglePrimitive element={element} />;
+    return <TrianglePrimitive element={element} />;
   case PrimitiveType.ELLIPSE:
     return <EllipsePrimitive element={element} />;
   }
