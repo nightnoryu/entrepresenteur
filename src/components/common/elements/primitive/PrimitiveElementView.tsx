@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrimitiveElement } from '../../../../model/types';
-import '../ElementView.css';
+import styles from '../ElementView.module.css';
 import { selectPrimitive } from '../../../../common/componentsFunctions';
 
 type PrimitiveElementViewProps = {
@@ -10,7 +10,7 @@ type PrimitiveElementViewProps = {
 function PrimitiveElementView({ element }: PrimitiveElementViewProps): JSX.Element {
   return (
     <div
-      className="workspace__element-view"
+      className={styles.element}
       style={{
         width: element.dimensions.width,
         height: element.dimensions.height,

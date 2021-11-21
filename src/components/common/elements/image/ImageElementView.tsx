@@ -1,7 +1,6 @@
 import React from 'react';
 import { ImageElement } from '../../../../model/types';
-import '../ElementView.css';
-import './ImageElementView.css';
+import styles from '../ElementView.module.css';
 
 type ImageElementViewProps = {
   element: ImageElement;
@@ -12,7 +11,7 @@ function ImageElementView({ element }: ImageElementViewProps): JSX.Element {
     <img
       src={element.src}
       alt="Image"
-      className="workspace__element-view workspace__element-view_image"
+      className={styles.element}
       style={{
         width: element.dimensions.width,
         height: element.dimensions.height,

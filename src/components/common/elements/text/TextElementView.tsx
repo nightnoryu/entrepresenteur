@@ -1,7 +1,6 @@
 import React from 'react';
 import { TextElement } from '../../../../model/types';
-import '../ElementView.css';
-import './TextElementView.css';
+import styles from '../ElementView.module.css';
 
 type TextElementViewProps = {
   element: TextElement;
@@ -10,7 +9,7 @@ type TextElementViewProps = {
 function TextElementView({ element }: TextElementViewProps): JSX.Element {
   return (
     <div
-      className="workspace__element-view workspace__element-view_text"
+      className={styles.element}
       style={{
         color: element.color,
         fontFamily: element.font,

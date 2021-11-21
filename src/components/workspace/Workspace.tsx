@@ -3,6 +3,7 @@ import styles from './Workspace.module.css';
 import { Slide } from '../../model/types';
 import SlideView from '../common/slideview/SlideView';
 import { UUID } from '../../model/uuid';
+import { createNewSlide } from '../../model/infrastructure_actions';
 
 type WorkspaceProps = {
   slide?: Slide;
