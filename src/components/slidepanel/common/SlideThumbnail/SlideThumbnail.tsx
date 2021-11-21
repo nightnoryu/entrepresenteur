@@ -1,8 +1,8 @@
 import React from 'react';
-import '../../../common/slideview/SlideView';
+import '../../../slideview/SlideView';
 import { Slide } from '../../../../model/types';
 import './SlideThumbnail.css';
-import SlideView from '../../../common/slideview/SlideView';
+import SlideView from '../../../slideview/SlideView';
 import { createNewSlide } from '../../../../model/infrastructure_actions';
 
 type SlideThumbnailProps = {

@@ -1,10 +1,10 @@
 import React from 'react';
-import { ElementType, Slide } from '../../../model/types';
-import TextElementView from '../elements/text/TextElementView';
-import ImageElementView from '../elements/image/ImageElementView';
-import PrimitiveElementView from '../elements/primitive/PrimitiveElementView';
+import { ElementType, Slide } from '../../model/types';
+import TextElementView from './elements/text/TextElementView';
+import ImageElementView from './elements/image/ImageElementView';
+import PrimitiveElementView from './elements/primitive/PrimitiveElementView';
 import styles from './SlideView.module.css';
-import { getSlideBackgroundStyle } from '../../../common/componentsFunctions';
+import { getSlideBackgroundStyle } from '../../common/componentsFunctions';
 
 type SlideViewProps = {
   slide: Slide;
