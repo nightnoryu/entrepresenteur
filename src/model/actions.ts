@@ -9,14 +9,6 @@ import {
   selectNearestUnselectedSlide,
 } from './infrastructure_actions';
 
-function serializePresentation(presentation: Presentation): string {
-  return JSON.stringify(presentation);
-}
-
-function unserializePresentation(json: string): Presentation {
-  return JSON.parse(json);
-}
-
 export function setPresentationTitle(
   editor: Editor,
   title: string,
@@ -50,7 +42,7 @@ export function addSlide(editor: Editor): Editor {
   };
 }
 
-function removeSlides(editor: Editor): Editor {
+export function removeSlides(editor: Editor): Editor {
   return {
     ...editor,
     selectedSlideIDs: selectNearestUnselectedSlide(
@@ -66,7 +58,7 @@ function removeSlides(editor: Editor): Editor {
   };
 }
 
-function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
+export function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
   return {
     ...editor,
     presentation: {
@@ -79,7 +71,7 @@ function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
   };
 }
 
-function setCurrentSlide(editor: Editor, slideID: UUID): Editor {
+export function setCurrentSlide(editor: Editor, slideID: UUID): Editor {
   return {
     ...editor,
     selectedSlideIDs: [slideID],
@@ -95,7 +87,7 @@ export function selectSlide(editor: Editor, slideID: UUID): Editor {
   };
 }
 
-function setSlideBackgroundColor(editor: Editor, color: string): Editor {
+export function setSlideBackgroundColor(editor: Editor, color: string): Editor {
   return {
     ...editor,
     presentation: {
@@ -115,7 +107,7 @@ function setSlideBackgroundColor(editor: Editor, color: string): Editor {
   };
 }
 
-function setSlideBackgroundImage(editor: Editor, src: string): Editor {
+export function setSlideBackgroundImage(editor: Editor, src: string): Editor {
   return {
     ...editor,
     presentation: {
@@ -135,7 +127,7 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
   };
 }
 
-function removeElements(editor: Editor): Editor {
+export function removeElements(editor: Editor): Editor {
   return {
     ...editor,
     selectedElementIDs: [],
@@ -155,11 +147,16 @@ function removeElements(editor: Editor): Editor {
   };
 }
 
-function addText(
-  editor: Editor,
-  position: Position,
-  dimensions: Dimensions,
-  value: string,
+export function addText(
+  editor: Editor, {
+    position,
+    dimensions,
+    value,
+  }: {
+    position: Position;
+    dimensions: Dimensions;
+    value: string;
+  },
 ): Editor {
   return {
     ...editor,
@@ -183,7 +180,7 @@ function addText(
   };
 }
 
-function setTextValue(editor: Editor, value: string): Editor {
+export function setTextValue(editor: Editor, value: string): Editor {
   return {
     ...editor,
     presentation: {
@@ -208,7 +205,7 @@ function setTextValue(editor: Editor, value: string): Editor {
   };
 }
 
-function setTextFont(editor: Editor, font: string): Editor {
+export function setTextFont(editor: Editor, font: string): Editor {
   return {
     ...editor,
     presentation: {
@@ -233,7 +230,7 @@ function setTextFont(editor: Editor, font: string): Editor {
   };
 }
 
-function setTextSize(editor: Editor, size: number): Editor {
+export function setTextSize(editor: Editor, size: number): Editor {
   return {
     ...editor,
     presentation: {
@@ -258,11 +255,16 @@ function setTextSize(editor: Editor, size: number): Editor {
   };
 }
 
-function addImage(
-  editor: Editor,
-  position: Position,
-  dimensions: Dimensions,
-  src: string,
+export function addImage(
+  editor: Editor, {
+    position,
+    dimensions,
+    src,
+  }: {
+    position: Position,
+    dimensions: Dimensions,
+    src: string,
+  },
 ): Editor {
   return {
     ...editor,
@@ -283,11 +285,16 @@ function addImage(
   };
 }
 
-function addPrimitive(
-  editor: Editor,
-  position: Position,
-  dimensions: Dimensions,
-  primitiveType: PrimitiveType,
+export function addPrimitive(
+  editor: Editor, {
+    position,
+    dimensions,
+    primitiveType,
+  }: {
+    position: Position,
+    dimensions: Dimensions,
+    primitiveType: PrimitiveType,
+  },
 ): Editor {
   return {
     ...editor,
@@ -310,7 +317,7 @@ function addPrimitive(
   };
 }
 
-function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
+export function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
   return {
     ...editor,
     presentation: {
@@ -335,7 +342,7 @@ function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
   };
 }
 
-function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
+export function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
   return {
     ...editor,
     presentation: {
@@ -360,7 +367,7 @@ function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
   };
 }
 
-function moveElements(editor: Editor, positionDiff: Position): Editor {
+export function moveElements(editor: Editor, positionDiff: Position): Editor {
   return {
     ...editor,
     presentation: {
@@ -387,7 +394,7 @@ function moveElements(editor: Editor, positionDiff: Position): Editor {
   };
 }
 
-function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
+export function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
   return {
     ...editor,
     presentation: {
@@ -411,7 +418,7 @@ function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
   };
 }
 
-function undo(editor: Editor): Editor {
+export function undo(editor: Editor): Editor {
   return {
     ...editor,
     presentation:
@@ -428,7 +435,7 @@ function undo(editor: Editor): Editor {
   };
 }
 
-function redo(editor: Editor): Editor {
+export function redo(editor: Editor): Editor {
   return {
     ...editor,
     presentation: isRedoAvailable(editor.history)
@@ -443,6 +450,6 @@ function redo(editor: Editor): Editor {
   };
 }
 
-function exportPresentation(presentation: Presentation): void {
+export function exportPresentation(presentation: Presentation): void {
   // TODO: implement
 }
