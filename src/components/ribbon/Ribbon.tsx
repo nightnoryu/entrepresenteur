@@ -1,5 +1,7 @@
 import React from 'react';
 import './Ribbon.css';
+import { dispatch } from '../../state/editor';
+import { setPresentationTitle } from '../../model/actions';
 
 type RibbonProps = {
   presentationTitle: string;
@@ -8,7 +10,15 @@ type RibbonProps = {
 function Ribbon({ presentationTitle }: RibbonProps): JSX.Element {
   return (
     <div className="ribbon">
-      <h1 className="presentation-name">{presentationTitle}</h1>
+      <h1
+        className="presentation-name"
+        onClick={() => {
+          const newTitle = prompt('Enter new title');
+          dispatch(setPresentationTitle, newTitle);
+        }}
+      >
+        {presentationTitle}
+      </h1>
       <nav className="menu">
         <ul className="menu__list">
           <li>

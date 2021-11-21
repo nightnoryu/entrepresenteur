@@ -1,7 +1,9 @@
 import { BackgroundType, Editor, ElementType, PrimitiveType } from '../model/types';
 
 type HandlerFunc = (() => void) | null;
-type ModifyFunc = (editor: Editor) => Editor;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+type ModifyFunc = (editor: Editor, payload) => Editor;
 
 let editor: Editor = {
   presentation: {
@@ -125,8 +127,10 @@ function addEditorChangeHandler(handler: HandlerFunc): void {
   editorChangeHandler = handler;
 }
 
-function dispatch(modifyFn: ModifyFunc): void {
-  const newEditor = modifyFn(editor);
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+function dispatch(modifyFn: ModifyFunc, payload): void {
+  const newEditor = modifyFn(editor, payload);
   setEditor(newEditor);
 
   if (editorChangeHandler !== null) {

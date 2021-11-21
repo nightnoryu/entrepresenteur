@@ -1,100 +1,101 @@
 .ribbon
 {
-    height: 10vh;
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    background: linear-gradient(180deg, #252F3C 0%, #252F3C 100%);
+  height: 10vh;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  background: linear-gradient(180deg, #252f3c 0%, #252f3c 100%);
 }
 
 .presentation-name
 {
-    margin: 25px;
+  color: #ffffff;
+  margin: 25px;
 }
 
 .menu
 {
-    margin-top: 4vh;
+  margin-top: 4vh;
 }
 
 .menu a
 {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .menu li
 {
-    position: relative;
-    list-style: none;
+  position: relative;
+  list-style: none;
 }
 
 .menu__list
 {
-    display: flex;
+  display: flex;
 }
 
 .menu__list > li
 {
-    margin: 0 10px 0 0;
+  margin: 0 10px 0 0;
 }
 
 .menu__list > li:hover .sub-menu__list
 {
-    display: block;
+  display: block;
 }
 
 .menu__link
 {
-    color: black;
-    padding: 17px 68px;
-    background-color: #FFD269;
+  color: black;
+  padding: 17px 68px;
+  background-color: #ffd269;
 }
 
 .sub-menu__list
 {
-    max-width: 250px;
-    display: none;
-    position: absolute;
-    left: 0;
-    top: 14px;
-    padding: 20px 0 0 0;
+  max-width: 250px;
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 14px;
+  padding: 20px 0 0 0;
 }
 
 .sub-menu__list > li:hover .sub-sub-menu__list
 {
-    display: block;
+  display: block;
 }
 
 .sub-menu__list > li
 {
-    background-color: #FFD269;
+  background-color: #ffd269;
 }
 
 .sub-menu__link
 {
-    color: black;
-    display: inline-block;
-    padding: 5px 10px;
+  color: black;
+  display: inline-block;
+  padding: 5px 10px;
 }
 
 .sub-sub-menu__list
 {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 92%;
-    padding: 0 0 0 5px;
-    max-width: 250px;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 92%;
+  padding: 0 0 0 5px;
+  max-width: 250px;
 }
 
 .sub-sub-menu__list > li
 {
-    background-color: #FFD269;
+  background-color: #ffd269;
 }
 
 .sub-sub-menu__link
 {
-    display: inline-block;
-    padding: 5px 10px;
-    color: black;
+  display: inline-block;
+  padding: 5px 10px;
+  color: black;
 }

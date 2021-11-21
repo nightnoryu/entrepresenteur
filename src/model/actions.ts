@@ -1,4 +1,4 @@
-import { BackgroundType, Dimensions, Editor, ElementType, Position, Presentation, PrimitiveType, } from './types';
+import { BackgroundType, Dimensions, Editor, ElementType, Position, Presentation, PrimitiveType } from './types';
 import { generateUUID, UUID } from './uuid';
 import {
   concatWithSelectedSlideElements,
@@ -18,12 +18,15 @@ function unserializePresentation(json: string): Presentation {
 }
 
 export function setPresentationTitle(
-  presentation: Presentation,
-  title: string
-): Presentation {
+  editor: Editor,
+  title: string,
+): Editor {
   return {
-    ...presentation,
-    title,
+    ...editor,
+    presentation: {
+      ...editor.presentation,
+      title,
+    },
   };
 }
 
@@ -41,7 +44,7 @@ export function addSlide(editor: Editor): Editor {
           : editor.presentation.slides.flatMap(slide =>
             isCurrentSlide(slide, editor.selectedSlideIDs)
               ? [slide, newSlide]
-              : slide
+              : slide,
           ),
     },
   };
@@ -52,12 +55,12 @@ function removeSlides(editor: Editor): Editor {
     ...editor,
     selectedSlideIDs: selectNearestUnselectedSlide(
       editor.presentation.slides,
-      editor.selectedSlideIDs
+      editor.selectedSlideIDs,
     ),
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.filter(
-        slide => !editor.selectedSlideIDs.includes(slide.id)
+        slide => !editor.selectedSlideIDs.includes(slide.id),
       ),
     },
   };
@@ -70,7 +73,7 @@ function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
       ...editor.presentation,
       slides: slideIDs.flatMap(
         slideID =>
-          editor.presentation.slides.find(slide => slide.id === slideID) || []
+          editor.presentation.slides.find(slide => slide.id === slideID) || [],
       ),
     },
   };
@@ -87,7 +90,7 @@ export function selectSlide(editor: Editor, slideID: UUID): Editor {
   return {
     ...editor,
     selectedSlideIDs: editor.presentation.slides.flatMap(slide =>
-      editor.selectedSlideIDs.concat(slideID).includes(slide.id) ? slide.id : []
+      editor.selectedSlideIDs.concat(slideID).includes(slide.id) ? slide.id : [],
     ),
   };
 }
@@ -106,7 +109,7 @@ function setSlideBackgroundColor(editor: Editor, color: string): Editor {
               color,
             },
           }
-          : slide
+          : slide,
       ),
     },
   };
@@ -126,7 +129,7 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
               src,
             },
           }
-          : slide
+          : slide,
       ),
     },
   };
@@ -143,10 +146,10 @@ function removeElements(editor: Editor): Editor {
           ? {
             ...slide,
             elements: slide.elements.filter(
-              element => !editor.selectedElementIDs.includes(element.id)
+              element => !editor.selectedElementIDs.includes(element.id),
             ),
           }
-          : { ...slide }
+          : { ...slide },
       ),
     },
   };
@@ -156,7 +159,7 @@ function addText(
   editor: Editor,
   position: Position,
   dimensions: Dimensions,
-  value: string
+  value: string,
 ): Editor {
   return {
     ...editor,
@@ -174,7 +177,7 @@ function addText(
           size: 10,
           font: 'Calibri',
           color: '#000000',
-        }
+        },
       ),
     },
   };
@@ -196,10 +199,10 @@ function setTextValue(editor: Editor, value: string): Editor {
                   ...element,
                   value,
                 }
-                : element
+                : element,
             ),
           }
-          : slide
+          : slide,
       ),
     },
   };
@@ -221,10 +224,10 @@ function setTextFont(editor: Editor, font: string): Editor {
                   ...element,
                   font,
                 }
-                : element
+                : element,
             ),
           }
-          : slide
+          : slide,
       ),
     },
   };
@@ -246,10 +249,10 @@ function setTextSize(editor: Editor, size: number): Editor {
                   ...element,
                   size,
                 }
-                : element
+                : element,
             ),
           }
-          : slide
+          : slide,
       ),
     },
   };
@@ -259,7 +262,7 @@ function addImage(
   editor: Editor,
   position: Position,
   dimensions: Dimensions,
-  src: string
+  src: string,
 ): Editor {
   return {
     ...editor,
@@ -274,7 +277,7 @@ function addImage(
           position,
           dimensions,
           src,
-        }
+        },
       ),
     },
   };
@@ -284,7 +287,7 @@ function addPrimitive(
   editor: Editor,
   position: Position,
   dimensions: Dimensions,
-  primitiveType: PrimitiveType
+  primitiveType: PrimitiveType,
 ): Editor {
   return {
     ...editor,
@@ -301,7 +304,7 @@ function addPrimitive(
           dimensions,
           fill: '#ffffff',
           stroke: '#000000',
-        }
+        },
       ),
     },
   };
@@ -323,10 +326,10 @@ function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
                   ...element,
                   fill,
                 }
-                : element
+                : element,
             ),
           }
-          : slide
+          : slide,
       ),
     },
   };
@@ -348,10 +351,10 @@ function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
                   ...element,
                   stroke,
                 }
-                : element
+                : element,
             ),
           }
-          : slide
+          : slide,
       ),
     },
   };
@@ -375,10 +378,10 @@ function moveElements(editor: Editor, positionDiff: Position): Editor {
                     y: element.position.y + positionDiff.y,
                   },
                 }
-                : element
+                : element,
             ),
           }
-          : slide
+          : slide,
       ),
     },
   };
@@ -399,10 +402,10 @@ function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
                   ...element,
                   dimensions,
                 }
-                : element
+                : element,
             ),
           }
-          : slide
+          : slide,
       ),
     },
   };
