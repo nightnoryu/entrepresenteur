@@ -180,7 +180,15 @@ export function addText(
   };
 }
 
-export function setTextValue(editor: Editor, value: string): Editor {
+export function setTextValue(
+  editor: Editor, {
+    elementID,
+    value,
+  }: {
+    elementID: UUID;
+    value: string;
+  },
+): Editor {
   return {
     ...editor,
     presentation: {
@@ -191,7 +199,7 @@ export function setTextValue(editor: Editor, value: string): Editor {
             ...slide,
             elements: slide.elements.map(element =>
               element.type === ElementType.TEXT &&
-              isCurrentElement(element, editor.selectedElementIDs)
+              element.id === elementID
                 ? {
                   ...element,
                   value,
@@ -364,6 +372,20 @@ export function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor 
           : slide,
       ),
     },
+  };
+}
+
+export function selectElement(editor: Editor, elementID: UUID): Editor {
+  return {
+    ...editor,
+    selectedElementIDs: editor.selectedElementIDs.concat(elementID),
+  };
+}
+
+export function unselectElement(editor: Editor, elementID: UUID): Editor {
+  return {
+    ...editor,
+    selectedElementIDs: editor.selectedElementIDs.filter(id => id != elementID),
   };
 }
 

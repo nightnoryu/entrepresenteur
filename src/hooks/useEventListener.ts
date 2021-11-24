@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-function useEventListener<T extends HTMLElement>(
+function useEventListener<T extends DocumentAndElementEventHandlers>(
   eventName: keyof WindowEventMap,
   handler: (e: Event) => void,
   ref?: React.RefObject<T>,

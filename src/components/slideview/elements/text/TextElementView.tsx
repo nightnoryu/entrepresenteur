@@ -12,6 +12,8 @@ function TextElementView({ element }: TextElementViewProps): JSX.Element {
       className={styles.element}
       x={element.position.x}
       y={element.position.y}
+      dominantBaseline="hanging"
+      textAnchor="left"
       style={{
         color: element.color,
         fontFamily: element.font,

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Position } from '../model/types';
 
-function useDragAndDrop<T extends HTMLElement>(
+function useDragAndDrop<T extends SVGGeometryElement>(
   ref: React.RefObject<T> | null,
   initialPosition: Position,
 ): Position {
