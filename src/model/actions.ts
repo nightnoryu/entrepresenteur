@@ -213,7 +213,15 @@ export function setTextValue(
   };
 }
 
-export function setTextFont(editor: Editor, font: string): Editor {
+export function setTextFont(
+  editor: Editor, {
+    elementID,
+    font,
+  }: {
+    elementID: UUID;
+    font: string;
+  },
+): Editor {
   return {
     ...editor,
     presentation: {
@@ -224,7 +232,7 @@ export function setTextFont(editor: Editor, font: string): Editor {
             ...slide,
             elements: slide.elements.map(element =>
               element.type === ElementType.TEXT &&
-              isCurrentElement(element, editor.selectedElementIDs)
+              element.id === elementID
                 ? {
                   ...element,
                   font,
@@ -238,7 +246,15 @@ export function setTextFont(editor: Editor, font: string): Editor {
   };
 }
 
-export function setTextSize(editor: Editor, size: number): Editor {
+export function setTextSize(
+  editor: Editor, {
+    elementID,
+    size,
+  }: {
+    elementID: UUID;
+    size: number;
+  },
+): Editor {
   return {
     ...editor,
     presentation: {
@@ -249,7 +265,7 @@ export function setTextSize(editor: Editor, size: number): Editor {
             ...slide,
             elements: slide.elements.map(element =>
               element.type === ElementType.TEXT &&
-              isCurrentElement(element, editor.selectedElementIDs)
+              element.id === elementID
                 ? {
                   ...element,
                   size,
