@@ -1,5 +1,6 @@
 import React from 'react';
 import { ImageElement } from '../../../../../model/types';
+import { getSelectedSVGElementProperties } from '../../../../../common/componentsFunctions';
 
 type EditableImageProps = {
   element: ImageElement;
@@ -7,15 +8,7 @@ type EditableImageProps = {
 }
 
 function EditableImage({ element, isSelected }: EditableImageProps): JSX.Element {
-  const selectedStyles = isSelected ? {
-    fill: '#2a8ec8',
-    stroke: '#1563c8',
-    fillOpacity: '0.3',
-    strokeOpacity: '0.3',
-  } : {
-    fillOpacity: '0',
-    strokeOpacity: '0',
-  };
+  const selectedStyles = getSelectedSVGElementProperties(element, isSelected);
 
   return (
     <rect

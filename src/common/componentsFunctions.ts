@@ -1,4 +1,4 @@
-import { BackgroundType, PrimitiveElement, Slide } from '../model/types';
+import { BackgroundType, PrimitiveElement, Slide, SlideElement } from '../model/types';
 
 export function getSlideBackgroundStyle(slide: Slide) {
   return slide.background.type == BackgroundType.SOLID
@@ -24,4 +24,16 @@ export function getTrianglePoints(element: PrimitiveElement): string {
   const secondPoint = `${element.position.x + element.dimensions.width / 2},${element.position.y}`;
   const thirdPoint = `${element.position.x + element.dimensions.width},${element.position.y + element.dimensions.height}`;
   return `${firstPoint} ${secondPoint} ${thirdPoint}`;
+}
+
+export function getSelectedSVGElementProperties(element: SlideElement, isSelected: boolean) {
+  return isSelected ? {
+    fill: '#2a8ec8',
+    stroke: '#1563c8',
+    fillOpacity: '0.3',
+    strokeOpacity: '0.3',
+  } : {
+    fillOpacity: '0',
+    strokeOpacity: '0',
+  };
 }

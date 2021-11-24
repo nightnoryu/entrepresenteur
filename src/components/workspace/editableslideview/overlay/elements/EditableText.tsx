@@ -1,5 +1,6 @@
 import React from 'react';
 import { TextElement } from '../../../../../model/types';
+import { getSelectedSVGElementProperties } from '../../../../../common/componentsFunctions';
 
 type EditableTextProps = {
   element: TextElement;
@@ -7,15 +8,7 @@ type EditableTextProps = {
 }
 
 function EditableText({ element, isSelected }: EditableTextProps): JSX.Element {
-  const selectedStyles = isSelected ? {
-    fill: '#2a8ec8',
-    stroke: '#1563c8',
-    fillOpacity: '0.3',
-    strokeOpacity: '0.3',
-  } : {
-    fillOpacity: '0',
-    strokeOpacity: '0',
-  };
+  const selectedStyles = getSelectedSVGElementProperties(element, isSelected);
 
   return (
     <rect
