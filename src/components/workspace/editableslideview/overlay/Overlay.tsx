@@ -1,8 +1,10 @@
 import React from 'react';
-import { Slide } from '../../../../model/types';
+import { ElementType, Slide } from '../../../../model/types';
 import { UUID } from '../../../../model/uuid';
 import styles from './Overlay.module.css';
-import SelectedElement from './elements/SelectedElement';
+import EditableText from './elements/EditableText';
+import EditableImage from './elements/EditableImage';
+import EditablePrimitive from './elements/EditablePrimitive';
 
 type OverlayProps = {
   slide: Slide;
@@ -15,12 +17,17 @@ function Overlay({ slide, selectedSlideIDs }: OverlayProps): JSX.Element {
       viewBox="0 0 800 600"
       className={styles.overlay}
     >
-      {slide.elements.flatMap(element => {
-        if (selectedSlideIDs.includes(element.id)) {
-          return <SelectedElement key={element.id} element={element} />;
-        }
+      {slide.elements.map(element => {
+        const isSelected = selectedSlideIDs.includes(element.id);
 
-        return [];
+        switch (element.type) {
+        case ElementType.TEXT:
+          return <EditableText key={element.id} element={element} isSelected={isSelected} />;
+        case ElementType.IMAGE:
+          return <EditableImage key={element.id} element={element} isSelected={isSelected} />;
+        case ElementType.PRIMITIVE:
+          return <EditablePrimitive key={element.id} element={element} isSelected={isSelected} />;
+        }
       })}
     </svg>
   );
