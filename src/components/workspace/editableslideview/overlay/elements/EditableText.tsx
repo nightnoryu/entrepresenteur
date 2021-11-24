@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { TextElement } from '../../../../../model/types';
 import { getSelectedSVGElementProperties } from '../../../../../common/componentsFunctions';
 import { dispatch } from '../../../../../state/editor';
-import { selectElement, setTextValue, unselectElement } from '../../../../../model/actions';
+import { moveElement, selectElement, setTextValue, unselectElement } from '../../../../../model/actions';
 import useDoubleClick from '../../../../../hooks/useDoubleClick';
+import useDragAndDrop from '../../../../../hooks/useDragAndDrop';
 
 type EditableTextProps = {
   element: TextElement;
@@ -24,6 +25,16 @@ function EditableText({ element, isSelected }: EditableTextProps): JSX.Element {
     });
   });
 
+  const position = useDragAndDrop(ref, element.position);
+  useEffect(() => {
+    dispatch(moveElement, {
+      elementID: element.id,
+      positionDiff: {
+        x: position.x - element.position.x,
+        y: position.y - element.position.y,
+      },
+    });
+  }, [position]);
 
   return (
     <rect

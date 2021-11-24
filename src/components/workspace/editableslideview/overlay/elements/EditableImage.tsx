@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ImageElement } from '../../../../../model/types';
 import { getSelectedSVGElementProperties } from '../../../../../common/componentsFunctions';
 import useEventListener from '../../../../../hooks/useEventListener';
 import { dispatch } from '../../../../../state/editor';
-import { selectElement } from '../../../../../model/actions';
+import { moveElement, selectElement } from '../../../../../model/actions';
+import useDragAndDrop from '../../../../../hooks/useDragAndDrop';
 
 type EditableImageProps = {
   element: ImageElement;
@@ -19,6 +20,17 @@ function EditableImage({ element, isSelected }: EditableImageProps): JSX.Element
       dispatch(selectElement, element.id);
     }
   }, ref);
+
+  const position = useDragAndDrop(ref, element.position);
+  useEffect(() => {
+    dispatch(moveElement, {
+      elementID: element.id,
+      positionDiff: {
+        x: position.x - element.position.x,
+        y: position.y - element.position.y,
+      },
+    });
+  }, [position]);
 
   return (
     <rect

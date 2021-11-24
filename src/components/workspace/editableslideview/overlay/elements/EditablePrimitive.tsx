@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { PrimitiveElement } from '../../../../../model/types';
 import { getSelectedSVGElementProperties } from '../../../../../common/componentsFunctions';
 import useEventListener from '../../../../../hooks/useEventListener';
 import { dispatch } from '../../../../../state/editor';
-import { selectElement, unselectElement } from '../../../../../model/actions';
+import { moveElement, selectElement, unselectElement } from '../../../../../model/actions';
+import useDragAndDrop from '../../../../../hooks/useDragAndDrop';
 
 type EditablePrimitiveProps = {
   element: PrimitiveElement;
@@ -17,6 +18,17 @@ function EditablePrimitive({ element, isSelected }: EditablePrimitiveProps): JSX
   useEventListener('mousedown', () => {
     dispatch(isSelected ? unselectElement : selectElement, element.id);
   }, ref);
+
+  const position = useDragAndDrop(ref, element.position);
+  useEffect(() => {
+    dispatch(moveElement, {
+      elementID: element.id,
+      positionDiff: {
+        x: position.x - element.position.x,
+        y: position.y - element.position.y,
+      },
+    });
+  }, [position]);
 
   return (
     <rect
