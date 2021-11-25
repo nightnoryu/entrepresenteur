@@ -5,7 +5,6 @@ type Handler = (event: Event) => void;
 
 function useDoubleClick<T extends DocumentAndElementEventHandlers>(
   ref: RefObject<T>,
-  onSingleClick: Handler,
   onDoubleClick: Handler,
   latency = 150,
 ): void {
@@ -15,9 +14,7 @@ function useDoubleClick<T extends DocumentAndElementEventHandlers>(
     clickCount += 1;
 
     setTimeout(() => {
-      if (clickCount === 1) {
-        onSingleClick(event);
-      } else if (clickCount === 2) {
+      if (clickCount === 2) {
         onDoubleClick(event);
       }
 
