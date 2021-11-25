@@ -7,7 +7,7 @@ function useDoubleClick<T extends DocumentAndElementEventHandlers>(
   ref: RefObject<T>,
   onSingleClick: Handler,
   onDoubleClick: Handler,
-  latency = 200,
+  latency = 150,
 ): void {
   let clickCount = 0;
 

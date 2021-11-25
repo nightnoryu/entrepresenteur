@@ -5,6 +5,7 @@ import { dispatch } from '../../../../../state/editor';
 import { moveElement, selectElement, setTextValue, unselectElement } from '../../../../../model/actions';
 import useDoubleClick from '../../../../../hooks/useDoubleClick';
 import useDragAndDrop from '../../../../../hooks/useDragAndDrop';
+import useOnClickOutside from '../../../../../hooks/useOnClickOutside';
 
 type EditableTextProps = {
   element: TextElement;
@@ -16,13 +17,21 @@ function EditableText({ element, isSelected }: EditableTextProps): JSX.Element {
 
   const ref = useRef(null);
   useDoubleClick(ref, () => {
-    dispatch(isSelected ? unselectElement : selectElement, element.id);
+    if (!isSelected) {
+      dispatch(selectElement, element.id);
+    }
   }, () => {
     const newText = prompt('Enter new text');
     dispatch(setTextValue, {
       elementID: element.id,
       value: newText,
     });
+  });
+
+  useOnClickOutside(ref, () => {
+    if (isSelected) {
+      dispatch(unselectElement, element.id);
+    }
   });
 
   const position = useDragAndDrop(ref, element.position);

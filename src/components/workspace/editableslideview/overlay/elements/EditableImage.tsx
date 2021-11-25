@@ -3,8 +3,9 @@ import { ImageElement } from '../../../../../model/types';
 import { getSelectedSVGElementProperties } from '../../../../../common/componentsFunctions';
 import useEventListener from '../../../../../hooks/useEventListener';
 import { dispatch } from '../../../../../state/editor';
-import { moveElement, selectElement } from '../../../../../model/actions';
+import { moveElement, selectElement, unselectElement } from '../../../../../model/actions';
 import useDragAndDrop from '../../../../../hooks/useDragAndDrop';
+import useOnClickOutside from '../../../../../hooks/useOnClickOutside';
 
 type EditableImageProps = {
   element: ImageElement;
@@ -20,6 +21,12 @@ function EditableImage({ element, isSelected }: EditableImageProps): JSX.Element
       dispatch(selectElement, element.id);
     }
   }, ref);
+
+  useOnClickOutside(ref, () => {
+    if (isSelected) {
+      dispatch(unselectElement, element.id);
+    }
+  });
 
   const position = useDragAndDrop(ref, element.position);
   useEffect(() => {

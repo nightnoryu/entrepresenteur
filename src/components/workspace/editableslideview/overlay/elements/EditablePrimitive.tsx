@@ -5,6 +5,7 @@ import useEventListener from '../../../../../hooks/useEventListener';
 import { dispatch } from '../../../../../state/editor';
 import { moveElement, selectElement, unselectElement } from '../../../../../model/actions';
 import useDragAndDrop from '../../../../../hooks/useDragAndDrop';
+import useOnClickOutside from '../../../../../hooks/useOnClickOutside';
 
 type EditablePrimitiveProps = {
   element: PrimitiveElement;
@@ -16,8 +17,16 @@ function EditablePrimitive({ element, isSelected }: EditablePrimitiveProps): JSX
 
   const ref = useRef(null);
   useEventListener('mousedown', () => {
-    dispatch(isSelected ? unselectElement : selectElement, element.id);
+    if (!isSelected) {
+      dispatch(selectElement, element.id);
+    }
   }, ref);
+
+  useOnClickOutside(ref, () => {
+    if (isSelected) {
+      dispatch(unselectElement, element.id);
+    }
+  });
 
   const position = useDragAndDrop(ref, element.position);
   useEffect(() => {

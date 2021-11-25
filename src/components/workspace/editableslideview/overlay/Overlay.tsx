@@ -5,6 +5,9 @@ import styles from './Overlay.module.css';
 import EditableText from './elements/EditableText';
 import EditableImage from './elements/EditableImage';
 import EditablePrimitive from './elements/EditablePrimitive';
+import useEventListener from '../../../../hooks/useEventListener';
+import { dispatch } from '../../../../state/editor';
+import { removeElements } from '../../../../model/actions';
 
 type OverlayProps = {
   slide: Slide;
@@ -12,6 +15,13 @@ type OverlayProps = {
 };
 
 function Overlay({ slide, selectedSlideIDs }: OverlayProps): JSX.Element {
+  useEventListener('keydown', (e: Event) => {
+    if ((e as KeyboardEvent).code === 'Delete') {
+      e.preventDefault();
+      dispatch(removeElements);
+    }
+  });
+
   return (
     <svg
       viewBox="0 0 800 600"
