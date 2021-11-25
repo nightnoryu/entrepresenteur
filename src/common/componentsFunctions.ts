@@ -6,7 +6,7 @@ export function getSlideBackgroundStyle(slide: Slide) {
       backgroundColor: slide.background.color,
     }
     : {
-      background: `url(${slide.background.src})`,
+      backgroundImage: `url(${slide.background.src})`,
     };
 }
 

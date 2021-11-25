@@ -16,7 +16,11 @@ function EditablePrimitive({ element, isSelected }: EditablePrimitiveProps): JSX
   const selectedStyles = getSelectedSVGElementProperties(element, isSelected);
 
   const ref = useRef(null);
-  useEventListener('mousedown', () => {
+  useEventListener('mousedown', (event: Event) => {
+    if ((event as MouseEvent).button !== 0) {
+      return;
+    }
+
     if (!isSelected) {
       dispatch(selectElement, element.id);
     }

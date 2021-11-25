@@ -25,7 +25,11 @@ function EditableText({ element, isSelected }: EditableTextProps): JSX.Element {
     });
   });
 
-  useEventListener('mousedown', () => {
+  useEventListener('mousedown', (event: Event) => {
+    if ((event as MouseEvent).button !== 0) {
+      return;
+    }
+
     if (!isSelected) {
       dispatch(selectElement, element.id);
     }

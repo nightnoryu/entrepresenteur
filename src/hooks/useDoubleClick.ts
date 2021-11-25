@@ -11,6 +11,10 @@ function useDoubleClick<T extends DocumentAndElementEventHandlers>(
   let clickCount = 0;
 
   const handleClick = (event: Event) => {
+    if ((event as MouseEvent).button !== 0) {
+      return;
+    }
+
     clickCount += 1;
 
     setTimeout(() => {

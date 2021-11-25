@@ -18,7 +18,11 @@ function SlideThumbnail({ slide, index, isSelected }: SlideThumbnailProps): JSX.
   const displayedSlide = slide || createNewSlide();
 
   const ref = useRef(null);
-  useEventListener('mousedown', () => {
+  useEventListener('mousedown', (event: Event) => {
+    if ((event as MouseEvent).button !== 0) {
+      return;
+    }
+
     dispatch(setCurrentSlide, slide.id);
   }, ref);
 

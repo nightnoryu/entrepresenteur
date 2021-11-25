@@ -23,6 +23,10 @@ function useDragAndDrop<T extends SVGGeometryElement>(
   };
 
   const onMouseDown = (e: MouseEvent) => {
+    if (e.button !== 0) {
+      return;
+    }
+
     startPos = {
       x: e.pageX,
       y: e.pageY,
