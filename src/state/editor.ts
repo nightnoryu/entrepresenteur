@@ -13,7 +13,7 @@ let editor: Editor = {
         id: 'slide1',
         background: {
           type: BackgroundType.SOLID,
-          color: '#ffffff',
+          color: '#efffff',
         },
         elements: [
           {
