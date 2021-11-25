@@ -98,7 +98,24 @@ let editor: Editor = {
           type: BackgroundType.IMAGE,
           src: 'https://www.windowscentral.com/sites/wpcentral.com/files/styles/large/public/field/image/2017/04/windows-xp-bliss.jpg',
         },
-        elements: [],
+        elements: [
+          {
+            id: 'element21',
+            type: ElementType.TEXT,
+            position: {
+              x: 300,
+              y: 300,
+            },
+            dimensions: {
+              width: 200,
+              height: 50,
+            },
+            value: 'Font props test',
+            color: '#ff0000',
+            font: 'Consolas',
+            size: 16,
+          },
+        ],
       },
     ],
   },
