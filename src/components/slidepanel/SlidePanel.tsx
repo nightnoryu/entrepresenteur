@@ -1,8 +1,8 @@
 import React from 'react';
-import './SlidePanel.css';
+import styles from './SlidePanel.module.css';
 import { UUID } from '../../model/uuid';
 import { Slide } from '../../model/types';
-import SlideList from './common/SlideList/SlideList';
+import SlideThumbnail from './slidethumbnail/SlideThumbnail';
 
 type SlidePanelProps = {
   slides: Slide[];
@@ -11,8 +11,15 @@ type SlidePanelProps = {
 
 function SlidePanel({ slides, selectedSlideIDs }: SlidePanelProps): JSX.Element {
   return (
-    <div className="slidepanel">
-      <SlideList slides={slides} selectedSlides={selectedSlideIDs} />
+    <div className={styles.slidepanel}>
+      {slides.map((slide, i) => (
+        <SlideThumbnail
+          key={slide.id}
+          slide={slide}
+          index={i + 1}
+          isSelected={selectedSlideIDs.includes(slide.id)}
+        />
+      ))}
     </div>);
 }
 

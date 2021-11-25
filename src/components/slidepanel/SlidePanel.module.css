@@ -1,0 +1,16 @@
+.slidepanel
+{
+  width: 15%;
+  height: 100%;
+
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  border-right: 1px solid black;
+}
+
+.slidepanel::-webkit-scrollbar
+{
+  display: none;
+}
