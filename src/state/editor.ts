@@ -119,9 +119,7 @@ let editor: Editor = {
       },
     ],
   },
-  selectedElementIDs: [
-    'element4',
-  ],
+  selectedElementIDs: [],
   selectedSlideIDs: [
     'slide1',
   ],
