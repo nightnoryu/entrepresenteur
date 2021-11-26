@@ -5,26 +5,22 @@ import styles from './SlideThumbnail.module.css';
 import SlideView from '../../slideview/SlideView';
 import { createNewSlide } from '../../../model/model_utils';
 import useEventListener from '../../../hooks/useEventListener';
-import { dispatch } from '../../../state/editor';
-import { setCurrentSlide, selectSlide } from '../../../model/actions';
 
 type SlideThumbnailProps = {
   slide: Slide;
   index: number;
   isSelected: boolean;
-  onSelect?: () => void;
+  onClick?: () => void;
 };
 
-function SlideThumbnail({ slide, index, isSelected }: SlideThumbnailProps): JSX.Element {
+function SlideThumbnail({ slide, index, isSelected, onClick }: SlideThumbnailProps): JSX.Element {
   const displayedSlide = slide || createNewSlide();
 
   const ref = useRef(null);
-  useEventListener('mousedown', (event: Event) => {
-    if ((event as MouseEvent).button !== 0) {
-      return;
+  useEventListener('click', () => {
+    if (onClick) {
+      onClick();
     }
-
-    dispatch(setCurrentSlide, slide.id);
   }, ref);
 
   return (
