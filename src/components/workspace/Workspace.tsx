@@ -1,8 +1,9 @@
 import React from 'react';
-import './Workspace.css';
+import styles from './Workspace.module.css';
 import { Slide } from '../../model/types';
-import SlideView from '../common/slideview/SlideView';
 import { UUID } from '../../model/uuid';
+import { createNewSlide } from '../../model/model_utils';
+import EditableSlideView from './editableslideview/EditableSlideView';
 
 type WorkspaceProps = {
   slide?: Slide;
@@ -13,10 +14,8 @@ function Workspace({ slide, selectedElementIDs }: WorkspaceProps): JSX.Element {
   const displayedSlide = slide || createNewSlide();
 
   return (
-    <div className="workspace">
-      <div className="workspace__slideview-wrapper">
-        <SlideView slide={displayedSlide} />
-      </div>
+    <div className={styles.workspace}>
+      <EditableSlideView slide={displayedSlide} selectedElementIDs={selectedElementIDs} />
     </div>
   );
 }

@@ -1,0 +1,19 @@
+.workspace
+{
+  width: 85%
+}
+
+.wrapper
+{
+  width: 800px;
+  height: 600px;
+
+  position: relative;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+  border: 1px solid black;
+  border-radius: 3px;
+}

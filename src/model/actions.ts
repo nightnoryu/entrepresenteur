@@ -1,4 +1,4 @@
-import { BackgroundType, Dimensions, Editor, ElementType, Position, Presentation, PrimitiveType, } from './types';
+import { BackgroundType, Dimensions, Editor, ElementType, Position, Presentation, PrimitiveType } from './types';
 import { generateUUID, UUID } from './uuid';
 import {
   concatWithSelectedSlideElements,
@@ -7,23 +7,18 @@ import {
   isCurrentSlide,
   isRedoAvailable,
   selectNearestUnselectedSlide,
-} from './infrastructure_actions';
-
-function serializePresentation(presentation: Presentation): string {
-  return JSON.stringify(presentation);
-}
-
-function unserializePresentation(json: string): Presentation {
-  return JSON.parse(json);
-}
+} from './model_utils';
 
 export function setPresentationTitle(
-  presentation: Presentation,
-  title: string
-): Presentation {
+  editor: Editor,
+  title: string,
+): Editor {
   return {
-    ...presentation,
-    title,
+    ...editor,
+    presentation: {
+      ...editor.presentation,
+      title,
+    },
   };
 }
 
@@ -41,58 +36,58 @@ export function addSlide(editor: Editor): Editor {
           : editor.presentation.slides.flatMap(slide =>
             isCurrentSlide(slide, editor.selectedSlideIDs)
               ? [slide, newSlide]
-              : slide
+              : slide,
           ),
     },
   };
 }
 
-function removeSlides(editor: Editor): Editor {
+export function removeSlides(editor: Editor): Editor {
   return {
     ...editor,
     selectedSlideIDs: selectNearestUnselectedSlide(
       editor.presentation.slides,
-      editor.selectedSlideIDs
+      editor.selectedSlideIDs,
     ),
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.filter(
-        slide => !editor.selectedSlideIDs.includes(slide.id)
+        slide => !editor.selectedSlideIDs.includes(slide.id),
       ),
     },
   };
 }
 
-function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
+export function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
       slides: slideIDs.flatMap(
         slideID =>
-          editor.presentation.slides.find(slide => slide.id === slideID) || []
+          editor.presentation.slides.find(slide => slide.id === slideID) || [],
       ),
     },
   };
 }
 
-function setCurrentSlide(editor: Editor, slideID: UUID): Editor {
+export function setCurrentSlide(editor: Editor, slideID: UUID): Editor {
   return {
     ...editor,
     selectedSlideIDs: [slideID],
   };
 }
 
-function selectSlide(editor: Editor, slideID: UUID): Editor {
+export function selectSlide(editor: Editor, slideID: UUID): Editor {
   return {
     ...editor,
     selectedSlideIDs: editor.presentation.slides.flatMap(slide =>
-      editor.selectedSlideIDs.concat(slideID).includes(slide.id) ? slide.id : []
+      editor.selectedSlideIDs.concat(slideID).includes(slide.id) ? slide.id : [],
     ),
   };
 }
 
-function setSlideBackgroundColor(editor: Editor, color: string): Editor {
+export function setSlideBackgroundColor(editor: Editor, color: string): Editor {
   return {
     ...editor,
     presentation: {
@@ -106,13 +101,13 @@ function setSlideBackgroundColor(editor: Editor, color: string): Editor {
               color,
             },
           }
-          : slide
+          : slide,
       ),
     },
   };
 }
 
-function setSlideBackgroundImage(editor: Editor, src: string): Editor {
+export function setSlideBackgroundImage(editor: Editor, src: string): Editor {
   return {
     ...editor,
     presentation: {
@@ -126,13 +121,13 @@ function setSlideBackgroundImage(editor: Editor, src: string): Editor {
               src,
             },
           }
-          : slide
+          : slide,
       ),
     },
   };
 }
 
-function removeElements(editor: Editor): Editor {
+export function removeElements(editor: Editor): Editor {
   return {
     ...editor,
     selectedElementIDs: [],
@@ -143,20 +138,25 @@ function removeElements(editor: Editor): Editor {
           ? {
             ...slide,
             elements: slide.elements.filter(
-              element => !editor.selectedElementIDs.includes(element.id)
+              element => !editor.selectedElementIDs.includes(element.id),
             ),
           }
-          : { ...slide }
+          : { ...slide },
       ),
     },
   };
 }
 
-function addText(
-  editor: Editor,
-  position: Position,
-  dimensions: Dimensions,
-  value: string
+export function addText(
+  editor: Editor, {
+    position,
+    dimensions,
+    value,
+  }: {
+    position: Position;
+    dimensions: Dimensions;
+    value: string;
+  },
 ): Editor {
   return {
     ...editor,
@@ -174,13 +174,21 @@ function addText(
           size: 10,
           font: 'Calibri',
           color: '#000000',
-        }
+        },
       ),
     },
   };
 }
 
-function setTextValue(editor: Editor, value: string): Editor {
+export function setTextValue(
+  editor: Editor, {
+    elementID,
+    value,
+  }: {
+    elementID: UUID;
+    value: string;
+  },
+): Editor {
   return {
     ...editor,
     presentation: {
@@ -191,21 +199,29 @@ function setTextValue(editor: Editor, value: string): Editor {
             ...slide,
             elements: slide.elements.map(element =>
               element.type === ElementType.TEXT &&
-              isCurrentElement(element, editor.selectedElementIDs)
+              element.id === elementID
                 ? {
                   ...element,
                   value,
                 }
-                : element
+                : element,
             ),
           }
-          : slide
+          : slide,
       ),
     },
   };
 }
 
-function setTextFont(editor: Editor, font: string): Editor {
+export function setTextFont(
+  editor: Editor, {
+    elementID,
+    font,
+  }: {
+    elementID: UUID;
+    font: string;
+  },
+): Editor {
   return {
     ...editor,
     presentation: {
@@ -216,21 +232,29 @@ function setTextFont(editor: Editor, font: string): Editor {
             ...slide,
             elements: slide.elements.map(element =>
               element.type === ElementType.TEXT &&
-              isCurrentElement(element, editor.selectedElementIDs)
+              element.id === elementID
                 ? {
                   ...element,
                   font,
                 }
-                : element
+                : element,
             ),
           }
-          : slide
+          : slide,
       ),
     },
   };
 }
 
-function setTextSize(editor: Editor, size: number): Editor {
+export function setTextSize(
+  editor: Editor, {
+    elementID,
+    size,
+  }: {
+    elementID: UUID;
+    size: number;
+  },
+): Editor {
   return {
     ...editor,
     presentation: {
@@ -241,25 +265,30 @@ function setTextSize(editor: Editor, size: number): Editor {
             ...slide,
             elements: slide.elements.map(element =>
               element.type === ElementType.TEXT &&
-              isCurrentElement(element, editor.selectedElementIDs)
+              element.id === elementID
                 ? {
                   ...element,
                   size,
                 }
-                : element
+                : element,
             ),
           }
-          : slide
+          : slide,
       ),
     },
   };
 }
 
-function addImage(
-  editor: Editor,
-  position: Position,
-  dimensions: Dimensions,
-  src: string
+export function addImage(
+  editor: Editor, {
+    position,
+    dimensions,
+    src,
+  }: {
+    position: Position,
+    dimensions: Dimensions,
+    src: string,
+  },
 ): Editor {
   return {
     ...editor,
@@ -274,17 +303,22 @@ function addImage(
           position,
           dimensions,
           src,
-        }
+        },
       ),
     },
   };
 }
 
-function addPrimitive(
-  editor: Editor,
-  position: Position,
-  dimensions: Dimensions,
-  primitiveType: PrimitiveType
+export function addPrimitive(
+  editor: Editor, {
+    position,
+    dimensions,
+    primitiveType,
+  }: {
+    position: Position,
+    dimensions: Dimensions,
+    primitiveType: PrimitiveType,
+  },
 ): Editor {
   return {
     ...editor,
@@ -301,13 +335,13 @@ function addPrimitive(
           dimensions,
           fill: '#ffffff',
           stroke: '#000000',
-        }
+        },
       ),
     },
   };
 }
 
-function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
+export function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
   return {
     ...editor,
     presentation: {
@@ -323,16 +357,16 @@ function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
                   ...element,
                   fill,
                 }
-                : element
+                : element,
             ),
           }
-          : slide
+          : slide,
       ),
     },
   };
 }
 
-function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
+export function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
   return {
     ...editor,
     presentation: {
@@ -348,16 +382,38 @@ function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
                   ...element,
                   stroke,
                 }
-                : element
+                : element,
             ),
           }
-          : slide
+          : slide,
       ),
     },
   };
 }
 
-function moveElements(editor: Editor, positionDiff: Position): Editor {
+export function selectElement(editor: Editor, elementID: UUID): Editor {
+  return {
+    ...editor,
+    selectedElementIDs: editor.selectedElementIDs.concat(elementID),
+  };
+}
+
+export function unselectElement(editor: Editor, elementID: UUID): Editor {
+  return {
+    ...editor,
+    selectedElementIDs: editor.selectedElementIDs.filter(id => id != elementID),
+  };
+}
+
+export function moveElement(
+  editor: Editor, {
+    elementID,
+    positionDiff,
+  }: {
+    elementID: UUID,
+    positionDiff: Position,
+  },
+): Editor {
   return {
     ...editor,
     presentation: {
@@ -367,7 +423,7 @@ function moveElements(editor: Editor, positionDiff: Position): Editor {
           ? {
             ...slide,
             elements: slide.elements.map(element =>
-              editor.selectedElementIDs.includes(element.id)
+              element.id === elementID
                 ? {
                   ...element,
                   position: {
@@ -375,16 +431,16 @@ function moveElements(editor: Editor, positionDiff: Position): Editor {
                     y: element.position.y + positionDiff.y,
                   },
                 }
-                : element
+                : element,
             ),
           }
-          : slide
+          : slide,
       ),
     },
   };
 }
 
-function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
+export function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
   return {
     ...editor,
     presentation: {
@@ -399,16 +455,16 @@ function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
                   ...element,
                   dimensions,
                 }
-                : element
+                : element,
             ),
           }
-          : slide
+          : slide,
       ),
     },
   };
 }
 
-function undo(editor: Editor): Editor {
+export function undo(editor: Editor): Editor {
   return {
     ...editor,
     presentation:
@@ -425,7 +481,7 @@ function undo(editor: Editor): Editor {
   };
 }
 
-function redo(editor: Editor): Editor {
+export function redo(editor: Editor): Editor {
   return {
     ...editor,
     presentation: isRedoAvailable(editor.history)
@@ -440,6 +496,6 @@ function redo(editor: Editor): Editor {
   };
 }
 
-function exportPresentation(presentation: Presentation): void {
+export function exportPresentation(presentation: Presentation): void {
   // TODO: implement
 }

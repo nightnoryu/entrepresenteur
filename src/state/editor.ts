@@ -1,7 +1,9 @@
 import { BackgroundType, Editor, ElementType, PrimitiveType } from '../model/types';
 
 type HandlerFunc = (() => void) | null;
-type ModifyFunc = (editor: Editor) => Editor;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+type ModifyFunc = (editor: Editor, payload?) => Editor;
 
 let editor: Editor = {
   presentation: {
@@ -11,7 +13,7 @@ let editor: Editor = {
         id: 'slide1',
         background: {
           type: BackgroundType.SOLID,
-          color: '#ffffff',
+          color: '#efffff',
         },
         elements: [
           {
@@ -96,13 +98,28 @@ let editor: Editor = {
           type: BackgroundType.IMAGE,
           src: 'https://www.windowscentral.com/sites/wpcentral.com/files/styles/large/public/field/image/2017/04/windows-xp-bliss.jpg',
         },
-        elements: [],
+        elements: [
+          {
+            id: 'element21',
+            type: ElementType.TEXT,
+            position: {
+              x: 300,
+              y: 300,
+            },
+            dimensions: {
+              width: 200,
+              height: 50,
+            },
+            value: 'Font props test',
+            color: '#ff0000',
+            font: 'Consolas',
+            size: 16,
+          },
+        ],
       },
     ],
   },
-  selectedElementIDs: [
-    'element4',
-  ],
+  selectedElementIDs: [],
   selectedSlideIDs: [
     'slide1',
   ],
@@ -125,8 +142,10 @@ function addEditorChangeHandler(handler: HandlerFunc): void {
   editorChangeHandler = handler;
 }
 
-function dispatch(modifyFn: ModifyFunc): void {
-  const newEditor = modifyFn(editor);
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+function dispatch(modifyFn: ModifyFunc, payload?): void {
+  const newEditor = modifyFn(editor, payload);
   setEditor(newEditor);
 
   if (editorChangeHandler !== null) {

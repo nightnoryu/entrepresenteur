@@ -1,0 +1,29 @@
+.slidethumbnail
+{
+  width: 90%;
+  height: 15%;
+  margin-left: 5%;
+  margin-top: 10px;
+
+  border: 1px solid #000000;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.slideindex
+{
+  font-size: 1.2em;
+  color: black;
+}
+
+.slideview
+{
+  width: 90%;
+  height: 80%;
+
+  position: relative;
+  left: 50%;
+  top: 40%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
