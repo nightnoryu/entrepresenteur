@@ -6,7 +6,7 @@ type Handler = (event: Event) => void;
 function useDoubleClick<T extends DocumentAndElementEventHandlers>(
   ref: RefObject<T>,
   onDoubleClick: Handler,
-  latency = 150,
+  latency = 300,
 ): void {
   let clickCount = 0;
 
