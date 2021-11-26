@@ -6,12 +6,13 @@ import SlideView from '../../slideview/SlideView';
 import { createNewSlide } from '../../../model/infrastructure_actions';
 import useEventListener from '../../../hooks/useEventListener';
 import { dispatch } from '../../../state/editor';
-import { setCurrentSlide } from '../../../model/actions';
+import { setCurrentSlide, selectSlide } from '../../../model/actions';
 
 type SlideThumbnailProps = {
   slide: Slide;
   index: number;
   isSelected: boolean;
+  onSelect?: () => void;
 };
 
 function SlideThumbnail({ slide, index, isSelected }: SlideThumbnailProps): JSX.Element {
@@ -28,7 +29,7 @@ function SlideThumbnail({ slide, index, isSelected }: SlideThumbnailProps): JSX.
 
   return (
     <div className={styles.slidethumbnail} ref={ref}>
-      <div className={styles.slideindex}>{index}</div>
+      <span className={styles.slideindex}>{index}</span>
       <div className={styles.slideview}>
         <SlideView slide={displayedSlide} />
       </div>
