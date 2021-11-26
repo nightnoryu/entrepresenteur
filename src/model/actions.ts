@@ -7,7 +7,7 @@ import {
   isCurrentSlide,
   isRedoAvailable,
   selectNearestUnselectedSlide,
-} from './infrastructure_actions';
+} from './model_utils';
 
 export function setPresentationTitle(
   editor: Editor,

@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Workspace.module.css';
 import { Slide } from '../../model/types';
 import { UUID } from '../../model/uuid';
-import { createNewSlide } from '../../model/infrastructure_actions';
+import { createNewSlide } from '../../model/model_utils';
 import EditableSlideView from './editableslideview/EditableSlideView';
 
 type WorkspaceProps = {

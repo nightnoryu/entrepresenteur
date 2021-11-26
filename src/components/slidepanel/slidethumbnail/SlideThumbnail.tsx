@@ -3,7 +3,7 @@ import '../../slideview/SlideView';
 import { Slide } from '../../../model/types';
 import styles from './SlideThumbnail.module.css';
 import SlideView from '../../slideview/SlideView';
-import { createNewSlide } from '../../../model/infrastructure_actions';
+import { createNewSlide } from '../../../model/model_utils';
 import useEventListener from '../../../hooks/useEventListener';
 import { dispatch } from '../../../state/editor';
 import { setCurrentSlide } from '../../../model/actions';

@@ -5,7 +5,7 @@ import Workspace from './components/workspace/Workspace';
 import './App.css';
 import useConfirmLeaving from './hooks/useConfirmLeaving';
 import { Editor } from './model/types';
-import { isCurrentSlide } from './model/infrastructure_actions';
+import { isCurrentSlide } from './model/model_utils';
 
 type AppProps = {
   editor: Editor;
