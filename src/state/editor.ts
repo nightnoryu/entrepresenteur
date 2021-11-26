@@ -44,7 +44,7 @@ let editor: Editor = {
               height: 100,
             },
             src: 'https://sun9-52.userapi.com/impg/hfp3GegAiTarASchXrdeEHs2mZxuWzSRlZYKwQ/KGBV_Z07zM8.jpg?size=737x647&quality=95&sign=6fed5591ff3f39e8304ea05d3e4cf8d4&type=album',
-            },
+          },
           {
             id: 'element3',
             type: ElementType.PRIMITIVE,

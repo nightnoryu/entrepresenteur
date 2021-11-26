@@ -15,7 +15,7 @@ function Workspace({ slide, selectedElementIDs }: WorkspaceProps): JSX.Element {
 
   return (
     <div className={styles.workspace}>
-      <EditableSlideView slide={displayedSlide} selectedElementIDs={selectedElementIDs}/>
+      <EditableSlideView slide={displayedSlide} selectedElementIDs={selectedElementIDs} />
     </div>
   );
 }
