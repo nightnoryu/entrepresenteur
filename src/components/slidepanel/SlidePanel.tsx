@@ -3,8 +3,9 @@ import styles from './SlidePanel.module.css';
 import { UUID } from '../../model/uuid';
 import { Slide } from '../../model/types';
 import SlideThumbnail from './slidethumbnail/SlideThumbnail';
-import { dispatch } from '../../state/editor';
-import { setCurrentSlide } from '../../model/actions';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../state';
 
 type SlidePanelProps = {
   slides: Slide[];
@@ -12,6 +13,9 @@ type SlidePanelProps = {
 }
 
 function SlidePanel({ slides, selectedSlideIDs }: SlidePanelProps): JSX.Element {
+  const dispatch = useDispatch();
+  const { setCurrentSlide } = bindActionCreators(actionCreators, dispatch);
+
   return (
     <div className={styles.slidepanel}>
       {slides.map((slide, i) => (
@@ -21,7 +25,7 @@ function SlidePanel({ slides, selectedSlideIDs }: SlidePanelProps): JSX.Element 
           index={i + 1}
           isSelected={selectedSlideIDs.includes(slide.id)}
           onClick={() => {
-            dispatch(setCurrentSlide, slide.id);
+            setCurrentSlide(slide.id);
           }}
         />
       ))}

@@ -6,8 +6,9 @@ import EditableText from './elements/EditableText';
 import EditableImage from './elements/EditableImage';
 import EditablePrimitive from './elements/EditablePrimitive';
 import useEventListener from '../../../../hooks/useEventListener';
-import { dispatch } from '../../../../state/editor';
-import { removeElements } from '../../../../model/actions';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../../../state';
 
 type OverlayProps = {
   slide: Slide;
@@ -15,10 +16,13 @@ type OverlayProps = {
 };
 
 function Overlay({ slide, selectedSlideIDs }: OverlayProps): JSX.Element {
+  const dispatch = useDispatch();
+  const { removeElements } = bindActionCreators(actionCreators, dispatch);
+
   useEventListener('keydown', (e: Event) => {
     if ((e as KeyboardEvent).code === 'Delete') {
       e.preventDefault();
-      dispatch(removeElements);
+      removeElements();
     }
   });
 
