@@ -2,6 +2,7 @@ import { BackgroundType, Dimensions, Editor, ElementType, Position, Presentation
 import { generateUUID, UUID } from './uuid';
 import {
   concatWithSelectedSlideElements,
+  createEditor,
   createNewSlide,
   isCurrentElement,
   isCurrentSlide,
@@ -9,6 +10,10 @@ import {
   moveElementOnTop,
   selectNearestUnselectedSlide,
 } from './model_utils';
+
+export function openPresentation(editor: Editor, presentation: Presentation): Editor {
+  return createEditor(presentation);
+}
 
 export function setPresentationTitle(
   editor: Editor,

@@ -3,6 +3,7 @@ import { Editor } from '../../model/types';
 import Action, { ActionType } from '../actions/actions';
 import {
   moveElement,
+  openPresentation,
   removeElements,
   selectElement,
   setCurrentSlide,
@@ -15,6 +16,8 @@ const initialState = createEditor(createNewPresentation());
 
 function reducer(state: Editor = initialState, action: Action): Editor {
   switch (action.type) {
+  case ActionType.OPEN_PRESENTATION:
+    return openPresentation(state, action.payload);
   case ActionType.CHANGE_PRESENTATION_TITLE:
     return setPresentationTitle(state, action.payload);
   case ActionType.SET_TEXT_VALUE:

@@ -1,6 +1,16 @@
 import { Dispatch } from 'react';
 import Action, { ActionType } from './actions';
 import { UUID } from '../../model/uuid';
+import { Presentation } from '../../model/types';
+
+export function openPresentation(presentation: Presentation) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.OPEN_PRESENTATION,
+      payload: presentation,
+    });
+  };
+}
 
 export function changePresentationTitle(title: string) {
   return (dispatch: Dispatch<Action>): void => {
