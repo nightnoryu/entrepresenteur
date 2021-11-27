@@ -42,7 +42,7 @@ export function unselectElement(elementID: UUID) {
 export function moveElement(payload: any) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
-      type: ActionType.UNSELECT_ELEMENT,
+      type: ActionType.MOVE_ELEMENT,
       payload: payload,
     });
   };
@@ -59,7 +59,7 @@ export function removeElements() {
 export function setCurrentSlide(slideID: UUID) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
-      type: ActionType.REMOVE_ELEMENTS,
+      type: ActionType.SET_CURRENT_SLIDE,
       payload: slideID,
     });
   };
