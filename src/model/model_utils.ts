@@ -47,7 +47,7 @@ export function createEditor(presentation: Presentation): Editor {
 export function concatWithSelectedSlideElements(
   slides: Slide[],
   selectedSlideIDs: UUID[],
-  element: SlideElement
+  element: SlideElement,
 ): Slide[] {
   return slides.map(slide =>
     isCurrentSlide(slide, selectedSlideIDs)
@@ -55,20 +55,20 @@ export function concatWithSelectedSlideElements(
         ...slide,
         elements: slide.elements.concat(element),
       }
-      : { ...slide }
+      : { ...slide },
   );
 }
 
 export function isCurrentSlide(
   slide: Slide,
-  selectedSlideIDs: UUID[]
+  selectedSlideIDs: UUID[],
 ): boolean {
   return slide.id === selectedSlideIDs[0];
 }
 
 export function isCurrentElement(
   element: SlideElement,
-  selectedElementIDs: UUID[]
+  selectedElementIDs: UUID[],
 ): boolean {
   return element.id === selectedElementIDs[0];
 }
@@ -78,7 +78,7 @@ export function isCurrentElement(
  */
 export function selectNearestUnselectedSlide(
   slides: Slide[],
-  selectedSlideIDs: UUID[]
+  selectedSlideIDs: UUID[],
 ): UUID[] {
   const firstSelectedSlideIndex = slides.findIndex(slide => isCurrentSlide(slide, selectedSlideIDs));
 
@@ -93,6 +93,17 @@ export function selectNearestUnselectedSlide(
   }
 
   return [newSlides[0].id];
+}
+
+export function moveElementOnTop(elements: SlideElement[], elementID: UUID): SlideElement[] {
+  elements.map((element, i) => {
+    if (element.id === elementID) {
+      elements.splice(i, 1);
+      elements.push(element);
+    }
+  });
+
+  return elements;
 }
 
 export function saveState(editor: Editor): Editor {

@@ -6,6 +6,7 @@ import {
   isCurrentElement,
   isCurrentSlide,
   isRedoAvailable,
+  moveElementOnTop,
   selectNearestUnselectedSlide,
 } from './model_utils';
 
@@ -395,6 +396,16 @@ export function selectElement(editor: Editor, elementID: UUID): Editor {
   return {
     ...editor,
     selectedElementIDs: editor.selectedElementIDs.concat(elementID),
+    presentation: {
+      ...editor.presentation,
+      slides: editor.presentation.slides.map(
+        slide => isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: moveElementOnTop(slide.elements, elementID),
+          } : slide,
+      ),
+    },
   };
 }
 
