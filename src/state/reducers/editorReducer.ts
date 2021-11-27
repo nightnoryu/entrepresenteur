@@ -1,6 +1,6 @@
 import { createEditor, createNewPresentation } from '../../model/model_utils';
 import { Editor } from '../../model/types';
-import Action from '../actions';
+import Action, { ActionType } from '../actions/actions';
 import {
   moveElement,
   removeElements,
@@ -10,7 +10,6 @@ import {
   setTextValue,
   unselectElement,
 } from '../../model/actions';
-import ActionType from '../actionTypes';
 
 const initialState = createEditor(createNewPresentation());
 

@@ -1,4 +1,4 @@
-enum ActionType {
+export enum ActionType {
   CHANGE_PRESENTATION_TITLE,
   SET_TEXT_VALUE,
   SELECT_ELEMENT,
@@ -8,4 +8,9 @@ enum ActionType {
   SET_CURRENT_SLIDE,
 }
 
-export default ActionType;
+type Action = {
+  type: ActionType;
+  payload?: any;
+}
+
+export default Action;

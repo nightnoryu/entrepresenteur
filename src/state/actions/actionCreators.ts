@@ -1,7 +1,6 @@
 import { Dispatch } from 'react';
-import Action from './actions';
-import ActionType from './actionTypes';
-import { UUID } from '../model/uuid';
+import Action, { ActionType } from './actions';
+import { UUID } from '../../model/uuid';
 
 export function changePresentationTitle(title: string) {
   return (dispatch: Dispatch<Action>): void => {
