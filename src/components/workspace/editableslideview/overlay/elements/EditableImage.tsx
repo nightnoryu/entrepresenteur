@@ -2,10 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { ImageElement } from '../../../../../model/types';
 import { getSelectedSVGElementProperties } from '../../../../../common/componentsFunctions';
 import useEventListener from '../../../../../hooks/useEventListener';
-import { dispatch } from '../../../../../state/editor';
-import { moveElement, selectElement, unselectElement } from '../../../../../model/actions';
 import useDragAndDrop from '../../../../../hooks/useDragAndDrop';
 import useOnClickOutside from '../../../../../hooks/useOnClickOutside';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../../../../state';
 
 type EditableImageProps = {
   element: ImageElement;
@@ -13,6 +14,9 @@ type EditableImageProps = {
 }
 
 function EditableImage({ element, isSelected }: EditableImageProps): JSX.Element {
+  const dispatch = useDispatch();
+  const { selectElement, unselectElement, moveElement } = bindActionCreators(actionCreators, dispatch);
+
   const selectedStyles = getSelectedSVGElementProperties(element, isSelected);
 
   const ref = useRef(null);
@@ -22,19 +26,19 @@ function EditableImage({ element, isSelected }: EditableImageProps): JSX.Element
     }
 
     if (!isSelected) {
-      dispatch(selectElement, element.id);
+      selectElement(element.id);
     }
   }, ref);
 
   useOnClickOutside(ref, () => {
     if (isSelected) {
-      dispatch(unselectElement, element.id);
+      unselectElement(element.id);
     }
   });
 
   const position = useDragAndDrop(ref, element.position);
   useEffect(() => {
-    dispatch(moveElement, {
+    moveElement({
       elementID: element.id,
       positionDiff: {
         x: position.x - element.position.x,

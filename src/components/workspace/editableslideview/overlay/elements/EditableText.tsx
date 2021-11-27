@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { TextElement } from '../../../../../model/types';
 import { getSelectedSVGElementProperties } from '../../../../../common/componentsFunctions';
-import { dispatch } from '../../../../../state/editor';
-import { moveElement, selectElement, setTextValue, unselectElement } from '../../../../../model/actions';
 import useDoubleClick from '../../../../../hooks/useDoubleClick';
 import useDragAndDrop from '../../../../../hooks/useDragAndDrop';
 import useOnClickOutside from '../../../../../hooks/useOnClickOutside';
 import useEventListener from '../../../../../hooks/useEventListener';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../../../../state';
 
 type EditableTextProps = {
   element: TextElement;
@@ -14,12 +15,15 @@ type EditableTextProps = {
 }
 
 function EditableText({ element, isSelected }: EditableTextProps): JSX.Element {
+  const dispatch = useDispatch();
+  const { setTextValue, selectElement, unselectElement, moveElement } = bindActionCreators(actionCreators, dispatch);
+
   const selectedStyles = getSelectedSVGElementProperties(element, isSelected);
 
   const ref = useRef(null);
   useDoubleClick(ref, () => {
     const newText = prompt('Enter new text');
-    dispatch(setTextValue, {
+    setTextValue({
       elementID: element.id,
       value: newText,
     });
@@ -31,19 +35,19 @@ function EditableText({ element, isSelected }: EditableTextProps): JSX.Element {
     }
 
     if (!isSelected) {
-      dispatch(selectElement, element.id);
+      selectElement(element.id);
     }
   }, ref);
 
   useOnClickOutside(ref, () => {
     if (isSelected) {
-      dispatch(unselectElement, element.id);
+      unselectElement(element.id);
     }
   });
 
   const position = useDragAndDrop(ref, element.position);
   useEffect(() => {
-    dispatch(moveElement, {
+    moveElement({
       elementID: element.id,
       positionDiff: {
         x: position.x - element.position.x,

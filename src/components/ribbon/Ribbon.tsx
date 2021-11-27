@@ -1,20 +1,24 @@
 import React from 'react';
 import './Ribbon.css';
-import { dispatch } from '../../state/editor';
-import { setPresentationTitle } from '../../model/actions';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../state';
 
 type RibbonProps = {
   presentationTitle: string;
 }
 
 function Ribbon({ presentationTitle }: RibbonProps): JSX.Element {
+  const dispatch = useDispatch();
+  const { changePresentationTitle } = bindActionCreators(actionCreators, dispatch);
+
   return (
     <div className="ribbon">
       <h1
         className="presentation-name"
         onClick={() => {
-          const newTitle = prompt('Enter new title');
-          dispatch(setPresentationTitle, newTitle);
+          const newTitle = prompt('Enter new title') || '';
+          changePresentationTitle(newTitle);
         }}
       >
         {presentationTitle}

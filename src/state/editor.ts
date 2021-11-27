@@ -1,11 +1,6 @@
 import { BackgroundType, Editor, ElementType, PrimitiveType } from '../model/types';
 
-type HandlerFunc = (() => void) | null;
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-type ModifyFunc = (editor: Editor, payload?) => Editor;
-
-let editor: Editor = {
+const editor: Editor = {
   presentation: {
     title: 'Sample presentation',
     slides: [
@@ -128,33 +123,7 @@ let editor: Editor = {
     currentState: -1,
   },
 };
-let editorChangeHandler: HandlerFunc = null;
 
-function getEditor(): Editor {
+export default function getEditor(): Editor {
   return editor;
 }
-
-function setEditor(newEditor: Editor): void {
-  editor = newEditor;
-}
-
-function addEditorChangeHandler(handler: HandlerFunc): void {
-  editorChangeHandler = handler;
-}
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-function dispatch(modifyFn: ModifyFunc, payload?): void {
-  const newEditor = modifyFn(editor, payload);
-  setEditor(newEditor);
-
-  if (editorChangeHandler !== null) {
-    editorChangeHandler();
-  }
-}
-
-export {
-  getEditor,
-  addEditorChangeHandler,
-  dispatch,
-};

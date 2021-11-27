@@ -4,14 +4,13 @@ import SlidePanel from './components/slidepanel/SlidePanel';
 import Workspace from './components/workspace/Workspace';
 import './App.css';
 import useConfirmLeaving from './hooks/useConfirmLeaving';
-import { Editor } from './model/types';
 import { isCurrentSlide } from './model/model_utils';
+import { useSelector } from 'react-redux';
+import { RootState } from './state/reducers';
 
-type AppProps = {
-  editor: Editor;
-}
+function App(): JSX.Element {
+  const editor = useSelector((state: RootState) => state.editor);
 
-function App({ editor }: AppProps): JSX.Element {
   const currentSlide = editor.presentation.slides.find(slide => isCurrentSlide(slide, editor.selectedSlideIDs));
 
   useConfirmLeaving();
