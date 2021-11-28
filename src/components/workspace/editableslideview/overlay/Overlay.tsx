@@ -5,10 +5,10 @@ import styles from './Overlay.module.css';
 import EditableText from './elements/EditableText';
 import EditableImage from './elements/EditableImage';
 import EditablePrimitive from './elements/EditablePrimitive';
-import useEventListener from '../../../../hooks/useEventListener';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../../state';
+import useHotkey from '../../../../hooks/useHotkey';
 
 type OverlayProps = {
   slide: Slide;
@@ -19,12 +19,9 @@ function Overlay({ slide, selectedSlideIDs }: OverlayProps): JSX.Element {
   const dispatch = useDispatch();
   const { removeElements } = bindActionCreators(actionCreators, dispatch);
 
-  useEventListener('keydown', (e: Event) => {
-    if ((e as KeyboardEvent).code === 'Delete') {
-      e.preventDefault();
-      removeElements();
-    }
-  });
+  useHotkey('Delete', () => {
+    removeElements();
+  }, false);
 
   return (
     <svg
