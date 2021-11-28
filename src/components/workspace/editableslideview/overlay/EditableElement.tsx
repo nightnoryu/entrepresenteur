@@ -7,13 +7,15 @@ import { getSelectedSVGElementProperties } from '../../../../common/componentsUt
 import useEventListener from '../../../../hooks/useEventListener';
 import useOnClickOutside from '../../../../hooks/useOnClickOutside';
 import useDragAndDrop from '../../../../hooks/useDragAndDrop';
+import useDoubleClick from '../../../../hooks/useDoubleClick';
 
 type EditableElementProps = {
   element: SlideElement;
   isSelected: boolean;
+  onDoubleClick?: (event: Event) => void;
 }
 
-function EditableElement({ element, isSelected }: EditableElementProps): JSX.Element {
+function EditableElement({ element, isSelected, onDoubleClick }: EditableElementProps): JSX.Element {
   const dispatch = useDispatch();
   const { selectElement, unselectElement, moveElement } = bindActionCreators(actionCreators, dispatch);
 
@@ -46,6 +48,12 @@ function EditableElement({ element, isSelected }: EditableElementProps): JSX.Ele
       },
     });
   }, [position]);
+
+  useDoubleClick(ref, (event: Event) => {
+    if (onDoubleClick) {
+      onDoubleClick(event);
+    }
+  });
 
   return (
     <rect

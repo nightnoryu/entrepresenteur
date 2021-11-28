@@ -14,7 +14,7 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
   return (
     <div className={styles.editable}>
       <SlideView slide={slide} />
-      <Overlay slide={slide} selectedSlideIDs={selectedElementIDs} />
+      <Overlay slide={slide} selectedElementIDs={selectedElementIDs} />
     </div>
   );
 }
