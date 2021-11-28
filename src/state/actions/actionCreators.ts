@@ -12,6 +12,14 @@ export function openPresentation(presentation: Presentation) {
   };
 }
 
+export function newPresentation() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.NEW_PRESENTATION,
+    });
+  };
+}
+
 export function changePresentationTitle(title: string) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({

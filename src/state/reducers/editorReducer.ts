@@ -18,6 +18,8 @@ function reducer(state: Editor = initialState, action: Action): Editor {
   switch (action.type) {
   case ActionType.OPEN_PRESENTATION:
     return openPresentation(state, action.payload);
+  case ActionType.NEW_PRESENTATION:
+    return createEditor(createNewPresentation());
   case ActionType.CHANGE_PRESENTATION_TITLE:
     return setPresentationTitle(state, action.payload);
   case ActionType.SET_TEXT_VALUE:
