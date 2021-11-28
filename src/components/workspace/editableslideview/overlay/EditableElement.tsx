@@ -58,8 +58,8 @@ function EditableElement({ element, isSelected, onDoubleClick }: EditableElement
   return (
     <rect
       ref={ref}
-      x={position.x}
-      y={position.y}
+      x={element.position.x}
+      y={element.position.y}
       width={element.dimensions.width}
       height={element.dimensions.height}
       rx="2"
