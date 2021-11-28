@@ -126,7 +126,6 @@ export function saveState(editor: Editor): Editor {
  */
 export function isRedoAvailable(history: History): boolean {
   return (
-    0 <= history.currentState &&
-    history.currentState < history.undoStack.length - 1
+    -1 <= history.currentState && history.currentState < history.undoStack.length
   );
 }

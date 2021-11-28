@@ -8,6 +8,7 @@ import {
   isCurrentSlide,
   isRedoAvailable,
   moveElementOnTop,
+  saveState,
   selectNearestUnselectedSlide,
 } from './model_utils';
 
@@ -195,12 +196,14 @@ export function setTextValue(
     value: string;
   },
 ): Editor {
+  const savedEditor = saveState(editor);
+
   return {
-    ...editor,
+    ...savedEditor,
     presentation: {
-      ...editor.presentation,
-      slides: editor.presentation.slides.map(slide =>
-        isCurrentSlide(slide, editor.selectedSlideIDs)
+      ...savedEditor.presentation,
+      slides: savedEditor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, savedEditor.selectedSlideIDs)
           ? {
             ...slide,
             elements: slide.elements.map(element =>
@@ -484,13 +487,13 @@ export function undo(editor: Editor): Editor {
   return {
     ...editor,
     presentation:
-      editor.history.currentState > 0
-        ? { ...editor.history.undoStack[editor.history.currentState - 1] }
+      editor.history.currentState > -1
+        ? { ...editor.history.undoStack[editor.history.currentState] }
         : editor.presentation,
     history: {
       ...editor.history,
       currentState:
-        editor.history.currentState > 0
+        editor.history.currentState > -1
           ? editor.history.currentState - 1
           : editor.history.currentState,
     },

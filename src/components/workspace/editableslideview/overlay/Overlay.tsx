@@ -5,7 +5,7 @@ import styles from './Overlay.module.css';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../../state';
-import useHotkey from '../../../../hooks/useHotkey';
+import useHotkey from '../../../../hooks/hotkeys/useHotkey';
 import EditableElement from './EditableElement';
 
 type OverlayProps = {
@@ -19,7 +19,7 @@ function Overlay({ slide, selectedElementIDs }: OverlayProps): JSX.Element {
 
   useHotkey('Delete', () => {
     removeElements();
-  }, false);
+  });
 
   return (
     <svg

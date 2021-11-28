@@ -9,33 +9,45 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './state/reducers';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from './state';
-import useHotkey from './hooks/useHotkey';
 import { openPresentationJSON, savePresentationJSON } from './common/fileUtils';
+import useHotkeyCtrl from './hooks/hotkeys/useHotkeyCtrl';
 
 function App(): JSX.Element {
   const editor = useSelector((state: RootState) => state.editor);
   const dispatch = useDispatch();
-  const { openPresentation, newPresentation, addSlide } = bindActionCreators(actionCreators, dispatch);
+  const {
+    openPresentation,
+    newPresentation,
+    addSlide,
+    undo,
+    redo,
+  } = bindActionCreators(actionCreators, dispatch);
 
   const currentSlide = editor.presentation.slides.find(slide => isCurrentSlide(slide, editor.selectedSlideIDs));
 
   useConfirmLeaving();
-  useHotkey('s', () => {
+  useHotkeyCtrl('s', () => {
     savePresentationJSON(editor.presentation, editor.presentation.title);
   });
-  useHotkey('o', () => {
+  useHotkeyCtrl('o', () => {
     openPresentationJSON(presentation => {
       openPresentation(presentation);
     });
   });
-  useHotkey('m', () => {
+  useHotkeyCtrl('m', () => {
     const confirmed = confirm('Are you sure?');
     if (confirmed) {
       newPresentation();
     }
   });
-  useHotkey('l', () => {
+  useHotkeyCtrl('l', () => {
     addSlide();
+  });
+  useHotkeyCtrl('z', () => {
+    undo();
+  });
+  useHotkeyCtrl('y', () => {
+    redo();
   });
 
   return (
