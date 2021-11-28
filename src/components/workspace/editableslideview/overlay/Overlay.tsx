@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../../state';
 import useHotkey from '../../../../hooks/hotkeys/useHotkey';
 import EditableElement from './EditableElement';
+import { SLIDE_HEIGHT, SLIDE_WIDTH } from '../../../../model/constants';
 
 type OverlayProps = {
   slide: Slide;
@@ -23,7 +24,7 @@ function Overlay({ slide, selectedElementIDs }: OverlayProps): JSX.Element {
 
   return (
     <svg
-      viewBox="0 0 800 600"
+      viewBox={`0 0 ${SLIDE_WIDTH} ${SLIDE_HEIGHT}`}
       className={styles.overlay}
     >
       {slide.elements.map(element => {
@@ -38,7 +39,7 @@ function Overlay({ slide, selectedElementIDs }: OverlayProps): JSX.Element {
               onDoubleClick={() => {
                 const newText = prompt('Enter new text');
 
-                if (newText === '') {
+                if (!newText) {
                   removeElements();
                   return;
                 }
