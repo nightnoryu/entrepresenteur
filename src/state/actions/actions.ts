@@ -9,6 +9,8 @@ export enum ActionType {
   REMOVE_ELEMENTS,
   ADD_SLIDE,
   SET_CURRENT_SLIDE,
+  UNDO,
+  REDO,
 }
 
 type Action = {

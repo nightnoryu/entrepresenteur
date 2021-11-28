@@ -89,3 +89,19 @@ export function setCurrentSlide(slideID: UUID) {
     });
   };
 }
+
+export function undo() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.UNDO,
+    });
+  };
+}
+
+export function redo() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.REDO,
+    });
+  };
+}

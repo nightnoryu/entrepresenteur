@@ -5,11 +5,13 @@ import {
   addSlide,
   moveElement,
   openPresentation,
+  redo,
   removeElements,
   selectElement,
   setCurrentSlide,
   setPresentationTitle,
   setTextValue,
+  undo,
   unselectElement,
 } from '../../model/actions';
 
@@ -37,6 +39,10 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return addSlide(state);
   case ActionType.SET_CURRENT_SLIDE:
     return setCurrentSlide(state, action.payload);
+  case ActionType.UNDO:
+    return undo(state);
+  case ActionType.REDO:
+    return redo(state);
   default:
     return state;
   }
