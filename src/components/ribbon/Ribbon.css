@@ -53,6 +53,7 @@
 
 .sub-menu__list
 {
+  z-index: 5;
   max-width: 250px;
   display: none;
   position: absolute;
@@ -80,7 +81,6 @@
 
 .sub-sub-menu__list
 {
-  z-index: 1;
   display: none;
   position: absolute;
   top: 0;
