@@ -22,11 +22,7 @@ function EditableElement({ element, isSelected, onDoubleClick }: EditableElement
   const selectedStyles = getSelectedSVGElementProperties(element, isSelected);
 
   const ref = useRef(null);
-  useEventListener('mousedown', (event: Event) => {
-    if ((event as MouseEvent).button !== 0) {
-      return;
-    }
-
+  useEventListener('mousedown', () => {
     if (!isSelected) {
       selectElement(element.id);
     }
