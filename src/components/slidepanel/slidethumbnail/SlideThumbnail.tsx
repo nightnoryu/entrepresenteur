@@ -16,7 +16,13 @@ function SlideThumbnail({ slide, index, isSelected, onClick }: SlideThumbnailPro
   const displayedSlide = slide || createNewSlide();
 
   return (
-    <div className={styles.slidethumbnail} onClick={onClick}>
+    <div
+      className={styles.slidethumbnail}
+      onClick={onClick}
+      style={isSelected ? {
+        border: '2px solid blue',
+      } : {}}
+    >
       <span className={styles.slideindex}>{index}</span>
       <div className={styles.slideview}>
         <SlideView slide={displayedSlide} />
