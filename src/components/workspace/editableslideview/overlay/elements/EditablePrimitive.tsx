@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { PrimitiveElement } from '../../../../../model/types';
-import { getSelectedSVGElementProperties } from '../../../../../common/componentsFunctions';
+import { getSelectedSVGElementProperties } from '../../../../../common/componentsUtils';
 import useEventListener from '../../../../../hooks/useEventListener';
 import useDragAndDrop from '../../../../../hooks/useDragAndDrop';
 import useOnClickOutside from '../../../../../hooks/useOnClickOutside';

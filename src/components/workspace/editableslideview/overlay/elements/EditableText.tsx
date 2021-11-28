@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { TextElement } from '../../../../../model/types';
-import { getSelectedSVGElementProperties } from '../../../../../common/componentsFunctions';
+import { getSelectedSVGElementProperties } from '../../../../../common/componentsUtils';
 import useDoubleClick from '../../../../../hooks/useDoubleClick';
 import useDragAndDrop from '../../../../../hooks/useDragAndDrop';
 import useOnClickOutside from '../../../../../hooks/useOnClickOutside';

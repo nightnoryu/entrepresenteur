@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrimitiveElement } from '../../../../model/types';
-import { calculateEllipseProperties } from '../../../../common/componentsFunctions';
+import { calculateEllipseProperties } from '../../../../common/componentsUtils';
 
 type EllipsePrimitiveProps = {
   element: PrimitiveElement;

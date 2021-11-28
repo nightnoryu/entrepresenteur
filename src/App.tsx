@@ -10,6 +10,7 @@ import { RootState } from './state/reducers';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from './state';
 import useHotkey from './hooks/useHotkey';
+import { openPresentationJSON, savePresentationJSON } from './common/fileUtils';
 
 function App(): JSX.Element {
   const editor = useSelector((state: RootState) => state.editor);
@@ -20,39 +21,12 @@ function App(): JSX.Element {
 
   useConfirmLeaving();
   useHotkey('s', () => {
-    const file = new Blob([JSON.stringify(editor.presentation)], { type: 'text/plain' });
-    const a = document.createElement('a');
-    const url = URL.createObjectURL(file);
-
-    a.href = url;
-    a.download = `${editor.presentation.title}.entrepresenteur.json`;
-    a.click();
-    setTimeout(() => {
-      URL.revokeObjectURL(url);
-    }, 0);
+    savePresentationJSON(editor.presentation, editor.presentation.title);
   });
   useHotkey('o', () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-
-    input.onchange = e => {
-      const target = e.target as HTMLInputElement;
-      if (target?.files) {
-        const file = target.files[0];
-
-        const reader = new FileReader();
-        reader.readAsText(file, 'UTF-8');
-
-        reader.onload = readerEvent => {
-          if (readerEvent.target?.result) {
-            const content = readerEvent.target.result.toString() || '';
-            openPresentation(JSON.parse(content));
-          }
-        };
-      }
-    };
-
-    input.click();
+    openPresentationJSON(presentation => {
+      openPresentation(presentation);
+    });
   });
   useHotkey('m', () => {
     const confirmed = confirm('Are you sure?');
@@ -64,9 +38,17 @@ function App(): JSX.Element {
   return (
     <div className="app">
       <Ribbon presentationTitle={editor.presentation.title} />
+
       <div className="app-main">
-        <SlidePanel slides={editor.presentation.slides} selectedSlideIDs={editor.selectedSlideIDs} />
-        <Workspace slide={currentSlide} selectedElementIDs={editor.selectedElementIDs} />
+        <SlidePanel
+          slides={editor.presentation.slides}
+          selectedSlideIDs={editor.selectedSlideIDs}
+        />
+
+        <Workspace
+          slide={currentSlide}
+          selectedElementIDs={editor.selectedElementIDs}
+        />
       </div>
     </div>
   );
