@@ -1,19 +1,19 @@
 import React, { useEffect, useRef } from 'react';
-import { PrimitiveElement } from '../../../../../model/types';
-import { getSelectedSVGElementProperties } from '../../../../../common/componentsUtils';
-import useEventListener from '../../../../../hooks/useEventListener';
-import useDragAndDrop from '../../../../../hooks/useDragAndDrop';
-import useOnClickOutside from '../../../../../hooks/useOnClickOutside';
+import { SlideElement } from '../../../../model/types';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../../../../state';
+import { actionCreators } from '../../../../state';
+import { getSelectedSVGElementProperties } from '../../../../common/componentsUtils';
+import useEventListener from '../../../../hooks/useEventListener';
+import useOnClickOutside from '../../../../hooks/useOnClickOutside';
+import useDragAndDrop from '../../../../hooks/useDragAndDrop';
 
-type EditablePrimitiveProps = {
-  element: PrimitiveElement;
+type EditableElementProps = {
+  element: SlideElement;
   isSelected: boolean;
 }
 
-function EditablePrimitive({ element, isSelected }: EditablePrimitiveProps): JSX.Element {
+function EditableElement({ element, isSelected }: EditableElementProps): JSX.Element {
   const dispatch = useDispatch();
   const { selectElement, unselectElement, moveElement } = bindActionCreators(actionCreators, dispatch);
 
@@ -50,8 +50,8 @@ function EditablePrimitive({ element, isSelected }: EditablePrimitiveProps): JSX
   return (
     <rect
       ref={ref}
-      x={element.position.x}
-      y={element.position.y}
+      x={position.x}
+      y={position.y}
       width={element.dimensions.width}
       height={element.dimensions.height}
       rx="2"
@@ -61,4 +61,4 @@ function EditablePrimitive({ element, isSelected }: EditablePrimitiveProps): JSX
   );
 }
 
-export default EditablePrimitive;
+export default EditableElement;
