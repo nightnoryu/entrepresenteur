@@ -37,6 +37,12 @@ function Overlay({ slide, selectedElementIDs }: OverlayProps): JSX.Element {
               isSelected={isSelected}
               onDoubleClick={() => {
                 const newText = prompt('Enter new text');
+
+                if (newText === '') {
+                  removeElements();
+                  return;
+                }
+
                 setTextValue({
                   elementID: element.id,
                   value: newText,
