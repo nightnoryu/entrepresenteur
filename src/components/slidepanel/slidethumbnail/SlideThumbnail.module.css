@@ -27,8 +27,8 @@
 .slideview
 {
   margin-top: -3%;
-  width: 70%;
-  height: 80%;
+  width: 85%;
+  height: auto;
   border: inherit;
 
   position: relative;
