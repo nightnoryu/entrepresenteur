@@ -22,10 +22,9 @@ function App(): JSX.Element {
   useEventListener('keydown', (e: Event) => {
     const event = e as KeyboardEvent;
     if (event.ctrlKey) {
-      e.stopPropagation();
-      e.preventDefault();
 
       if (event.key === 's') {
+        e.preventDefault();
         const file = new Blob([JSON.stringify(editor.presentation)], { type: 'text/plain' });
         const a = document.createElement('a');
         const url = URL.createObjectURL(file);
@@ -38,6 +37,7 @@ function App(): JSX.Element {
         }, 0);
 
       } else if (event.key === 'o') {
+        e.preventDefault();
         const input = document.createElement('input');
         input.type = 'file';
 
@@ -60,6 +60,7 @@ function App(): JSX.Element {
 
         input.click();
       } else if (event.key === 'm') {
+        e.preventDefault();
         const confirmed = confirm('Are you sure?');
         if (confirmed) {
           newPresentation();
