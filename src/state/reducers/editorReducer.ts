@@ -2,6 +2,7 @@ import { createEditor, createNewPresentation } from '../../model/model_utils';
 import { Editor } from '../../model/types';
 import Action, { ActionType } from '../actions/actions';
 import {
+  addSlide,
   moveElement,
   openPresentation,
   removeElements,
@@ -32,6 +33,8 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return moveElement(state, action.payload);
   case ActionType.REMOVE_ELEMENTS:
     return removeElements(state);
+  case ActionType.ADD_SLIDE:
+    return addSlide(state);
   case ActionType.SET_CURRENT_SLIDE:
     return setCurrentSlide(state, action.payload);
   default:

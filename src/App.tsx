@@ -15,7 +15,7 @@ import { openPresentationJSON, savePresentationJSON } from './common/fileUtils';
 function App(): JSX.Element {
   const editor = useSelector((state: RootState) => state.editor);
   const dispatch = useDispatch();
-  const { openPresentation, newPresentation } = bindActionCreators(actionCreators, dispatch);
+  const { openPresentation, newPresentation, addSlide } = bindActionCreators(actionCreators, dispatch);
 
   const currentSlide = editor.presentation.slides.find(slide => isCurrentSlide(slide, editor.selectedSlideIDs));
 
@@ -33,6 +33,9 @@ function App(): JSX.Element {
     if (confirmed) {
       newPresentation();
     }
+  });
+  useHotkey('l', () => {
+    addSlide();
   });
 
   return (

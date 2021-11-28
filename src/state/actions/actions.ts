@@ -7,6 +7,7 @@ export enum ActionType {
   UNSELECT_ELEMENT,
   MOVE_ELEMENT,
   REMOVE_ELEMENTS,
+  ADD_SLIDE,
   SET_CURRENT_SLIDE,
 }
 
