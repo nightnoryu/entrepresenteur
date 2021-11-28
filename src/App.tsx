@@ -7,9 +7,9 @@ import useConfirmLeaving from './hooks/useConfirmLeaving';
 import { isCurrentSlide } from './model/model_utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './state/reducers';
-import useEventListener from './hooks/useEventListener';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from './state';
+import useHotkey from './hooks/useHotkey';
 
 function App(): JSX.Element {
   const editor = useSelector((state: RootState) => state.editor);
@@ -19,53 +19,45 @@ function App(): JSX.Element {
   const currentSlide = editor.presentation.slides.find(slide => isCurrentSlide(slide, editor.selectedSlideIDs));
 
   useConfirmLeaving();
-  useEventListener('keydown', (e: Event) => {
-    const event = e as KeyboardEvent;
-    if (event.ctrlKey) {
+  useHotkey('s', () => {
+    const file = new Blob([JSON.stringify(editor.presentation)], { type: 'text/plain' });
+    const a = document.createElement('a');
+    const url = URL.createObjectURL(file);
 
-      if (event.key === 's') {
-        e.preventDefault();
-        const file = new Blob([JSON.stringify(editor.presentation)], { type: 'text/plain' });
-        const a = document.createElement('a');
-        const url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = `${editor.presentation.title}.entrepresenteur.json`;
+    a.click();
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+    }, 0);
+  });
+  useHotkey('o', () => {
+    const input = document.createElement('input');
+    input.type = 'file';
 
-        a.href = url;
-        a.download = `${editor.presentation.title}.entrepresenteur.json`;
-        a.click();
-        setTimeout(() => {
-          URL.revokeObjectURL(url);
-        }, 0);
+    input.onchange = e => {
+      const target = e.target as HTMLInputElement;
+      if (target?.files) {
+        const file = target.files[0];
 
-      } else if (event.key === 'o') {
-        e.preventDefault();
-        const input = document.createElement('input');
-        input.type = 'file';
+        const reader = new FileReader();
+        reader.readAsText(file, 'UTF-8');
 
-        input.onchange = e => {
-          const target = e.target as HTMLInputElement;
-          if (target?.files) {
-            const file = target.files[0];
-
-            const reader = new FileReader();
-            reader.readAsText(file, 'UTF-8');
-
-            reader.onload = readerEvent => {
-              if (readerEvent.target?.result) {
-                const content = readerEvent.target.result.toString() || '';
-                openPresentation(JSON.parse(content));
-              }
-            };
+        reader.onload = readerEvent => {
+          if (readerEvent.target?.result) {
+            const content = readerEvent.target.result.toString() || '';
+            openPresentation(JSON.parse(content));
           }
         };
-
-        input.click();
-      } else if (event.key === 'm') {
-        e.preventDefault();
-        const confirmed = confirm('Are you sure?');
-        if (confirmed) {
-          newPresentation();
-        }
       }
+    };
+
+    input.click();
+  });
+  useHotkey('m', () => {
+    const confirmed = confirm('Are you sure?');
+    if (confirmed) {
+      newPresentation();
     }
   });
 
