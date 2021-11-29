@@ -4,6 +4,7 @@ import { Position } from '../model/types';
 function useDragAndDrop<T extends SVGGeometryElement>(
   ref: React.RefObject<T> | null,
   initialPosition: Position,
+  mouseDownHandler?: (event: MouseEvent) => void,
 ): Position {
   const [pos, setPos] = useState(initialPosition);
   let startPos: Position;
@@ -25,6 +26,10 @@ function useDragAndDrop<T extends SVGGeometryElement>(
   const onMouseDown = (e: MouseEvent) => {
     if (e.button !== 0) {
       return;
+    }
+
+    if (mouseDownHandler) {
+      mouseDownHandler(e);
     }
 
     startPos = {

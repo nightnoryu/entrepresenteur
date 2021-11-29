@@ -90,6 +90,14 @@ export function setCurrentSlide(slideID: UUID) {
   };
 }
 
+export function saveState() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SAVE_STATE,
+    });
+  };
+}
+
 export function undo() {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({

@@ -29,7 +29,7 @@ export function createNewPresentation(): Presentation {
  * Create root model object
  */
 export function createEditor(presentation: Presentation): Editor {
-  return {
+  const editor = {
     presentation,
     selectedSlideIDs:
       presentation.slides.length > 0 ? [presentation.slides[0].id] : [],
@@ -39,6 +39,9 @@ export function createEditor(presentation: Presentation): Editor {
       currentState: -1,
     },
   };
+
+  // HACK: probably need to refactor history saving
+  return saveState(editor);
 }
 
 /**
