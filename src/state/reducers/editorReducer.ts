@@ -1,4 +1,4 @@
-import { createEditor, createNewPresentation } from '../../model/model_utils';
+import { createEditor, createNewPresentation, saveState } from '../../model/model_utils';
 import { Editor } from '../../model/types';
 import Action, { ActionType } from '../actions/actions';
 import {
@@ -39,6 +39,8 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return addSlide(state);
   case ActionType.SET_CURRENT_SLIDE:
     return setCurrentSlide(state, action.payload);
+  case ActionType.SAVE_STATE:
+    return saveState(state);
   case ActionType.UNDO:
     return undo(state);
   case ActionType.REDO:
