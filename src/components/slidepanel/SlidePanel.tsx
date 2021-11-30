@@ -1,11 +1,12 @@
 import React from 'react';
 import styles from './SlidePanel.module.css';
 import { UUID } from '../../model/uuid';
-import { Editor, Slide } from '../../model/types';
+import { Slide } from '../../model/types';
 import SlideThumbnail from './slidethumbnail/SlideThumbnail';
 import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../state';
+import { RootState } from '../../state/reducers';
 
 type SlidePanelProps = {
   slides: Slide[];
@@ -32,7 +33,7 @@ function SlidePanel({ slides, selectedSlideIDs }: SlidePanelProps): JSX.Element 
     </div>);
 }
 
-function mapStateToProps(state: Editor): SlidePanelProps {
+function mapStateToProps(state: RootState) {
   return {
     slides: state.presentation.slides,
     selectedSlideIDs: state.selectedSlideIDs,
