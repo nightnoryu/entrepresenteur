@@ -1,9 +1,6 @@
 import editorReducer from './editorReducer';
-import { combineReducers } from 'redux';
 
-const reducers = combineReducers({
-  editor: editorReducer,
-});
+const reducers = editorReducer; // TODO: replace with combineReducers
 
 export default reducers;
 export type RootState = ReturnType<typeof reducers>;

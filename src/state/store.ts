@@ -5,7 +5,7 @@ import getEditor from './editor';
 
 const store = createStore(
   reducers,
-  { editor: getEditor() },
+  getEditor(),
   applyMiddleware(thunk),
 );
 

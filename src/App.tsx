@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './state/reducers';
 
 function App(): JSX.Element {
-  const editor = useSelector((state: RootState) => state.editor);
+  const editor = useSelector((state: RootState) => state);
 
   const currentSlide = editor.presentation.slides.find(slide => isCurrentSlide(slide, editor.selectedSlideIDs));
 
@@ -17,7 +17,7 @@ function App(): JSX.Element {
 
   return (
     <div className="app">
-      <Ribbon presentationTitle={editor.presentation.title} />
+      <Ribbon />
       <div className="app-main">
         <SlidePanel slides={editor.presentation.slides} selectedSlideIDs={editor.selectedSlideIDs} />
         <Workspace slide={currentSlide} selectedElementIDs={editor.selectedElementIDs} />
