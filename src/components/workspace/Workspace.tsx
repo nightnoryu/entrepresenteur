@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './Workspace.module.css';
-import { Slide } from '../../model/types';
+import { Editor, Slide } from '../../model/types';
 import { UUID } from '../../model/uuid';
-import { createNewSlide } from '../../model/model_utils';
+import { createNewSlide, isCurrentSlide } from '../../model/model_utils';
 import EditableSlideView from './editableslideview/EditableSlideView';
+import { connect } from 'react-redux';
 
 type WorkspaceProps = {
   slide?: Slide;
@@ -20,4 +21,11 @@ function Workspace({ slide, selectedElementIDs }: WorkspaceProps): JSX.Element {
   );
 }
 
-export default Workspace;
+function mapStateToProps(state: Editor): WorkspaceProps {
+  return {
+    slide: state.presentation.slides.find(slide => isCurrentSlide(slide, state.selectedSlideIDs)),
+    selectedElementIDs: state.selectedElementIDs,
+  };
+}
+
+export default connect(mapStateToProps)(Workspace);
