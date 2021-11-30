@@ -8,7 +8,7 @@ import EditablePrimitive from './elements/EditablePrimitive';
 import useEventListener from '../../../../hooks/useEventListener';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../../../state';
+import { actionCreators } from '../../../../state/actions';
 
 type OverlayProps = {
   slide: Slide;

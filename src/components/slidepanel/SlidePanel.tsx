@@ -5,7 +5,7 @@ import { Slide } from '../../model/types';
 import SlideThumbnail from './slidethumbnail/SlideThumbnail';
 import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../state';
+import { actionCreators } from '../../state/actions';
 import { RootState } from '../../state/reducers';
 
 type SlidePanelProps = {
