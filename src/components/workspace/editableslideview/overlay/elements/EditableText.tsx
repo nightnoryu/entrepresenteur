@@ -1,32 +1,33 @@
-import React, { useEffect, useRef } from 'react';
+import React, { Dispatch, useEffect, useRef } from 'react';
 import { TextElement } from '../../../../../model/types';
 import { getSelectedSVGElementProperties } from '../../../../../common/componentsFunctions';
 import useDoubleClick from '../../../../../hooks/useDoubleClick';
 import useDragAndDrop from '../../../../../hooks/useDragAndDrop';
 import useOnClickOutside from '../../../../../hooks/useOnClickOutside';
 import useEventListener from '../../../../../hooks/useEventListener';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../../../state';
+import { UUID } from '../../../../../model/uuid';
+import Action from '../../../../../state/actions/actions';
+import { setTextValue } from '../../../../../state/actions/actionCreators';
 
 type EditableTextProps = {
   element: TextElement;
   isSelected: boolean;
+  setTextValue: (elementID: UUID, value: string) => void,
 }
 
-function EditableText({ element, isSelected }: EditableTextProps): JSX.Element {
+function EditableText({ element, isSelected, setTextValue }: EditableTextProps): JSX.Element {
   const dispatch = useDispatch();
-  const { setTextValue, selectElement, unselectElement, moveElement } = bindActionCreators(actionCreators, dispatch);
+  const { selectElement, unselectElement, moveElement } = bindActionCreators(actionCreators, dispatch);
 
   const selectedStyles = getSelectedSVGElementProperties(element, isSelected);
 
   const ref = useRef(null);
   useDoubleClick(ref, () => {
-    const newText = prompt('Enter new text');
-    setTextValue({
-      elementID: element.id,
-      value: newText,
-    });
+    const newText = prompt('Enter new text') ?? '';
+    setTextValue(element.id, newText);
   });
 
   useEventListener('mousedown', (event: Event) => {
@@ -70,4 +71,13 @@ function EditableText({ element, isSelected }: EditableTextProps): JSX.Element {
   );
 }
 
-export default EditableText;
+function mapDispatchToProps(dispatch: Dispatch<Action>) {
+  return {
+    setTextValue: (elementID: UUID, value: string) => dispatch(setTextValue({
+      elementID,
+      value,
+    })),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(EditableText);

@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import './Ribbon.css';
-import { connect, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../state';
-import { Editor } from '../../model/types';
+import { connect } from 'react-redux';
+import { changePresentationTitle } from '../../state/actions/actionCreators';
+import Action from '../../state/actions/actions';
+import { RootState } from '../../state/reducers';
 
 type RibbonProps = {
   presentationTitle: string;
+  changePresentationTitle: (title: string) => void;
 }
 
-function Ribbon({ presentationTitle }: RibbonProps): JSX.Element {
-  const dispatch = useDispatch();
-  const { changePresentationTitle } = bindActionCreators(actionCreators, dispatch);
-
+function Ribbon({ presentationTitle, changePresentationTitle }: RibbonProps): JSX.Element {
   return (
     <div className="ribbon">
       <h1
@@ -146,8 +144,14 @@ function Ribbon({ presentationTitle }: RibbonProps): JSX.Element {
   );
 }
 
-function mapStateToProps(state: Editor): RibbonProps {
+function mapStateToProps(state: RootState) {
   return { presentationTitle: state.presentation.title };
 }
 
-export default connect(mapStateToProps)(Ribbon);
+function mapDispatchToProps(dispatch: Dispatch<Action>) {
+  return {
+    changePresentationTitle: (title: string) => dispatch(changePresentationTitle(title)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Ribbon);

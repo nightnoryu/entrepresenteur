@@ -2,21 +2,17 @@ import { Dispatch } from 'react';
 import Action, { ActionType } from './actions';
 import { UUID } from '../../model/uuid';
 
-export function changePresentationTitle(title: string) {
-  return (dispatch: Dispatch<Action>): void => {
-    dispatch({
-      type: ActionType.CHANGE_PRESENTATION_TITLE,
-      payload: title,
-    });
+export function changePresentationTitle(title: string): Action {
+  return {
+    type: ActionType.CHANGE_PRESENTATION_TITLE,
+    payload: title,
   };
 }
 
-export function setTextValue(payload: any) {
-  return (dispatch: Dispatch<Action>): void => {
-    dispatch({
-      type: ActionType.SET_TEXT_VALUE,
-      payload: payload,
-    });
+export function setTextValue(payload: any): Action {
+  return {
+    type: ActionType.SET_TEXT_VALUE,
+    payload: payload,
   };
 }
 
