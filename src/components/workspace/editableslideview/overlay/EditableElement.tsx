@@ -21,7 +21,7 @@ function EditableElement({ element, isSelected, onDoubleClick }: EditableElement
 
   const selectedStyles = getSelectedSVGElementProperties(element, isSelected);
 
-  const ref = useRef(null);
+  const ref = useRef<SVGRectElement>(null);
   useEventListener('mousedown', () => {
     if (!isSelected) {
       selectElement(element.id);
@@ -34,9 +34,13 @@ function EditableElement({ element, isSelected, onDoubleClick }: EditableElement
     }
   });
 
+  let scaleFactor = 1;
+  if (ref?.current) {
+    scaleFactor = element.dimensions.width / ref.current.getBoundingClientRect().width;
+  }
   const position = useDragAndDrop(ref, element.position, () => {
     saveState();
-  });
+  }, scaleFactor);
   useEffect(() => {
     moveElement({
       elementID: element.id,
