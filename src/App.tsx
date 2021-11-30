@@ -19,7 +19,7 @@ function App(): JSX.Element {
     <div className="app">
       <Ribbon />
       <div className="app-main">
-        <SlidePanel slides={editor.presentation.slides} selectedSlideIDs={editor.selectedSlideIDs} />
+        <SlidePanel />
         <Workspace slide={currentSlide} selectedElementIDs={editor.selectedElementIDs} />
       </div>
     </div>

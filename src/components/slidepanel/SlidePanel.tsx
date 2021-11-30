@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './SlidePanel.module.css';
 import { UUID } from '../../model/uuid';
-import { Slide } from '../../model/types';
+import { Editor, Slide } from '../../model/types';
 import SlideThumbnail from './slidethumbnail/SlideThumbnail';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../state';
 
@@ -32,4 +32,11 @@ function SlidePanel({ slides, selectedSlideIDs }: SlidePanelProps): JSX.Element 
     </div>);
 }
 
-export default SlidePanel;
+function mapStateToProps(state: Editor): SlidePanelProps {
+  return {
+    slides: state.presentation.slides,
+    selectedSlideIDs: state.selectedSlideIDs,
+  };
+}
+
+export default connect(mapStateToProps)(SlidePanel);
