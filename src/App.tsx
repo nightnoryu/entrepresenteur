@@ -4,16 +4,19 @@ import SlidePanel from './components/slidepanel/SlidePanel';
 import Workspace from './components/workspace/Workspace';
 import './App.css';
 import useConfirmLeaving from './hooks/useConfirmLeaving';
-import { isCurrentSlide } from './model/model_utils';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from './state/reducers';
+import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from './state';
 import { openPresentationJSON, savePresentationJSON } from './common/fileUtils';
 import useHotkeyCtrl from './hooks/hotkeys/useHotkeyCtrl';
+import { Presentation } from './model/types';
+import { RootState } from './state/reducers';
 
-function App(): JSX.Element {
-  const editor = useSelector((state: RootState) => state.editor);
+type AppProps = {
+  presentation: Presentation;
+}
+
+function App({ presentation }: AppProps): JSX.Element {
   const dispatch = useDispatch();
   const {
     openPresentation,
@@ -23,11 +26,9 @@ function App(): JSX.Element {
     redo,
   } = bindActionCreators(actionCreators, dispatch);
 
-  const currentSlide = editor.presentation.slides.find(slide => isCurrentSlide(slide, editor.selectedSlideIDs));
-
   useConfirmLeaving();
   useHotkeyCtrl('s', () => {
-    savePresentationJSON(editor.presentation, editor.presentation.title);
+    savePresentationJSON(presentation, presentation.title);
   });
   useHotkeyCtrl('o', () => {
     openPresentationJSON(presentation => {
@@ -52,21 +53,19 @@ function App(): JSX.Element {
 
   return (
     <div className="app">
-      <Ribbon presentationTitle={editor.presentation.title} />
-
+      <Ribbon />
       <div className="app-main">
-        <SlidePanel
-          slides={editor.presentation.slides}
-          selectedSlideIDs={editor.selectedSlideIDs}
-        />
-
-        <Workspace
-          slide={currentSlide}
-          selectedElementIDs={editor.selectedElementIDs}
-        />
+        <SlidePanel />
+        <Workspace />
       </div>
     </div>
   );
 }
 
-export default App;
+function mapStateToProps(state: RootState) {
+  return {
+    presentation: state.editor.presentation,
+  };
+}
+
+export default connect(mapStateToProps)(App);

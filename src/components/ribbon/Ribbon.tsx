@@ -1,8 +1,9 @@
 import React from 'react';
 import './Ribbon.css';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../state';
+import { RootState } from '../../state/reducers';
 
 type RibbonProps = {
   presentationTitle: string;
@@ -145,4 +146,10 @@ function Ribbon({ presentationTitle }: RibbonProps): JSX.Element {
   );
 }
 
-export default Ribbon;
+function mapStateToProps(state: RootState) {
+  return {
+    presentationTitle: state.editor.presentation.title,
+  };
+}
+
+export default connect(mapStateToProps)(Ribbon);
