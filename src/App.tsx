@@ -54,7 +54,14 @@ function App({ presentation }: AppProps): JSX.Element {
 
   return (
     <div className="app">
-      <Ribbon menu={menuItems} />
+      <Ribbon
+        menu={menuItems(() => {
+          openPresentationJSON(presentation => {
+            openPresentation(presentation);
+          });
+        })}
+      />
+
       <div className="app-main">
         <SlidePanel />
         <Workspace />
