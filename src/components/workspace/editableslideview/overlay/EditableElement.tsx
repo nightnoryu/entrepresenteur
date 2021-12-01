@@ -28,8 +28,8 @@ function EditableElement({ element, isSelected, onDoubleClick }: EditableElement
     }
   }, ref);
 
-  useOnClickOutside(ref, () => {
-    if (isSelected) {
+  useOnClickOutside(ref, (event) => {
+    if (isSelected && !event.ctrlKey) {
       unselectElement(element.id);
     }
   });
