@@ -4,12 +4,19 @@ import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../state';
 import { RootState } from '../../state/reducers';
+import { MenuItemType, RibbonMenu } from './RibbonTypes';
 
-type RibbonProps = {
+type RibbonProps = StateProps & OwnProps;
+
+type StateProps = {
   presentationTitle: string;
-}
+};
 
-function Ribbon({ presentationTitle }: RibbonProps): JSX.Element {
+type OwnProps = {
+  menu: RibbonMenu;
+};
+
+function Ribbon({ presentationTitle, menu }: RibbonProps): JSX.Element {
   const dispatch = useDispatch();
   const { changePresentationTitle } = bindActionCreators(actionCreators, dispatch);
 
@@ -26,129 +33,49 @@ function Ribbon({ presentationTitle }: RibbonProps): JSX.Element {
       </h1>
       <nav className="menu">
         <ul className="menu__list">
-          <li>
-            <a href="#" className="menu__link">File</a>
-            <ul className="sub-menu__list">
-              <li>
-                <a href="#" className="sub-menu__link">New</a>
-                <ul className="sub-sub-menu__list">
-                  <li>
-                    <a href="#" className="sub-sub-menu__link">Empty</a>
-                  </li>
-                  <li>
-                    <a href="#" className="sub-sub-menu__link">From template</a>
-                  </li>
+          {menu.items.map(dropdown => {
+            return (
+              <li key={dropdown.label}>
+                <a href="#" className="menu__link">{dropdown.label}</a>
+                <ul className="sub-menu__list">
+                  {dropdown.items.map(item => {
+                    return item.type === MenuItemType.MenuButton
+                      ? (
+                        <li key={item.label}>
+                          <a href="#" className="sub-menu__link" onClick={item.action}>{item.label}</a>
+                        </li>
+                      )
+                      : (
+                        <li key={item.label}>
+                          <a href="#" className="sub-menu__link">{item.label}</a>
+                          <ul className="sub-sub-menu__list">
+                            {item.items.map(subItem => {
+                              return (
+                                <li key={subItem.label}>
+                                  <a href="#" className="sub-sub-menu__link" onClick={subItem.action}>
+                                    {subItem.label}
+                                  </a>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </li>
+                      );
+                  })}
                 </ul>
               </li>
-              <li>
-                <a href="#" className="sub-menu__link">Open</a>
-              </li>
-              <li>
-                <a href="#" className="sub-menu__link">Rename</a>
-              </li>
-              <li>
-                <a href="#" className="sub-menu__link">Download</a>
-              </li>
-              <li>
-                <a href="#" className="sub-menu__link">Export</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="#" className="menu__link">Edit</a>
-            <ul className="sub-menu__list">
-              <li>
-                <a href="#" className="sub-menu__link">Undo</a>
-              </li>
-              <li>
-                <a href="#" className="sub-menu__link">Redo</a>
-              </li>
-              <li>
-                <a href="#" className="sub-menu__link">Delete</a>
-              </li>
-              <li>
-                <a href="#" className="sub-menu__link">Text</a>
-                <ul className="sub-sub-menu__list">
-                  <li>
-                    <a href="#" className="sub-sub-menu__link">Color</a>
-                  </li>
-                  <li>
-                    <a href="#" className="sub-sub-menu__link">Font</a>
-                  </li>
-                  <li>
-                    <a href="#" className="sub-sub-menu__link">Size</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="#" className="sub-menu__link">Primitive</a>
-                <ul className="sub-sub-menu__list">
-                  <li>
-                    <a href="#" className="sub-sub-menu__link">Fill</a>
-                  </li>
-                  <li>
-                    <a href="#" className="sub-sub-menu__link">Stroke</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="#" className="menu__link">Insert</a>
-            <ul className="sub-menu__list">
-              <li>
-                <a href="#" className="sub-menu__link">Image</a>
-              </li>
-              <li>
-                <a href="#" className="sub-menu__link">Text</a>
-              </li>
-              <li>
-                <a href="#" className="sub-menu__link">Primitive</a>
-                <ul className="sub-sub-menu__list">
-                  <li>
-                    <a href="#" className="sub-sub-menu__link">Rectangle</a>
-                  </li>
-                  <li>
-                    <a href="#" className="sub-sub-menu__link">Triangle</a>
-                  </li>
-                  <li>
-                    <a href="#" className="sub-sub-menu__link">Circle</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="#" className="menu__link">Slide</a>
-            <ul className="sub-menu__list">
-              <li>
-                <a href="#" className="sub-menu__link">New</a>
-              </li>
-              <li>
-                <a href="#" className="sub-menu__link">Delete</a>
-              </li>
-              <li>
-                <a href="#" className="sub-menu__link">Change Background</a>
-                <ul className="sub-sub-menu__list">
-                  <li>
-                    <a href="#" className="sub-sub-menu__link">Color</a>
-                  </li>
-                  <li>
-                    <a href="#" className="sub-sub-menu__link">Image</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
+            );
+          })}
         </ul>
       </nav>
     </div>
   );
 }
 
-function mapStateToProps(state: RootState) {
+function mapStateToProps(state: RootState, ownProps: OwnProps): RibbonProps {
   return {
     presentationTitle: state.editor.presentation.title,
+    menu: ownProps.menu,
   };
 }
 

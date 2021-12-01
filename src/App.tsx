@@ -11,6 +11,7 @@ import { openPresentationJSON, savePresentationJSON } from './common/fileUtils';
 import useHotkeyCtrl from './hooks/hotkeys/useHotkeyCtrl';
 import { Presentation } from './model/types';
 import { RootState } from './state/reducers';
+import { menuItems } from './model/menu';
 
 type AppProps = {
   presentation: Presentation;
@@ -53,7 +54,7 @@ function App({ presentation }: AppProps): JSX.Element {
 
   return (
     <div className="app">
-      <Ribbon />
+      <Ribbon menu={menuItems} />
       <div className="app-main">
         <SlidePanel />
         <Workspace />
