@@ -30,8 +30,12 @@ export function openPresentationJSON(callback: OpenPresentationCallback): void {
 
       reader.addEventListener('load', (event: ProgressEvent<FileReader>) => {
         if (event.target?.result) {
-          const content = event.target.result.toString();
-          callback(JSON.parse(content));
+          try {
+            const result = JSON.parse(event.target.result.toString());
+            callback(result);
+          } catch (e) {
+            alert('Invalid presentation format!');
+          }
         }
       });
     }
