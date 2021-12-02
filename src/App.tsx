@@ -24,6 +24,7 @@ function App({ presentation }: AppProps): JSX.Element {
     newPresentation,
     addSlide,
     removeSlides,
+    setSlideBackgroundImage,
     addText,
     addImage,
     undo,
@@ -51,6 +52,10 @@ function App({ presentation }: AppProps): JSX.Element {
   useHotkeyCtrl('d', () => {
     removeSlides();
   });
+  useHotkeyCtrl('b', () => {
+    openImageBase64()
+      .then(image => setSlideBackgroundImage(image.src));
+  });
   useHotkeyCtrl('e', () => {
     const text = prompt('Enter text') || '';
     if (text !== '') {
@@ -59,9 +64,7 @@ function App({ presentation }: AppProps): JSX.Element {
   });
   useHotkeyCtrl('i', () => {
     openImageBase64()
-      .then(image => {
-        addImage({ x: 0, y: 0 }, { width: image.width, height: image.height }, image.src);
-      })
+      .then(image => addImage({ x: 0, y: 0 }, { width: image.width, height: image.height }, image.src))
       .catch(error => alert(error));
   });
   useHotkeyCtrl('z', () => {

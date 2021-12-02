@@ -92,6 +92,15 @@ export function removeSlides() {
   };
 }
 
+export function setSlideBackgroundImage(src: string) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_SLIDE_BACKGROUND_IMAGE,
+      payload: src,
+    });
+  };
+}
+
 export function setCurrentSlide(slideID: UUID) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
