@@ -70,9 +70,9 @@ function App({ presentation }: AppProps): JSX.Element {
   );
 }
 
-function mapStateToProps(state: RootState) {
+function mapStateToProps(state: RootState): AppProps {
   return {
-    presentation: state.editor.presentation,
+    presentation: state.presentation,
   };
 }
 

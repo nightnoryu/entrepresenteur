@@ -33,10 +33,10 @@ function SlidePanel({ slides, selectedSlideIDs }: SlidePanelProps): JSX.Element 
     </div>);
 }
 
-function mapStateToProps(state: RootState) {
+function mapStateToProps(state: RootState): SlidePanelProps {
   return {
-    slides: state.editor.presentation.slides,
-    selectedSlideIDs: state.editor.selectedSlideIDs,
+    slides: state.presentation.slides,
+    selectedSlideIDs: state.selectedSlideIDs,
   };
 }
 

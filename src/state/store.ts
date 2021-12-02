@@ -7,7 +7,7 @@ const composeEnhancers = (window as any)['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__']
 
 const store = createStore(
   reducers,
-  { editor: getEditor() },
+  getEditor(),
   composeEnhancers(applyMiddleware(thunk)),
 );
 

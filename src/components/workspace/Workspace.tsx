@@ -22,10 +22,10 @@ function Workspace({ slide, selectedElementIDs }: WorkspaceProps): JSX.Element {
   );
 }
 
-function mapStateToProps(state: RootState) {
+function mapStateToProps(state: RootState): WorkspaceProps {
   return {
-    slide: state.editor.presentation.slides.find(slide => isCurrentSlide(slide, state.editor.selectedSlideIDs)),
-    selectedElementIDs: state.editor.selectedElementIDs,
+    slide: state.presentation.slides.find(slide => isCurrentSlide(slide, state.selectedSlideIDs)),
+    selectedElementIDs: state.selectedElementIDs,
   };
 }
 
