@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import Action, { ActionType } from './actions';
 import { UUID } from '../../model/uuid';
-import { Presentation } from '../../model/types';
+import { Position, Presentation } from '../../model/types';
 
 export function openPresentation(presentation: Presentation) {
   return (dispatch: Dispatch<Action>): void => {
@@ -29,11 +29,14 @@ export function changePresentationTitle(title: string) {
   };
 }
 
-export function setTextValue(payload: any) {
+export function setTextValue(elementID: UUID, value: string) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
       type: ActionType.SET_TEXT_VALUE,
-      payload: payload,
+      payload: {
+        elementID,
+        value,
+      },
     });
   };
 }
@@ -56,11 +59,14 @@ export function unselectElement(elementID: UUID) {
   };
 }
 
-export function moveElement(payload: any) {
+export function moveElement(elementID: UUID, positionDiff: Position) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
       type: ActionType.MOVE_ELEMENT,
-      payload: payload,
+      payload: {
+        elementID,
+        positionDiff,
+      },
     });
   };
 }

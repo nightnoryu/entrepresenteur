@@ -44,10 +44,7 @@ function Overlay({ slide, selectedElementIDs }: OverlayProps): JSX.Element {
                   return;
                 }
 
-                setTextValue({
-                  elementID: element.id,
-                  value: newText,
-                });
+                setTextValue(element.id, newText);
               }}
             />
           );

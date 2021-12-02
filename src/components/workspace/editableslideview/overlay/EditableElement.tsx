@@ -42,12 +42,9 @@ function EditableElement({ element, isSelected, onDoubleClick }: EditableElement
     saveState();
   }, scaleFactor);
   useEffect(() => {
-    moveElement({
-      elementID: element.id,
-      positionDiff: {
-        x: position.x - element.position.x,
-        y: position.y - element.position.y,
-      },
+    moveElement(element.id, {
+      x: position.x - element.position.x,
+      y: position.y - element.position.y,
     });
   }, [position]);
 
