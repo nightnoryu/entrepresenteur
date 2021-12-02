@@ -59,14 +59,11 @@ export function unselectElement(elementID: UUID) {
   };
 }
 
-export function moveElement(elementID: UUID, positionDiff: Position) {
+export function moveElements(positionDiff: Position) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
       type: ActionType.MOVE_ELEMENT,
-      payload: {
-        elementID,
-        positionDiff,
-      },
+      payload: positionDiff,
     });
   };
 }

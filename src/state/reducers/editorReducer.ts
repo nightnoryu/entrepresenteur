@@ -3,7 +3,7 @@ import { Editor } from '../../model/types';
 import Action, { ActionType } from '../actions/actions';
 import {
   addSlide,
-  moveElement,
+  moveElements,
   openPresentation,
   redo,
   removeElements,
@@ -32,7 +32,7 @@ function reducer(state: Editor = initialState, action: Action): Editor {
   case ActionType.UNSELECT_ELEMENT:
     return unselectElement(state, action.payload);
   case ActionType.MOVE_ELEMENT:
-    return moveElement(state, action.payload);
+    return moveElements(state, action.payload);
   case ActionType.REMOVE_ELEMENTS:
     return removeElements(state);
   case ActionType.ADD_SLIDE:

@@ -17,7 +17,7 @@ type EditableElementProps = {
 
 function EditableElement({ element, isSelected, onDoubleClick }: EditableElementProps): JSX.Element {
   const dispatch = useDispatch();
-  const { selectElement, unselectElement, moveElement, saveState } = bindActionCreators(actionCreators, dispatch);
+  const { selectElement, unselectElement, moveElements, saveState } = bindActionCreators(actionCreators, dispatch);
 
   const selectedStyles = getSelectedSVGElementProperties(element, isSelected);
 
@@ -42,7 +42,7 @@ function EditableElement({ element, isSelected, onDoubleClick }: EditableElement
     saveState();
   }, scaleFactor);
   useEffect(() => {
-    moveElement(element.id, {
+    moveElements({
       x: position.x - element.position.x,
       y: position.y - element.position.y,
     });

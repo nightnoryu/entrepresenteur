@@ -424,14 +424,9 @@ export function unselectElement(editor: Editor, elementID: UUID): Editor {
   };
 }
 
-export function moveElement(
-  editor: Editor, {
-    elementID,
-    positionDiff,
-  }: {
-    elementID: UUID,
-    positionDiff: Position,
-  },
+export function moveElements(
+  editor: Editor,
+  positionDiff: Position,
 ): Editor {
   return {
     ...editor,
@@ -442,7 +437,7 @@ export function moveElement(
           ? {
             ...slide,
             elements: slide.elements.map(element =>
-              element.id === elementID
+              editor.selectedElementIDs.includes(element.id)
                 ? {
                   ...element,
                   position: {
