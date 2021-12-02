@@ -84,6 +84,14 @@ export function addSlide() {
   };
 }
 
+export function removeSlides() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.REMOVE_SLIDES,
+    });
+  };
+}
+
 export function setCurrentSlide(slideID: UUID) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({

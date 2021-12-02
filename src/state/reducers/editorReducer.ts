@@ -7,6 +7,7 @@ import {
   openPresentation,
   redo,
   removeElements,
+  removeSlides,
   selectElement,
   setCurrentSlide,
   setPresentationTitle,
@@ -37,6 +38,8 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return removeElements(state);
   case ActionType.ADD_SLIDE:
     return addSlide(state);
+  case ActionType.REMOVE_SLIDES:
+    return removeSlides(state);
   case ActionType.SET_CURRENT_SLIDE:
     return setCurrentSlide(state, action.payload);
   case ActionType.SAVE_STATE:

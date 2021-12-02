@@ -23,6 +23,7 @@ function App({ presentation }: AppProps): JSX.Element {
     openPresentation,
     newPresentation,
     addSlide,
+    removeSlides,
     undo,
     redo,
   } = bindActionCreators(actionCreators, dispatch);
@@ -44,6 +45,9 @@ function App({ presentation }: AppProps): JSX.Element {
   });
   useHotkeyCtrl('l', () => {
     addSlide();
+  });
+  useHotkeyCtrl('d', () => {
+    removeSlides();
   });
   useHotkeyCtrl('z', () => {
     undo();
