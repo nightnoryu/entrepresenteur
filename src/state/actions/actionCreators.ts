@@ -101,6 +101,15 @@ export function setCurrentSlide(slideID: UUID) {
   };
 }
 
+export function selectSlide(slideID: UUID) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SELECT_SLIDE,
+      payload: slideID,
+    });
+  };
+}
+
 export function addText(position: Position, dimensions: Dimensions, value: string) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({

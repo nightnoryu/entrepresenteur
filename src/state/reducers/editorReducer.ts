@@ -11,6 +11,7 @@ import {
   removeElements,
   removeSlides,
   selectElement,
+  selectSlide,
   setCurrentSlide,
   setPresentationTitle,
   setTextValue,
@@ -44,6 +45,8 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return removeSlides(state);
   case ActionType.SET_CURRENT_SLIDE:
     return setCurrentSlide(state, action.payload);
+  case ActionType.SELECT_SLIDE:
+    return selectSlide(state, action.payload);
   case ActionType.ADD_TEXT:
     return addText(state, action.payload);
   case ActionType.ADD_IMAGE:

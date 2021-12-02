@@ -15,7 +15,7 @@ type SlidePanelProps = {
 
 function SlidePanel({ slides, selectedSlideIDs }: SlidePanelProps): JSX.Element {
   const dispatch = useDispatch();
-  const { setCurrentSlide } = bindActionCreators(actionCreators, dispatch);
+  const { setCurrentSlide, selectSlide } = bindActionCreators(actionCreators, dispatch);
 
   return (
     <div className={styles.slidepanel}>
@@ -25,8 +25,12 @@ function SlidePanel({ slides, selectedSlideIDs }: SlidePanelProps): JSX.Element 
           slide={slide}
           index={i + 1}
           isSelected={selectedSlideIDs.includes(slide.id)}
-          onClick={() => {
-            setCurrentSlide(slide.id);
+          onClick={event => {
+            if (event.ctrlKey) {
+              selectSlide(slide.id);
+            } else {
+              setCurrentSlide(slide.id);
+            }
           }}
         />
       ))}
