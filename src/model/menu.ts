@@ -1,6 +1,6 @@
 import { MenuItemType, RibbonMenu } from '../components/ribbon/RibbonTypes';
 
-export function menuItems(openHandler: () => void): RibbonMenu {
+export function menuItems(openHandler?: () => void): RibbonMenu {
   return {
     items: [
       {
@@ -25,7 +25,11 @@ export function menuItems(openHandler: () => void): RibbonMenu {
           {
             type: MenuItemType.MenuButton,
             label: 'Open',
-            action: openHandler,
+            action: () => {
+              if (openHandler) {
+                openHandler();
+              }
+            },
           },
           {
             type: MenuItemType.MenuButton,
