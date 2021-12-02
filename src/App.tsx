@@ -54,7 +54,8 @@ function App({ presentation }: AppProps): JSX.Element {
   });
   useHotkeyCtrl('b', () => {
     openImageBase64()
-      .then(image => setSlideBackgroundImage(image.src));
+      .then(image => setSlideBackgroundImage(image.src))
+      .catch(error => alert(error));
   });
   useHotkeyCtrl('e', () => {
     const text = prompt('Enter text') || '';
