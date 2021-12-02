@@ -35,9 +35,9 @@ function App({ presentation }: AppProps): JSX.Element {
     savePresentationJSON(presentation, presentation.title);
   });
   useHotkeyCtrl('o', () => {
-    openPresentationJSON(presentation => {
-      openPresentation(presentation);
-    });
+    openPresentationJSON()
+      .then(presentation => openPresentation(presentation))
+      .catch(error => alert(error));
   });
   useHotkeyCtrl('m', () => {
     const confirmed = confirm('Are you sure?');
@@ -58,9 +58,10 @@ function App({ presentation }: AppProps): JSX.Element {
     }
   });
   useHotkeyCtrl('i', () => {
-    openImageBase64(image => {
-      addImage({ x: 0, y: 0 }, { width: image.width, height: image.height }, image.src);
-    });
+    openImageBase64()
+      .then(image => {
+        addImage({ x: 0, y: 0 }, { width: image.width, height: image.height }, image.src);
+      });
   });
   useHotkeyCtrl('z', () => {
     undo();

@@ -1,21 +1,19 @@
 import { Presentation } from '../model/types';
 
-type OpenFileHandler = (file: File) => void;
-type OpenPresentationCallback = (presentation: Presentation) => void;
-type OpenImageCallback = (image: HTMLImageElement) => void;
+function openFile(): Promise<File> {
+  return new Promise(resolve => {
+    const input = document.createElement('input');
+    input.type = 'file';
 
-function openFile(handler: OpenFileHandler): void {
-  const input = document.createElement('input');
-  input.type = 'file';
+    input.addEventListener('change', (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      if (target?.files) {
+        resolve(target.files[0]);
+      }
+    });
 
-  input.addEventListener('change', (event: Event) => {
-    const target = event.target as HTMLInputElement;
-    if (target?.files) {
-      handler(target.files[0]);
-    }
+    input.click();
   });
-
-  input.click();
 }
 
 export function savePresentationJSON(presentation: Presentation, filename: string): void {
@@ -32,42 +30,48 @@ export function savePresentationJSON(presentation: Presentation, filename: strin
   URL.revokeObjectURL(url);
 }
 
-export function openPresentationJSON(callback: OpenPresentationCallback): void {
-  openFile(file => {
-    const reader = new FileReader();
+export function openPresentationJSON(): Promise<Presentation> {
+  return new Promise((resolve, reject) => {
+    openFile()
+      .then(file => {
+        const reader = new FileReader();
 
-    reader.addEventListener('loadend', (event: ProgressEvent<FileReader>) => {
-      if (event.target?.result) {
-        try {
-          const result = JSON.parse(event.target.result.toString());
-          callback(result);
-        } catch (e) {
-          alert('Invalid presentation format');
-        }
-      }
-    });
+        reader.addEventListener('loadend', (event: ProgressEvent<FileReader>) => {
+          if (event.target?.result) {
+            try {
+              const result = JSON.parse(event.target.result.toString());
+              resolve(result);
+            } catch (e) {
+              reject('Invalid presentation format');
+            }
+          }
+        });
 
-    reader.readAsText(file, 'UTF-8');
+        reader.readAsText(file, 'UTF-8');
+      });
   });
 }
 
-export function openImageBase64(callback: OpenImageCallback): void {
-  openFile(file => {
-    console.log(file);
-    const reader = new FileReader();
+export function openImageBase64(): Promise<HTMLImageElement> {
+  return new Promise(resolve => {
+    openFile()
+      .then(file => {
+        console.log(file);
+        const reader = new FileReader();
 
-    reader.addEventListener('loadend', (event: ProgressEvent<FileReader>) => {
-      if (event.target?.result) {
-        const image = new Image();
+        reader.addEventListener('loadend', (event: ProgressEvent<FileReader>) => {
+          if (event.target?.result) {
+            const image = new Image();
 
-        image.addEventListener('load', () => {
-          callback(image);
+            image.addEventListener('load', () => {
+              resolve(image);
+            });
+
+            image.src = event.target.result.toString();
+          }
         });
 
-        image.src = event.target.result.toString();
-      }
-    });
-
-    reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
+      });
   });
 }
