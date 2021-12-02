@@ -10,6 +10,7 @@ export enum ActionType {
   ADD_SLIDE,
   REMOVE_SLIDES,
   SET_CURRENT_SLIDE,
+  ADD_IMAGE,
   SAVE_STATE,
   UNDO,
   REDO,

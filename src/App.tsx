@@ -7,7 +7,7 @@ import useConfirmLeaving from './hooks/useConfirmLeaving';
 import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from './state';
-import { openPresentationJSON, savePresentationJSON } from './common/fileUtils';
+import { openImageBase64, openPresentationJSON, savePresentationJSON } from './common/fileUtils';
 import useHotkeyCtrl from './hooks/hotkeys/useHotkeyCtrl';
 import { Presentation } from './model/types';
 import { RootState } from './state/reducers';
@@ -24,6 +24,7 @@ function App({ presentation }: AppProps): JSX.Element {
     newPresentation,
     addSlide,
     removeSlides,
+    addImage,
     undo,
     redo,
   } = bindActionCreators(actionCreators, dispatch);
@@ -48,6 +49,11 @@ function App({ presentation }: AppProps): JSX.Element {
   });
   useHotkeyCtrl('d', () => {
     removeSlides();
+  });
+  useHotkeyCtrl('i', () => {
+    openImageBase64(image => {
+      addImage({ x: 0, y: 0 }, { width: image.width, height: image.height }, image.src);
+    });
   });
   useHotkeyCtrl('z', () => {
     undo();

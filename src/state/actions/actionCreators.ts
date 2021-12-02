@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import Action, { ActionType } from './actions';
 import { UUID } from '../../model/uuid';
-import { Position, Presentation } from '../../model/types';
+import { Dimensions, Position, Presentation } from '../../model/types';
 
 export function openPresentation(presentation: Presentation) {
   return (dispatch: Dispatch<Action>): void => {
@@ -97,6 +97,19 @@ export function setCurrentSlide(slideID: UUID) {
     dispatch({
       type: ActionType.SET_CURRENT_SLIDE,
       payload: slideID,
+    });
+  };
+}
+
+export function addImage(position: Position, dimensions: Dimensions, src: string) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.ADD_IMAGE,
+      payload: {
+        position,
+        dimensions,
+        src,
+      },
     });
   };
 }
