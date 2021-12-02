@@ -4,6 +4,7 @@ import Action, { ActionType } from '../actions/actions';
 import {
   addImage,
   addSlide,
+  addText,
   moveElements,
   openPresentation,
   redo,
@@ -43,6 +44,8 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return removeSlides(state);
   case ActionType.SET_CURRENT_SLIDE:
     return setCurrentSlide(state, action.payload);
+  case ActionType.ADD_TEXT:
+    return addText(state, action.payload);
   case ActionType.ADD_IMAGE:
     return addImage(state, action.payload);
   case ActionType.SAVE_STATE:

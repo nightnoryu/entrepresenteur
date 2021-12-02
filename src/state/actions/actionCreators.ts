@@ -101,6 +101,19 @@ export function setCurrentSlide(slideID: UUID) {
   };
 }
 
+export function addText(position: Position, dimensions: Dimensions, value: string) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.ADD_TEXT,
+      payload: {
+        position,
+        dimensions,
+        value,
+      },
+    });
+  };
+}
+
 export function addImage(position: Position, dimensions: Dimensions, src: string) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({

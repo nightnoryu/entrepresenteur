@@ -178,7 +178,7 @@ export function addText(
           position,
           dimensions,
           value,
-          size: 10,
+          size: 42,
           font: 'Calibri',
           color: '#000000',
         },

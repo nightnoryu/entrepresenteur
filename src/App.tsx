@@ -24,6 +24,7 @@ function App({ presentation }: AppProps): JSX.Element {
     newPresentation,
     addSlide,
     removeSlides,
+    addText,
     addImage,
     undo,
     redo,
@@ -49,6 +50,12 @@ function App({ presentation }: AppProps): JSX.Element {
   });
   useHotkeyCtrl('d', () => {
     removeSlides();
+  });
+  useHotkeyCtrl('e', () => {
+    const text = prompt('Enter text') || '';
+    if (text !== '') {
+      addText({ x: 0, y: 0 }, { width: 100, height: 100 }, text);
+    }
   });
   useHotkeyCtrl('i', () => {
     openImageBase64(image => {
