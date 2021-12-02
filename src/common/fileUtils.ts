@@ -53,7 +53,7 @@ export function openPresentationJSON(): Promise<Presentation> {
 }
 
 export function openImageBase64(): Promise<HTMLImageElement> {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     openFile()
       .then(file => {
         console.log(file);
@@ -65,6 +65,9 @@ export function openImageBase64(): Promise<HTMLImageElement> {
 
             image.addEventListener('load', () => {
               resolve(image);
+            });
+            image.addEventListener('error', () => {
+              reject('Invalid image');
             });
 
             image.src = event.target.result.toString();

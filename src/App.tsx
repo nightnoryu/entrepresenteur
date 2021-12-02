@@ -61,7 +61,8 @@ function App({ presentation }: AppProps): JSX.Element {
     openImageBase64()
       .then(image => {
         addImage({ x: 0, y: 0 }, { width: image.width, height: image.height }, image.src);
-      });
+      })
+      .catch(error => alert(error));
   });
   useHotkeyCtrl('z', () => {
     undo();
