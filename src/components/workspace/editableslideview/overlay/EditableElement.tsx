@@ -28,7 +28,7 @@ function EditableElement({ element, isSelected, onDoubleClick }: EditableElement
     }
   }, ref);
 
-  useOnClickOutside(ref, (event) => {
+  useOnClickOutside(ref, event => {
     if (isSelected && !event.ctrlKey) {
       unselectElement(element.id);
     }
