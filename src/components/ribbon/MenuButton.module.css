@@ -1,0 +1,14 @@
+.menuButtonContainer {
+  position: relative;
+}
+
+.menuButtonLabel {
+  padding: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 900;
+  color: #7d663d;
+  border-radius: 6px;
+}
+
+.menuButtonLabel:active
