@@ -2,46 +2,61 @@ import React from 'react';
 import { ElementType, Slide } from '../../../../model/types';
 import { UUID } from '../../../../model/uuid';
 import styles from './Overlay.module.css';
-import EditableText from './elements/EditableText';
-import EditableImage from './elements/EditableImage';
-import EditablePrimitive from './elements/EditablePrimitive';
-import useEventListener from '../../../../hooks/useEventListener';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../../state';
+import useHotkey from '../../../../hooks/hotkeys/useHotkey';
+import EditableElement from './EditableElement';
+import { SLIDE_HEIGHT, SLIDE_WIDTH } from '../../../../model/constants';
 
 type OverlayProps = {
   slide: Slide;
-  selectedSlideIDs: UUID[];
+  selectedElementIDs: UUID[];
 };
 
-function Overlay({ slide, selectedSlideIDs }: OverlayProps): JSX.Element {
+function Overlay({ slide, selectedElementIDs }: OverlayProps): JSX.Element {
   const dispatch = useDispatch();
-  const { removeElements } = bindActionCreators(actionCreators, dispatch);
+  const { removeElements, setTextValue } = bindActionCreators(actionCreators, dispatch);
 
-  useEventListener('keydown', (e: Event) => {
-    if ((e as KeyboardEvent).code === 'Delete') {
-      e.preventDefault();
-      removeElements();
-    }
+  useHotkey('Delete', () => {
+    removeElements();
   });
 
   return (
     <svg
-      viewBox="0 0 800 600"
+      viewBox={`0 0 ${SLIDE_WIDTH} ${SLIDE_HEIGHT}`}
       className={styles.overlay}
     >
       {slide.elements.map(element => {
-        const isSelected = selectedSlideIDs.includes(element.id);
+        const isSelected = selectedElementIDs.includes(element.id);
 
-        switch (element.type) {
-        case ElementType.TEXT:
-          return <EditableText key={element.id} element={element} isSelected={isSelected} />;
-        case ElementType.IMAGE:
-          return <EditableImage key={element.id} element={element} isSelected={isSelected} />;
-        case ElementType.PRIMITIVE:
-          return <EditablePrimitive key={element.id} element={element} isSelected={isSelected} />;
+        if (element.type === ElementType.TEXT) {
+          return (
+            <EditableElement
+              key={element.id}
+              element={element}
+              isSelected={isSelected}
+              onDoubleClick={() => {
+                const newText = prompt('Enter new text');
+
+                if (!newText) {
+                  removeElements();
+                  return;
+                }
+
+                setTextValue(element.id, newText);
+              }}
+            />
+          );
         }
+
+        return (
+          <EditableElement
+            key={element.id}
+            element={element}
+            isSelected={isSelected}
+          />
+        );
       })}
     </svg>
   );

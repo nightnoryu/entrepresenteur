@@ -4,26 +4,93 @@ import SlidePanel from './components/slidepanel/SlidePanel';
 import Workspace from './components/workspace/Workspace';
 import './App.css';
 import useConfirmLeaving from './hooks/useConfirmLeaving';
-import { isCurrentSlide } from './model/model_utils';
-import { useSelector } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from './state';
+import { openImageBase64, openPresentationJSON, savePresentationJSON } from './common/fileUtils';
+import useHotkeyCtrl from './hooks/hotkeys/useHotkeyCtrl';
+import { Presentation } from './model/types';
 import { RootState } from './state/reducers';
+import { menuItems } from './model/menu';
 
-function App(): JSX.Element {
-  const editor = useSelector((state: RootState) => state.editor);
+type AppProps = {
+  presentation: Presentation;
+}
 
-  const currentSlide = editor.presentation.slides.find(slide => isCurrentSlide(slide, editor.selectedSlideIDs));
+function App({ presentation }: AppProps): JSX.Element {
+  const dispatch = useDispatch();
+  const {
+    openPresentation,
+    newPresentation,
+    addSlide,
+    removeSlides,
+    setSlideBackgroundImage,
+    addText,
+    addImage,
+    undo,
+    redo,
+  } = bindActionCreators(actionCreators, dispatch);
 
   useConfirmLeaving();
+  useHotkeyCtrl('s', () => {
+    savePresentationJSON(presentation, presentation.title);
+  });
+  useHotkeyCtrl('o', () => {
+    openPresentationJSON()
+      .then(presentation => openPresentation(presentation))
+      .catch(error => alert(error));
+  });
+  useHotkeyCtrl('m', () => {
+    const confirmed = confirm('Are you sure?');
+    if (confirmed) {
+      newPresentation();
+    }
+  });
+  useHotkeyCtrl('l', () => {
+    addSlide();
+  });
+  useHotkeyCtrl('d', () => {
+    removeSlides();
+  });
+  useHotkeyCtrl('b', () => {
+    openImageBase64()
+      .then(image => setSlideBackgroundImage(image.src))
+      .catch(error => alert(error));
+  });
+  useHotkeyCtrl('e', () => {
+    const text = prompt('Enter text') || '';
+    if (text !== '') {
+      addText({ x: 0, y: 0 }, { width: 100, height: 100 }, text);
+    }
+  });
+  useHotkeyCtrl('i', () => {
+    openImageBase64()
+      .then(image => addImage({ x: 0, y: 0 }, { width: image.width, height: image.height }, image.src))
+      .catch(error => alert(error));
+  });
+  useHotkeyCtrl('z', () => {
+    undo();
+  });
+  useHotkeyCtrl('y', () => {
+    redo();
+  });
 
   return (
     <div className="app">
-      <Ribbon presentationTitle={editor.presentation.title} />
+      <Ribbon menu={menuItems()} />
+
       <div className="app-main">
-        <SlidePanel slides={editor.presentation.slides} selectedSlideIDs={editor.selectedSlideIDs} />
-        <Workspace slide={currentSlide} selectedElementIDs={editor.selectedElementIDs} />
+        <SlidePanel />
+        <Workspace />
       </div>
     </div>
   );
 }
 
-export default App;
+function mapStateToProps(state: RootState): AppProps {
+  return {
+    presentation: state.presentation,
+  };
+}
+
+export default connect(mapStateToProps)(App);

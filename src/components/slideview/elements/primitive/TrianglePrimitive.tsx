@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrimitiveElement } from '../../../../model/types';
-import { getTrianglePoints } from '../../../../common/componentsFunctions';
+import { getTrianglePoints } from '../../../../common/componentsUtils';
 
 type TrianglePrimitiveProps = {
   element: PrimitiveElement;

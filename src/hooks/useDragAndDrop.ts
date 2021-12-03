@@ -4,14 +4,16 @@ import { Position } from '../model/types';
 function useDragAndDrop<T extends SVGGeometryElement>(
   ref: React.RefObject<T> | null,
   initialPosition: Position,
+  mouseDownHandler?: (event: MouseEvent) => void,
+  scaleFactor = 1,
 ): Position {
   const [pos, setPos] = useState(initialPosition);
   let startPos: Position;
 
   const onMouseMove = (e: MouseEvent) => {
     const delta = {
-      x: e.pageX - startPos.x,
-      y: e.pageY - startPos.y,
+      x: scaleFactor * (e.pageX - startPos.x),
+      y: scaleFactor * (e.pageY - startPos.y),
     };
 
     const newPos = {
@@ -25,6 +27,10 @@ function useDragAndDrop<T extends SVGGeometryElement>(
   const onMouseDown = (e: MouseEvent) => {
     if (e.button !== 0) {
       return;
+    }
+
+    if (mouseDownHandler) {
+      mouseDownHandler(e);
     }
 
     startPos = {

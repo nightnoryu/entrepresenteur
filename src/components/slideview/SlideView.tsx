@@ -4,7 +4,8 @@ import TextElementView from './elements/text/TextElementView';
 import ImageElementView from './elements/image/ImageElementView';
 import PrimitiveElementView from './elements/primitive/PrimitiveElementView';
 import styles from './SlideView.module.css';
-import { getSlideBackgroundStyle } from '../../common/componentsFunctions';
+import { getSlideBackgroundStyle } from '../../common/componentsUtils';
+import { SLIDE_HEIGHT, SLIDE_WIDTH } from '../../model/constants';
 
 type SlideViewProps = {
   slide: Slide;
@@ -15,7 +16,7 @@ function SlideView({ slide }: SlideViewProps): JSX.Element {
 
   return (
     <svg
-      viewBox="0 0 800 600"
+      viewBox={`0 0 ${SLIDE_WIDTH} ${SLIDE_HEIGHT}`}
       className={styles.slideview}
       style={slideBackgroundStyle}
     >
