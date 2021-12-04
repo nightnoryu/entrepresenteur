@@ -1,20 +1,29 @@
-import React, { useState } from 'react';
-import { Position } from '../../model/types';
+import React, { Dispatch, useEffect, useState } from 'react';
+import { Position, SlideElement } from '../../model/types';
 import useDragAndDrop from './useDragAndDrop';
+import Action from '../../state/actions/actions';
 
 function useElementDragAndDrop<T extends SVGGeometryElement>(
   ref: React.RefObject<T> | null,
-  initialPosition: Position,
-  scaleFactor = 1,
-): Position {
-  const [pos, setPos] = useState(initialPosition);
+  element: SlideElement,
+  moveElements: (positionDiff: Position) => (dispatch: Dispatch<Action>) => void,
+  saveState: () => (dispatch: Dispatch<Action>) => void,
+): void {
+  const [pos, setPos] = useState(element.position);
+  let scaleFactor = 1;
   let startPos: Position;
+
+  if (ref?.current) {
+    scaleFactor = element.dimensions.width / ref.current.getBoundingClientRect().width;
+  }
 
   const onStart = (event: MouseEvent) => {
     startPos = {
       x: event.pageX,
       y: event.pageY,
     };
+
+    saveState();
   };
 
   const onMove = (event: MouseEvent) => {
@@ -31,9 +40,14 @@ function useElementDragAndDrop<T extends SVGGeometryElement>(
     setPos(newPos);
   };
 
-  useDragAndDrop(ref, onStart, onMove);
+  useEffect(() => {
+    moveElements({
+      x: pos.x - element.position.x,
+      y: pos.y - element.position.y,
+    });
+  }, [pos]);
 
-  return pos;
+  useDragAndDrop(ref, onStart, onMove);
 }
 
 export default useElementDragAndDrop;

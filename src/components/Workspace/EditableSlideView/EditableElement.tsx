@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { SlideElement } from '../../../model/types';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -34,17 +34,7 @@ function EditableElement({ element, isSelected, onDoubleClick }: EditableElement
     }
   });
 
-  let scaleFactor = 1;
-  if (ref?.current) {
-    scaleFactor = element.dimensions.width / ref.current.getBoundingClientRect().width;
-  }
-  const position = useElementDragAndDrop(ref, element.position, scaleFactor);
-  useEffect(() => {
-    moveElements({
-      x: position.x - element.position.x,
-      y: position.y - element.position.y,
-    });
-  }, [position]);
+  useElementDragAndDrop(ref, element, moveElements, saveState);
 
   useDoubleClick(ref, (event: Event) => {
     if (onDoubleClick) {
