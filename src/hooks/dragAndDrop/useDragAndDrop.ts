@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 type DragAndDropHandler = (event: MouseEvent) => void;
 
@@ -8,6 +8,8 @@ function useDragAndDrop<T extends EventTarget>(
   onMove?: DragAndDropHandler,
   onFinish?: DragAndDropHandler,
 ): void {
+  const savedOnFinish = useRef<DragAndDropHandler>();
+
   const onMouseDown = (e: Event) => {
     const event = e as MouseEvent;
     if (event.button !== 0) {
@@ -29,8 +31,8 @@ function useDragAndDrop<T extends EventTarget>(
   };
 
   const onMouseUp = (event: MouseEvent) => {
-    if (onFinish) {
-      onFinish(event);
+    if (savedOnFinish.current) {
+      savedOnFinish.current(event);
     }
 
     removeEventListener('mousemove', onMouseMove);
@@ -38,6 +40,10 @@ function useDragAndDrop<T extends EventTarget>(
   };
 
   useEffect(() => {
+    if (savedOnFinish.current !== onFinish) {
+      savedOnFinish.current = onFinish;
+    }
+
     if (ref?.current) {
       ref.current.addEventListener('mousedown', onMouseDown);
     }

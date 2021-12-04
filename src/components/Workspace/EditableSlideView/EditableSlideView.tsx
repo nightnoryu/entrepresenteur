@@ -3,7 +3,6 @@ import { ElementType, Slide } from '../../../model/types';
 import styles from './EditableSlideView.module.css';
 import { getSlideBackgroundStyle } from '../../../common/componentsUtils';
 import TextElementView from '../../SlidePanel/SlideView/Elements/TextElementView/TextElementView';
-import ImageElementView from '../../SlidePanel/SlideView/Elements/ImageElementView/ImageElementView';
 import PrimitiveElementView from '../../SlidePanel/SlideView/Elements/PrimitiveElementView/PrimitiveElementView';
 import { SLIDE_HEIGHT, SLIDE_WIDTH } from '../../../model/constants';
 import { UUID } from '../../../model/uuid';
@@ -14,6 +13,7 @@ import EditableElement from './EditableElement';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state';
 import useHotkey from '../../../hooks/hotkeys/useHotkey';
+import EditableImageElement from './Elements/EditableImageElement/EditableImageElement';
 
 type EditableSlideViewProps = {
   slide: Slide;
@@ -43,13 +43,19 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
         switch (element.type) {
         case ElementType.TEXT:
           return <TextElementView key={element.id} element={element} />;
-        case ElementType.IMAGE:
-          return <ImageElementView key={element.id} element={element} />;
         case ElementType.PRIMITIVE:
           return <PrimitiveElementView key={element.id} element={element} />;
         }
       })}
       {slide.elements.map(element => {
+        if (element.type === ElementType.IMAGE) {
+          return <EditableImageElement
+            key={element.id}
+            element={element}
+            isSelected={selectedElementIDs.includes(element.id)}
+          />;
+        }
+
         return <EditableElement
           key={element.id}
           element={element}
