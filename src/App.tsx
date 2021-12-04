@@ -1,7 +1,6 @@
 import React from 'react';
 import Ribbon from './components/Ribbon/Ribbon';
 import SlidePanel from './components/SlidePanel/SlidePanel';
-import Workspace from './components/Workspace/Workspace';
 import './App.css';
 import useConfirmLeaving from './hooks/useConfirmLeaving';
 import { connect, useDispatch } from 'react-redux';
@@ -12,6 +11,7 @@ import useHotkeyCtrl from './hooks/hotkeys/useHotkeyCtrl';
 import { Presentation } from './model/types';
 import { RootState } from './state/reducers';
 import { menuItems } from './model/menu';
+import Workspace from './components/Workspace/Workspace';
 
 type AppProps = {
   presentation: Presentation;
