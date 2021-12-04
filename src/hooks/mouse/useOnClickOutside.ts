@@ -3,7 +3,7 @@ import useEventListener from '../useEventListener';
 
 type Handler = (event: MouseEvent) => void;
 
-function useOnClickOutside<T extends SVGGeometryElement>(
+function useOnClickOutside<T extends SVGElement>(
   ref: RefObject<T>,
   handler: Handler,
 ): void {

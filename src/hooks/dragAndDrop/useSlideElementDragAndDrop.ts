@@ -3,7 +3,7 @@ import { Position, SlideElement } from '../../model/types';
 import useDragAndDrop from './useDragAndDrop';
 import Action from '../../state/actions/actions';
 
-function useElementDragAndDrop<T extends SVGGeometryElement>(
+function useElementDragAndDrop<T extends SVGElement>(
   ref: React.RefObject<T> | null,
   element: SlideElement,
   moveElements: (positionDiff: Position) => (dispatch: Dispatch<Action>) => void,
