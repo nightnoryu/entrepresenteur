@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-import { SlideElement } from '../../../../model/types';
+import { SlideElement } from '../../../model/types';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../../../state';
-import { getSelectedSVGElementProperties } from '../../../../common/componentsUtils';
-import useEventListener from '../../../../hooks/useEventListener';
-import useOnClickOutside from '../../../../hooks/useOnClickOutside';
-import useDragAndDrop from '../../../../hooks/useDragAndDrop';
-import useDoubleClick from '../../../../hooks/useDoubleClick';
+import { actionCreators } from '../../../state';
+import { getSelectedSVGElementProperties } from '../../../common/componentsUtils';
+import useEventListener from '../../../hooks/useEventListener';
+import useOnClickOutside from '../../../hooks/useOnClickOutside';
+import useDragAndDrop from '../../../hooks/useDragAndDrop';
+import useDoubleClick from '../../../hooks/useDoubleClick';
 
 type EditableElementProps = {
   element: SlideElement;

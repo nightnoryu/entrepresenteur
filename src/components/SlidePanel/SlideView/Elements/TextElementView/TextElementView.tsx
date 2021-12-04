@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextElement } from '../../../../model/types';
+import { TextElement } from '../../../../../model/types';
 import styles from '../ElementView.module.css';
 
 type TextElementViewProps = {

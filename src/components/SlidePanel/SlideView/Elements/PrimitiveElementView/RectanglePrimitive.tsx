@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrimitiveElement } from '../../../../model/types';
+import { PrimitiveElement } from '../../../../../model/types';
 
 type RectanglePrimitiveProps = {
   element: PrimitiveElement;

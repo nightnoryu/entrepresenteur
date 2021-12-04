@@ -1,9 +1,12 @@
 import React from 'react';
+import { ElementType, Slide } from '../../../model/types';
 import styles from './EditableSlideView.module.css';
-import SlideView from '../../SlideView/SlideView';
-import { Slide } from '../../../model/types';
+import { getSlideBackgroundStyle } from '../../../common/componentsUtils';
+import TextElementView from '../../SlidePanel/SlideView/Elements/TextElementView/TextElementView';
+import ImageElementView from '../../SlidePanel/SlideView/Elements/ImageElementView/ImageElementView';
+import PrimitiveElementView from '../../SlidePanel/SlideView/Elements/PrimitiveElementView/PrimitiveElementView';
+import { SLIDE_HEIGHT, SLIDE_WIDTH } from '../../../model/constants';
 import { UUID } from '../../../model/uuid';
-import Overlay from './Overlay/Overlay';
 
 type EditableSlideViewProps = {
   slide: Slide;
@@ -11,11 +14,25 @@ type EditableSlideViewProps = {
 }
 
 function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps): JSX.Element {
+  const slideBackgroundStyle = getSlideBackgroundStyle(slide);
+
   return (
-    <div className={styles.editable}>
-      <SlideView slide={slide} />
-      <Overlay slide={slide} selectedElementIDs={selectedElementIDs} />
-    </div>
+    <svg
+      viewBox={`0 0 ${SLIDE_WIDTH} ${SLIDE_HEIGHT}`}
+      className={styles.editableslideview}
+      style={slideBackgroundStyle}
+    >
+      {slide.elements.map(element => {
+        switch (element.type) {
+        case ElementType.TEXT:
+          return <TextElementView key={element.id} element={element} />;
+        case ElementType.IMAGE:
+          return <ImageElementView key={element.id} element={element} />;
+        case ElementType.PRIMITIVE:
+          return <PrimitiveElementView key={element.id} element={element} />;
+        }
+      })}
+    </svg>
   );
 }
 

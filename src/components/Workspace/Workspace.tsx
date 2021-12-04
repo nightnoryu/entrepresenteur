@@ -3,7 +3,7 @@ import styles from './Workspace.module.css';
 import { Slide } from '../../model/types';
 import { UUID } from '../../model/uuid';
 import { createNewSlide, isCurrentSlide } from '../../model/model_utils';
-import EditableSlideView from './EditableSlideView/EditableSlideView';
+import EditableSlideViewWrapper from './EditableSlideViewWrapper/EditableSlideViewWrapper';
 import { RootState } from '../../state/reducers';
 import { connect } from 'react-redux';
 
@@ -17,7 +17,7 @@ function Workspace({ slide, selectedElementIDs }: WorkspaceProps): JSX.Element {
 
   return (
     <div className={styles.workspace}>
-      <EditableSlideView slide={displayedSlide} selectedElementIDs={selectedElementIDs} />
+      <EditableSlideViewWrapper slide={displayedSlide} selectedElementIDs={selectedElementIDs} />
     </div>
   );
 }

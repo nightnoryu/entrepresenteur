@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrimitiveElement, PrimitiveType } from '../../../../model/types';
+import { PrimitiveElement, PrimitiveType } from '../../../../../model/types';
 import RectanglePrimitive from './RectanglePrimitive';
 import EllipsePrimitive from './EllipsePrimitive';
 import TrianglePrimitive from './TrianglePrimitive';

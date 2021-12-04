@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageElement } from '../../../../model/types';
+import { ImageElement } from '../../../../../model/types';
 import styles from '../ElementView.module.css';
 
 type ImageElementViewProps = {
