@@ -7,7 +7,7 @@ function useOnClickOutside<T extends SVGGeometryElement>(
   ref: RefObject<T>,
   handler: Handler,
 ): void {
-  useEventListener('click', event => {
+  useEventListener('mousedown', event => {
     const el = ref?.current;
 
     if (!el || el.contains(event.target as Node)) {
