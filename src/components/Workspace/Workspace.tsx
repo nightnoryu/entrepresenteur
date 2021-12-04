@@ -3,7 +3,7 @@ import styles from './Workspace.module.css';
 import { Slide } from '../../model/types';
 import { UUID } from '../../model/uuid';
 import { createNewSlide, isCurrentSlide } from '../../model/model_utils';
-import EditableSlideView from './editableslideview/EditableSlideView';
+import EditableSlideView from './EditableSlideView/EditableSlideView';
 import { RootState } from '../../state/reducers';
 import { connect } from 'react-redux';
 

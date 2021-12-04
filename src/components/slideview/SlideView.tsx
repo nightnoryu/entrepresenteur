@@ -1,8 +1,8 @@
 import React from 'react';
 import { ElementType, Slide } from '../../model/types';
-import TextElementView from './elements/text/TextElementView';
-import ImageElementView from './elements/image/ImageElementView';
-import PrimitiveElementView from './elements/primitive/PrimitiveElementView';
+import TextElementView from './elements/TextElementView/TextElementView';
+import ImageElementView from './elements/ImageElementView/ImageElementView';
+import PrimitiveElementView from './elements/PrimitiveElementView/PrimitiveElementView';
 import styles from './SlideView.module.css';
 import { getSlideBackgroundStyle } from '../../common/componentsUtils';
 import { SLIDE_HEIGHT, SLIDE_WIDTH } from '../../model/constants';

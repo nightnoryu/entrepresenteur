@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './EditableSlideView.module.css';
-import SlideView from '../../slideview/SlideView';
+import SlideView from '../../SlideView/SlideView';
 import { Slide } from '../../../model/types';
 import { UUID } from '../../../model/uuid';
-import Overlay from './overlay/Overlay';
+import Overlay from './Overlay/Overlay';
 
 type EditableSlideViewProps = {
   slide: Slide;

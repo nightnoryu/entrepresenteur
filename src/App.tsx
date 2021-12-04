@@ -1,7 +1,7 @@
 import React from 'react';
-import Ribbon from './components/ribbon/Ribbon';
-import SlidePanel from './components/slidepanel/SlidePanel';
-import Workspace from './components/workspace/Workspace';
+import Ribbon from './components/Ribbon/Ribbon';
+import SlidePanel from './components/SlidePanel/SlidePanel';
+import Workspace from './components/Workspace/Workspace';
 import './App.css';
 import useConfirmLeaving from './hooks/useConfirmLeaving';
 import { connect, useDispatch } from 'react-redux';

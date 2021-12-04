@@ -1,4 +1,4 @@
-import { MenuItemType, RibbonMenu } from '../components/ribbon/RibbonTypes';
+import { MenuItemType, RibbonMenu } from '../components/Ribbon/RibbonTypes';
 
 export function menuItems(openHandler?: () => void): RibbonMenu {
   return {
