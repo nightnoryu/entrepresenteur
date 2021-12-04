@@ -20,8 +20,8 @@ const editor: Editor = {
               y: 300,
             },
             dimensions: {
-              width: 200,
-              height: 200,
+              width: 0,
+              height: 0,
             },
             value: 'Sample',
             color: '#000000',

@@ -60,7 +60,7 @@ function App({ presentation }: AppProps): JSX.Element {
   useHotkeyCtrl('e', () => {
     const text = prompt('Enter text') || '';
     if (text !== '') {
-      addText({ x: 0, y: 0 }, { width: 100, height: 100 }, text);
+      addText({ x: 0, y: 0 }, { width: 0, height: 0 }, text);
     }
   });
   useHotkeyCtrl('i', () => {

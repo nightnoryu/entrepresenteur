@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { ElementType, Slide } from '../../../model/types';
 import styles from './EditableSlideView.module.css';
 import { getSlideBackgroundStyle } from '../../../common/componentsUtils';
@@ -25,10 +25,17 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
   const dispatch = useDispatch();
   const { removeElements } = bindActionCreators(actionCreators, dispatch);
 
-  const ref = useRef(null);
+  const ref = useRef<SVGSVGElement>(null);
   useHotkey('Delete', () => {
     removeElements();
   }, ref);
+
+  const getScaleFactor = useCallback(() => {
+    return ref?.current
+      ? SLIDE_WIDTH / ref.current.getBoundingClientRect().width
+      : 1;
+  }, [ref?.current]);
+  const scaleFactor = getScaleFactor();
 
   return (
     <svg
@@ -46,18 +53,21 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
           return <EditableImageElement
             key={element.id}
             element={element}
+            scaleFactor={scaleFactor}
             isSelected={isSelected}
           />;
         case ElementType.TEXT:
           return <EditableTextElement
             key={element.id}
             element={element}
+            scaleFactor={scaleFactor}
             isSelected={isSelected}
           />;
         case ElementType.PRIMITIVE:
           return <EditablePrimitiveElement
             key={element.id}
             element={element}
+            scaleFactor={scaleFactor}
             isSelected={isSelected}
           />;
         }

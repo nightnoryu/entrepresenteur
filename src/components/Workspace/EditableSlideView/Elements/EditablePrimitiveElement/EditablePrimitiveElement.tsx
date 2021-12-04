@@ -10,10 +10,11 @@ import { calculateEllipseProperties, getTrianglePoints } from '../../../../../co
 
 type EditablePrimitiveElementProps = {
   element: PrimitiveElement;
+  scaleFactor: number;
   isSelected: boolean;
 }
 
-function EditablePrimitiveElement({ element, isSelected }: EditablePrimitiveElementProps): JSX.Element {
+function EditablePrimitiveElement({ element, scaleFactor, isSelected }: EditablePrimitiveElementProps): JSX.Element {
   const dispatch = useDispatch();
   const { selectElement, unselectElement, moveElements } = bindActionCreators(actionCreators, dispatch);
 
@@ -30,7 +31,7 @@ function EditablePrimitiveElement({ element, isSelected }: EditablePrimitiveElem
     }
   });
 
-  const delta = useElementDragAndDrop(ref, element, moveElements);
+  const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
 
   switch (element.primitiveType) {
   case PrimitiveType.RECTANGLE:

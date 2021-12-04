@@ -1,4 +1,4 @@
-import React, { Dispatch, useCallback, useState } from 'react';
+import React, { Dispatch, useState } from 'react';
 import { Position, SlideElement } from '../../model/types';
 import useDragAndDrop from './useDragAndDrop';
 import Action from '../../state/actions/actions';
@@ -6,16 +6,11 @@ import Action from '../../state/actions/actions';
 function useElementDragAndDrop<T extends SVGElement>(
   ref: React.RefObject<T> | null,
   element: SlideElement,
+  scaleFactor: number,
   moveElements: (positionDiff: Position) => (dispatch: Dispatch<Action>) => void,
 ): Position {
   const [delta, setDelta] = useState({ x: 0, y: 0 });
   let startPos: Position;
-
-  const getScaleFactor = useCallback(() => {
-    return ref?.current
-      ? element.dimensions.width / ref.current.getBoundingClientRect().width
-      : 1;
-  }, [ref?.current]);
 
   const onStart = (event: MouseEvent) => {
     startPos = {
@@ -26,8 +21,8 @@ function useElementDragAndDrop<T extends SVGElement>(
 
   const onMove = (event: MouseEvent) => {
     setDelta({
-      x: getScaleFactor() * (event.pageX - startPos.x),
-      y: getScaleFactor() * (event.pageY - startPos.y),
+      x: scaleFactor * (event.pageX - startPos.x),
+      y: scaleFactor * (event.pageY - startPos.y),
     });
   };
 

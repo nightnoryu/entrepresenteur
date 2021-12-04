@@ -10,10 +10,11 @@ import useDoubleClick from '../../../../../hooks/mouse/useDoubleClick';
 
 type EditableTextElementProps = {
   element: TextElement;
+  scaleFactor: number;
   isSelected: boolean;
 }
 
-function EditableTextElement({ element, isSelected }: EditableTextElementProps): JSX.Element {
+function EditableTextElement({ element, scaleFactor, isSelected }: EditableTextElementProps): JSX.Element {
   const dispatch = useDispatch();
   const { selectElement, unselectElement, moveElements, setTextValue } = bindActionCreators(actionCreators, dispatch);
 
@@ -35,22 +36,22 @@ function EditableTextElement({ element, isSelected }: EditableTextElementProps):
     setTextValue(element.id, newValue);
   });
 
-  const delta = useElementDragAndDrop(ref, element, moveElements);
+  const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
 
   return (
     <text
       x={element.position.x}
       y={element.position.y}
-      // dominantBaseline="hanging"
-      // textAnchor="left"
+      dominantBaseline="hanging"
+      textAnchor="left"
       style={{
         color: element.color,
         fontFamily: element.font,
         fontSize: element.size,
         width: element.dimensions.width,
         height: element.dimensions.height,
-        transform: `translate(${delta.x}px, ${delta.y}px)`,
         userSelect: 'none',
+        transform: `translate(${delta.x}px, ${delta.y}px)`,
       }}
       ref={ref}
     >

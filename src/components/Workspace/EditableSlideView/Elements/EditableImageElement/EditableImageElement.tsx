@@ -9,10 +9,11 @@ import useElementDragAndDrop from '../../../../../hooks/dragAndDrop/useSlideElem
 
 type EditableImageElementProps = {
   element: ImageElement;
+  scaleFactor: number;
   isSelected: boolean;
 }
 
-function EditableImageElement({ element, isSelected }: EditableImageElementProps): JSX.Element {
+function EditableImageElement({ element, scaleFactor, isSelected }: EditableImageElementProps): JSX.Element {
   const dispatch = useDispatch();
   const { selectElement, unselectElement, moveElements } = bindActionCreators(actionCreators, dispatch);
 
@@ -29,7 +30,7 @@ function EditableImageElement({ element, isSelected }: EditableImageElementProps
     }
   });
 
-  const delta = useElementDragAndDrop(ref, element, moveElements);
+  const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
 
   return (
     <image
