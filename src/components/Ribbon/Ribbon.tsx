@@ -1,36 +1,16 @@
 import React from 'react';
 import './Ribbon.css';
-import { connect, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../state';
-import { RootState } from '../../state/reducers';
 import { MenuItemType, RibbonMenu } from './RibbonTypes';
+import PresentationTitle from './PresentationTitle/PresentationTitle';
 
-type RibbonProps = StateProps & OwnProps;
-
-type StateProps = {
-  presentationTitle: string;
-};
-
-type OwnProps = {
+type RibbonProps = {
   menu: RibbonMenu;
 };
 
-function Ribbon({ presentationTitle, menu }: RibbonProps): JSX.Element {
-  const dispatch = useDispatch();
-  const { changePresentationTitle } = bindActionCreators(actionCreators, dispatch);
-
+function Ribbon({ menu }: RibbonProps): JSX.Element {
   return (
     <div className="ribbon">
-      <h1
-        className="presentation-name"
-        onClick={() => {
-          const newTitle = prompt('Enter new title') || '';
-          changePresentationTitle(newTitle);
-        }}
-      >
-        {presentationTitle}
-      </h1>
+      <PresentationTitle />
       <nav className="menu">
         <ul className="menu__list">
           {menu.items.map(dropdown => {
@@ -72,10 +52,4 @@ function Ribbon({ presentationTitle, menu }: RibbonProps): JSX.Element {
   );
 }
 
-function mapStateToProps(state: RootState): StateProps {
-  return {
-    presentationTitle: state.presentation.title,
-  };
-}
-
-export default connect(mapStateToProps)(Ribbon);
+export default Ribbon;

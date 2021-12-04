@@ -7,20 +7,27 @@
   background: linear-gradient(180deg, #252f3c 0%, #252f3c 100%);
 }
 
-.presentation-name
+.presentation-title
 {
   color: #ffffff;
   margin: 25px;
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  padding: 8px;
+  font: 1.5em Helvetica, serif;
+}
+
+.presentation-title:hover,
+.presentation-title:focus
+{
+  background-color: #19202a;
+  cursor: pointer;
 }
 
 .menu
 {
   margin-top: 4vh;
-}
-
-.menu a
-{
-  text-decoration: none;
 }
 
 .menu li
