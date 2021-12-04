@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Position } from '../model/types';
+import { Position } from '../../model/types';
 import useDragAndDrop from './useDragAndDrop';
 
 function useElementDragAndDrop<T extends SVGGeometryElement>(

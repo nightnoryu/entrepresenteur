@@ -5,9 +5,9 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state';
 import { getSelectedSVGElementProperties } from '../../../common/componentsUtils';
 import useEventListener from '../../../hooks/useEventListener';
-import useOnClickOutside from '../../../hooks/useOnClickOutside';
-import useDoubleClick from '../../../hooks/useDoubleClick';
-import useElementDragAndDrop from '../../../hooks/useSlideElementDragAndDrop';
+import useOnClickOutside from '../../../hooks/mouse/useOnClickOutside';
+import useDoubleClick from '../../../hooks/mouse/useDoubleClick';
+import useElementDragAndDrop from '../../../hooks/dragAndDrop/useSlideElementDragAndDrop';
 
 type EditableElementProps = {
   element: SlideElement;
