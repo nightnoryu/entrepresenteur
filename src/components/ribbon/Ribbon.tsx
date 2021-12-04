@@ -72,10 +72,9 @@ function Ribbon({ presentationTitle, menu }: RibbonProps): JSX.Element {
   );
 }
 
-function mapStateToProps(state: RootState, ownProps: OwnProps): RibbonProps {
+function mapStateToProps(state: RootState): StateProps {
   return {
     presentationTitle: state.presentation.title,
-    menu: ownProps.menu,
   };
 }
 
