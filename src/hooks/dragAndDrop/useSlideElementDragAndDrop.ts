@@ -1,4 +1,4 @@
-import React, { Dispatch, useEffect, useState } from 'react';
+import React, { Dispatch, useCallback, useState } from 'react';
 import { Position, SlideElement } from '../../model/types';
 import useDragAndDrop from './useDragAndDrop';
 import Action from '../../state/actions/actions';
@@ -7,47 +7,38 @@ function useElementDragAndDrop<T extends SVGElement>(
   ref: React.RefObject<T> | null,
   element: SlideElement,
   moveElements: (positionDiff: Position) => (dispatch: Dispatch<Action>) => void,
-  saveState: () => (dispatch: Dispatch<Action>) => void,
-): void {
-  const [pos, setPos] = useState(element.position);
-  let scaleFactor = 1;
+): Position {
+  const [delta, setDelta] = useState({ x: 0, y: 0 });
   let startPos: Position;
 
-  if (ref?.current) {
-    scaleFactor = element.dimensions.width / ref.current.getBoundingClientRect().width;
-  }
+  const getScaleFactor = useCallback(() => {
+    return ref?.current
+      ? element.dimensions.width / ref.current.getBoundingClientRect().width
+      : 1;
+  }, [ref?.current]);
 
   const onStart = (event: MouseEvent) => {
     startPos = {
       x: event.pageX,
       y: event.pageY,
     };
-
-    saveState();
   };
 
   const onMove = (event: MouseEvent) => {
-    const delta = {
-      x: scaleFactor * (event.pageX - startPos.x),
-      y: scaleFactor * (event.pageY - startPos.y),
-    };
-
-    const newPos = {
-      x: pos.x + delta.x,
-      y: pos.y + delta.y,
-    };
-
-    setPos(newPos);
+    setDelta({
+      x: getScaleFactor() * (event.pageX - startPos.x),
+      y: getScaleFactor() * (event.pageY - startPos.y),
+    });
   };
 
-  useEffect(() => {
-    moveElements({
-      x: pos.x - element.position.x,
-      y: pos.y - element.position.y,
-    });
-  }, [pos]);
+  const onFinish = () => {
+    moveElements(delta);
+    setDelta({ x: 0, y: 0 });
+  };
 
-  useDragAndDrop(ref, onStart, onMove);
+  useDragAndDrop(ref, onStart, onMove, onFinish);
+
+  return delta;
 }
 
 export default useElementDragAndDrop;

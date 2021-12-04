@@ -7,7 +7,6 @@ import { getSelectedSVGElementProperties } from '../../../common/componentsUtils
 import useEventListener from '../../../hooks/useEventListener';
 import useOnClickOutside from '../../../hooks/mouse/useOnClickOutside';
 import useDoubleClick from '../../../hooks/mouse/useDoubleClick';
-import useElementDragAndDrop from '../../../hooks/dragAndDrop/useSlideElementDragAndDrop';
 
 type EditableElementProps = {
   element: SlideElement;
@@ -33,8 +32,6 @@ function EditableElement({ element, isSelected, onDoubleClick }: EditableElement
       unselectElement(element.id);
     }
   });
-
-  useElementDragAndDrop(ref, element, moveElements, saveState);
 
   useDoubleClick(ref, (event: Event) => {
     if (onDoubleClick) {
