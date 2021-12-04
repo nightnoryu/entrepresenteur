@@ -7,6 +7,9 @@ import ImageElementView from '../../SlidePanel/SlideView/Elements/ImageElementVi
 import PrimitiveElementView from '../../SlidePanel/SlideView/Elements/PrimitiveElementView/PrimitiveElementView';
 import { SLIDE_HEIGHT, SLIDE_WIDTH } from '../../../model/constants';
 import { UUID } from '../../../model/uuid';
+import { RootState } from '../../../state/reducers';
+import { createNewSlide, isCurrentSlide } from '../../../model/model_utils';
+import { connect } from 'react-redux';
 
 type EditableSlideViewProps = {
   slide: Slide;
@@ -36,4 +39,11 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
   );
 }
 
-export default EditableSlideView;
+function mapStateToProps(state: RootState): EditableSlideViewProps {
+  return {
+    slide: state.presentation.slides.find(slide => isCurrentSlide(slide, state.selectedSlideIDs)) || createNewSlide(),
+    selectedElementIDs: state.selectedElementIDs,
+  };
+}
+
+export default connect(mapStateToProps)(EditableSlideView);
