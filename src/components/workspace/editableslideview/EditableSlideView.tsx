@@ -10,6 +10,7 @@ import { UUID } from '../../../model/uuid';
 import { RootState } from '../../../state/reducers';
 import { createNewSlide, isCurrentSlide } from '../../../model/model_utils';
 import { connect } from 'react-redux';
+import EditableElement from './EditableElement';
 
 type EditableSlideViewProps = {
   slide: Slide;
@@ -34,6 +35,13 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
         case ElementType.PRIMITIVE:
           return <PrimitiveElementView key={element.id} element={element} />;
         }
+      })}
+      {slide.elements.map(element => {
+        return <EditableElement
+          key={element.id}
+          element={element}
+          isSelected={selectedElementIDs.includes(element.id)}
+        />;
       })}
     </svg>
   );
