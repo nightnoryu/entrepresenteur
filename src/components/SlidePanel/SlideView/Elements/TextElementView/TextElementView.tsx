@@ -1,6 +1,5 @@
 import React from 'react';
 import { TextElement } from '../../../../../model/types';
-import styles from '../ElementView.module.css';
 
 type TextElementViewProps = {
   element: TextElement;
@@ -9,7 +8,6 @@ type TextElementViewProps = {
 function TextElementView({ element }: TextElementViewProps): JSX.Element {
   return (
     <text
-      className={styles.element}
       x={element.position.x}
       y={element.position.y}
       dominantBaseline="hanging"
