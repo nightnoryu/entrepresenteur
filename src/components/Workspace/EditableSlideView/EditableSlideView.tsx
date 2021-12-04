@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { ElementType, Slide } from '../../../model/types';
 import styles from './EditableSlideView.module.css';
 import { getSlideBackgroundStyle } from '../../../common/componentsUtils';
@@ -13,6 +13,7 @@ import { connect, useDispatch } from 'react-redux';
 import EditableElement from './EditableElement';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state';
+import useHotkey from '../../../hooks/hotkeys/useHotkey';
 
 type EditableSlideViewProps = {
   slide: Slide;
@@ -23,13 +24,20 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
   const slideBackgroundStyle = getSlideBackgroundStyle(slide);
 
   const dispatch = useDispatch();
-  const { setTextValue } = bindActionCreators(actionCreators, dispatch);
+  const { setTextValue, removeElements } = bindActionCreators(actionCreators, dispatch);
+
+  const ref = useRef(null);
+  useHotkey('Delete', () => {
+    removeElements();
+  }, ref);
 
   return (
     <svg
       viewBox={`0 0 ${SLIDE_WIDTH} ${SLIDE_HEIGHT}`}
       className={styles.editableslideview}
       style={slideBackgroundStyle}
+      ref={ref}
+      tabIndex={0}
     >
       {slide.elements.map(element => {
         switch (element.type) {
