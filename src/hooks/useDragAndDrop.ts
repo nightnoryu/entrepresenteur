@@ -1,65 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import { Position } from '../model/types';
+import React, { useEffect } from 'react';
 
-function useDragAndDrop<T extends SVGGeometryElement>(
+type DragAndDropHandler = (event: MouseEvent) => void;
+
+function useDragAndDrop<T extends EventTarget>(
   ref: React.RefObject<T> | null,
-  initialPosition: Position,
-  mouseDownHandler?: (event: MouseEvent) => void,
-  scaleFactor = 1,
-): Position {
-  const [pos, setPos] = useState(initialPosition);
-  let startPos: Position;
-
-  const onMouseMove = (e: MouseEvent) => {
-    const delta = {
-      x: scaleFactor * (e.pageX - startPos.x),
-      y: scaleFactor * (e.pageY - startPos.y),
-    };
-
-    const newPos = {
-      x: pos.x + delta.x,
-      y: pos.y + delta.y,
-    };
-
-    setPos(newPos);
-  };
-
-  const onMouseDown = (e: MouseEvent) => {
-    if (e.button !== 0) {
+  onStart?: DragAndDropHandler,
+  onMove?: DragAndDropHandler,
+  onFinish?: DragAndDropHandler,
+): void {
+  const onMouseDown = (e: Event) => {
+    const event = e as MouseEvent;
+    if (event.button !== 0) {
       return;
     }
 
-    if (mouseDownHandler) {
-      mouseDownHandler(e);
+    if (onStart) {
+      onStart(event);
     }
-
-    startPos = {
-      x: e.pageX,
-      y: e.pageY,
-    };
 
     addEventListener('mousemove', onMouseMove);
     addEventListener('mouseup', onMouseUp);
   };
 
-  const onMouseUp = () => {
+  const onMouseMove = (event: MouseEvent) => {
+    if (onMove) {
+      onMove(event);
+    }
+  };
+
+  const onMouseUp = (event: MouseEvent) => {
+    if (onFinish) {
+      onFinish(event);
+    }
+
     removeEventListener('mousemove', onMouseMove);
     removeEventListener('mouseup', onMouseUp);
   };
 
   useEffect(() => {
-    if (ref) {
-      ref.current?.addEventListener('mousedown', onMouseDown);
+    if (ref?.current) {
+      ref.current.addEventListener('mousedown', onMouseDown);
     }
 
     return () => {
-      if (ref) {
-        ref.current?.removeEventListener('mousedown', onMouseDown);
+      if (ref?.current) {
+        ref.current.removeEventListener('mousedown', onMouseDown);
       }
     };
   });
-
-  return pos;
 }
 
 export default useDragAndDrop;

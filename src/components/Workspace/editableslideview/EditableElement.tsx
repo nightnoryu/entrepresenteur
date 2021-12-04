@@ -6,8 +6,8 @@ import { actionCreators } from '../../../state';
 import { getSelectedSVGElementProperties } from '../../../common/componentsUtils';
 import useEventListener from '../../../hooks/useEventListener';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
-import useDragAndDrop from '../../../hooks/useDragAndDrop';
 import useDoubleClick from '../../../hooks/useDoubleClick';
+import useElementDragAndDrop from '../../../hooks/useSlideElementDragAndDrop';
 
 type EditableElementProps = {
   element: SlideElement;
@@ -38,9 +38,7 @@ function EditableElement({ element, isSelected, onDoubleClick }: EditableElement
   if (ref?.current) {
     scaleFactor = element.dimensions.width / ref.current.getBoundingClientRect().width;
   }
-  const position = useDragAndDrop(ref, element.position, () => {
-    saveState();
-  }, scaleFactor);
+  const position = useElementDragAndDrop(ref, element.position, scaleFactor);
   useEffect(() => {
     moveElements({
       x: position.x - element.position.x,
