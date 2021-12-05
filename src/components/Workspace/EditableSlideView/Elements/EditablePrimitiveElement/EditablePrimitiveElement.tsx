@@ -2,11 +2,10 @@ import React, { useRef } from 'react';
 import { PrimitiveElement, PrimitiveType } from '../../../../../model/types';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import useEventListener from '../../../../../hooks/useEventListener';
-import useOnClickOutside from '../../../../../hooks/mouse/useOnClickOutside';
 import useElementDragAndDrop from '../../../../../hooks/dragAndDrop/useSlideElementDragAndDrop';
 import { actionCreators } from '../../../../../state';
 import { calculateEllipseProperties, getTrianglePoints } from '../../../../../common/componentsUtils';
+import useSlideElementActions from '../../../../../hooks/useSlideElementActions';
 
 type EditablePrimitiveElementProps = {
   element: PrimitiveElement;
@@ -19,18 +18,8 @@ function EditablePrimitiveElement({ element, scaleFactor, isSelected }: Editable
   const { selectElement, unselectElement, moveElements } = bindActionCreators(actionCreators, dispatch);
 
   const ref = useRef(null);
-  useEventListener('mousedown', () => {
-    if (!isSelected) {
-      selectElement(element.id);
-    }
-  }, ref);
 
-  useOnClickOutside(ref, event => {
-    if (isSelected && !event.ctrlKey) {
-      unselectElement(element.id);
-    }
-  });
-
+  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement);
   const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
 
   switch (element.primitiveType) {

@@ -3,10 +3,9 @@ import { TextElement } from '../../../../../model/types';
 import { useDispatch } from 'react-redux';
 import { actionCreators } from '../../../../../state';
 import { bindActionCreators } from 'redux';
-import useEventListener from '../../../../../hooks/useEventListener';
-import useOnClickOutside from '../../../../../hooks/mouse/useOnClickOutside';
 import useElementDragAndDrop from '../../../../../hooks/dragAndDrop/useSlideElementDragAndDrop';
 import useDoubleClick from '../../../../../hooks/mouse/useDoubleClick';
+import useSlideElementActions from '../../../../../hooks/useSlideElementActions';
 
 type EditableTextElementProps = {
   element: TextElement;
@@ -19,24 +18,14 @@ function EditableTextElement({ element, scaleFactor, isSelected }: EditableTextE
   const { selectElement, unselectElement, moveElements, setTextValue } = bindActionCreators(actionCreators, dispatch);
 
   const ref = useRef<SVGTextElement>(null);
-  useEventListener('mousedown', () => {
-    if (!isSelected) {
-      selectElement(element.id);
-    }
-  }, ref);
 
-  useOnClickOutside(ref, event => {
-    if (isSelected && !event.ctrlKey) {
-      unselectElement(element.id);
-    }
-  });
+  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement);
+  const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
 
   useDoubleClick(ref, () => {
     const newValue = prompt('Enter new value') || '';
     setTextValue(element.id, newValue);
   });
-
-  const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
 
   return (
     <text

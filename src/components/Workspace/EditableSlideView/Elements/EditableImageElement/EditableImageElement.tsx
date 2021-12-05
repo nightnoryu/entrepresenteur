@@ -3,9 +3,8 @@ import { ImageElement } from '../../../../../model/types';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../../../state';
 import { useDispatch } from 'react-redux';
-import useEventListener from '../../../../../hooks/useEventListener';
-import useOnClickOutside from '../../../../../hooks/mouse/useOnClickOutside';
 import useElementDragAndDrop from '../../../../../hooks/dragAndDrop/useSlideElementDragAndDrop';
+import useSlideElementActions from '../../../../../hooks/useSlideElementActions';
 
 type EditableImageElementProps = {
   element: ImageElement;
@@ -18,18 +17,7 @@ function EditableImageElement({ element, scaleFactor, isSelected }: EditableImag
   const { selectElement, unselectElement, moveElements } = bindActionCreators(actionCreators, dispatch);
 
   const ref = useRef<SVGImageElement>(null);
-  useEventListener('mousedown', () => {
-    if (!isSelected) {
-      selectElement(element.id);
-    }
-  }, ref);
-
-  useOnClickOutside(ref, event => {
-    if (isSelected && !event.ctrlKey) {
-      unselectElement(element.id);
-    }
-  });
-
+  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement);
   const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
 
   return (
