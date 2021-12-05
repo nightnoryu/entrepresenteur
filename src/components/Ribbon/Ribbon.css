@@ -25,6 +25,11 @@
   cursor: pointer;
 }
 
+.presentation-title:focus
+{
+  outline: #000000 solid 2px;
+}
+
 .menu
 {
   margin-top: 4vh;
