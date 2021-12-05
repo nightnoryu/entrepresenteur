@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { ElementType, Slide } from '../../../model/types';
 import styles from './EditableSlideView.module.css';
 import { getSlideBackgroundStyle } from '../../../common/componentsUtils';
@@ -13,6 +13,7 @@ import useHotkey from '../../../hooks/hotkeys/useHotkey';
 import EditableImageElement from './Elements/EditableImageElement/EditableImageElement';
 import EditableTextElement from './Elements/EditableTextElement/EditableTextElement';
 import EditablePrimitiveElement from './Elements/EditablePrimitiveElement/EditablePrimitiveElement';
+import useScaleFactorForDragAndDrop from '../../../hooks/dragAndDrop/useScaleFactorForDragAndDrop';
 
 type EditableSlideViewProps = {
   slide: Slide;
@@ -30,12 +31,7 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
     removeElements();
   }, ref);
 
-  const getScaleFactor = useCallback(() => {
-    return ref?.current
-      ? SLIDE_WIDTH / ref.current.getBoundingClientRect().width
-      : 1;
-  }, [ref?.current]);
-  const scaleFactor = getScaleFactor();
+  const scaleFactor = useScaleFactorForDragAndDrop(ref);
 
   return (
     <svg
