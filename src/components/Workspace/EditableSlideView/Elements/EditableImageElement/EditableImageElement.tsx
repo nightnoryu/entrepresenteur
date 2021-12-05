@@ -16,7 +16,7 @@ function EditableImageElement({ element, scaleFactor, isSelected }: EditableImag
   const dispatch = useDispatch();
   const { selectElement, unselectElement, moveElements } = bindActionCreators(actionCreators, dispatch);
 
-  const ref = useRef<SVGImageElement>(null);
+  const ref = useRef(null);
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement);
   const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
 

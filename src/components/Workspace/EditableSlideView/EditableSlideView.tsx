@@ -26,7 +26,7 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
   const dispatch = useDispatch();
   const { removeElements } = bindActionCreators(actionCreators, dispatch);
 
-  const ref = useRef<SVGSVGElement>(null);
+  const ref = useRef(null);
   useHotkey('Delete', () => {
     removeElements();
   }, ref);

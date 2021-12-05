@@ -17,13 +17,13 @@ function EditableTextElement({ element, scaleFactor, isSelected }: EditableTextE
   const dispatch = useDispatch();
   const { selectElement, unselectElement, moveElements, setTextValue } = bindActionCreators(actionCreators, dispatch);
 
-  const ref = useRef<SVGTextElement>(null);
+  const ref = useRef(null);
 
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement);
   const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
 
   useDoubleClick(ref, () => {
-    const newValue = prompt('Enter new value') || '';
+    const newValue = prompt('Enter new value', element.value) || '';
     setTextValue(element.id, newValue);
   });
 
