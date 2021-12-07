@@ -22,12 +22,16 @@ function Ribbon({ menu }: RibbonProps): JSX.Element {
                     return item.type === MenuItemType.MenuButton
                       ? (
                         <li key={item.label}>
-                          <a href="#" className="sub-menu__link" onClick={item.action}>{item.label}</a>
+                          <a href="#" className="sub-menu__link" onClick={item.action}>
+                            {item.label}
+                            {item.icon && <span className="material-icons md-18">{item.icon}</span>}
+                          </a>
                         </li>
                       )
                       : (
                         <li key={item.label}>
                           <a href="#" className="sub-menu__link">{item.label}</a>
+                          {item.icon && <span className="material-icons md-18">{item.icon}</span>}
                           <ul className="sub-sub-menu__list">
                             {item.items.map(subItem => {
                               return (
@@ -35,6 +39,7 @@ function Ribbon({ menu }: RibbonProps): JSX.Element {
                                   <a href="#" className="sub-sub-menu__link" onClick={subItem.action}>
                                     {subItem.label}
                                   </a>
+                                  {subItem.icon && <span className="material-icons md-18">{subItem.icon}</span>}
                                 </li>
                               );
                             })}
