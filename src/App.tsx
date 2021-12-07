@@ -11,6 +11,7 @@ import { RootState } from './state/reducers';
 import { getRibbonMenuItems } from './model/menu';
 import Workspace from './components/Workspace/Workspace';
 import useAppHotkeys from './hooks/hotkeys/useAppHotkeys';
+import { openPresentationJSON, savePresentationJSON } from './common/fileUtils';
 
 type AppProps = {
   presentation: Presentation;
@@ -22,6 +23,7 @@ function App({ presentation }: AppProps): JSX.Element {
     openPresentation,
     newPresentation,
     addSlide,
+    removeSlides,
     setSlideBackgroundImage,
     addText,
     addImage,
@@ -42,9 +44,26 @@ function App({ presentation }: AppProps): JSX.Element {
     undo,
   );
 
+  const openPresentationMenu = () => {
+    openPresentationJSON()
+      .then(presentation => openPresentation(presentation))
+      .catch(error => alert(error));
+  };
+
+  const savePresentation = () => {
+    savePresentationJSON(presentation, presentation.title);
+  };
+
+  const menuItems = getRibbonMenuItems(
+    openPresentationMenu,
+    savePresentation,
+    addSlide,
+    removeSlides,
+  );
+
   return (
     <div className="app">
-      <Ribbon menuItems={getRibbonMenuItems()} />
+      <Ribbon menuItems={menuItems} />
       <div className={styles.main}>
         <SlidePanel />
         <Workspace />

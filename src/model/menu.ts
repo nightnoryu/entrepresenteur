@@ -1,6 +1,12 @@
 import { DropdownMenuItemType, MenuItemType } from '../components/Ribbon/RibbonTypes';
+import { addSlide, removeSlides } from '../state/actions/actionCreators';
 
-export function getRibbonMenuItems(): DropdownMenuItemType[] {
+export function getRibbonMenuItems(
+  onOpenPresentation: () => void,
+  onSavePresentation: () => void,
+  onNewSlide: typeof addSlide,
+  onDeleteSlide: typeof removeSlides,
+): DropdownMenuItemType[] {
   return [
     {
       label: 'File',
@@ -14,13 +20,13 @@ export function getRibbonMenuItems(): DropdownMenuItemType[] {
         {
           type: MenuItemType.MenuButton,
           label: 'Open',
-          action: () => console.log('Open'),
+          action: onOpenPresentation,
           icon: 'upload',
         },
         {
           type: MenuItemType.MenuButton,
           label: 'Download',
-          action: () => console.log('Download'),
+          action: onSavePresentation,
           icon: 'download',
         },
         {
@@ -144,13 +150,13 @@ export function getRibbonMenuItems(): DropdownMenuItemType[] {
         {
           type: MenuItemType.MenuButton,
           label: 'New',
-          action: () => console.log('New'),
+          action: onNewSlide,
           icon: 'add_box',
         },
         {
           type: MenuItemType.MenuButton,
           label: 'Delete',
-          action: () => console.log('Delete'),
+          action: onDeleteSlide,
           icon: 'remove_circle_outline',
         },
         {

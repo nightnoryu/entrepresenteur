@@ -25,7 +25,6 @@ function useAppHotkeys(
 ): void {
   useHotkeyCtrl('s', () => {
     savePresentationJSON(presentation, presentation.title);
-    console.log('whatever');
   });
 
   useHotkeyCtrl('o', () => {

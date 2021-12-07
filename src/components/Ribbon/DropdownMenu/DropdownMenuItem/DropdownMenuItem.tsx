@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenuItem } from '../../RibbonTypes';
+import { MenuItem, MenuItemType } from '../../RibbonTypes';
 import styles from './DropdownMenuItem.module.css';
 
 type DropdownMenuItemProps = {
@@ -25,7 +25,17 @@ function DropdownMenuItem({ label, items, isVisible, onClick }: DropdownMenuItem
           <ul className={styles.dropdownList}>
             {items.map(item => (
               <li key={item.label}>
-                <a href="#">{item.label}</a>
+                <a
+                  href="#"
+                  onClick={() => {
+                    onClick();
+                    if (item.type === MenuItemType.MenuButton) {
+                      item.action();
+                    }
+                  }}
+                >
+                  {item.label}
+                </a>
                 {
                   item.icon &&
                     <span className={'material-icons md-18 ' + styles.itemIcon}>{item.icon}</span>
