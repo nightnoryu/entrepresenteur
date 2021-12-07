@@ -1,8 +1,4 @@
-export type RibbonMenu = {
-  items: MenuDropdown[];
-};
-
-export type MenuDropdown = {
+export type DropdownMenuItem = {
   label: string;
   items: MenuItem[];
 };

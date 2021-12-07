@@ -1,14 +1,14 @@
 import React from 'react';
 import Ribbon from './components/Ribbon/Ribbon';
 import SlidePanel from './components/SlidePanel/SlidePanel';
-import './App.css';
+import styles from './App.module.css';
 import useConfirmLeaving from './hooks/useConfirmLeaving';
 import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from './state';
 import { Presentation } from './model/types';
 import { RootState } from './state/reducers';
-import { menuItems } from './model/menu';
+import { getRibbonMenuItems } from './model/menu';
 import Workspace from './components/Workspace/Workspace';
 import useAppHotkeys from './hooks/hotkeys/useAppHotkeys';
 
@@ -44,9 +44,8 @@ function App({ presentation }: AppProps): JSX.Element {
 
   return (
     <div className="app">
-      <Ribbon menu={menuItems()} />
-
-      <div className="app-main">
+      <Ribbon menuItems={getRibbonMenuItems()} />
+      <div className={styles.main}>
         <SlidePanel />
         <Workspace />
       </div>

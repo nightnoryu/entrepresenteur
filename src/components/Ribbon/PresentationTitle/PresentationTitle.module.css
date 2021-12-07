@@ -1,0 +1,20 @@
+.title
+{
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  padding: 8px;
+  font: 1.5em Helvetica, serif;
+}
+
+.title:hover,
+.title:focus
+{
+  background-color: #bebebe;
+  cursor: pointer;
+}
+
+.title:focus
+{
+  outline: #000000 solid 2px;
+}

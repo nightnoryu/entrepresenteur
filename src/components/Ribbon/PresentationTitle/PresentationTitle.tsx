@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state';
+import styles from './PresentationTitle.module.css';
 import { RootState } from '../../../state/reducers';
 
 type PresentationTitleProps = {
@@ -34,7 +35,7 @@ function PresentationTitle({ title }: PresentationTitleProps): JSX.Element {
     <input
       type="text"
       aria-label="Presentation Title"
-      className="presentation-title"
+      className={styles.title}
       value={editingValue}
       onChange={onChange}
       onKeyDown={onKeyDown}
