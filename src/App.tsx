@@ -1,29 +1,63 @@
 import React from 'react';
-import Ribbon from './components/ribbon/Ribbon';
-import SlidePanel from './components/slidepanel/SlidePanel';
-import Workspace from './components/workspace/Workspace';
+import Ribbon from './components/Ribbon/Ribbon';
+import SlidePanel from './components/SlidePanel/SlidePanel';
 import './App.css';
 import useConfirmLeaving from './hooks/useConfirmLeaving';
-import { isCurrentSlide } from './model/model_utils';
-import { useSelector } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from './state';
+import { Presentation } from './model/types';
 import { RootState } from './state/reducers';
+import { menuItems } from './model/menu';
+import Workspace from './components/Workspace/Workspace';
+import useAppHotkeys from './hooks/hotkeys/useAppHotkeys';
 
-function App(): JSX.Element {
-  const editor = useSelector((state: RootState) => state.editor);
+type AppProps = {
+  presentation: Presentation;
+}
 
-  const currentSlide = editor.presentation.slides.find(slide => isCurrentSlide(slide, editor.selectedSlideIDs));
+function App({ presentation }: AppProps): JSX.Element {
+  const dispatch = useDispatch();
+  const {
+    openPresentation,
+    newPresentation,
+    addSlide,
+    setSlideBackgroundImage,
+    addText,
+    addImage,
+    undo,
+    redo,
+  } = bindActionCreators(actionCreators, dispatch);
 
   useConfirmLeaving();
+  useAppHotkeys(
+    presentation,
+    addImage,
+    addSlide,
+    addText,
+    newPresentation,
+    openPresentation,
+    redo,
+    setSlideBackgroundImage,
+    undo,
+  );
 
   return (
     <div className="app">
-      <Ribbon presentationTitle={editor.presentation.title} />
+      <Ribbon menu={menuItems()} />
+
       <div className="app-main">
-        <SlidePanel slides={editor.presentation.slides} selectedSlideIDs={editor.selectedSlideIDs} />
-        <Workspace slide={currentSlide} selectedElementIDs={editor.selectedElementIDs} />
+        <SlidePanel />
+        <Workspace />
       </div>
     </div>
   );
 }
 
-export default App;
+function mapStateToProps(state: RootState): AppProps {
+  return {
+    presentation: state.presentation,
+  };
+}
+
+export default connect(mapStateToProps)(App);

@@ -2,12 +2,19 @@ import { BackgroundType, Dimensions, Editor, ElementType, Position, Presentation
 import { generateUUID, UUID } from './uuid';
 import {
   concatWithSelectedSlideElements,
+  createEditor,
   createNewSlide,
   isCurrentElement,
   isCurrentSlide,
   isRedoAvailable,
+  moveElementOnTop,
+  saveState,
   selectNearestUnselectedSlide,
 } from './model_utils';
+
+export function openPresentation(editor: Editor, presentation: Presentation): Editor {
+  return createEditor(presentation);
+}
 
 export function setPresentationTitle(
   editor: Editor,
@@ -171,7 +178,7 @@ export function addText(
           position,
           dimensions,
           value,
-          size: 10,
+          size: 42,
           font: 'Calibri',
           color: '#000000',
         },
@@ -189,12 +196,14 @@ export function setTextValue(
     value: string;
   },
 ): Editor {
+  const savedEditor = saveState(editor);
+
   return {
-    ...editor,
+    ...savedEditor,
     presentation: {
-      ...editor.presentation,
-      slides: editor.presentation.slides.map(slide =>
-        isCurrentSlide(slide, editor.selectedSlideIDs)
+      ...savedEditor.presentation,
+      slides: savedEditor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, savedEditor.selectedSlideIDs)
           ? {
             ...slide,
             elements: slide.elements.map(element =>
@@ -395,6 +404,16 @@ export function selectElement(editor: Editor, elementID: UUID): Editor {
   return {
     ...editor,
     selectedElementIDs: editor.selectedElementIDs.concat(elementID),
+    presentation: {
+      ...editor.presentation,
+      slides: editor.presentation.slides.map(
+        slide => isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: moveElementOnTop(slide.elements, elementID),
+          } : slide,
+      ),
+    },
   };
 }
 
@@ -405,14 +424,9 @@ export function unselectElement(editor: Editor, elementID: UUID): Editor {
   };
 }
 
-export function moveElement(
-  editor: Editor, {
-    elementID,
-    positionDiff,
-  }: {
-    elementID: UUID,
-    positionDiff: Position,
-  },
+export function moveElements(
+  editor: Editor,
+  positionDiff: Position,
 ): Editor {
   return {
     ...editor,
@@ -423,7 +437,7 @@ export function moveElement(
           ? {
             ...slide,
             elements: slide.elements.map(element =>
-              element.id === elementID
+              editor.selectedElementIDs.includes(element.id)
                 ? {
                   ...element,
                   position: {
