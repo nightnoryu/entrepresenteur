@@ -1,30 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MenuItem } from '../../RibbonTypes';
 import styles from './DropdownMenuItem.module.css';
 
 type DropdownMenuItemProps = {
   label: string;
   items: MenuItem[];
+  onClick: () => void;
+  isVisible: boolean;
 };
 
-function DropdownMenuItem({ label, items }: DropdownMenuItemProps): JSX.Element {
-  const [active, setActive] = useState(false);
-
+function DropdownMenuItem({ label, items, isVisible, onClick }: DropdownMenuItemProps): JSX.Element {
   return (
     <div className={styles.item}>
       <a
         className={styles.itemLabel}
         href="#"
-        onClick={event => {
-          event.preventDefault();
-          setActive(!active);
-        }}
+        onClick={onClick}
       >
         {label}
       </a>
 
       {
-        active &&
+        isVisible &&
           <ul className={styles.dropdownList}>
             {items.map(item => (
               <li key={item.label}>
