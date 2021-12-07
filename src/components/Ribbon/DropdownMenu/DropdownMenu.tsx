@@ -1,5 +1,6 @@
 import React from 'react';
 import { DropdownMenuItem } from '../RibbonTypes';
+import styles from './DropdownMenu.module.css';
 
 type DropdownMenuProps = {
   menuItems: DropdownMenuItem[];
@@ -7,10 +8,12 @@ type DropdownMenuProps = {
 
 function DropdownMenu({ menuItems }: DropdownMenuProps): JSX.Element {
   return (
-    <div>
-      {menuItems.map(menuItem => {
-        return <div key={menuItem.label}>{menuItem.label}</div>;
-      })}
+    <div className={styles.menu}>
+      {menuItems.map(menuItem => (
+        <div key={menuItem.label} className={styles.item}>
+          <div className={styles.itemLabel}>{menuItem.label}</div>
+        </div>
+      ))}
     </div>
   );
 }

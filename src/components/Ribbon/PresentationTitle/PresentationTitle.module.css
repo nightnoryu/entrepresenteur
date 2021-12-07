@@ -1,10 +1,11 @@
 .title
 {
-  background-color: transparent;
+  margin-top: 10px;
+  margin-left: 5px;
   border: none;
   border-radius: 5px;
-  padding: 8px;
-  font: 1.5em Helvetica, serif;
+  padding: 3px;
+  font: 1.5em 'Nunito', sans-serif;
 }
 
 .title:hover,
