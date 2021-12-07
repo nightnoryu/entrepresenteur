@@ -1,18 +1,17 @@
 import React from 'react';
-import { DropdownMenuItem } from '../RibbonTypes';
+import { DropdownMenuItemType } from '../RibbonTypes';
 import styles from './DropdownMenu.module.css';
+import DropdownMenuItem from './DropdownMenuItem/DropdownMenuItem';
 
 type DropdownMenuProps = {
-  menuItems: DropdownMenuItem[];
+  menuItems: DropdownMenuItemType[];
 }
 
 function DropdownMenu({ menuItems }: DropdownMenuProps): JSX.Element {
   return (
     <div className={styles.menu}>
       {menuItems.map(menuItem => (
-        <div key={menuItem.label} className={styles.item}>
-          <div className={styles.itemLabel}>{menuItem.label}</div>
-        </div>
+        <DropdownMenuItem key={menuItem.label} label={menuItem.label} items={menuItem.items} />
       ))}
     </div>
   );

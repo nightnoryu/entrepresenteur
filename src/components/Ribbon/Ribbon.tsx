@@ -2,10 +2,10 @@ import React from 'react';
 import styles from './Ribbon.module.css';
 import PresentationTitle from './PresentationTitle/PresentationTitle';
 import DropdownMenu from './DropdownMenu/DropdownMenu';
-import { DropdownMenuItem } from './RibbonTypes';
+import { DropdownMenuItemType } from './RibbonTypes';
 
 type RibbonProps = {
-  menuItems: DropdownMenuItem[];
+  menuItems: DropdownMenuItemType[];
 };
 
 function Ribbon({ menuItems }: RibbonProps): JSX.Element {

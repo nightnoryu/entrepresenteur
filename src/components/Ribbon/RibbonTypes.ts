@@ -1,4 +1,4 @@
-export type DropdownMenuItem = {
+export type DropdownMenuItemType = {
   label: string;
   items: MenuItem[];
 };

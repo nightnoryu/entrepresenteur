@@ -1,6 +1,6 @@
-import { DropdownMenuItem, MenuItemType } from '../components/Ribbon/RibbonTypes';
+import { DropdownMenuItemType, MenuItemType } from '../components/Ribbon/RibbonTypes';
 
-export function getRibbonMenuItems(): DropdownMenuItem[] {
+export function getRibbonMenuItems(): DropdownMenuItemType[] {
   return [
     {
       label: 'File',
