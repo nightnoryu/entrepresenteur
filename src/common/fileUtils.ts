@@ -56,7 +56,6 @@ export function openImageBase64(): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     openFile()
       .then(file => {
-        console.log(file);
         const reader = new FileReader();
 
         reader.addEventListener('loadend', (event: ProgressEvent<FileReader>) => {
