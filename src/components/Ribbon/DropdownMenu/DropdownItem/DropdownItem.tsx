@@ -17,7 +17,8 @@ function DropdownItem({ item, onClick }: DropdownItemProps): JSX.Element {
       <a
         href="#"
         className={styles.item}
-        onClick={() => {
+        onClick={event => {
+          event.preventDefault();
           if (item.type === MenuItemType.MenuButton) {
             item.action();
             onClick();
@@ -41,6 +42,10 @@ function DropdownItem({ item, onClick }: DropdownItemProps): JSX.Element {
                 <a
                   href="#"
                   className={styles.subItem}
+                  onClick={event => {
+                    event.preventDefault();
+                    subItem.action();
+                  }}
                 >
                   {subItem.label}
                   {

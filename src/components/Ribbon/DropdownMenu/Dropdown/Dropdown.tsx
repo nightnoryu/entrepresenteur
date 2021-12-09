@@ -16,7 +16,10 @@ function Dropdown({ label, items, isVisible, onClick }: DropdownMenuItemProps): 
       <a
         className={styles.itemLabel}
         href="#"
-        onClick={onClick}
+        onClick={event => {
+          event.preventDefault();
+          onClick();
+        }}
       >
         {label}
       </a>
