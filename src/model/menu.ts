@@ -11,6 +11,7 @@ export function getRibbonMenuItems(
   addSlide: MenuAction,
   removeSlide: MenuAction,
   setSlideBackgroundImage: MenuAction,
+  removeElements: MenuAction,
   undo: MenuAction,
   redo: MenuAction,
 ): DropdownMenuItemType[] {
@@ -21,7 +22,7 @@ export function getRibbonMenuItems(
         {
           type: MenuItemType.MenuButton,
           label: 'New',
-          action: () => console.log('New'),
+          action: newPresentation,
           icon: 'add',
         },
         {
@@ -62,7 +63,7 @@ export function getRibbonMenuItems(
         {
           type: MenuItemType.MenuButton,
           label: 'Delete',
-          action: () => console.log('Delete'),
+          action: removeElements,
           icon: 'delete',
         },
         {

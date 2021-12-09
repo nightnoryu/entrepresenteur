@@ -29,6 +29,7 @@ function App({ presentation }: AppProps): JSX.Element {
     addImage,
     undo,
     redo,
+    removeElements,
   } = bindActionCreators(actionCreators, dispatch);
 
   const newPresentationAction = () => {
@@ -64,6 +65,8 @@ function App({ presentation }: AppProps): JSX.Element {
   const addSlideAction = () => addSlide();
   const removeSlidesAction = () => removeSlides();
 
+  const removeElementsAction = () => removeElements();
+
   const undoAction = () => undo();
   const redoAction = () => redo();
 
@@ -91,6 +94,7 @@ function App({ presentation }: AppProps): JSX.Element {
     addSlideAction,
     removeSlidesAction,
     setSlideBackgroundImageAction,
+    removeElementsAction,
     undoAction,
     redoAction,
   );
