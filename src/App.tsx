@@ -44,6 +44,13 @@ function App({ presentation }: AppProps): JSX.Element {
     undo,
   );
 
+  const newPresentationMenu = () => {
+    const confirmed = confirm('Are you sure? All unsaved changes will be lost.');
+    if (confirmed) {
+      newPresentation();
+    }
+  };
+
   const openPresentationMenu = () => {
     openPresentationJSON()
       .then(presentation => openPresentation(presentation))
@@ -55,6 +62,7 @@ function App({ presentation }: AppProps): JSX.Element {
   };
 
   const menuItems = getRibbonMenuItems(
+    newPresentationMenu,
     openPresentationMenu,
     savePresentation,
     addSlide,

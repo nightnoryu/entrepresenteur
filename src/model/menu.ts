@@ -2,6 +2,7 @@ import { DropdownMenuItemType, MenuItemType } from '../components/Ribbon/RibbonT
 import { addSlide, removeSlides } from '../state/actions/actionCreators';
 
 export function getRibbonMenuItems(
+  onNewPresentation: () => void,
   onOpenPresentation: () => void,
   onSavePresentation: () => void,
   onNewSlide: typeof addSlide,
