@@ -1,0 +1,21 @@
+.title
+{
+  margin-top: 10px;
+  margin-left: 5px;
+  border: none;
+  border-radius: 5px;
+  padding: 3px;
+  font: 1.5em 'Nunito', sans-serif;
+}
+
+.title:hover,
+.title:focus
+{
+  background-color: #bebebe;
+  cursor: pointer;
+}
+
+.title:focus
+{
+  outline: #000000 solid 2px;
+}

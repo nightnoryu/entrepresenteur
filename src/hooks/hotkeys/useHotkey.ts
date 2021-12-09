@@ -1,9 +1,11 @@
 import useEventListener from '../useEventListener';
 import Handler from './handler';
+import React from 'react';
 
 function useHotkey(
   key: string,
   handler: Handler,
+  ref?: React.RefObject<DocumentAndElementEventHandlers>,
 ): void {
   useEventListener('keydown', (e: Event) => {
     const event = e as KeyboardEvent;
@@ -12,7 +14,7 @@ function useHotkey(
       event.preventDefault();
       handler(event);
     }
-  });
+  }, ref);
 }
 
 export default useHotkey;

@@ -1,17 +1,17 @@
 import React from 'react';
-import Ribbon from './components/ribbon/Ribbon';
-import SlidePanel from './components/slidepanel/SlidePanel';
-import Workspace from './components/workspace/Workspace';
-import './App.css';
+import Ribbon from './components/Ribbon/Ribbon';
+import SlidePanel from './components/SlidePanel/SlidePanel';
+import styles from './App.module.css';
 import useConfirmLeaving from './hooks/useConfirmLeaving';
 import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from './state';
-import { openImageBase64, openPresentationJSON, savePresentationJSON } from './common/fileUtils';
-import useHotkeyCtrl from './hooks/hotkeys/useHotkeyCtrl';
 import { Presentation } from './model/types';
 import { RootState } from './state/reducers';
-import { menuItems } from './model/menu';
+import { getRibbonMenuItems } from './model/menu';
+import Workspace from './components/Workspace/Workspace';
+import useAppHotkeys from './hooks/hotkeys/useAppHotkeys';
+import { openImageBase64, openPresentationJSON, savePresentationJSON } from './common/fileUtils';
 
 type AppProps = {
   presentation: Presentation;
@@ -29,57 +29,80 @@ function App({ presentation }: AppProps): JSX.Element {
     addImage,
     undo,
     redo,
+    removeElements,
   } = bindActionCreators(actionCreators, dispatch);
 
-  useConfirmLeaving();
-  useHotkeyCtrl('s', () => {
-    savePresentationJSON(presentation, presentation.title);
-  });
-  useHotkeyCtrl('o', () => {
-    openPresentationJSON()
-      .then(presentation => openPresentation(presentation))
-      .catch(error => alert(error));
-  });
-  useHotkeyCtrl('m', () => {
-    const confirmed = confirm('Are you sure?');
+  const newPresentationAction = () => {
+    const confirmed = confirm('Are you sure? All unsaved changes will be lost.');
     if (confirmed) {
       newPresentation();
     }
-  });
-  useHotkeyCtrl('l', () => {
-    addSlide();
-  });
-  useHotkeyCtrl('d', () => {
-    removeSlides();
-  });
-  useHotkeyCtrl('b', () => {
-    openImageBase64()
-      .then(image => setSlideBackgroundImage(image.src))
+  };
+
+  const openPresentationAction = () => {
+    openPresentationJSON()
+      .then(presentation => openPresentation(presentation))
       .catch(error => alert(error));
-  });
-  useHotkeyCtrl('e', () => {
+  };
+
+  const savePresentationAction = () => {
+    savePresentationJSON(presentation, presentation.title);
+  };
+
+  const addTextAction = () => {
     const text = prompt('Enter text') || '';
     if (text !== '') {
-      addText({ x: 0, y: 0 }, { width: 100, height: 100 }, text);
+      addText({ x: 0, y: 0 }, { width: 0, height: 0 }, text);
     }
-  });
-  useHotkeyCtrl('i', () => {
+  };
+
+  const addImageAction = () => {
     openImageBase64()
       .then(image => addImage({ x: 0, y: 0 }, { width: image.width, height: image.height }, image.src))
       .catch(error => alert(error));
-  });
-  useHotkeyCtrl('z', () => {
-    undo();
-  });
-  useHotkeyCtrl('y', () => {
-    redo();
-  });
+  };
+
+  const addSlideAction = () => addSlide();
+  const removeSlidesAction = () => removeSlides();
+
+  const removeElementsAction = () => removeElements();
+
+  const undoAction = () => undo();
+  const redoAction = () => redo();
+
+  const setSlideBackgroundImageAction = () => {
+    openImageBase64()
+      .then(image => setSlideBackgroundImage(image.src))
+      .catch(error => alert(error));
+  };
+
+  useConfirmLeaving();
+  useAppHotkeys(
+    newPresentationAction,
+    openPresentationAction,
+    savePresentationAction,
+    undoAction,
+    redoAction,
+  );
+
+  const menuItems = getRibbonMenuItems(
+    newPresentationAction,
+    openPresentationAction,
+    savePresentationAction,
+    addTextAction,
+    addImageAction,
+    addSlideAction,
+    removeSlidesAction,
+    setSlideBackgroundImageAction,
+    removeElementsAction,
+    undoAction,
+    redoAction,
+  );
 
   return (
     <div className="app">
-      <Ribbon menu={menuItems()} />
-
-      <div className="app-main">
+      <Ribbon menuItems={menuItems} />
+      <div className={styles.main}>
         <SlidePanel />
         <Workspace />
       </div>

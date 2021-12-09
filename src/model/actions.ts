@@ -495,6 +495,7 @@ export function undo(editor: Editor): Editor {
   };
 }
 
+// TODO: fix redo implementation
 export function redo(editor: Editor): Editor {
   return {
     ...editor,
