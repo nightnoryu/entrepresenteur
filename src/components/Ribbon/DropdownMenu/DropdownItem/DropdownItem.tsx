@@ -45,6 +45,7 @@ function DropdownItem({ item, onClick }: DropdownItemProps): JSX.Element {
                   onClick={event => {
                     event.preventDefault();
                     subItem.action();
+                    onClick();
                   }}
                 >
                   {subItem.label}
