@@ -36,7 +36,7 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
   return (
     <svg
       viewBox={`0 0 ${SLIDE_WIDTH} ${SLIDE_HEIGHT}`}
-      className={styles.editableslideview}
+      className={styles.editableSlideView}
       style={slideBackgroundStyle}
       ref={ref}
       tabIndex={0}
