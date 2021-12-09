@@ -1,12 +1,18 @@
 import { DropdownMenuItemType, MenuItemType } from '../components/Ribbon/RibbonTypes';
-import { addSlide, removeSlides } from '../state/actions/actionCreators';
+
+type MenuAction = () => void;
 
 export function getRibbonMenuItems(
-  onNewPresentation: () => void,
-  onOpenPresentation: () => void,
-  onSavePresentation: () => void,
-  onNewSlide: typeof addSlide,
-  onDeleteSlide: typeof removeSlides,
+  newPresentation: MenuAction,
+  openPresentation: MenuAction,
+  savePresentation: MenuAction,
+  addText: MenuAction,
+  addImage: MenuAction,
+  addSlide: MenuAction,
+  removeSlide: MenuAction,
+  setSlideBackgroundImage: MenuAction,
+  undo: MenuAction,
+  redo: MenuAction,
 ): DropdownMenuItemType[] {
   return [
     {
@@ -21,13 +27,13 @@ export function getRibbonMenuItems(
         {
           type: MenuItemType.MenuButton,
           label: 'Open',
-          action: onOpenPresentation,
+          action: openPresentation,
           icon: 'upload',
         },
         {
           type: MenuItemType.MenuButton,
           label: 'Download',
-          action: onSavePresentation,
+          action: savePresentation,
           icon: 'download',
         },
         {
@@ -44,13 +50,13 @@ export function getRibbonMenuItems(
         {
           type: MenuItemType.MenuButton,
           label: 'Undo',
-          action: () => console.log('Undo'),
+          action: undo,
           icon: 'undo',
         },
         {
           type: MenuItemType.MenuButton,
           label: 'Redo',
-          action: () => console.log('Redo'),
+          action: redo,
           icon: 'redo',
         },
         {
@@ -109,13 +115,13 @@ export function getRibbonMenuItems(
         {
           type: MenuItemType.MenuButton,
           label: 'Image',
-          action: () => console.log('Image'),
+          action: addImage,
           icon: 'image',
         },
         {
           type: MenuItemType.MenuButton,
           label: 'Text',
-          action: () => console.log('Text'),
+          action: addText,
           icon: 'text_fields',
         },
         {
@@ -151,13 +157,13 @@ export function getRibbonMenuItems(
         {
           type: MenuItemType.MenuButton,
           label: 'New',
-          action: onNewSlide,
+          action: addSlide,
           icon: 'add_box',
         },
         {
           type: MenuItemType.MenuButton,
           label: 'Delete',
-          action: onDeleteSlide,
+          action: removeSlide,
           icon: 'remove_circle_outline',
         },
         {
@@ -174,7 +180,7 @@ export function getRibbonMenuItems(
             {
               type: MenuItemType.MenuButton,
               label: 'Image',
-              action: () => console.log('Image'),
+              action: setSlideBackgroundImage,
               icon: 'image',
             },
           ],

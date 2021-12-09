@@ -11,7 +11,7 @@ import { RootState } from './state/reducers';
 import { getRibbonMenuItems } from './model/menu';
 import Workspace from './components/Workspace/Workspace';
 import useAppHotkeys from './hooks/hotkeys/useAppHotkeys';
-import { openPresentationJSON, savePresentationJSON } from './common/fileUtils';
+import { openImageBase64, openPresentationJSON, savePresentationJSON } from './common/fileUtils';
 
 type AppProps = {
   presentation: Presentation;
@@ -31,42 +31,68 @@ function App({ presentation }: AppProps): JSX.Element {
     redo,
   } = bindActionCreators(actionCreators, dispatch);
 
-  useConfirmLeaving();
-  useAppHotkeys(
-    presentation,
-    addImage,
-    addSlide,
-    addText,
-    newPresentation,
-    openPresentation,
-    redo,
-    setSlideBackgroundImage,
-    undo,
-  );
-
-  const newPresentationMenu = () => {
+  const newPresentationAction = () => {
     const confirmed = confirm('Are you sure? All unsaved changes will be lost.');
     if (confirmed) {
       newPresentation();
     }
   };
 
-  const openPresentationMenu = () => {
+  const openPresentationAction = () => {
     openPresentationJSON()
       .then(presentation => openPresentation(presentation))
       .catch(error => alert(error));
   };
 
-  const savePresentation = () => {
+  const savePresentationAction = () => {
     savePresentationJSON(presentation, presentation.title);
   };
 
+  const addTextAction = () => {
+    const text = prompt('Enter text') || '';
+    if (text !== '') {
+      addText({ x: 0, y: 0 }, { width: 0, height: 0 }, text);
+    }
+  };
+
+  const addImageAction = () => {
+    openImageBase64()
+      .then(image => addImage({ x: 0, y: 0 }, { width: image.width, height: image.height }, image.src))
+      .catch(error => alert(error));
+  };
+
+  const addSlideAction = () => addSlide();
+  const removeSlidesAction = () => removeSlides();
+
+  const undoAction = () => undo();
+  const redoAction = () => redo();
+
+  const setSlideBackgroundImageAction = () => {
+    openImageBase64()
+      .then(image => setSlideBackgroundImage(image.src))
+      .catch(error => alert(error));
+  };
+
+  useConfirmLeaving();
+  useAppHotkeys(
+    newPresentationAction,
+    openPresentationAction,
+    savePresentationAction,
+    undoAction,
+    redoAction,
+  );
+
   const menuItems = getRibbonMenuItems(
-    newPresentationMenu,
-    openPresentationMenu,
-    savePresentation,
-    addSlide,
-    removeSlides,
+    newPresentationAction,
+    openPresentationAction,
+    savePresentationAction,
+    addTextAction,
+    addImageAction,
+    addSlideAction,
+    removeSlidesAction,
+    setSlideBackgroundImageAction,
+    undoAction,
+    redoAction,
   );
 
   return (
