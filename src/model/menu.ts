@@ -14,6 +14,7 @@ export function getRibbonMenuItems(
   addSlide: MenuAction,
   removeSlide: MenuAction,
   setSlideBackgroundImage: MenuAction,
+  setSlideBackgroundColor: MenuAction,
   removeElements: MenuAction,
   undo: MenuAction,
   redo: MenuAction,
@@ -178,7 +179,7 @@ export function getRibbonMenuItems(
             {
               type: MenuItemType.MenuButton,
               label: 'Color',
-              action: () => console.log('Color'),
+              action: setSlideBackgroundColor,
               icon: 'format_color_fill',
             },
             {

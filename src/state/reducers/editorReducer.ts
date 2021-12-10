@@ -20,6 +20,7 @@ import {
   removeElements,
   removeSlides,
   resizeElement,
+  setSlideBackgroundColor,
   setSlideBackgroundImage,
   setTextValue,
 } from '../../model/statefulActions';
@@ -52,6 +53,8 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return removeSlides(state);
   case ActionType.SET_SLIDE_BACKGROUND_IMAGE:
     return setSlideBackgroundImage(state, action.payload);
+  case ActionType.SET_SLIDE_BACKGROUND_COLOR:
+    return setSlideBackgroundColor(state, action.payload);
   case ActionType.SET_CURRENT_SLIDE:
     return setCurrentSlide(state, action.payload);
   case ActionType.SELECT_SLIDE:

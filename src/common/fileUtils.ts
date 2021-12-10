@@ -79,6 +79,23 @@ export function openImageBase64(): Promise<HTMLImageElement> {
   });
 }
 
+export function pickColor(): Promise<string> {
+  return new Promise(resolve => {
+    const input = document.createElement('input');
+    input.type = 'color';
+
+    input.addEventListener('change', (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      if (target?.value) {
+        console.log(target.value);
+        resolve(target.value);
+      }
+    });
+
+    input.click();
+  });
+}
+
 export function scaleImage(width: number, height: number): Dimensions {
   const result = { width, height };
   const aspectRatio = width / height;
