@@ -5,7 +5,7 @@ import { getSlideBackgroundStyle } from '../../../common/componentsUtils';
 import { SLIDE_HEIGHT, SLIDE_WIDTH } from '../../../model/constants';
 import { UUID } from '../../../model/uuid';
 import { RootState } from '../../../state/reducers';
-import { createNewSlide, isCurrentSlide } from '../../../model/model_utils';
+import { createNewSlide, isCurrentSlide } from '../../../model/modelUtils';
 import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state';

@@ -1,4 +1,4 @@
-import { createEditor, createNewPresentation, saveState } from '../../model/model_utils';
+import { createEditor, createNewPresentation, saveState } from '../../model/modelUtils';
 import { Editor } from '../../model/types';
 import Action, { ActionType } from '../actions/actions';
 import {

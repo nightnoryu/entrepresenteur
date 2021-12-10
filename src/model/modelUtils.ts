@@ -1,35 +1,27 @@
 import { BackgroundType, Editor, History, Presentation, Slide, SlideElement } from './types';
 import { generateUUID, UUID } from './uuid';
+import { DEFAULT_PRESENTATION_NAME, DEFAULT_SLIDE_BACKGROUND } from './constants';
 
-/**
- * Create default slide
- */
 export function createNewSlide(): Slide {
   return {
     id: generateUUID(),
     background: {
       type: BackgroundType.SOLID,
-      color: '#ffffff',
+      color: DEFAULT_SLIDE_BACKGROUND,
     },
     elements: [],
   };
 }
 
-/**
- * Create new presentation
- */
 export function createNewPresentation(): Presentation {
   return {
-    title: 'New Presentation',
+    title: DEFAULT_PRESENTATION_NAME,
     slides: [createNewSlide()],
   };
 }
 
-/**
- * Create root model object
- */
 export function createEditor(presentation: Presentation): Editor {
-  const editor = {
+  return {
     presentation,
     selectedSlideIDs:
       presentation.slides.length > 0 ? [presentation.slides[0].id] : [],
@@ -39,14 +31,8 @@ export function createEditor(presentation: Presentation): Editor {
       currentState: -1,
     },
   };
-
-  // HACK: probably need to refactor history saving
-  return saveState(editor);
 }
 
-/**
- * Returns new slide list with the element appended to the element list of the slide at the specified index
- */
 export function concatWithSelectedSlideElements(
   slides: Slide[],
   selectedSlideIDs: UUID[],
@@ -76,9 +62,6 @@ export function isCurrentElement(
   return element.id === selectedElementIDs[0];
 }
 
-/**
- * Returns ID of the new current slide upon removing all selected slides
- */
 export function selectNearestUnselectedSlide(
   slides: Slide[],
   selectedSlideIDs: UUID[],
@@ -124,9 +107,6 @@ export function saveState(editor: Editor): Editor {
   };
 }
 
-/**
- * Returns true if current state allows redoing operations
- */
 export function isRedoAvailable(history: History): boolean {
   return (
     -1 <= history.currentState && history.currentState < history.undoStack.length

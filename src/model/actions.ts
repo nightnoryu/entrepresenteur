@@ -8,9 +8,15 @@ import {
   isCurrentSlide,
   isRedoAvailable,
   moveElementOnTop,
-  saveState,
   selectNearestUnselectedSlide,
-} from './model_utils';
+} from './modelUtils';
+import {
+  DEFAULT_PRIMITIVE_FILL,
+  DEFAULT_PRIMITIVE_STROKE,
+  DEFAULT_TEXT_COLOR,
+  DEFAULT_TEXT_FONT,
+  DEFAULT_TEXT_SIZE,
+} from './constants';
 
 export function openPresentation(editor: Editor, presentation: Presentation): Editor {
   return createEditor(presentation);
@@ -178,9 +184,9 @@ export function addText(
           position,
           dimensions,
           value,
-          size: 42,
-          font: 'Calibri',
-          color: '#000000',
+          size: DEFAULT_TEXT_SIZE,
+          font: DEFAULT_TEXT_FONT,
+          color: DEFAULT_TEXT_COLOR,
         },
       ),
     },
@@ -196,14 +202,12 @@ export function setTextValue(
     value: string;
   },
 ): Editor {
-  const savedEditor = saveState(editor);
-
   return {
-    ...savedEditor,
+    ...editor,
     presentation: {
-      ...savedEditor.presentation,
-      slides: savedEditor.presentation.slides.map(slide =>
-        isCurrentSlide(slide, savedEditor.selectedSlideIDs)
+      ...editor.presentation,
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
           ? {
             ...slide,
             elements: slide.elements.map(element =>
@@ -342,8 +346,8 @@ export function addPrimitive(
           primitiveType,
           position,
           dimensions,
-          fill: '#ffffff',
-          stroke: '#000000',
+          fill: DEFAULT_PRIMITIVE_FILL,
+          stroke: DEFAULT_PRIMITIVE_STROKE,
         },
       ),
     },
@@ -495,7 +499,6 @@ export function undo(editor: Editor): Editor {
   };
 }
 
-// TODO: fix redo implementation
 export function redo(editor: Editor): Editor {
   return {
     ...editor,
