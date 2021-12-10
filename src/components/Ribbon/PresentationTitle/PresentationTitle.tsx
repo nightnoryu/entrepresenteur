@@ -31,6 +31,10 @@ function PresentationTitle({ title }: PresentationTitleProps): JSX.Element {
     }
   };
 
+  const onFocus = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.currentTarget.select();
+  };
+
   return (
     <input
       type="text"
@@ -40,6 +44,7 @@ function PresentationTitle({ title }: PresentationTitleProps): JSX.Element {
       onChange={onChange}
       onKeyDown={onKeyDown}
       onBlur={onBlur}
+      onFocus={onFocus}
     />
   );
 }
