@@ -23,12 +23,12 @@ export function removeSlides(editor: Editor): Editor {
   return saveState(editor, removeSlidesImpl(editor));
 }
 
-export function setSlideBackgroundColor(editor: Editor, color: string): Editor {
-  return saveState(editor, setSlideBackgroundColorImpl(editor, color));
-}
-
 export function setSlideBackgroundImage(editor: Editor, src: string): Editor {
   return saveState(editor, setSlideBackgroundImageImpl(editor, src));
+}
+
+export function setSlideBackgroundColor(editor: Editor, color: string): Editor {
+  return saveState(editor, setSlideBackgroundColorImpl(editor, color));
 }
 
 export function removeElements(editor: Editor): Editor {

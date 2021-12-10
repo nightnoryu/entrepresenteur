@@ -110,6 +110,15 @@ export function setSlideBackgroundImage(src: string) {
   };
 }
 
+export function setSlideBackgroundColor(color: string) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_SLIDE_BACKGROUND_COLOR,
+      payload: color,
+    });
+  };
+}
+
 export function setCurrentSlide(slideID: UUID) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
