@@ -486,13 +486,13 @@ export function undo(editor: Editor): Editor {
   return {
     ...editor,
     presentation:
-      editor.history.currentState > 0
-        ? { ...editor.history.undoStack[editor.history.currentState - 1] }
+      editor.history.currentState >= 0
+        ? { ...editor.history.undoStack[editor.history.currentState] }
         : editor.presentation,
     history: {
       ...editor.history,
       currentState:
-        editor.history.currentState > 0
+        editor.history.currentState >= 0
           ? editor.history.currentState - 1
           : editor.history.currentState,
     },
