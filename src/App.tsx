@@ -6,12 +6,13 @@ import useConfirmLeaving from './hooks/useConfirmLeaving';
 import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from './state';
-import { Presentation } from './model/types';
+import { Presentation, PrimitiveType } from './model/types';
 import { RootState } from './state/reducers';
 import { getRibbonMenuItems } from './model/menu';
 import Workspace from './components/Workspace/Workspace';
 import useAppHotkeys from './hooks/hotkeys/useAppHotkeys';
-import { openImageBase64, openPresentationJSON, savePresentationJSON } from './common/fileUtils';
+import { openImageBase64, openPresentationJSON, savePresentationJSON, scaleImage } from './common/fileUtils';
+import { DEFAULT_ELEMENT_POSITION, DEFAULT_PRIMITIVE_DIMENSIONS, DEFAULT_TEXT_DIMENSIONS } from './model/constants';
 
 type AppProps = {
   presentation: Presentation;
@@ -29,6 +30,7 @@ function App({ presentation }: AppProps): JSX.Element {
     addImage,
     undo,
     redo,
+    addPrimitive,
     removeElements,
   } = bindActionCreators(actionCreators, dispatch);
 
@@ -52,14 +54,18 @@ function App({ presentation }: AppProps): JSX.Element {
   const addTextAction = () => {
     const text = prompt('Enter text') || '';
     if (text !== '') {
-      addText({ x: 0, y: 0 }, { width: 0, height: 0 }, text);
+      addText(DEFAULT_ELEMENT_POSITION, DEFAULT_TEXT_DIMENSIONS, text);
     }
   };
 
   const addImageAction = () => {
     openImageBase64()
-      .then(image => addImage({ x: 0, y: 0 }, { width: image.width, height: image.height }, image.src))
+      .then(image => addImage(DEFAULT_ELEMENT_POSITION, scaleImage(image.width, image.height), image.src))
       .catch(error => alert(error));
+  };
+
+  const addPrimitiveAction = (type: PrimitiveType) => {
+    addPrimitive(DEFAULT_ELEMENT_POSITION, DEFAULT_PRIMITIVE_DIMENSIONS, type);
   };
 
   const addSlideAction = () => addSlide();
@@ -91,6 +97,7 @@ function App({ presentation }: AppProps): JSX.Element {
     savePresentationAction,
     addTextAction,
     addImageAction,
+    addPrimitiveAction,
     addSlideAction,
     removeSlidesAction,
     setSlideBackgroundImageAction,

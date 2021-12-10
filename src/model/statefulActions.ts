@@ -1,7 +1,8 @@
-import { Dimensions, Editor, Position } from './types';
+import { Dimensions, Editor, Position, PrimitiveType } from './types';
 import { saveState } from './modelUtils';
 import {
   addImage as addImageImpl,
+  addPrimitive as addPrimitiveImpl,
   addSlide as addSlideImpl,
   addText as addTextImpl,
   moveElements as moveElementsImpl,
@@ -55,6 +56,14 @@ export function addImage(editor: Editor, payload: {
   src: string,
 }): Editor {
   return saveState(editor, addImageImpl(editor, payload));
+}
+
+export function addPrimitive(editor: Editor, payload: {
+  position: Position,
+  dimensions: Dimensions,
+  primitiveType: PrimitiveType,
+}): Editor {
+  return saveState(editor, addPrimitiveImpl(editor, payload));
 }
 
 export function moveElements(editor: Editor, positionDiff: Position): Editor {

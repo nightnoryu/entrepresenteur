@@ -1,4 +1,5 @@
-import { Presentation } from '../model/types';
+import { Dimensions, Presentation } from '../model/types';
+import { DEFAULT_IMAGE_WIDTH } from '../model/constants';
 
 function openFile(): Promise<File> {
   return new Promise(resolve => {
@@ -76,4 +77,16 @@ export function openImageBase64(): Promise<HTMLImageElement> {
         reader.readAsDataURL(file);
       });
   });
+}
+
+export function scaleImage(width: number, height: number): Dimensions {
+  const result = { width, height };
+  const aspectRatio = width / height;
+
+  if (result.width > DEFAULT_IMAGE_WIDTH) {
+    result.width = DEFAULT_IMAGE_WIDTH;
+    result.height = result.width / aspectRatio;
+  }
+
+  return result;
 }
