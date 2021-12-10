@@ -8,7 +8,7 @@ function useHotkeyCtrlShift(
   useEventListener('keydown', (e: Event) => {
     const event = e as KeyboardEvent;
 
-    if (event.ctrlKey && event.shiftKey && event.key === key) {
+    if (event.ctrlKey && event.shiftKey && event.key === key.toUpperCase()) {
       event.preventDefault();
       handler(event);
     }

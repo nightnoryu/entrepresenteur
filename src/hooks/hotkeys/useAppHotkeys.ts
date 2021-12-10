@@ -1,4 +1,5 @@
 import useHotkeyCtrl from './useHotkeyCtrl';
+import useHotkeyCtrlShift from './useHotkeyCtrlShift';
 
 type HotkeyAction = () => void;
 
@@ -13,7 +14,7 @@ function useAppHotkeys(
   useHotkeyCtrl('o', openPresentation);
   useHotkeyCtrl('m', newPresentation);
   useHotkeyCtrl('z', undo);
-  useHotkeyCtrl('y', redo);
+  useHotkeyCtrlShift('z', redo);
 }
 
 export default useAppHotkeys;
