@@ -3,22 +3,24 @@ import { Editor } from '../../model/types';
 import Action, { ActionType } from '../actions/actions';
 import {
   addImage,
-  addSlide,
   addText,
   openPresentation,
   redo,
-  removeElements,
-  removeSlides,
   selectElement,
   selectSlide,
   setCurrentSlide,
   setPresentationTitle,
-  setSlideBackgroundImage,
   setTextValue,
   undo,
   unselectElement,
 } from '../../model/actions';
-import { moveElements } from '../../model/statefulActions';
+import {
+  addSlide,
+  moveElements,
+  removeElements,
+  removeSlides,
+  setSlideBackgroundImage,
+} from '../../model/statefulActions';
 
 const initialState = createEditor(createNewPresentation());
 
