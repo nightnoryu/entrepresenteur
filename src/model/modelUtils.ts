@@ -1,4 +1,4 @@
-import { BackgroundType, Editor, History, Presentation, Slide, SlideElement } from './types';
+import { BackgroundType, Editor, Presentation, Slide, SlideElement } from './types';
 import { generateUUID, UUID } from './uuid';
 import { DEFAULT_PRESENTATION_NAME, DEFAULT_SLIDE_BACKGROUND } from './constants';
 
@@ -27,8 +27,8 @@ export function createEditor(presentation: Presentation): Editor {
       presentation.slides.length > 0 ? [presentation.slides[0].id] : [],
     selectedElementIDs: [],
     history: {
-      undoStack: [],
-      currentState: -1,
+      pastStates: [],
+      futureStates: [],
     },
   };
 }
@@ -92,21 +92,12 @@ export function moveElementOnTop(elements: SlideElement[], elementID: UUID): Sli
   return elements;
 }
 
-export function saveState(editor: Editor): Editor {
+export function saveState(editor: Editor, newEditor: Editor): Editor {
   return {
-    ...editor,
+    ...newEditor,
     history: {
-      ...editor.history,
-      undoStack: editor.history.currentState < editor.history.undoStack.length - 1
-        ? editor.history.undoStack
-          .slice(editor.history.currentState, -1)
-          .concat({ ...editor.presentation })
-        : editor.history.undoStack.concat({ ...editor.presentation }),
-      currentState: editor.history.currentState + 1,
+      pastStates: [...newEditor.history.pastStates, editor.presentation],
+      futureStates: [],
     },
   };
-}
-
-export function isRedoAvailable(history: History): boolean {
-  return -1 <= history.currentState && history.currentState < history.undoStack.length - 1;
 }

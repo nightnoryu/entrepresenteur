@@ -80,8 +80,8 @@ export type Presentation = {
 };
 
 export type History = {
-  undoStack: Presentation[];
-  currentState: number;
+  pastStates: Presentation[];
+  futureStates: Presentation[];
 };
 
 export type Editor = {

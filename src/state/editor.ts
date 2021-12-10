@@ -119,8 +119,8 @@ const editor: Editor = {
     'slide1',
   ],
   history: {
-    undoStack: [],
-    currentState: -1,
+    pastStates: [],
+    futureStates: [],
   },
 };
 

@@ -15,23 +15,23 @@ import {
 import { UUID } from './uuid';
 
 export function addSlide(editor: Editor): Editor {
-  return addSlideImpl(saveState(editor));
+  return saveState(editor, addSlideImpl(editor));
 }
 
 export function removeSlides(editor: Editor): Editor {
-  return removeSlidesImpl(saveState(editor));
+  return saveState(editor, removeSlidesImpl(editor));
 }
 
 export function setSlideBackgroundColor(editor: Editor, color: string): Editor {
-  return setSlideBackgroundColorImpl(saveState(editor), color);
+  return saveState(editor, setSlideBackgroundColorImpl(editor, color));
 }
 
 export function setSlideBackgroundImage(editor: Editor, src: string): Editor {
-  return setSlideBackgroundImageImpl(saveState(editor), src);
+  return saveState(editor, setSlideBackgroundImageImpl(editor, src));
 }
 
 export function removeElements(editor: Editor): Editor {
-  return removeElementsImpl(saveState(editor));
+  return saveState(editor, removeElementsImpl(editor));
 }
 
 export function addText(editor: Editor, payload: {
@@ -39,14 +39,14 @@ export function addText(editor: Editor, payload: {
   dimensions: Dimensions;
   value: string;
 }): Editor {
-  return addTextImpl(saveState(editor), payload);
+  return saveState(editor, addTextImpl(editor, payload));
 }
 
 export function setTextValue(editor: Editor, payload: {
   elementID: UUID;
   value: string;
 }): Editor {
-  return setTextValueImpl(saveState(editor), payload);
+  return saveState(editor, setTextValueImpl(editor, payload));
 }
 
 export function addImage(editor: Editor, payload: {
@@ -54,13 +54,13 @@ export function addImage(editor: Editor, payload: {
   dimensions: Dimensions,
   src: string,
 }): Editor {
-  return addImageImpl(saveState(editor), payload);
+  return saveState(editor, addImageImpl(editor, payload));
 }
 
 export function moveElements(editor: Editor, positionDiff: Position): Editor {
-  return moveElementsImpl(saveState(editor), positionDiff);
+  return saveState(editor, moveElementsImpl(editor, positionDiff));
 }
 
 export function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
-  return resizeElementImpl(saveState(editor), dimensions);
+  return saveState(editor, resizeElementImpl(editor, dimensions));
 }

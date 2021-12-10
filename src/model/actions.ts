@@ -6,7 +6,6 @@ import {
   createNewSlide,
   isCurrentElement,
   isCurrentSlide,
-  isRedoAvailable,
   moveElementOnTop,
   selectNearestUnselectedSlide,
 } from './modelUtils';
@@ -483,35 +482,29 @@ export function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
 }
 
 export function undo(editor: Editor): Editor {
-  return {
-    ...editor,
-    presentation:
-      editor.history.currentState >= 0
-        ? { ...editor.history.undoStack[editor.history.currentState] }
-        : editor.presentation,
-    history: {
-      ...editor.history,
-      currentState:
-        editor.history.currentState >= 0
-          ? editor.history.currentState - 1
-          : editor.history.currentState,
-    },
-  };
+  return editor.history.pastStates.length > 0
+    ? {
+      ...editor,
+      presentation: editor.history.pastStates[editor.history.pastStates.length - 1],
+      history: {
+        pastStates: editor.history.pastStates.slice(0, editor.history.pastStates.length - 1),
+        futureStates: [editor.presentation, ...editor.history.futureStates],
+      },
+    }
+    : editor;
 }
 
 export function redo(editor: Editor): Editor {
-  return {
-    ...editor,
-    presentation: isRedoAvailable(editor.history)
-      ? { ...editor.history.undoStack[editor.history.currentState + 1] }
-      : editor.presentation,
-    history: {
-      ...editor.history,
-      currentState: isRedoAvailable(editor.history)
-        ? editor.history.currentState + 1
-        : editor.history.currentState,
-    },
-  };
+  return editor.history.futureStates.length > 0
+    ? {
+      ...editor,
+      presentation: editor.history.futureStates[0],
+      history: {
+        pastStates: [...editor.history.pastStates, editor.presentation],
+        futureStates: editor.history.futureStates.slice(1),
+      },
+    }
+    : editor;
 }
 
 export function exportPresentation(presentation: Presentation): void {
