@@ -1,6 +1,9 @@
-// Presentation
-
 import { Dimensions, Position } from './types';
+
+// Editor
+export const MAX_HISTORY_ENTRIES = 50; // TODO: history optimizations
+
+// Presentation
 
 export const DEFAULT_PRESENTATION_NAME = 'New Presentation';
 
@@ -26,10 +29,12 @@ export const DEFAULT_TEXT_FONT = 'Comic Sans MS';
 export const DEFAULT_TEXT_COLOR = '#000000';
 export const DEFAULT_TEXT_SIZE = 42;
 
-export const DEFAULT_PRIMITIVE_FILL = '#ffffff';
-export const DEFAULT_PRIMITIVE_STROKE = '#000000';
+export const DEFAULT_IMAGE_WIDTH = SLIDE_WIDTH / 2;
+export const DEFAULT_IMAGE_HEIGHT = SLIDE_HEIGHT / 2;
 
 export const DEFAULT_PRIMITIVE_DIMENSIONS: Dimensions = {
   width: 200,
   height: 200,
 };
+export const DEFAULT_PRIMITIVE_FILL = '#ffffff';
+export const DEFAULT_PRIMITIVE_STROKE = '#000000';

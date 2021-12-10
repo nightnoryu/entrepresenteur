@@ -11,7 +11,7 @@ import { RootState } from './state/reducers';
 import { getRibbonMenuItems } from './model/menu';
 import Workspace from './components/Workspace/Workspace';
 import useAppHotkeys from './hooks/hotkeys/useAppHotkeys';
-import { openImageBase64, openPresentationJSON, savePresentationJSON } from './common/fileUtils';
+import { openImageBase64, openPresentationJSON, savePresentationJSON, scaleImage } from './common/fileUtils';
 import { DEFAULT_ELEMENT_POSITION, DEFAULT_PRIMITIVE_DIMENSIONS, DEFAULT_TEXT_DIMENSIONS } from './model/constants';
 
 type AppProps = {
@@ -60,7 +60,7 @@ function App({ presentation }: AppProps): JSX.Element {
 
   const addImageAction = () => {
     openImageBase64()
-      .then(image => addImage(DEFAULT_ELEMENT_POSITION, { width: image.width, height: image.height }, image.src))
+      .then(image => addImage(DEFAULT_ELEMENT_POSITION, scaleImage(image.width, image.height), image.src))
       .catch(error => alert(error));
   };
 
