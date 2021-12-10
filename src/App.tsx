@@ -6,7 +6,7 @@ import useConfirmLeaving from './hooks/useConfirmLeaving';
 import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from './state';
-import { Presentation } from './model/types';
+import { Presentation, PrimitiveType } from './model/types';
 import { RootState } from './state/reducers';
 import { getRibbonMenuItems } from './model/menu';
 import Workspace from './components/Workspace/Workspace';
@@ -29,6 +29,7 @@ function App({ presentation }: AppProps): JSX.Element {
     addImage,
     undo,
     redo,
+    addPrimitive,
     removeElements,
   } = bindActionCreators(actionCreators, dispatch);
 
@@ -62,6 +63,10 @@ function App({ presentation }: AppProps): JSX.Element {
       .catch(error => alert(error));
   };
 
+  const addPrimitiveAction = (type: PrimitiveType) => {
+    addPrimitive({ x: 0, y: 0 }, { width: 100, height: 100 }, type);
+  };
+
   const addSlideAction = () => addSlide();
   const removeSlidesAction = () => removeSlides();
 
@@ -91,6 +96,7 @@ function App({ presentation }: AppProps): JSX.Element {
     savePresentationAction,
     addTextAction,
     addImageAction,
+    addPrimitiveAction,
     addSlideAction,
     removeSlidesAction,
     setSlideBackgroundImageAction,

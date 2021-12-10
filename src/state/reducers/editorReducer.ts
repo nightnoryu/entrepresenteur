@@ -13,6 +13,7 @@ import {
 } from '../../model/actions';
 import {
   addImage,
+  addPrimitive,
   addSlide,
   addText,
   moveElements,
@@ -59,6 +60,8 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return addText(state, action.payload);
   case ActionType.ADD_IMAGE:
     return addImage(state, action.payload);
+  case ActionType.ADD_PRIMITIVE:
+    return addPrimitive(state, action.payload);
   case ActionType.UNDO:
     return undo(state);
   case ActionType.REDO:

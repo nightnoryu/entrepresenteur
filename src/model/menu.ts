@@ -1,6 +1,8 @@
 import { DropdownMenuItemType, MenuItemType } from '../components/Ribbon/RibbonTypes';
+import { PrimitiveType } from './types';
 
 type MenuAction = () => void;
+type AddPrimitiveMenuAction = (type: PrimitiveType) => void;
 
 export function getRibbonMenuItems(
   newPresentation: MenuAction,
@@ -8,6 +10,7 @@ export function getRibbonMenuItems(
   savePresentation: MenuAction,
   addText: MenuAction,
   addImage: MenuAction,
+  addPrimitive: AddPrimitiveMenuAction,
   addSlide: MenuAction,
   removeSlide: MenuAction,
   setSlideBackgroundImage: MenuAction,
@@ -133,19 +136,19 @@ export function getRibbonMenuItems(
             {
               type: MenuItemType.MenuButton,
               label: 'Rectangle',
-              action: () => console.log('Rectangle'),
+              action: () => addPrimitive(PrimitiveType.RECTANGLE),
               icon: 'rectangle',
             },
             {
               type: MenuItemType.MenuButton,
               label: 'Triangle',
-              action: () => console.log('Triangle'),
+              action: () => addPrimitive(PrimitiveType.TRIANGLE),
               icon: 'change_history',
             },
             {
               type: MenuItemType.MenuButton,
-              label: 'Circle',
-              action: () => console.log('Circle'),
+              label: 'Ellipse',
+              action: () => addPrimitive(PrimitiveType.ELLIPSE),
               icon: 'circle',
             },
           ],

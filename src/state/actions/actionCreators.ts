@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import Action, { ActionType } from './actions';
 import { UUID } from '../../model/uuid';
-import { Dimensions, Position, Presentation } from '../../model/types';
+import { Dimensions, Position, Presentation, PrimitiveType } from '../../model/types';
 
 export function openPresentation(presentation: Presentation) {
   return (dispatch: Dispatch<Action>): void => {
@@ -149,6 +149,19 @@ export function addImage(position: Position, dimensions: Dimensions, src: string
         position,
         dimensions,
         src,
+      },
+    });
+  };
+}
+
+export function addPrimitive(position: Position, dimensions: Dimensions, primitiveType: PrimitiveType) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.ADD_PRIMITIVE,
+      payload: {
+        position,
+        dimensions,
+        primitiveType,
       },
     });
   };
