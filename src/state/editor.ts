@@ -1,5 +1,4 @@
 import { BackgroundType, Editor, ElementType, PrimitiveType } from '../model/types';
-import { saveState } from '../model/model_utils';
 
 const editor: Editor = {
   presentation: {
@@ -120,11 +119,11 @@ const editor: Editor = {
     'slide1',
   ],
   history: {
-    undoStack: [],
-    currentState: -1,
+    pastStates: [],
+    futureStates: [],
   },
 };
 
 export default function getEditor(): Editor {
-  return saveState(editor);
+  return editor;
 }

@@ -6,11 +6,16 @@ import {
   createNewSlide,
   isCurrentElement,
   isCurrentSlide,
-  isRedoAvailable,
   moveElementOnTop,
-  saveState,
   selectNearestUnselectedSlide,
-} from './model_utils';
+} from './modelUtils';
+import {
+  DEFAULT_PRIMITIVE_FILL,
+  DEFAULT_PRIMITIVE_STROKE,
+  DEFAULT_TEXT_COLOR,
+  DEFAULT_TEXT_FONT,
+  DEFAULT_TEXT_SIZE,
+} from './constants';
 
 export function openPresentation(editor: Editor, presentation: Presentation): Editor {
   return createEditor(presentation);
@@ -178,9 +183,9 @@ export function addText(
           position,
           dimensions,
           value,
-          size: 42,
-          font: 'Calibri',
-          color: '#000000',
+          size: DEFAULT_TEXT_SIZE,
+          font: DEFAULT_TEXT_FONT,
+          color: DEFAULT_TEXT_COLOR,
         },
       ),
     },
@@ -196,14 +201,12 @@ export function setTextValue(
     value: string;
   },
 ): Editor {
-  const savedEditor = saveState(editor);
-
   return {
-    ...savedEditor,
+    ...editor,
     presentation: {
-      ...savedEditor.presentation,
-      slides: savedEditor.presentation.slides.map(slide =>
-        isCurrentSlide(slide, savedEditor.selectedSlideIDs)
+      ...editor.presentation,
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
           ? {
             ...slide,
             elements: slide.elements.map(element =>
@@ -342,8 +345,8 @@ export function addPrimitive(
           primitiveType,
           position,
           dimensions,
-          fill: '#ffffff',
-          stroke: '#000000',
+          fill: DEFAULT_PRIMITIVE_FILL,
+          stroke: DEFAULT_PRIMITIVE_STROKE,
         },
       ),
     },
@@ -479,36 +482,29 @@ export function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
 }
 
 export function undo(editor: Editor): Editor {
-  return {
-    ...editor,
-    presentation:
-      editor.history.currentState > 0
-        ? { ...editor.history.undoStack[editor.history.currentState - 1] }
-        : editor.presentation,
-    history: {
-      ...editor.history,
-      currentState:
-        editor.history.currentState > 0
-          ? editor.history.currentState - 1
-          : editor.history.currentState,
-    },
-  };
+  return editor.history.pastStates.length > 0
+    ? {
+      ...editor,
+      presentation: editor.history.pastStates[editor.history.pastStates.length - 1],
+      history: {
+        pastStates: editor.history.pastStates.slice(0, editor.history.pastStates.length - 1),
+        futureStates: [editor.presentation, ...editor.history.futureStates],
+      },
+    }
+    : editor;
 }
 
-// TODO: fix redo implementation
 export function redo(editor: Editor): Editor {
-  return {
-    ...editor,
-    presentation: isRedoAvailable(editor.history)
-      ? { ...editor.history.undoStack[editor.history.currentState + 1] }
-      : editor.presentation,
-    history: {
-      ...editor.history,
-      currentState: isRedoAvailable(editor.history)
-        ? editor.history.currentState + 1
-        : editor.history.currentState,
-    },
-  };
+  return editor.history.futureStates.length > 0
+    ? {
+      ...editor,
+      presentation: editor.history.futureStates[0],
+      history: {
+        pastStates: [...editor.history.pastStates, editor.presentation],
+        futureStates: editor.history.futureStates.slice(1),
+      },
+    }
+    : editor;
 }
 
 export function exportPresentation(presentation: Presentation): void {

@@ -1,24 +1,27 @@
-import { createEditor, createNewPresentation, saveState } from '../../model/model_utils';
+import { createEditor, createNewPresentation } from '../../model/modelUtils';
 import { Editor } from '../../model/types';
 import Action, { ActionType } from '../actions/actions';
+import {
+  openPresentation,
+  redo,
+  selectElement,
+  selectSlide,
+  setCurrentSlide,
+  setPresentationTitle,
+  undo,
+  unselectElement,
+} from '../../model/actions';
 import {
   addImage,
   addSlide,
   addText,
   moveElements,
-  openPresentation,
-  redo,
   removeElements,
   removeSlides,
-  selectElement,
-  selectSlide,
-  setCurrentSlide,
-  setPresentationTitle,
+  resizeElement,
   setSlideBackgroundImage,
   setTextValue,
-  undo,
-  unselectElement,
-} from '../../model/actions';
+} from '../../model/statefulActions';
 
 const initialState = createEditor(createNewPresentation());
 
@@ -36,8 +39,10 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return selectElement(state, action.payload);
   case ActionType.UNSELECT_ELEMENT:
     return unselectElement(state, action.payload);
-  case ActionType.MOVE_ELEMENT:
+  case ActionType.MOVE_ELEMENTS:
     return moveElements(state, action.payload);
+  case ActionType.RESIZE_ELEMENT:
+    return resizeElement(state, action.payload);
   case ActionType.REMOVE_ELEMENTS:
     return removeElements(state);
   case ActionType.ADD_SLIDE:
@@ -54,8 +59,6 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return addText(state, action.payload);
   case ActionType.ADD_IMAGE:
     return addImage(state, action.payload);
-  case ActionType.SAVE_STATE:
-    return saveState(state);
   case ActionType.UNDO:
     return undo(state);
   case ActionType.REDO:

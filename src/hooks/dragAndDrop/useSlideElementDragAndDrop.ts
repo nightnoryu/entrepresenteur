@@ -27,7 +27,9 @@ function useElementDragAndDrop<T extends SVGElement>(
   };
 
   const onFinish = () => {
-    moveElements(delta);
+    if (delta.x !== 0 && delta.y !== 0) {
+      moveElements(delta);
+    }
     setDelta({ x: 0, y: 0 });
   };
 
