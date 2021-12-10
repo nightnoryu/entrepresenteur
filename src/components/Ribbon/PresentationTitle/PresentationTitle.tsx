@@ -15,19 +15,19 @@ function PresentationTitle({ title }: PresentationTitleProps): JSX.Element {
 
   const [editingValue, setEditingValue] = useState(title);
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => setEditingValue(event.target.value);
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => setEditingValue(event.currentTarget.value);
 
-  const onKeyDown = (event: any) => {
+  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      event.target.blur();
+      event.currentTarget.blur();
     }
   };
 
   const onBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value.trim() === '') {
+    if (event.currentTarget.value.trim() === '') {
       setEditingValue(title);
     } else {
-      changePresentationTitle(event.target.value);
+      changePresentationTitle(event.currentTarget.value);
     }
   };
 
