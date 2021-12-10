@@ -5,7 +5,6 @@ import {
   addImage,
   addSlide,
   addText,
-  moveElements,
   openPresentation,
   redo,
   removeElements,
@@ -19,6 +18,7 @@ import {
   undo,
   unselectElement,
 } from '../../model/actions';
+import { moveElements } from '../../model/statefulActions';
 
 const initialState = createEditor(createNewPresentation());
 

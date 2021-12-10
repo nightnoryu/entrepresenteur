@@ -100,7 +100,7 @@ export function saveState(editor: Editor): Editor {
       undoStack: isRedoAvailable(editor.history)
         ? editor.history.undoStack
           .slice(editor.history.currentState, -1)
-          .concat(editor.presentation)
+          .concat({ ...editor.presentation })
         : editor.history.undoStack.concat({ ...editor.presentation }),
       currentState: editor.history.currentState + 1,
     },
@@ -108,7 +108,5 @@ export function saveState(editor: Editor): Editor {
 }
 
 export function isRedoAvailable(history: History): boolean {
-  return (
-    -1 <= history.currentState && history.currentState < history.undoStack.length
-  );
+  return 0 <= history.currentState && history.currentState < history.undoStack.length;
 }
