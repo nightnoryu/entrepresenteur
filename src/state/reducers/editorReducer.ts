@@ -2,24 +2,25 @@ import { createEditor, createNewPresentation } from '../../model/modelUtils';
 import { Editor } from '../../model/types';
 import Action, { ActionType } from '../actions/actions';
 import {
-  addImage,
-  addText,
   openPresentation,
   redo,
   selectElement,
   selectSlide,
   setCurrentSlide,
   setPresentationTitle,
-  setTextValue,
   undo,
   unselectElement,
 } from '../../model/actions';
 import {
+  addImage,
   addSlide,
+  addText,
   moveElements,
   removeElements,
   removeSlides,
+  resizeElement,
   setSlideBackgroundImage,
+  setTextValue,
 } from '../../model/statefulActions';
 
 const initialState = createEditor(createNewPresentation());
@@ -38,8 +39,10 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return selectElement(state, action.payload);
   case ActionType.UNSELECT_ELEMENT:
     return unselectElement(state, action.payload);
-  case ActionType.MOVE_ELEMENT:
+  case ActionType.MOVE_ELEMENTS:
     return moveElements(state, action.payload);
+  case ActionType.RESIZE_ELEMENT:
+    return resizeElement(state, action.payload);
   case ActionType.REMOVE_ELEMENTS:
     return removeElements(state);
   case ActionType.ADD_SLIDE:

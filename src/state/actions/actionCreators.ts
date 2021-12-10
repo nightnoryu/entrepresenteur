@@ -62,8 +62,17 @@ export function unselectElement(elementID: UUID) {
 export function moveElements(positionDiff: Position) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
-      type: ActionType.MOVE_ELEMENT,
+      type: ActionType.MOVE_ELEMENTS,
       payload: positionDiff,
+    });
+  };
+}
+
+export function resizeElement(dimensions: Dimensions) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.RESIZE_ELEMENT,
+      payload: dimensions,
     });
   };
 }
