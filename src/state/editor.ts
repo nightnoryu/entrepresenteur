@@ -1,5 +1,4 @@
 import { BackgroundType, Editor, ElementType, PrimitiveType } from '../model/types';
-import { saveState } from '../model/modelUtils';
 
 const editor: Editor = {
   presentation: {
@@ -126,5 +125,5 @@ const editor: Editor = {
 };
 
 export default function getEditor(): Editor {
-  return saveState(editor);
+  return editor;
 }

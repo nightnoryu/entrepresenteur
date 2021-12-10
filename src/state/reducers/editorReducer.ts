@@ -1,4 +1,4 @@
-import { createEditor, createNewPresentation, saveState } from '../../model/modelUtils';
+import { createEditor, createNewPresentation } from '../../model/modelUtils';
 import { Editor } from '../../model/types';
 import Action, { ActionType } from '../actions/actions';
 import {
@@ -54,8 +54,6 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return addText(state, action.payload);
   case ActionType.ADD_IMAGE:
     return addImage(state, action.payload);
-  case ActionType.SAVE_STATE:
-    return saveState(state);
   case ActionType.UNDO:
     return undo(state);
   case ActionType.REDO:

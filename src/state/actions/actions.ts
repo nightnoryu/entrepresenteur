@@ -14,7 +14,6 @@ export enum ActionType {
   SELECT_SLIDE,
   ADD_TEXT,
   ADD_IMAGE,
-  SAVE_STATE,
   UNDO,
   REDO,
 }
