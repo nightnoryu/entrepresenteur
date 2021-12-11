@@ -40,8 +40,8 @@ export function getSelectedSVGElementProperties(element: SlideElement, isSelecte
 
 export function getResizeAnchorProperties(element: SlideElement) {
   return {
-    x: element.position.x + element.dimensions.width,
-    y: element.position.y + element.dimensions.height,
+    x: element.position.x + element.dimensions.width - 5,
+    y: element.position.y + element.dimensions.height - 5,
     width: 10,
     height: 10,
   };

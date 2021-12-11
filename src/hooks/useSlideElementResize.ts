@@ -28,7 +28,6 @@ function useSlideElementResize(
 
   const onFinish = () => {
     if (delta.width !== 0 && delta.height !== 0) {
-      console.log('resized');
       resizeElement(element.id, {
         width: element.dimensions.width + delta.width,
         height: element.dimensions.height + delta.height,
