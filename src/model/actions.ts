@@ -457,7 +457,16 @@ export function moveElements(
   };
 }
 
-export function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
+export function resizeElement(
+  editor: Editor,
+  {
+    elementID,
+    dimensions,
+  }: {
+    elementID: UUID;
+    dimensions: Dimensions;
+  },
+): Editor {
   return {
     ...editor,
     presentation: {
@@ -467,7 +476,7 @@ export function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
           ? {
             ...slide,
             elements: slide.elements.map(element =>
-              isCurrentElement(element, editor.selectedElementIDs)
+              element.id === elementID
                 ? {
                   ...element,
                   dimensions,

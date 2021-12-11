@@ -37,3 +37,12 @@ export function getSelectedSVGElementProperties(element: SlideElement, isSelecte
     strokeOpacity: '0',
   };
 }
+
+export function getResizeAnchorProperties(element: SlideElement) {
+  return {
+    x: element.position.x + element.dimensions.width,
+    y: element.position.y + element.dimensions.height,
+    width: 10,
+    height: 10,
+  };
+}
