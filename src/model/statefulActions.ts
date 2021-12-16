@@ -70,6 +70,9 @@ export function moveElements(editor: Editor, positionDiff: Position): Editor {
   return saveState(editor, moveElementsImpl(editor, positionDiff));
 }
 
-export function resizeElement(editor: Editor, dimensions: Dimensions): Editor {
-  return saveState(editor, resizeElementImpl(editor, dimensions));
+export function resizeElement(editor: Editor, payload: {
+  elementID: UUID;
+  dimensions: Dimensions;
+}): Editor {
+  return saveState(editor, resizeElementImpl(editor, payload));
 }

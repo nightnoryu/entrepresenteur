@@ -68,11 +68,14 @@ export function moveElements(positionDiff: Position) {
   };
 }
 
-export function resizeElement(dimensions: Dimensions) {
+export function resizeElement(elementID: UUID, dimensions: Dimensions) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
       type: ActionType.RESIZE_ELEMENT,
-      payload: dimensions,
+      payload: {
+        elementID,
+        dimensions,
+      },
     });
   };
 }
