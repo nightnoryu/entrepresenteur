@@ -13,6 +13,7 @@ function useSlideElementActions<T extends SVGElement>(
   isSelected: boolean,
   selectElement: typeof selectElementCreator,
   unselectElement: typeof unselectElementCreator,
+  resizeAnchorRef?: React.RefObject<T>,
 ): void {
   useEventListener('mousedown', () => {
     if (!isSelected) {
@@ -24,7 +25,7 @@ function useSlideElementActions<T extends SVGElement>(
     if (isSelected && !event.ctrlKey) {
       unselectElement(element.id);
     }
-  });
+  }, resizeAnchorRef ? [resizeAnchorRef] : undefined);
 }
 
 export default useSlideElementActions;

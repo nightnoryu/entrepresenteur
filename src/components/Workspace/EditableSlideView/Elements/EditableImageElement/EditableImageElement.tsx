@@ -19,12 +19,12 @@ function EditableImageElement({ element, scaleFactor, isSelected }: EditableImag
   const dispatch = useDispatch();
   const { selectElement, unselectElement, moveElements, resizeElement } = bindActionCreators(actionCreators, dispatch);
 
-  const ref = useRef(null);
-  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement);
-  const delta = useSlideElementDragAndDrop(ref, element, scaleFactor, moveElements);
-
   const resizeAnchorRef = useRef(null);
   useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
+
+  const ref = useRef(null);
+  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, resizeAnchorRef);
+  const delta = useSlideElementDragAndDrop(ref, element, scaleFactor, moveElements);
 
   return (
     <>
@@ -38,12 +38,15 @@ function EditableImageElement({ element, scaleFactor, isSelected }: EditableImag
         style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
         ref={ref}
       />
-      <rect
-        ref={resizeAnchorRef}
-        {...getResizeAnchorProperties(element)}
-        className={styles.resizeAnchor}
-        style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
-      />
+      {
+        isSelected &&
+          <rect
+              ref={resizeAnchorRef}
+              {...getResizeAnchorProperties(element)}
+              className={styles.resizeAnchor}
+              style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
+          />
+      }
     </>
   );
 }
