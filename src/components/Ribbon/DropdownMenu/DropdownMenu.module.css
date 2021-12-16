@@ -1,5 +1,8 @@
 .menu
 {
   display: flex;
+
+  height: 30%;
+
   margin-top: 5px;
 }
