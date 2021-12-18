@@ -25,7 +25,7 @@ const editor: Editor = {
             value: 'Sample',
             color: '#000000',
             font: 'Calibri',
-            size: 42,
+            size: 44,
           },
           {
             id: 'element2',
@@ -108,7 +108,7 @@ const editor: Editor = {
             value: 'Font props test',
             color: '#ff0000',
             font: 'Consolas',
-            size: 42,
+            size: 44,
           },
         ],
       },
