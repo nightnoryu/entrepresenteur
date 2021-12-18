@@ -53,7 +53,7 @@ export function setTextFont(elementID: UUID, font: string) {
   };
 }
 
-export function setTextSize(elementID: UUID, size: string) {
+export function setTextSize(elementID: UUID, size: number) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
       type: ActionType.SET_TEXT_SIZE,

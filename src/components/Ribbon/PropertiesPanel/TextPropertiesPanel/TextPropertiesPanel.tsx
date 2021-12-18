@@ -21,6 +21,11 @@ function TextPropertiesPanel({ currentElementID }: TextPropertiesPanelProps): JS
     setTextFont(currentElementID, event.currentTarget.value);
   };
 
+  const onSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const size = parseInt(event.currentTarget.value);
+    setTextSize(currentElementID, size);
+  };
+
   return (
     <ul className={styles.textPropertiesPanel}>
       <li className={styles.panelElement}>
@@ -39,7 +44,23 @@ function TextPropertiesPanel({ currentElementID }: TextPropertiesPanelProps): JS
           ))}
         </select>
       </li>
-      <li className={styles.panelElement}>Size</li>
+
+      <li className={styles.panelElement}>
+        <select
+          name="size"
+          className={styles.sizeSelection}
+          onChange={onSizeChange}
+        >
+          {textProps.sizes.map(sizeValue => (
+            <option
+              key={sizeValue}
+              value={sizeValue}
+            >
+              {sizeValue}
+            </option>
+          ))}
+        </select>
+      </li>
     </ul>
   );
 }

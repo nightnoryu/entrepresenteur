@@ -11,7 +11,8 @@
   margin: 0 10px 0;
 }
 
-.fontSelection
+.fontSelection,
+.sizeSelection
 {
   width: 200px;
 
