@@ -20,12 +20,13 @@ type EditablePrimitiveElementProps = {
   parentRef: React.RefObject<DocumentAndElementEventHandlers>;
 }
 
-function EditablePrimitiveElement({
-                                    element,
-                                    scaleFactor,
-                                    isSelected,
-                                    parentRef,
-                                  }: EditablePrimitiveElementProps): JSX.Element {
+function EditablePrimitiveElement(
+  {
+    element,
+    scaleFactor,
+    isSelected,
+    parentRef,
+  }: EditablePrimitiveElementProps): JSX.Element {
   const dispatch = useDispatch();
   const { selectElement, unselectElement, moveElements, resizeElement } = bindActionCreators(actionCreators, dispatch);
 
