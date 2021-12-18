@@ -11,15 +11,16 @@ type EditableTextElementProps = {
   element: TextElement;
   scaleFactor: number;
   isSelected: boolean;
+  parentRef: React.RefObject<DocumentAndElementEventHandlers>;
 }
 
-function EditableTextElement({ element, scaleFactor, isSelected }: EditableTextElementProps): JSX.Element {
+function EditableTextElement({ element, scaleFactor, isSelected, parentRef }: EditableTextElementProps): JSX.Element {
   const dispatch = useDispatch();
   const { selectElement, unselectElement, moveElements, setTextValue } = bindActionCreators(actionCreators, dispatch);
 
   const ref = useRef(null);
 
-  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement);
+  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef);
   const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
 
   useDoubleClick(ref, () => {

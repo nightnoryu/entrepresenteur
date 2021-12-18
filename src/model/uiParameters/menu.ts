@@ -1,5 +1,5 @@
-import { DropdownMenuItemType, MenuItemType } from '../components/Ribbon/RibbonTypes';
-import { PrimitiveType } from './types';
+import { DropdownMenuItemType, MenuItemType } from '../../components/Ribbon/RibbonTypes';
+import { PrimitiveType } from '../types';
 
 type MenuAction = () => void;
 type AddPrimitiveMenuAction = (type: PrimitiveType) => void;

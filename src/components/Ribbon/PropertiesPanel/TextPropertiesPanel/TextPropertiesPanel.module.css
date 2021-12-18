@@ -1,0 +1,10 @@
+.textPropertiesPanel
+{
+  list-style: none;
+  display: flex;
+}
+
+.panelElement
+{
+  margin: 0 10px 0;
+}

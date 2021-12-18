@@ -4,6 +4,8 @@ import { RootState } from '../../../state/reducers';
 import { ElementType } from '../../../model/types';
 import { isCurrentSlide } from '../../../model/modelUtils';
 import { connect } from 'react-redux';
+import PrimitivePropertiesPanel from './PrimitivePropertiesPanel/PrimitivePropertiesPanel';
+import TextPropertiesPanel from './TextPropertiesPanel/TextPropertiesPanel';
 
 type PropertiesPanelProps = {
   selectedElementType?: ElementType;
@@ -12,14 +14,14 @@ type PropertiesPanelProps = {
 
 function PropertiesPanel({ selectedElementType }: PropertiesPanelProps): JSX.Element {
   return (
-    <ul className={styles.propsPanel}>
+    <div className={styles.propsPanel}>
       {(() => {
         if (selectedElementType !== undefined) {
           switch (selectedElementType) {
           case ElementType.PRIMITIVE:
-            return 'Primitive';
+            return <PrimitivePropertiesPanel />;
           case ElementType.TEXT:
-            return 'Text';
+            return <TextPropertiesPanel />;
           case ElementType.IMAGE:
             break;
           }
@@ -27,7 +29,7 @@ function PropertiesPanel({ selectedElementType }: PropertiesPanelProps): JSX.Ele
 
         return '';
       })()}
-    </ul>
+    </div>
   );
 }
 

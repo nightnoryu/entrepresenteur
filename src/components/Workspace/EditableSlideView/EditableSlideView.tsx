@@ -51,6 +51,7 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
             element={element}
             scaleFactor={scaleFactor}
             isSelected={isSelected}
+            parentRef={ref}
           />;
         case ElementType.TEXT:
           return <EditableTextElement
@@ -58,6 +59,7 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
             element={element}
             scaleFactor={scaleFactor}
             isSelected={isSelected}
+            parentRef={ref}
           />;
         case ElementType.PRIMITIVE:
           return <EditablePrimitiveElement
@@ -65,6 +67,7 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
             element={element}
             scaleFactor={scaleFactor}
             isSelected={isSelected}
+            parentRef={ref}
           />;
         }
       })}
