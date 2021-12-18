@@ -4,26 +4,37 @@ import { getTextProperties } from '../../../../model/uiParameters/textProperties
 import { connect, useDispatch } from 'react-redux';
 import { actionCreators } from '../../../../state';
 import { bindActionCreators } from 'redux';
-import { UUID } from '../../../../model/uuid';
 import { RootState } from '../../../../state/reducers';
+import { isCurrentElement, isCurrentSlide } from '../../../../model/modelUtils';
+import { ElementType, TextElement } from '../../../../model/types';
 
 type TextPropertiesPanelProps = {
-  currentElementID: UUID;
+  currentElement?: TextElement;
 };
 
-function TextPropertiesPanel({ currentElementID }: TextPropertiesPanelProps): JSX.Element {
+function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.Element {
   const dispatch = useDispatch();
-  const { setTextFont, setTextSize } = bindActionCreators(actionCreators, dispatch);
+  const { setTextFont, setTextSize, setTextColor } = bindActionCreators(actionCreators, dispatch);
 
   const textProps = getTextProperties();
 
   const onFontChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setTextFont(currentElementID, event.currentTarget.value);
+    if (currentElement) {
+      setTextFont(currentElement.id, event.currentTarget.value);
+    }
   };
 
   const onSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const size = parseInt(event.currentTarget.value);
-    setTextSize(currentElementID, size);
+    if (currentElement) {
+      const size = parseInt(event.currentTarget.value);
+      setTextSize(currentElement.id, size);
+    }
+  };
+
+  const onColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (currentElement) {
+      setTextColor(currentElement.id, event.currentTarget.value);
+    }
   };
 
   return (
@@ -32,6 +43,7 @@ function TextPropertiesPanel({ currentElementID }: TextPropertiesPanelProps): JS
         <select
           name="font"
           className={styles.fontSelection}
+          value={currentElement?.font}
           onChange={onFontChange}
         >
           {textProps.fonts.map(fontOption => (
@@ -49,6 +61,7 @@ function TextPropertiesPanel({ currentElementID }: TextPropertiesPanelProps): JS
         <select
           name="size"
           className={styles.sizeSelection}
+          value={currentElement?.size}
           onChange={onSizeChange}
         >
           {textProps.sizes.map(sizeValue => (
@@ -61,13 +74,33 @@ function TextPropertiesPanel({ currentElementID }: TextPropertiesPanelProps): JS
           ))}
         </select>
       </li>
+
+      <li>
+        <input
+          type="color"
+          defaultValue={currentElement?.color}
+          onInput={onColorChange}
+        />
+      </li>
     </ul>
   );
 }
 
 function mapStateToProps(state: RootState): TextPropertiesPanelProps {
+  for (const slide of state.presentation.slides) {
+    if (isCurrentSlide(slide, state.selectedSlideIDs)) {
+      for (const element of slide.elements) {
+        if (isCurrentElement(element, state.selectedElementIDs) && element.type === ElementType.TEXT) {
+          return {
+            currentElement: element,
+          };
+        }
+      }
+    }
+  }
+
   return {
-    currentElementID: state.selectedElementIDs[0],
+    currentElement: undefined,
   };
 }
 
