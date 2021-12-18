@@ -8,6 +8,7 @@ import {
   selectSlide,
   setCurrentSlide,
   setPresentationTitle,
+  setTextColor,
   setTextFont,
   setTextSize,
   undo,
@@ -43,6 +44,8 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return setTextFont(state, action.payload);
   case ActionType.SET_TEXT_SIZE:
     return setTextSize(state, action.payload);
+  case ActionType.SET_TEXT_COLOR:
+    return setTextColor(state, action.payload);
   case ActionType.SELECT_ELEMENT:
     return selectElement(state, action.payload);
   case ActionType.UNSELECT_ELEMENT:

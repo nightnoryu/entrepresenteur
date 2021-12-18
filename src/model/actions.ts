@@ -291,6 +291,39 @@ export function setTextSize(
   };
 }
 
+export function setTextColor(
+  editor: Editor, {
+    elementID,
+    color,
+  }: {
+    elementID: UUID;
+    color: string;
+  },
+): Editor {
+  return {
+    ...editor,
+    presentation: {
+      ...editor.presentation,
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
+              element.type === ElementType.TEXT &&
+              element.id === elementID
+                ? {
+                  ...element,
+                  color,
+                }
+                : element,
+            ),
+          }
+          : slide,
+      ),
+    },
+  };
+}
+
 export function addImage(
   editor: Editor, {
     position,

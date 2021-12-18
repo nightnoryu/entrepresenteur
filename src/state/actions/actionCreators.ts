@@ -65,6 +65,18 @@ export function setTextSize(elementID: UUID, size: number) {
   };
 }
 
+export function setTextColor(elementID: UUID, color: string) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_TEXT_SIZE,
+      payload: {
+        elementID,
+        color,
+      },
+    });
+  };
+}
+
 export function selectElement(elementID: UUID) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
