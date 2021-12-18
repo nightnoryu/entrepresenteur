@@ -15,7 +15,6 @@ function useOnClickOutside<T extends SVGElement>(
     const containsIncluded = (el: React.RefObject<Node>) => {
       return el?.current?.contains(event.target as Node);
     };
-    console.log(includedElements?.every(containsIncluded));
 
     if (!element || element.contains(event.target as Node)) {
       return;
