@@ -8,6 +8,8 @@ import {
   selectSlide,
   setCurrentSlide,
   setPresentationTitle,
+  setPrimitiveFillColor,
+  setPrimitiveStrokeColor,
   setTextColor,
   setTextFont,
   setTextSize,
@@ -46,6 +48,10 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return setTextSize(state, action.payload);
   case ActionType.SET_TEXT_COLOR:
     return setTextColor(state, action.payload);
+  case ActionType.SET_PRIMITIVE_FILL_COLOR:
+    return setPrimitiveFillColor(state, action.payload);
+  case ActionType.SET_PRIMITIVE_STROKE_COLOR:
+    return setPrimitiveStrokeColor(state, action.payload);
   case ActionType.SELECT_ELEMENT:
     return selectElement(state, action.payload);
   case ActionType.UNSELECT_ELEMENT:

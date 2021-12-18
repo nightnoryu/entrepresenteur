@@ -77,6 +77,30 @@ export function setTextColor(elementID: UUID, color: string) {
   };
 }
 
+export function setPrimitiveFillColor(elementID: UUID, fill: string) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_PRIMITIVE_FILL_COLOR,
+      payload: {
+        elementID,
+        fill,
+      },
+    });
+  };
+}
+
+export function setPrimitiveStrokeColor(elementID: UUID, stroke: string) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_PRIMITIVE_STROKE_COLOR,
+      payload: {
+        elementID,
+        stroke,
+      },
+    });
+  };
+}
+
 export function selectElement(elementID: UUID) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({

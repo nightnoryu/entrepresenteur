@@ -4,7 +4,6 @@ import {
   concatWithSelectedSlideElements,
   createEditor,
   createNewSlide,
-  isCurrentElement,
   isCurrentSlide,
   moveElementOnTop,
   selectNearestUnselectedSlide,
@@ -386,7 +385,15 @@ export function addPrimitive(
   };
 }
 
-export function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
+export function setPrimitiveFillColor(
+  editor: Editor, {
+    elementID,
+    fill,
+  }: {
+    elementID: UUID;
+    fill: string;
+  },
+): Editor {
   return {
     ...editor,
     presentation: {
@@ -397,7 +404,7 @@ export function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
             ...slide,
             elements: slide.elements.map(element =>
               element.type === ElementType.PRIMITIVE &&
-              isCurrentElement(element, editor.selectedElementIDs)
+              element.id === elementID
                 ? {
                   ...element,
                   fill,
@@ -411,7 +418,15 @@ export function setPrimitiveFillColor(editor: Editor, fill: string): Editor {
   };
 }
 
-export function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor {
+export function setPrimitiveStrokeColor(
+  editor: Editor, {
+    elementID,
+    stroke,
+  }: {
+    elementID: UUID;
+    stroke: string;
+  },
+): Editor {
   return {
     ...editor,
     presentation: {
@@ -422,7 +437,7 @@ export function setPrimitiveStrokeColor(editor: Editor, stroke: string): Editor 
             ...slide,
             elements: slide.elements.map(element =>
               element.type === ElementType.PRIMITIVE &&
-              isCurrentElement(element, editor.selectedElementIDs)
+              element.id === elementID
                 ? {
                   ...element,
                   stroke,
