@@ -1,0 +1,12 @@
+.primitivePropertiesPanel
+{
+  list-style: none;
+  display: flex;
+
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.panelElement
+{
+  margin: 0 10px 0;
+}
