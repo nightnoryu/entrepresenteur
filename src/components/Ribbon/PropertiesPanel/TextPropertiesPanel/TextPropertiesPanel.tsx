@@ -75,7 +75,8 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
         </select>
       </li>
 
-      <li>
+      <li className={styles.panelElement}>
+        Color
         <input
           type="color"
           defaultValue={currentElement?.color}
