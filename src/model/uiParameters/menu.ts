@@ -70,48 +70,6 @@ export function getRibbonMenuItems(
           action: removeElements,
           icon: 'delete',
         },
-        {
-          type: MenuItemType.Submenu,
-          label: 'Text',
-          icon: 'text_fields',
-          items: [
-            {
-              type: MenuItemType.MenuButton,
-              label: 'Color',
-              action: () => console.log('Color'),
-              icon: 'palette',
-            },
-            {
-              type: MenuItemType.MenuButton,
-              label: 'Font',
-              action: () => console.log('Font'),
-            },
-            {
-              type: MenuItemType.MenuButton,
-              label: 'Size',
-              action: () => console.log('Size'),
-            },
-          ],
-        },
-        {
-          type: MenuItemType.Submenu,
-          label: 'Primitive',
-          icon: 'dashboard',
-          items: [
-            {
-              type: MenuItemType.MenuButton,
-              label: 'Fill',
-              action: () => console.log('Fill'),
-              icon: 'format_color_fill',
-            },
-            {
-              type: MenuItemType.MenuButton,
-              label: 'Stroke',
-              action: () => console.log('Stroke'),
-              icon: 'border_color',
-            },
-          ],
-        },
       ],
     },
     {
