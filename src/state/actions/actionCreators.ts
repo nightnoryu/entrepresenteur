@@ -41,6 +41,30 @@ export function setTextValue(elementID: UUID, value: string) {
   };
 }
 
+export function setTextFont(elementID: UUID, font: string) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_TEXT_FONT,
+      payload: {
+        elementID,
+        font,
+      },
+    });
+  };
+}
+
+export function setTextSize(elementID: UUID, size: string) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_TEXT_SIZE,
+      payload: {
+        elementID,
+        size,
+      },
+    });
+  };
+}
+
 export function selectElement(elementID: UUID) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
