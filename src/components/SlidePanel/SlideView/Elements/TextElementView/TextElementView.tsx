@@ -10,10 +10,10 @@ function TextElementView({ element }: TextElementViewProps): JSX.Element {
     <text
       x={element.position.x}
       y={element.position.y}
+      fill={element.color}
       dominantBaseline="hanging"
       textAnchor="left"
       style={{
-        color: element.color,
         fontFamily: element.font,
         fontSize: element.size,
         width: element.dimensions.width,

@@ -17,9 +17,16 @@ type EditablePrimitiveElementProps = {
   element: PrimitiveElement;
   scaleFactor: number;
   isSelected: boolean;
+  parentRef: React.RefObject<DocumentAndElementEventHandlers>;
 }
 
-function EditablePrimitiveElement({ element, scaleFactor, isSelected }: EditablePrimitiveElementProps): JSX.Element {
+function EditablePrimitiveElement(
+  {
+    element,
+    scaleFactor,
+    isSelected,
+    parentRef,
+  }: EditablePrimitiveElementProps): JSX.Element {
   const dispatch = useDispatch();
   const { selectElement, unselectElement, moveElements, resizeElement } = bindActionCreators(actionCreators, dispatch);
 
@@ -27,7 +34,7 @@ function EditablePrimitiveElement({ element, scaleFactor, isSelected }: Editable
   useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
 
   const ref = useRef(null);
-  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, resizeAnchorRef);
+  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef, resizeAnchorRef);
   const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
 
   const getPrimitiveElement = () => {

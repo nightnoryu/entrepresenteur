@@ -3,6 +3,7 @@ import styles from './Ribbon.module.css';
 import PresentationTitle from './PresentationTitle/PresentationTitle';
 import DropdownMenu from './DropdownMenu/DropdownMenu';
 import { DropdownMenuItemType } from './RibbonTypes';
+import PropertiesPanel from './PropertiesPanel/PropertiesPanel';
 
 type RibbonProps = {
   menuItems: DropdownMenuItemType[];
@@ -13,6 +14,7 @@ function Ribbon({ menuItems }: RibbonProps): JSX.Element {
     <div className={styles.ribbon}>
       <PresentationTitle />
       <DropdownMenu menuItems={menuItems} />
+      <PropertiesPanel />
     </div>
   );
 }

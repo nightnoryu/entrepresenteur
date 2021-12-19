@@ -11,30 +11,43 @@ type EditableTextElementProps = {
   element: TextElement;
   scaleFactor: number;
   isSelected: boolean;
+  parentRef: React.RefObject<DocumentAndElementEventHandlers>;
 }
 
-function EditableTextElement({ element, scaleFactor, isSelected }: EditableTextElementProps): JSX.Element {
+function EditableTextElement({ element, scaleFactor, isSelected, parentRef }: EditableTextElementProps): JSX.Element {
   const dispatch = useDispatch();
-  const { selectElement, unselectElement, moveElements, setTextValue } = bindActionCreators(actionCreators, dispatch);
+  const {
+    selectElement,
+    unselectElement,
+    moveElements,
+    setTextValue,
+    removeElements,
+  } = bindActionCreators(actionCreators, dispatch);
 
   const ref = useRef(null);
 
-  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement);
+  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef);
   const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
 
   useDoubleClick(ref, () => {
-    const newValue = prompt('Enter new value', element.value) || '';
-    setTextValue(element.id, newValue);
+    const newValue = prompt('Enter new value', element.value);
+    if (newValue !== null) {
+      if (newValue === '') {
+        removeElements();
+      }
+
+      setTextValue(element.id, newValue);
+    }
   });
 
   return (
     <text
       x={element.position.x}
       y={element.position.y}
+      fill={element.color}
       dominantBaseline="hanging"
       textAnchor="left"
       style={{
-        color: element.color,
         fontFamily: element.font,
         fontSize: element.size,
         width: element.dimensions.width,

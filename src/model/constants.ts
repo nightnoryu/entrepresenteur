@@ -27,10 +27,9 @@ export const DEFAULT_TEXT_DIMENSIONS: Dimensions = {
 };
 export const DEFAULT_TEXT_FONT = 'Comic Sans MS';
 export const DEFAULT_TEXT_COLOR = '#000000';
-export const DEFAULT_TEXT_SIZE = 42;
+export const DEFAULT_TEXT_SIZE = 44;
 
 export const DEFAULT_IMAGE_WIDTH = SLIDE_WIDTH / 2;
-export const DEFAULT_IMAGE_HEIGHT = SLIDE_HEIGHT / 2;
 
 export const DEFAULT_PRIMITIVE_DIMENSIONS: Dimensions = {
   width: 200,

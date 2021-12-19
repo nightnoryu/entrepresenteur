@@ -41,6 +41,66 @@ export function setTextValue(elementID: UUID, value: string) {
   };
 }
 
+export function setTextFont(elementID: UUID, font: string) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_TEXT_FONT,
+      payload: {
+        elementID,
+        font,
+      },
+    });
+  };
+}
+
+export function setTextSize(elementID: UUID, size: number) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_TEXT_SIZE,
+      payload: {
+        elementID,
+        size,
+      },
+    });
+  };
+}
+
+export function setTextColor(elementID: UUID, color: string) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_TEXT_COLOR,
+      payload: {
+        elementID,
+        color,
+      },
+    });
+  };
+}
+
+export function setPrimitiveFillColor(elementID: UUID, fill: string) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_PRIMITIVE_FILL_COLOR,
+      payload: {
+        elementID,
+        fill,
+      },
+    });
+  };
+}
+
+export function setPrimitiveStrokeColor(elementID: UUID, stroke: string) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_PRIMITIVE_STROKE_COLOR,
+      payload: {
+        elementID,
+        stroke,
+      },
+    });
+  };
+}
+
 export function selectElement(elementID: UUID) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({

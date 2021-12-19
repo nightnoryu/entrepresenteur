@@ -1,11 +1,15 @@
 .title
 {
-  margin-top: 10px;
-  margin-left: 5px;
+  height: 30%;
+
+  margin-top: 5px;
+  padding: 3px;
+
   border: none;
   border-radius: 5px;
-  padding: 3px;
-  font: 1.5em 'Nunito', sans-serif;
+
+  vertical-align: center;
+  font: 1.5em 'Noto Sans', sans-serif;
 }
 
 .title:hover,

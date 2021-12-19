@@ -13,9 +13,10 @@ type EditableImageElementProps = {
   element: ImageElement;
   scaleFactor: number;
   isSelected: boolean;
+  parentRef: React.RefObject<DocumentAndElementEventHandlers>;
 }
 
-function EditableImageElement({ element, scaleFactor, isSelected }: EditableImageElementProps): JSX.Element {
+function EditableImageElement({ element, scaleFactor, isSelected, parentRef }: EditableImageElementProps): JSX.Element {
   const dispatch = useDispatch();
   const { selectElement, unselectElement, moveElements, resizeElement } = bindActionCreators(actionCreators, dispatch);
 
@@ -23,7 +24,7 @@ function EditableImageElement({ element, scaleFactor, isSelected }: EditableImag
   useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
 
   const ref = useRef(null);
-  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, resizeAnchorRef);
+  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef, resizeAnchorRef);
   const delta = useSlideElementDragAndDrop(ref, element, scaleFactor, moveElements);
 
   return (

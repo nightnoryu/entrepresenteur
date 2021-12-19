@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from './state';
 import { Presentation, PrimitiveType } from './model/types';
 import { RootState } from './state/reducers';
-import { getRibbonMenuItems } from './model/menu';
+import { getRibbonMenuItems } from './model/uiParameters/menu';
 import Workspace from './components/Workspace/Workspace';
 import useAppHotkeys from './hooks/hotkeys/useAppHotkeys';
 import { openImageBase64, openPresentationJSON, pickColor, savePresentationJSON, scaleImage } from './common/fileUtils';

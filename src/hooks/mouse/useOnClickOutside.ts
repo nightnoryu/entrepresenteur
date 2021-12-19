@@ -1,20 +1,20 @@
-import { RefObject } from 'react';
+import React from 'react';
 import useEventListener from '../useEventListener';
 
 type Handler = (event: MouseEvent) => void;
 
 function useOnClickOutside<T extends SVGElement>(
-  ref: RefObject<T>,
+  ref: React.RefObject<T>,
   handler: Handler,
-  includedElements?: RefObject<Node>[],
+  includedElements?: React.RefObject<Node>[],
+  parent?: React.RefObject<DocumentAndElementEventHandlers>,
 ): void {
   useEventListener('mousedown', event => {
     const element = ref?.current;
 
-    const containsIncluded = (el: RefObject<Node>) => {
+    const containsIncluded = (el: React.RefObject<Node>) => {
       return el?.current?.contains(event.target as Node);
     };
-    console.log(includedElements?.every(containsIncluded));
 
     if (!element || element.contains(event.target as Node)) {
       return;
@@ -24,7 +24,7 @@ function useOnClickOutside<T extends SVGElement>(
     }
 
     handler(event as MouseEvent);
-  });
+  }, parent);
 }
 
 export default useOnClickOutside;

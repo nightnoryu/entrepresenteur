@@ -8,6 +8,11 @@ import {
   selectSlide,
   setCurrentSlide,
   setPresentationTitle,
+  setPrimitiveFillColor,
+  setPrimitiveStrokeColor,
+  setTextColor,
+  setTextFont,
+  setTextSize,
   undo,
   unselectElement,
 } from '../../model/actions';
@@ -37,6 +42,16 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return setPresentationTitle(state, action.payload);
   case ActionType.SET_TEXT_VALUE:
     return setTextValue(state, action.payload);
+  case ActionType.SET_TEXT_FONT:
+    return setTextFont(state, action.payload);
+  case ActionType.SET_TEXT_SIZE:
+    return setTextSize(state, action.payload);
+  case ActionType.SET_TEXT_COLOR:
+    return setTextColor(state, action.payload);
+  case ActionType.SET_PRIMITIVE_FILL_COLOR:
+    return setPrimitiveFillColor(state, action.payload);
+  case ActionType.SET_PRIMITIVE_STROKE_COLOR:
+    return setPrimitiveStrokeColor(state, action.payload);
   case ActionType.SELECT_ELEMENT:
     return selectElement(state, action.payload);
   case ActionType.UNSELECT_ELEMENT:
