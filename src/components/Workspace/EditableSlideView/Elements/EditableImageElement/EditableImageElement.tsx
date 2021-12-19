@@ -35,6 +35,7 @@ function EditableImageElement({ element, scaleFactor, isSelected, parentRef }: E
         y={element.position.y}
         width={element.dimensions.width}
         height={element.dimensions.height}
+        preserveAspectRatio="none"
         onDragStart={e => e.preventDefault()}
         style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
         ref={ref}
