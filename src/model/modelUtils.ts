@@ -1,6 +1,6 @@
 import { BackgroundType, Editor, Presentation, Slide, SlideElement } from './types';
 import { generateUUID, UUID } from './uuid';
-import { DEFAULT_PRESENTATION_NAME, DEFAULT_SLIDE_BACKGROUND } from './constants';
+import { DEFAULT_PRESENTATION_NAME, DEFAULT_SLIDE_BACKGROUND, MAX_HISTORY_ENTRIES } from './constants';
 
 export function createNewSlide(): Slide {
   return {
@@ -96,7 +96,9 @@ export function saveState(editor: Editor, newEditor: Editor): Editor {
   return {
     ...newEditor,
     history: {
-      pastStates: [...newEditor.history.pastStates, editor.presentation],
+      pastStates: newEditor.history.pastStates.length < MAX_HISTORY_ENTRIES
+        ? [...newEditor.history.pastStates, editor.presentation]
+        : [...newEditor.history.pastStates.slice(1), editor.presentation],
       futureStates: [],
     },
   };

@@ -1,7 +1,7 @@
 import { Dimensions, Position } from './types';
 
 // Editor
-export const MAX_HISTORY_ENTRIES = 50; // TODO: history optimizations
+export const MAX_HISTORY_ENTRIES = 50;
 
 // Presentation
 
