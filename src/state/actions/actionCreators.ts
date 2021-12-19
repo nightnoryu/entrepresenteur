@@ -164,6 +164,22 @@ export function removeSlides() {
   };
 }
 
+export function nextSlide() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.NEXT_SLIDE,
+    });
+  };
+}
+
+export function previousSlide() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.PREVIOUS_SLIDE,
+    });
+  };
+}
+
 export function setSlideBackgroundImage(src: string) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({

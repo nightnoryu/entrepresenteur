@@ -4,6 +4,7 @@ import {
   concatWithSelectedSlideElements,
   createEditor,
   createNewSlide,
+  getCurrentSlideIndex,
   isCurrentSlide,
   moveElementOnTop,
   selectNearestUnselectedSlide,
@@ -86,6 +87,7 @@ export function setCurrentSlide(editor: Editor, slideID: UUID): Editor {
   return {
     ...editor,
     selectedSlideIDs: [slideID],
+    selectedElementIDs: [],
   };
 }
 
@@ -95,6 +97,31 @@ export function selectSlide(editor: Editor, slideID: UUID): Editor {
     selectedSlideIDs: editor.presentation.slides.flatMap(slide =>
       editor.selectedSlideIDs.concat(slideID).includes(slide.id) ? slide.id : [],
     ),
+    selectedElementIDs: [],
+  };
+}
+
+export function nextSlide(editor: Editor): Editor {
+  const currentSlideIndex = getCurrentSlideIndex(editor.presentation.slides, editor.selectedSlideIDs);
+
+  return {
+    ...editor,
+    selectedSlideIDs: currentSlideIndex < editor.presentation.slides.length - 1
+      ? [editor.presentation.slides[currentSlideIndex + 1].id]
+      : editor.selectedSlideIDs,
+    selectedElementIDs: [],
+  };
+}
+
+export function previousSlide(editor: Editor): Editor {
+  const currentSlideIndex = getCurrentSlideIndex(editor.presentation.slides, editor.selectedSlideIDs);
+
+  return {
+    ...editor,
+    selectedSlideIDs: currentSlideIndex > 0
+      ? [editor.presentation.slides[currentSlideIndex - 1].id]
+      : editor.selectedSlideIDs,
+    selectedElementIDs: [],
   };
 }
 

@@ -2,7 +2,9 @@ import { createEditor, createNewPresentation } from '../../model/modelUtils';
 import { Editor } from '../../model/types';
 import Action, { ActionType } from '../actions/actions';
 import {
+  nextSlide,
   openPresentation,
+  previousSlide,
   redo,
   selectElement,
   selectSlide,
@@ -66,6 +68,10 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return addSlide(state);
   case ActionType.REMOVE_SLIDES:
     return removeSlides(state);
+  case ActionType.NEXT_SLIDE:
+    return nextSlide(state);
+  case ActionType.PREVIOUS_SLIDE:
+    return previousSlide(state);
   case ActionType.SET_SLIDE_BACKGROUND_IMAGE:
     return setSlideBackgroundImage(state, action.payload);
   case ActionType.SET_SLIDE_BACKGROUND_COLOR:

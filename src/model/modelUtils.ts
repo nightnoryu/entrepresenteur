@@ -92,6 +92,13 @@ export function moveElementOnTop(elements: SlideElement[], elementID: UUID): Sli
   return elements;
 }
 
+export function getCurrentSlideIndex(slides: Slide[], selectedSlideIDs: UUID[]): number {
+  return slides.reduce(
+    (savedIndex, slide, index) => isCurrentSlide(slide, selectedSlideIDs) ? index : savedIndex,
+    -1,
+  );
+}
+
 export function saveState(editor: Editor, newEditor: Editor): Editor {
   return {
     ...newEditor,
