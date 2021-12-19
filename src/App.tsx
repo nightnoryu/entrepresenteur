@@ -103,45 +103,55 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
         .then(presentation => actionCreators.openPresentation(presentation)(dispatch))
         .catch(error => alert(error));
     },
+
     newPresentation: () => {
       const confirmed = confirm('Are you sure? All unsaved changes will be lost.');
       if (confirmed) {
         actionCreators.newPresentation()(dispatch);
       }
     },
+
     savePresentation: (presentation: Presentation) => {
       return () => {
         savePresentationJSON(presentation, presentation.title);
       };
     },
+
     undo: () => actionCreators.undo()(dispatch),
     redo: () => actionCreators.redo()(dispatch),
+
     addText: () => {
       const text = prompt('Enter text') || '';
       if (text !== '') {
         actionCreators.addText(DEFAULT_ELEMENT_POSITION, DEFAULT_TEXT_DIMENSIONS, text)(dispatch);
       }
     },
+
     addImage: () => {
       openImageBase64()
         .then(image => actionCreators.addImage(DEFAULT_ELEMENT_POSITION, scaleImage(image.width, image.height), image.src)(dispatch))
         .catch(error => alert(error));
     },
+
     addPrimitive: (type: PrimitiveType) => {
       actionCreators.addPrimitive(DEFAULT_ELEMENT_POSITION, DEFAULT_PRIMITIVE_DIMENSIONS, type)(dispatch);
     },
+
     addSlide: () => actionCreators.addSlide()(dispatch),
     removeSlides: () => actionCreators.removeSlides()(dispatch),
+
     setSlideBackgroundImage: () => {
       openImageBase64()
         .then(image => actionCreators.setSlideBackgroundImage(image.src)(dispatch))
         .catch(error => alert(error));
     },
+
     setSlideBackgroundColor: () => {
       pickColor()
         .then(color => actionCreators.setSlideBackgroundColor(color)(dispatch))
         .catch(error => alert(error));
     },
+
     removeElements: () => actionCreators.removeElements()(dispatch),
   };
 }
