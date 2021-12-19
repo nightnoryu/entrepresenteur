@@ -31,6 +31,8 @@ type AppDispatchProps = {
   addPrimitive: (type: PrimitiveType) => void;
   addSlide: () => void;
   removeSlides: () => void;
+  nextSlide: () => void;
+  previousSlide: () => void;
   setSlideBackgroundImage: () => void;
   setSlideBackgroundColor: () => void;
   removeElements: () => void;
@@ -49,6 +51,8 @@ function App(
     addPrimitive,
     addSlide,
     removeSlides,
+    nextSlide,
+    previousSlide,
     setSlideBackgroundImage,
     setSlideBackgroundColor,
     removeElements,
@@ -61,6 +65,8 @@ function App(
     savePresentation(presentation),
     undo,
     redo,
+    nextSlide,
+    previousSlide,
   );
 
   const menuItems = getRibbonMenuItems(
@@ -139,6 +145,9 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
 
     addSlide: () => actionCreators.addSlide()(dispatch),
     removeSlides: () => actionCreators.removeSlides()(dispatch),
+
+    nextSlide: () => actionCreators.nextSlide()(dispatch),
+    previousSlide: () => actionCreators.previousSlide()(dispatch),
 
     setSlideBackgroundImage: () => {
       openImageBase64()
