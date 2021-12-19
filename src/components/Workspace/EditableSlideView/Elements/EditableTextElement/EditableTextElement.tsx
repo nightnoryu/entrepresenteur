@@ -16,7 +16,13 @@ type EditableTextElementProps = {
 
 function EditableTextElement({ element, scaleFactor, isSelected, parentRef }: EditableTextElementProps): JSX.Element {
   const dispatch = useDispatch();
-  const { selectElement, unselectElement, moveElements, setTextValue } = bindActionCreators(actionCreators, dispatch);
+  const {
+    selectElement,
+    unselectElement,
+    moveElements,
+    setTextValue,
+    removeElements,
+  } = bindActionCreators(actionCreators, dispatch);
 
   const ref = useRef(null);
 
@@ -24,8 +30,14 @@ function EditableTextElement({ element, scaleFactor, isSelected, parentRef }: Ed
   const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
 
   useDoubleClick(ref, () => {
-    const newValue = prompt('Enter new value', element.value) || '';
-    setTextValue(element.id, newValue);
+    const newValue = prompt('Enter new value', element.value);
+    if (newValue !== null) {
+      if (newValue === '') {
+        removeElements();
+      }
+
+      setTextValue(element.id, newValue);
+    }
   });
 
   return (
