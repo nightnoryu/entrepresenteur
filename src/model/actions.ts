@@ -38,17 +38,20 @@ export function addSlide(editor: Editor): Editor {
 
   return {
     ...editor,
-    selectedSlideIDs: [newSlide.id],
     presentation: {
       ...editor.presentation,
       slides:
         editor.presentation.slides.length === 0
           ? [newSlide]
           : editor.presentation.slides.flatMap(slide =>
-            isCurrentSlide(slide, editor.selectedSlideIDs)
+            isCurrentSlide(slide, editor.selections.selectedSlideIDs)
               ? [slide, newSlide]
               : slide,
           ),
+    },
+    selections: {
+      ...editor.selections,
+      selectedSlideIDs: [newSlide.id],
     },
   };
 }
@@ -56,14 +59,17 @@ export function addSlide(editor: Editor): Editor {
 export function removeSlides(editor: Editor): Editor {
   return {
     ...editor,
-    selectedSlideIDs: selectNearestUnselectedSlide(
-      editor.presentation.slides,
-      editor.selectedSlideIDs,
-    ),
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.filter(
-        slide => !editor.selectedSlideIDs.includes(slide.id),
+        slide => !editor.selections.selectedSlideIDs.includes(slide.id),
+      ),
+    },
+    selections: {
+      ...editor.selections,
+      selectedSlideIDs: selectNearestUnselectedSlide(
+        editor.presentation.slides,
+        editor.selections.selectedSlideIDs,
       ),
     },
   };
@@ -85,16 +91,22 @@ export function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
 export function setCurrentSlide(editor: Editor, slideID: UUID): Editor {
   return {
     ...editor,
-    selectedSlideIDs: [slideID],
+    selections: {
+      ...editor.selections,
+      selectedSlideIDs: [slideID],
+    },
   };
 }
 
 export function selectSlide(editor: Editor, slideID: UUID): Editor {
   return {
     ...editor,
-    selectedSlideIDs: editor.presentation.slides.flatMap(slide =>
-      editor.selectedSlideIDs.concat(slideID).includes(slide.id) ? slide.id : [],
-    ),
+    selections: {
+      ...editor.selections,
+      selectedSlideIDs: editor.presentation.slides.flatMap(slide =>
+        editor.selections.selectedSlideIDs.concat(slideID).includes(slide.id) ? slide.id : [],
+      ),
+    },
   };
 }
 
@@ -104,7 +116,7 @@ export function setSlideBackgroundColor(editor: Editor, color: string): Editor {
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.map(slide =>
-        isCurrentSlide(slide, editor.selectedSlideIDs)
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
           ? {
             ...slide,
             background: {
@@ -124,7 +136,7 @@ export function setSlideBackgroundImage(editor: Editor, src: string): Editor {
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.map(slide =>
-        isCurrentSlide(slide, editor.selectedSlideIDs)
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
           ? {
             ...slide,
             background: {
@@ -141,15 +153,18 @@ export function setSlideBackgroundImage(editor: Editor, src: string): Editor {
 export function removeElements(editor: Editor): Editor {
   return {
     ...editor,
-    selectedElementIDs: [],
+    selections: {
+      ...editor.selections,
+      selectedElementIDs: [],
+    },
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.map(slide =>
-        isCurrentSlide(slide, editor.selectedSlideIDs)
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
           ? {
             ...slide,
             elements: slide.elements.filter(
-              element => !editor.selectedElementIDs.includes(element.id),
+              element => !editor.selections.selectedElementIDs.includes(element.id),
             ),
           }
           : { ...slide },
@@ -175,7 +190,7 @@ export function addText(
       ...editor.presentation,
       slides: concatWithSelectedSlideElements(
         editor.presentation.slides,
-        editor.selectedSlideIDs,
+        editor.selections.selectedSlideIDs,
         {
           id: generateUUID(),
           type: ElementType.TEXT,
@@ -205,7 +220,7 @@ export function setTextValue(
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.map(slide =>
-        isCurrentSlide(slide, editor.selectedSlideIDs)
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
           ? {
             ...slide,
             elements: slide.elements.map(element =>
@@ -238,7 +253,7 @@ export function setTextFont(
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.map(slide =>
-        isCurrentSlide(slide, editor.selectedSlideIDs)
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
           ? {
             ...slide,
             elements: slide.elements.map(element =>
@@ -271,7 +286,7 @@ export function setTextSize(
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.map(slide =>
-        isCurrentSlide(slide, editor.selectedSlideIDs)
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
           ? {
             ...slide,
             elements: slide.elements.map(element =>
@@ -304,7 +319,7 @@ export function setTextColor(
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.map(slide =>
-        isCurrentSlide(slide, editor.selectedSlideIDs)
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
           ? {
             ...slide,
             elements: slide.elements.map(element =>
@@ -340,7 +355,7 @@ export function addImage(
       ...editor.presentation,
       slides: concatWithSelectedSlideElements(
         editor.presentation.slides,
-        editor.selectedSlideIDs,
+        editor.selections.selectedSlideIDs,
         {
           id: generateUUID(),
           type: ElementType.IMAGE,
@@ -370,7 +385,7 @@ export function addPrimitive(
       ...editor.presentation,
       slides: concatWithSelectedSlideElements(
         editor.presentation.slides,
-        editor.selectedSlideIDs,
+        editor.selections.selectedSlideIDs,
         {
           id: generateUUID(),
           type: ElementType.PRIMITIVE,
@@ -399,7 +414,7 @@ export function setPrimitiveFillColor(
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.map(slide =>
-        isCurrentSlide(slide, editor.selectedSlideIDs)
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
           ? {
             ...slide,
             elements: slide.elements.map(element =>
@@ -432,7 +447,7 @@ export function setPrimitiveStrokeColor(
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.map(slide =>
-        isCurrentSlide(slide, editor.selectedSlideIDs)
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
           ? {
             ...slide,
             elements: slide.elements.map(element =>
@@ -454,11 +469,14 @@ export function setPrimitiveStrokeColor(
 export function selectElement(editor: Editor, elementID: UUID): Editor {
   return {
     ...editor,
-    selectedElementIDs: editor.selectedElementIDs.concat(elementID),
+    selections: {
+      ...editor.selections,
+      selectedElementIDs: editor.selections.selectedElementIDs.concat(elementID),
+    },
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.map(
-        slide => isCurrentSlide(slide, editor.selectedSlideIDs)
+        slide => isCurrentSlide(slide, editor.selections.selectedSlideIDs)
           ? {
             ...slide,
             elements: moveElementOnTop(slide.elements, elementID),
@@ -471,7 +489,10 @@ export function selectElement(editor: Editor, elementID: UUID): Editor {
 export function unselectElement(editor: Editor, elementID: UUID): Editor {
   return {
     ...editor,
-    selectedElementIDs: editor.selectedElementIDs.filter(id => id != elementID),
+    selections: {
+      ...editor.selections,
+      selectedElementIDs: editor.selections.selectedElementIDs.filter(id => id != elementID),
+    },
   };
 }
 
@@ -484,11 +505,11 @@ export function moveElements(
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.map(slide =>
-        isCurrentSlide(slide, editor.selectedSlideIDs)
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
           ? {
             ...slide,
             elements: slide.elements.map(element =>
-              editor.selectedElementIDs.includes(element.id)
+              editor.selections.selectedElementIDs.includes(element.id)
                 ? {
                   ...element,
                   position: {
@@ -520,7 +541,7 @@ export function resizeElement(
     presentation: {
       ...editor.presentation,
       slides: editor.presentation.slides.map(slide =>
-        isCurrentSlide(slide, editor.selectedSlideIDs)
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
           ? {
             ...slide,
             elements: slide.elements.map(element =>

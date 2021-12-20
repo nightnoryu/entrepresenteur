@@ -114,10 +114,12 @@ const editor: Editor = {
       },
     ],
   },
-  selectedElementIDs: [],
-  selectedSlideIDs: [
-    'slide1',
-  ],
+  selections: {
+    selectedSlideIDs: [
+      'slide1',
+    ],
+    selectedElementIDs: [],
+  },
   history: {
     pastStates: [],
     futureStates: [],
