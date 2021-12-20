@@ -79,6 +79,11 @@ export type Presentation = {
   slides: Slide[];
 };
 
+type Selections = {
+  selectedSlideIDs: UUID[];
+  selectedElementIDs: UUID[];
+};
+
 export type History = {
   pastStates: Presentation[];
   futureStates: Presentation[];
@@ -86,7 +91,6 @@ export type History = {
 
 export type Editor = {
   presentation: Presentation;
-  selectedSlideIDs: UUID[];
-  selectedElementIDs: UUID[];
+  selections: Selections;
   history: History;
 };

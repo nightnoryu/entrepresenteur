@@ -89,9 +89,9 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
 
 function mapStateToProps(state: RootState): TextPropertiesPanelProps {
   for (const slide of state.presentation.slides) {
-    if (isCurrentSlide(slide, state.selectedSlideIDs)) {
+    if (isCurrentSlide(slide, state.selections.selectedSlideIDs)) {
       for (const element of slide.elements) {
-        if (isCurrentElement(element, state.selectedElementIDs) && element.type === ElementType.TEXT) {
+        if (isCurrentElement(element, state.selections.selectedElementIDs) && element.type === ElementType.TEXT) {
           return {
             currentElement: element,
           };

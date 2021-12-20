@@ -23,9 +23,10 @@ export function createNewPresentation(): Presentation {
 export function createEditor(presentation: Presentation): Editor {
   return {
     presentation,
-    selectedSlideIDs:
-      presentation.slides.length > 0 ? [presentation.slides[0].id] : [],
-    selectedElementIDs: [],
+    selections: {
+      selectedSlideIDs: presentation.slides.length > 0 ? [presentation.slides[0].id] : [],
+      selectedElementIDs: [],
+    },
     history: {
       pastStates: [],
       futureStates: [],
