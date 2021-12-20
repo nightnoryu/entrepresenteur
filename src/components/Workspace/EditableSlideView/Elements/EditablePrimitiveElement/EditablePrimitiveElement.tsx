@@ -26,7 +26,8 @@ function EditablePrimitiveElement(
     scaleFactor,
     isSelected,
     parentRef,
-  }: EditablePrimitiveElementProps): JSX.Element {
+  }: EditablePrimitiveElementProps,
+): JSX.Element {
   const dispatch = useDispatch();
   const { selectElement, unselectElement, moveElements, resizeElement } = bindActionCreators(actionCreators, dispatch);
 
