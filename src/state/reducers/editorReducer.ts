@@ -2,31 +2,33 @@ import { createEditor, createNewPresentation } from '../../model/modelUtils';
 import { Editor } from '../../model/types';
 import Action, { ActionType } from '../actions/actions';
 import {
-  addImage,
-  addPrimitive,
-  addSlide,
-  addText,
-  moveElements,
   openPresentation,
   redo,
-  removeElements,
-  removeSlides,
-  resizeElement,
   selectElement,
   selectSlide,
   setCurrentSlide,
   setPresentationTitle,
   setPrimitiveFillColor,
   setPrimitiveStrokeColor,
-  setSlideBackgroundColor,
-  setSlideBackgroundImage,
   setTextColor,
   setTextFont,
   setTextSize,
-  setTextValue,
   undo,
   unselectElement,
 } from '../../model/actions';
+import {
+  addImage,
+  addPrimitive,
+  addSlide,
+  addText,
+  moveElements,
+  removeElements,
+  removeSlides,
+  resizeElement,
+  setSlideBackgroundColor,
+  setSlideBackgroundImage,
+  setTextValue,
+} from '../../model/statefulActions';
 
 const initialState = createEditor(createNewPresentation());
 
