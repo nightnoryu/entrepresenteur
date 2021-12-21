@@ -114,7 +114,7 @@ export function selectSlide(editor: Editor, slideID: UUID): Editor {
 }
 
 export function nextSlide(editor: Editor): Editor {
-  const currentSlideIndex = getCurrentSlideIndex(editor.presentation.slides, editor.selectedSlideIDs);
+  const currentSlideIndex = getCurrentSlideIndex(editor.presentation.slides, editor.selections.selectedSlideIDs);
 
   return {
     ...editor,
@@ -128,7 +128,7 @@ export function nextSlide(editor: Editor): Editor {
 }
 
 export function previousSlide(editor: Editor): Editor {
-  const currentSlideIndex = getCurrentSlideIndex(editor.presentation.slides, editor.selectedSlideIDs);
+  const currentSlideIndex = getCurrentSlideIndex(editor.presentation.slides, editor.selections.selectedSlideIDs);
 
   return {
     ...editor,
