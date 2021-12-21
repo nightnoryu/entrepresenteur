@@ -49,7 +49,7 @@ function EditablePrimitiveElement(
           height={element.dimensions.height}
           fill={element.fill}
           stroke={element.stroke}
-          style={delta && { transform: `translate(${delta.x}px, ${delta.y}px)` }}
+          style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
           ref={ref}
         />
       );
@@ -59,7 +59,7 @@ function EditablePrimitiveElement(
           points={getTrianglePoints(element)}
           fill={element.fill}
           stroke={element.stroke}
-          style={delta && { transform: `translate(${delta.x}px, ${delta.y}px)` }}
+          style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
           ref={ref}
         />
       );
@@ -74,7 +74,7 @@ function EditablePrimitiveElement(
           ry={properties.ry}
           fill={element.fill}
           stroke={element.stroke}
-          style={delta && { transform: `translate(${delta.x}px, ${delta.y}px)` }}
+          style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
           ref={ref}
         />
       );
