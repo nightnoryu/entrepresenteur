@@ -21,7 +21,7 @@ function EditableImageElement({ element, scaleFactor, isSelected, parentRef }: E
   const { selectElement, unselectElement, moveElements, resizeElement } = bindActionCreators(actionCreators, dispatch);
 
   const resizeAnchorRef = useRef(null);
-  useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
+  const dimensions = useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
 
   const ref = useRef(null);
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef, resizeAnchorRef);
@@ -33,8 +33,8 @@ function EditableImageElement({ element, scaleFactor, isSelected, parentRef }: E
         href={element.src}
         x={element.position.x}
         y={element.position.y}
-        width={element.dimensions.width}
-        height={element.dimensions.height}
+        width={dimensions.width}
+        height={dimensions.height}
         preserveAspectRatio="none"
         onDragStart={e => e.preventDefault()}
         style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}

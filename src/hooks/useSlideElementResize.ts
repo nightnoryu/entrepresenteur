@@ -9,7 +9,7 @@ function useSlideElementResize(
   scaleFactor: number,
   resizeElement: typeof actionCreators.resizeElement,
 ): Dimensions {
-  const [delta, setDelta] = useState({ width: 0, height: 0 });
+  const [dimensions, setDimensions] = useState(element.dimensions);
   let startPos: Position;
 
   const onStart = (event: MouseEvent) => {
@@ -20,25 +20,27 @@ function useSlideElementResize(
   };
 
   const onMove = (event: MouseEvent) => {
-    setDelta({
+    const delta = {
       width: scaleFactor * (event.pageX - startPos.x),
       height: scaleFactor * (event.pageY - startPos.y),
+    };
+
+    setDimensions({
+      width: dimensions.width + delta.width,
+      height: dimensions.height + delta.height,
     });
   };
 
   const onFinish = () => {
-    if (delta.width !== 0 && delta.height !== 0) {
-      resizeElement(element.id, {
-        width: element.dimensions.width + delta.width,
-        height: element.dimensions.height + delta.height,
-      });
-    }
-    setDelta({ width: 0, height: 0 });
+    resizeElement(element.id, {
+      width: dimensions.width,
+      height: dimensions.height,
+    });
   };
 
   useDragAndDrop(ref, onStart, onMove, onFinish);
 
-  return delta;
+  return dimensions;
 }
 
 export default useSlideElementResize;
