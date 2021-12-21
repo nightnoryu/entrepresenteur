@@ -59,6 +59,7 @@ function App(
   }: AppProps,
 ): JSX.Element {
   useConfirmLeaving();
+
   useAppHotkeys(
     newPresentation,
     openPresentation,

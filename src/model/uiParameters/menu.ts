@@ -150,5 +150,22 @@ export function getRibbonMenuItems(
         },
       ],
     },
+    {
+      label: 'Demonstration',
+      items: [
+        {
+          type: MenuItemType.MenuButton,
+          label: 'From start',
+          action: () => console.log('from start'),
+          icon: 'restart_alt',
+        },
+        {
+          type: MenuItemType.MenuButton,
+          label: 'From current slide',
+          action: () => console.log('from current'),
+          icon: 'play_arrow',
+        },
+      ],
+    },
   ];
 }
