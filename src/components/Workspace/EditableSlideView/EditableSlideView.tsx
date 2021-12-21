@@ -77,8 +77,8 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
 
 function mapStateToProps(state: RootState): EditableSlideViewProps {
   return {
-    slide: state.presentation.slides.find(slide => isCurrentSlide(slide, state.selectedSlideIDs)) || createNewSlide(),
-    selectedElementIDs: state.selectedElementIDs,
+    slide: state.presentation.slides.find(slide => isCurrentSlide(slide, state.selections.selectedSlideIDs)) || createNewSlide(),
+    selectedElementIDs: state.selections.selectedElementIDs,
   };
 }
 

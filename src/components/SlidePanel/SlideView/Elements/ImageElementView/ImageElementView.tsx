@@ -13,6 +13,7 @@ function ImageElementView({ element }: ImageElementViewProps): JSX.Element {
       y={element.position.y}
       width={element.dimensions.width}
       height={element.dimensions.height}
+      preserveAspectRatio="none"
     />
   );
 }

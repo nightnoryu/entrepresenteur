@@ -2,37 +2,35 @@ import { createEditor, createNewPresentation } from '../../model/modelUtils';
 import { Editor } from '../../model/types';
 import Action, { ActionType } from '../actions/actions';
 import {
+  addImage,
+  addPrimitive,
+  addSlide,
+  addText,
+  moveElements,
+  nextSlide,
   openPresentation,
-  redo,
+  previousSlide,
+  removeElements,
+  removeSlides,
+  resizeElement,
   selectElement,
   selectSlide,
   setCurrentSlide,
   setPresentationTitle,
   setPrimitiveFillColor,
   setPrimitiveStrokeColor,
+  setSlideBackgroundColor,
+  setSlideBackgroundImage,
   setTextColor,
   setTextFont,
   setTextSize,
-  undo,
+  setTextValue,
   unselectElement,
 } from '../../model/actions';
-import {
-  addImage,
-  addPrimitive,
-  addSlide,
-  addText,
-  moveElements,
-  removeElements,
-  removeSlides,
-  resizeElement,
-  setSlideBackgroundColor,
-  setSlideBackgroundImage,
-  setTextValue,
-} from '../../model/statefulActions';
 
 const initialState = createEditor(createNewPresentation());
 
-function reducer(state: Editor = initialState, action: Action): Editor {
+function editorReducer(state = initialState, action: Action): Editor {
   switch (action.type) {
   case ActionType.OPEN_PRESENTATION:
     return openPresentation(state, action.payload);
@@ -66,6 +64,10 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return addSlide(state);
   case ActionType.REMOVE_SLIDES:
     return removeSlides(state);
+  case ActionType.NEXT_SLIDE:
+    return nextSlide(state);
+  case ActionType.PREVIOUS_SLIDE:
+    return previousSlide(state);
   case ActionType.SET_SLIDE_BACKGROUND_IMAGE:
     return setSlideBackgroundImage(state, action.payload);
   case ActionType.SET_SLIDE_BACKGROUND_COLOR:
@@ -80,13 +82,9 @@ function reducer(state: Editor = initialState, action: Action): Editor {
     return addImage(state, action.payload);
   case ActionType.ADD_PRIMITIVE:
     return addPrimitive(state, action.payload);
-  case ActionType.UNDO:
-    return undo(state);
-  case ActionType.REDO:
-    return redo(state);
   default:
     return state;
   }
 }
 
-export default reducer;
+export default editorReducer;

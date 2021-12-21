@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import useSlideElementDragAndDrop from '../../../../../hooks/dragAndDrop/useSlideElementDragAndDrop';
 import useSlideElementActions from '../../../../../hooks/useSlideElementActions';
 import useSlideElementResize from '../../../../../hooks/useSlideElementResize';
-import { getResizeAnchorProperties } from '../../../../../common/componentsUtils';
+import { getResizeAnchorProperties, getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
 
 type EditableImageElementProps = {
   element: ImageElement;
@@ -21,11 +21,13 @@ function EditableImageElement({ element, scaleFactor, isSelected, parentRef }: E
   const { selectElement, unselectElement, moveElements, resizeElement } = bindActionCreators(actionCreators, dispatch);
 
   const resizeAnchorRef = useRef(null);
-  useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
+  const dimensions = useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
 
   const ref = useRef(null);
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef, resizeAnchorRef);
   const delta = useSlideElementDragAndDrop(ref, element, scaleFactor, moveElements);
+
+  const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
 
   return (
     <>
@@ -33,8 +35,9 @@ function EditableImageElement({ element, scaleFactor, isSelected, parentRef }: E
         href={element.src}
         x={element.position.x}
         y={element.position.y}
-        width={element.dimensions.width}
-        height={element.dimensions.height}
+        width={dimensions.width}
+        height={dimensions.height}
+        preserveAspectRatio="none"
         onDragStart={e => e.preventDefault()}
         style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
         ref={ref}
@@ -45,7 +48,7 @@ function EditableImageElement({ element, scaleFactor, isSelected, parentRef }: E
               ref={resizeAnchorRef}
               {...getResizeAnchorProperties(element)}
               className={styles.resizeAnchor}
-              style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
+              style={{ transform: `translate(${resizeAnchorDelta.x}px, ${resizeAnchorDelta.y}px)` }}
           />
       }
     </>

@@ -7,6 +7,7 @@ import { actionCreators } from '../../../../../state';
 import {
   calculateEllipseProperties,
   getResizeAnchorProperties,
+  getResizeAnchorTranslateDelta,
   getTrianglePoints,
 } from '../../../../../common/componentsUtils';
 import useSlideElementActions from '../../../../../hooks/useSlideElementActions';
@@ -26,16 +27,19 @@ function EditablePrimitiveElement(
     scaleFactor,
     isSelected,
     parentRef,
-  }: EditablePrimitiveElementProps): JSX.Element {
+  }: EditablePrimitiveElementProps,
+): JSX.Element {
   const dispatch = useDispatch();
   const { selectElement, unselectElement, moveElements, resizeElement } = bindActionCreators(actionCreators, dispatch);
 
   const resizeAnchorRef = useRef(null);
-  useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
+  const dimensions = useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
 
   const ref = useRef(null);
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef, resizeAnchorRef);
   const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
+
+  const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
 
   const getPrimitiveElement = () => {
     switch (element.primitiveType) {
@@ -44,26 +48,26 @@ function EditablePrimitiveElement(
         <rect
           x={element.position.x}
           y={element.position.y}
-          width={element.dimensions.width}
-          height={element.dimensions.height}
+          width={dimensions.width}
+          height={dimensions.height}
           fill={element.fill}
           stroke={element.stroke}
-          style={delta && { transform: `translate(${delta.x}px, ${delta.y}px)` }}
+          style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
           ref={ref}
         />
       );
     case PrimitiveType.TRIANGLE:
       return (
         <polygon
-          points={getTrianglePoints(element)}
+          points={getTrianglePoints({ ...element, dimensions })}
           fill={element.fill}
           stroke={element.stroke}
-          style={delta && { transform: `translate(${delta.x}px, ${delta.y}px)` }}
+          style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
           ref={ref}
         />
       );
     case PrimitiveType.ELLIPSE: {
-      const properties = calculateEllipseProperties(element);
+      const properties = calculateEllipseProperties({ ...element, dimensions });
 
       return (
         <ellipse
@@ -73,7 +77,7 @@ function EditablePrimitiveElement(
           ry={properties.ry}
           fill={element.fill}
           stroke={element.stroke}
-          style={delta && { transform: `translate(${delta.x}px, ${delta.y}px)` }}
+          style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
           ref={ref}
         />
       );
@@ -90,7 +94,7 @@ function EditablePrimitiveElement(
               ref={resizeAnchorRef}
               {...getResizeAnchorProperties(element)}
               className={styles.resizeAnchor}
-              style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
+              style={{ transform: `translate(${resizeAnchorDelta.x}px, ${resizeAnchorDelta.y}px)` }}
           />
       }
     </>

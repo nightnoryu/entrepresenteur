@@ -1,6 +1,6 @@
 import { BackgroundType, Editor, Presentation, Slide, SlideElement } from './types';
 import { generateUUID, UUID } from './uuid';
-import { DEFAULT_PRESENTATION_NAME, DEFAULT_SLIDE_BACKGROUND } from './constants';
+import { DEFAULT_PRESENTATION_NAME, DEFAULT_SLIDE_BACKGROUND, MAX_HISTORY_ENTRIES } from './constants';
 
 export function createNewSlide(): Slide {
   return {
@@ -23,9 +23,10 @@ export function createNewPresentation(): Presentation {
 export function createEditor(presentation: Presentation): Editor {
   return {
     presentation,
-    selectedSlideIDs:
-      presentation.slides.length > 0 ? [presentation.slides[0].id] : [],
-    selectedElementIDs: [],
+    selections: {
+      selectedSlideIDs: presentation.slides.length > 0 ? [presentation.slides[0].id] : [],
+      selectedElementIDs: [],
+    },
     history: {
       pastStates: [],
       futureStates: [],
@@ -34,12 +35,11 @@ export function createEditor(presentation: Presentation): Editor {
 }
 
 export function concatWithSelectedSlideElements(
-  slides: Slide[],
-  selectedSlideIDs: UUID[],
+  editor: Editor,
   element: SlideElement,
 ): Slide[] {
-  return slides.map(slide =>
-    isCurrentSlide(slide, selectedSlideIDs)
+  return editor.presentation.slides.map(slide =>
+    isCurrentSlide(slide, editor.selections.selectedSlideIDs)
       ? {
         ...slide,
         elements: slide.elements.concat(element),
@@ -62,17 +62,14 @@ export function isCurrentElement(
   return element.id === selectedElementIDs[0];
 }
 
-export function selectNearestUnselectedSlide(
-  slides: Slide[],
-  selectedSlideIDs: UUID[],
-): UUID[] {
-  const firstSelectedSlideIndex = slides.findIndex(slide => isCurrentSlide(slide, selectedSlideIDs));
+export function selectNearestUnselectedSlide(editor: Editor): UUID[] {
+  const firstSelectedSlideIndex = editor.presentation.slides.findIndex(slide => isCurrentSlide(slide, editor.selections.selectedSlideIDs));
 
   if (firstSelectedSlideIndex > 0) {
-    return [slides[firstSelectedSlideIndex - 1].id];
+    return [editor.presentation.slides[firstSelectedSlideIndex - 1].id];
   }
 
-  const newSlides = slides.filter(slide => !selectedSlideIDs.includes(slide.id));
+  const newSlides = editor.presentation.slides.filter(slide => !editor.selections.selectedSlideIDs.includes(slide.id));
 
   if (newSlides.length === 0) {
     return [];
@@ -92,12 +89,32 @@ export function moveElementOnTop(elements: SlideElement[], elementID: UUID): Sli
   return elements;
 }
 
+export function getCurrentSlideIndex(editor: Editor): number {
+  return editor.presentation.slides.reduce(
+    (savedIndex, slide, index) => isCurrentSlide(slide, editor.selections.selectedSlideIDs)
+      ? index
+      : savedIndex,
+    -1,
+  );
+}
+
 export function saveState(editor: Editor, newEditor: Editor): Editor {
-  return {
-    ...newEditor,
-    history: {
-      pastStates: [...newEditor.history.pastStates, editor.presentation],
-      futureStates: [],
-    },
-  };
+  if (editor !== newEditor) {
+    const historyState = {
+      presentation: editor.presentation,
+      selections: editor.selections,
+    };
+
+    return {
+      ...newEditor,
+      history: {
+        pastStates: newEditor.history.pastStates.length < MAX_HISTORY_ENTRIES
+          ? [...newEditor.history.pastStates, historyState]
+          : [...newEditor.history.pastStates.slice(1), historyState],
+        futureStates: [],
+      },
+    };
+  }
+
+  return newEditor;
 }

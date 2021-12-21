@@ -34,11 +34,11 @@ function PropertiesPanel({ selectedElementType }: PropertiesPanelProps): JSX.Ele
 }
 
 function mapStateToProps(state: RootState): PropertiesPanelProps {
-  if (state.selectedElementIDs.length === 1) {
+  if (state.selections.selectedElementIDs.length === 1) {
     for (const slide of state.presentation.slides) {
-      if (isCurrentSlide(slide, state.selectedSlideIDs)) {
+      if (isCurrentSlide(slide, state.selections.selectedSlideIDs)) {
         for (const element of slide.elements) {
-          if (element.id === state.selectedElementIDs[0]) {
+          if (element.id === state.selections.selectedElementIDs[0]) {
             return {
               selectedElementType: element.type,
             };

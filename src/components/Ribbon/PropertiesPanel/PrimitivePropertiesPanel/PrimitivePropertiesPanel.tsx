@@ -52,9 +52,9 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
 
 function mapStateToProps(state: RootState): PrimitivePropertiesPanelProps {
   for (const slide of state.presentation.slides) {
-    if (isCurrentSlide(slide, state.selectedSlideIDs)) {
+    if (isCurrentSlide(slide, state.selections.selectedSlideIDs)) {
       for (const element of slide.elements) {
-        if (isCurrentElement(element, state.selectedElementIDs) && element.type === ElementType.PRIMITIVE) {
+        if (isCurrentElement(element, state.selections.selectedElementIDs) && element.type === ElementType.PRIMITIVE) {
           return {
             currentElement: element,
           };
