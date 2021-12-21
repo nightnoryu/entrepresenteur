@@ -68,10 +68,7 @@ export function removeSlides(editor: Editor): Editor {
     },
     selections: {
       ...editor.selections,
-      selectedSlideIDs: selectNearestUnselectedSlide(
-        editor.presentation.slides,
-        editor.selections.selectedSlideIDs,
-      ),
+      selectedSlideIDs: selectNearestUnselectedSlide(editor),
     },
   };
 }
@@ -114,7 +111,7 @@ export function selectSlide(editor: Editor, slideID: UUID): Editor {
 }
 
 export function nextSlide(editor: Editor): Editor {
-  const currentSlideIndex = getCurrentSlideIndex(editor.presentation.slides, editor.selections.selectedSlideIDs);
+  const currentSlideIndex = getCurrentSlideIndex(editor);
 
   return {
     ...editor,
@@ -128,7 +125,7 @@ export function nextSlide(editor: Editor): Editor {
 }
 
 export function previousSlide(editor: Editor): Editor {
-  const currentSlideIndex = getCurrentSlideIndex(editor.presentation.slides, editor.selections.selectedSlideIDs);
+  const currentSlideIndex = getCurrentSlideIndex(editor);
 
   return {
     ...editor,
@@ -220,8 +217,7 @@ export function addText(
     presentation: {
       ...editor.presentation,
       slides: concatWithSelectedSlideElements(
-        editor.presentation.slides,
-        editor.selections.selectedSlideIDs,
+        editor,
         {
           id: generateUUID(),
           type: ElementType.TEXT,
@@ -385,8 +381,7 @@ export function addImage(
     presentation: {
       ...editor.presentation,
       slides: concatWithSelectedSlideElements(
-        editor.presentation.slides,
-        editor.selections.selectedSlideIDs,
+        editor,
         {
           id: generateUUID(),
           type: ElementType.IMAGE,
@@ -415,8 +410,7 @@ export function addPrimitive(
     presentation: {
       ...editor.presentation,
       slides: concatWithSelectedSlideElements(
-        editor.presentation.slides,
-        editor.selections.selectedSlideIDs,
+        editor,
         {
           id: generateUUID(),
           type: ElementType.PRIMITIVE,
