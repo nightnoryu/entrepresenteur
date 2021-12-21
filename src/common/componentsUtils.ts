@@ -1,4 +1,4 @@
-import { BackgroundType, PrimitiveElement, Slide, SlideElement } from '../model/types';
+import { BackgroundType, Dimensions, Position, PrimitiveElement, Slide, SlideElement } from '../model/types';
 
 export function getSlideBackgroundStyle(slide: Slide) {
   return slide.background.type == BackgroundType.SOLID
@@ -45,4 +45,17 @@ export function getResizeAnchorProperties(element: SlideElement) {
     width: 10,
     height: 10,
   };
+}
+
+export function getResizeAnchorTranslateDelta(
+  element: SlideElement,
+  delta: Position,
+  dimensions: Dimensions,
+): Position {
+  return delta.x === 0 && delta.y === 0
+    ? {
+      x: dimensions.width - element.dimensions.width,
+      y: dimensions.height - element.dimensions.height,
+    }
+    : delta;
 }

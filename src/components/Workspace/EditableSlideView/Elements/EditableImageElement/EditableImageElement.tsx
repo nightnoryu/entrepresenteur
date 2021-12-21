@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import useSlideElementDragAndDrop from '../../../../../hooks/dragAndDrop/useSlideElementDragAndDrop';
 import useSlideElementActions from '../../../../../hooks/useSlideElementActions';
 import useSlideElementResize from '../../../../../hooks/useSlideElementResize';
-import { getResizeAnchorProperties } from '../../../../../common/componentsUtils';
+import { getResizeAnchorProperties, getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
 
 type EditableImageElementProps = {
   element: ImageElement;
@@ -26,6 +26,8 @@ function EditableImageElement({ element, scaleFactor, isSelected, parentRef }: E
   const ref = useRef(null);
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef, resizeAnchorRef);
   const delta = useSlideElementDragAndDrop(ref, element, scaleFactor, moveElements);
+
+  const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
 
   return (
     <>
@@ -46,7 +48,7 @@ function EditableImageElement({ element, scaleFactor, isSelected, parentRef }: E
               ref={resizeAnchorRef}
               {...getResizeAnchorProperties(element)}
               className={styles.resizeAnchor}
-              style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
+              style={{ transform: `translate(${resizeAnchorDelta.x}px, ${resizeAnchorDelta.y}px)` }}
           />
       }
     </>
