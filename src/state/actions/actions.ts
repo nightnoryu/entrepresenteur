@@ -32,9 +32,10 @@ export const STATEFUL_ACTIONS = [
   ActionType.SET_TEXT_VALUE,
   ActionType.SET_TEXT_FONT,
   ActionType.SET_TEXT_SIZE,
-  ActionType.SET_TEXT_COLOR,
-  ActionType.SET_PRIMITIVE_FILL_COLOR,
-  ActionType.SET_PRIMITIVE_STROKE_COLOR,
+  // TODO: #65
+  // ActionType.SET_TEXT_COLOR,
+  // ActionType.SET_PRIMITIVE_FILL_COLOR,
+  // ActionType.SET_PRIMITIVE_STROKE_COLOR,
   ActionType.MOVE_ELEMENTS,
   ActionType.RESIZE_ELEMENT,
   ActionType.REMOVE_ELEMENTS,
