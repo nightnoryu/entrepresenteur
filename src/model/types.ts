@@ -79,14 +79,19 @@ export type Presentation = {
   slides: Slide[];
 };
 
-type Selections = {
+export type Selections = {
   selectedSlideIDs: UUID[];
   selectedElementIDs: UUID[];
 };
 
+export type HistoryState = {
+  presentation: Presentation;
+  selections: Selections;
+};
+
 export type History = {
-  pastStates: Presentation[];
-  futureStates: Presentation[];
+  pastStates: HistoryState[];
+  futureStates: HistoryState[];
 };
 
 export type Editor = {

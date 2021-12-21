@@ -99,12 +99,17 @@ export function getCurrentSlideIndex(editor: Editor): number {
 }
 
 export function saveState(editor: Editor, newEditor: Editor): Editor {
+  const historyState = {
+    presentation: editor.presentation,
+    selections: editor.selections,
+  };
+
   return {
     ...newEditor,
     history: {
       pastStates: newEditor.history.pastStates.length < MAX_HISTORY_ENTRIES
-        ? [...newEditor.history.pastStates, editor.presentation]
-        : [...newEditor.history.pastStates.slice(1), editor.presentation],
+        ? [...newEditor.history.pastStates, historyState]
+        : [...newEditor.history.pastStates.slice(1), historyState],
       futureStates: [],
     },
   };

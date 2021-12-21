@@ -585,29 +585,49 @@ export function resizeElement(
 }
 
 export function undo(editor: Editor): Editor {
-  return editor.history.pastStates.length > 0
-    ? {
+  if (editor.history.pastStates.length > 0) {
+    const currentHistoryState = {
+      presentation: editor.presentation,
+      selections: editor.selections,
+    };
+
+    const previousHistoryState = editor.history.pastStates[editor.history.pastStates.length - 1];
+
+    return {
       ...editor,
-      presentation: editor.history.pastStates[editor.history.pastStates.length - 1],
+      presentation: previousHistoryState.presentation,
+      selections: previousHistoryState.selections,
       history: {
         pastStates: editor.history.pastStates.slice(0, editor.history.pastStates.length - 1),
-        futureStates: [editor.presentation, ...editor.history.futureStates],
+        futureStates: [currentHistoryState, ...editor.history.futureStates],
       },
-    }
-    : editor;
+    };
+  }
+
+  return editor;
 }
 
 export function redo(editor: Editor): Editor {
-  return editor.history.futureStates.length > 0
-    ? {
+  if (editor.history.futureStates.length > 0) {
+    const currentHistoryState = {
+      presentation: editor.presentation,
+      selections: editor.selections,
+    };
+
+    const nextHistoryState = editor.history.futureStates[0];
+
+    return {
       ...editor,
-      presentation: editor.history.futureStates[0],
+      presentation: nextHistoryState.presentation,
+      selections: editor.history.futureStates.length != 1 ? nextHistoryState.selections : editor.selections,
       history: {
-        pastStates: [...editor.history.pastStates, editor.presentation],
+        pastStates: [...editor.history.pastStates, currentHistoryState],
         futureStates: editor.history.futureStates.slice(1),
       },
-    }
-    : editor;
+    };
+  }
+
+  return editor;
 }
 
 export function exportPresentation(presentation: Presentation): void {
