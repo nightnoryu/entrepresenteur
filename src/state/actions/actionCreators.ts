@@ -216,6 +216,14 @@ export function selectSlide(slideID: UUID) {
   };
 }
 
+export function setFirstCurrentSlide() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_FIRST_CURRENT_SLIDE,
+    });
+  };
+}
+
 export function addText(position: Position, dimensions: Dimensions, value: string) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({

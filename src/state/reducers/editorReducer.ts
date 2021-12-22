@@ -16,6 +16,7 @@ import {
   selectElement,
   selectSlide,
   setCurrentSlide,
+  setFirstCurrentSlide,
   setPresentationTitle,
   setPrimitiveFillColor,
   setPrimitiveStrokeColor,
@@ -78,6 +79,8 @@ function editorReducer(state = initialState, action: Action): Editor {
     return setCurrentSlide(state, action.payload);
   case ActionType.SELECT_SLIDE:
     return selectSlide(state, action.payload);
+  case ActionType.SET_FIRST_CURRENT_SLIDE:
+    return setFirstCurrentSlide(state);
   case ActionType.ADD_TEXT:
     return addText(state, action.payload);
   case ActionType.ADD_IMAGE:
