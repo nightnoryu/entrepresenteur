@@ -18,6 +18,7 @@ export function getRibbonMenuItems(
   removeElements: MenuAction,
   undo: MenuAction,
   redo: MenuAction,
+  startDemonstrationFromStart: MenuAction,
   startDemonstration: MenuAction,
 ): DropdownMenuItemType[] {
   return [
@@ -157,7 +158,7 @@ export function getRibbonMenuItems(
         {
           type: MenuItemType.MenuButton,
           label: 'From start',
-          action: () => console.log('from start'),
+          action: startDemonstrationFromStart,
           icon: 'restart_alt',
         },
         {

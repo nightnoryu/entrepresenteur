@@ -36,6 +36,7 @@ type AppDispatchProps = {
   setSlideBackgroundImage: () => void;
   setSlideBackgroundColor: () => void;
   removeElements: () => void;
+  startDemonstrationFromStart: () => void;
   startDemonstration: () => void;
 };
 
@@ -57,6 +58,7 @@ function App(
     setSlideBackgroundImage,
     setSlideBackgroundColor,
     removeElements,
+    startDemonstrationFromStart,
     startDemonstration,
   }: AppProps,
 ): JSX.Element {
@@ -86,6 +88,7 @@ function App(
     removeElements,
     undo,
     redo,
+    startDemonstrationFromStart,
     startDemonstration,
   );
 
@@ -167,6 +170,10 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
 
     removeElements: () => actionCreators.removeElements()(dispatch),
 
+    startDemonstrationFromStart: () => {
+      actionCreators.setFirstCurrentSlide()(dispatch);
+      actionCreators.startDemonstration()(dispatch);
+    },
     startDemonstration: () => actionCreators.startDemonstration()(dispatch),
   };
 }
