@@ -53,7 +53,7 @@ function EditablePrimitiveElement(
           fill={element.fill}
           stroke={element.stroke}
           style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
-          ref={ref}
+          ref={isSelected ? undefined : ref}
         />
       );
     case PrimitiveType.TRIANGLE:
@@ -63,7 +63,7 @@ function EditablePrimitiveElement(
           fill={element.fill}
           stroke={element.stroke}
           style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
-          ref={ref}
+          ref={isSelected ? undefined : ref}
         />
       );
     case PrimitiveType.ELLIPSE: {
@@ -78,7 +78,7 @@ function EditablePrimitiveElement(
           fill={element.fill}
           stroke={element.stroke}
           style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
-          ref={ref}
+          ref={isSelected ? undefined : ref}
         />
       );
     }
@@ -88,6 +88,21 @@ function EditablePrimitiveElement(
   return (
     <>
       {getPrimitiveElement()}
+      {
+        isSelected &&
+          <rect
+              x={element.position.x}
+              y={element.position.y}
+              width={dimensions.width}
+              height={dimensions.height}
+              fill="#2a8ec8"
+              stroke="#1563c8"
+              fillOpacity="0.3"
+              strokeOpacity="0.3"
+              style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
+              ref={isSelected ? ref : undefined}
+          />
+      }
       {
         isSelected &&
           <rect
