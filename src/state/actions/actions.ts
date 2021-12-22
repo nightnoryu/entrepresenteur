@@ -26,6 +26,8 @@ export enum ActionType {
   ADD_PRIMITIVE,
   UNDO,
   REDO,
+  START_DEMONSTRATION,
+  STOP_DEMONSTRATION,
 }
 
 export const STATEFUL_ACTIONS = [

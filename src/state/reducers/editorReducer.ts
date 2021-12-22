@@ -25,6 +25,8 @@ import {
   setTextFont,
   setTextSize,
   setTextValue,
+  startDemonstration,
+  stopDemonstration,
   unselectElement,
 } from '../../model/actions';
 
@@ -82,6 +84,10 @@ function editorReducer(state = initialState, action: Action): Editor {
     return addImage(state, action.payload);
   case ActionType.ADD_PRIMITIVE:
     return addPrimitive(state, action.payload);
+  case ActionType.START_DEMONSTRATION:
+    return startDemonstration(state);
+  case ActionType.STOP_DEMONSTRATION:
+    return stopDemonstration(state);
   default:
     return state;
   }

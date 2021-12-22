@@ -630,6 +630,20 @@ export function redo(editor: Editor): Editor {
   return editor;
 }
 
+export function startDemonstration(editor: Editor): Editor {
+  return {
+    ...editor,
+    isDemonstrating: true,
+  };
+}
+
+export function stopDemonstration(editor: Editor): Editor {
+  return {
+    ...editor,
+    isDemonstrating: false,
+  };
+}
+
 export function exportPresentation(presentation: Presentation): void {
   // TODO: implement
 }

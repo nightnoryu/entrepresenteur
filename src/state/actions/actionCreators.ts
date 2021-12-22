@@ -270,3 +270,19 @@ export function redo() {
     });
   };
 }
+
+export function startDemonstration() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.START_DEMONSTRATION,
+    });
+  };
+}
+
+export function stopDemonstration() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.STOP_DEMONSTRATION,
+    });
+  };
+}
