@@ -36,6 +36,7 @@ type AppDispatchProps = {
   setSlideBackgroundImage: () => void;
   setSlideBackgroundColor: () => void;
   removeElements: () => void;
+  startDemonstration: () => void;
 };
 
 function App(
@@ -56,6 +57,7 @@ function App(
     setSlideBackgroundImage,
     setSlideBackgroundColor,
     removeElements,
+    startDemonstration,
   }: AppProps,
 ): JSX.Element {
   useConfirmLeaving();
@@ -84,6 +86,7 @@ function App(
     removeElements,
     undo,
     redo,
+    startDemonstration,
   );
 
   return (
@@ -163,6 +166,8 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
     },
 
     removeElements: () => actionCreators.removeElements()(dispatch),
+
+    startDemonstration: () => actionCreators.startDemonstration()(dispatch),
   };
 }
 
