@@ -98,4 +98,5 @@ export type Editor = {
   presentation: Presentation;
   selections: Selections;
   history: History;
+  isDemonstrating: boolean;
 };

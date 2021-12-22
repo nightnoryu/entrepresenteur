@@ -16,6 +16,7 @@ import {
   selectElement,
   selectSlide,
   setCurrentSlide,
+  setFirstCurrentSlide,
   setPresentationTitle,
   setPrimitiveFillColor,
   setPrimitiveStrokeColor,
@@ -25,6 +26,8 @@ import {
   setTextFont,
   setTextSize,
   setTextValue,
+  startDemonstration,
+  stopDemonstration,
   unselectElement,
 } from '../../model/actions';
 
@@ -76,12 +79,18 @@ function editorReducer(state = initialState, action: Action): Editor {
     return setCurrentSlide(state, action.payload);
   case ActionType.SELECT_SLIDE:
     return selectSlide(state, action.payload);
+  case ActionType.SET_FIRST_CURRENT_SLIDE:
+    return setFirstCurrentSlide(state);
   case ActionType.ADD_TEXT:
     return addText(state, action.payload);
   case ActionType.ADD_IMAGE:
     return addImage(state, action.payload);
   case ActionType.ADD_PRIMITIVE:
     return addPrimitive(state, action.payload);
+  case ActionType.START_DEMONSTRATION:
+    return startDemonstration(state);
+  case ActionType.STOP_DEMONSTRATION:
+    return stopDemonstration(state);
   default:
     return state;
   }

@@ -31,6 +31,7 @@ export function createEditor(presentation: Presentation): Editor {
       pastStates: [],
       futureStates: [],
     },
+    isDemonstrating: false,
   };
 }
 

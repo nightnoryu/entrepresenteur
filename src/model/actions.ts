@@ -110,6 +110,16 @@ export function selectSlide(editor: Editor, slideID: UUID): Editor {
   };
 }
 
+export function setFirstCurrentSlide(editor: Editor): Editor {
+  return {
+    ...editor,
+    selections: {
+      selectedSlideIDs: [editor.presentation.slides[0].id],
+      selectedElementIDs: [],
+    },
+  };
+}
+
 export function nextSlide(editor: Editor): Editor {
   const currentSlideIndex = getCurrentSlideIndex(editor);
 
@@ -628,6 +638,20 @@ export function redo(editor: Editor): Editor {
   }
 
   return editor;
+}
+
+export function startDemonstration(editor: Editor): Editor {
+  return {
+    ...editor,
+    isDemonstrating: true,
+  };
+}
+
+export function stopDemonstration(editor: Editor): Editor {
+  return {
+    ...editor,
+    isDemonstrating: false,
+  };
 }
 
 export function exportPresentation(presentation: Presentation): void {

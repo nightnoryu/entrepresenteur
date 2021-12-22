@@ -18,6 +18,8 @@ export function getRibbonMenuItems(
   removeElements: MenuAction,
   undo: MenuAction,
   redo: MenuAction,
+  startDemonstrationFromStart: MenuAction,
+  startDemonstration: MenuAction,
 ): DropdownMenuItemType[] {
   return [
     {
@@ -147,6 +149,23 @@ export function getRibbonMenuItems(
               icon: 'image',
             },
           ],
+        },
+      ],
+    },
+    {
+      label: 'Demonstration',
+      items: [
+        {
+          type: MenuItemType.MenuButton,
+          label: 'From start',
+          action: startDemonstrationFromStart,
+          icon: 'restart_alt',
+        },
+        {
+          type: MenuItemType.MenuButton,
+          label: 'From current slide',
+          action: startDemonstration,
+          icon: 'play_arrow',
         },
       ],
     },

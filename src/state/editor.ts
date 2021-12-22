@@ -124,6 +124,7 @@ const editor: Editor = {
     pastStates: [],
     futureStates: [],
   },
+  isDemonstrating: false,
 };
 
 export default function getEditor(): Editor {
