@@ -9,7 +9,7 @@ function useHotkey(
 ): void {
   useEventListener('keydown', (e: Event) => {
     const event = e as KeyboardEvent;
-    console.log(event);
+
     if (event.key === key) {
       event.preventDefault();
       handler(event);
