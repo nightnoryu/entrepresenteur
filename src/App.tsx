@@ -112,9 +112,12 @@ function mapStateToProps(state: RootState): AppStateProps {
 function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
   return {
     openPresentation: () => {
-      openPresentationJSON()
-        .then(presentation => actionCreators.openPresentation(presentation)(dispatch))
-        .catch(error => alert(error));
+      const confirmed = confirm('Are you sure? All unsaved changes will be lost.');
+      if (confirmed) {
+        openPresentationJSON()
+          .then(presentation => actionCreators.openPresentation(presentation)(dispatch))
+          .catch(error => alert(error));
+      }
     },
 
     newPresentation: () => {

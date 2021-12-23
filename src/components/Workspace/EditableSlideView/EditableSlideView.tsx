@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { ElementType, Slide } from '../../../model/types';
 import styles from './EditableSlideView.module.css';
 import { getSlideBackgroundStyle } from '../../../common/componentsUtils';
@@ -32,6 +32,7 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
   }, ref);
 
   const scaleFactor = useScaleFactorForDragAndDrop(ref);
+  const [delta, setDelta] = useState({ x: 0, y: 0 });
 
   return (
     <svg
@@ -50,6 +51,8 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
             key={element.id}
             element={element}
             scaleFactor={scaleFactor}
+            delta={delta}
+            setDelta={setDelta}
             isSelected={isSelected}
             parentRef={ref}
           />;
@@ -58,6 +61,8 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
             key={element.id}
             element={element}
             scaleFactor={scaleFactor}
+            delta={delta}
+            setDelta={setDelta}
             isSelected={isSelected}
             parentRef={ref}
           />;
@@ -66,6 +71,8 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
             key={element.id}
             element={element}
             scaleFactor={scaleFactor}
+            delta={delta}
+            setDelta={setDelta}
             isSelected={isSelected}
             parentRef={ref}
           />;

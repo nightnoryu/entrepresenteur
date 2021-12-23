@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { TextElement } from '../../../../../model/types';
+import { Position, TextElement } from '../../../../../model/types';
 import { useDispatch } from 'react-redux';
 import { actionCreators } from '../../../../../state';
 import { bindActionCreators } from 'redux';
@@ -10,11 +10,22 @@ import useSlideElementActions from '../../../../../hooks/useSlideElementActions'
 type EditableTextElementProps = {
   element: TextElement;
   scaleFactor: number;
+  delta: Position;
+  setDelta: (position: Position) => void;
   isSelected: boolean;
   parentRef: React.RefObject<DocumentAndElementEventHandlers>;
 }
 
-function EditableTextElement({ element, scaleFactor, isSelected, parentRef }: EditableTextElementProps): JSX.Element {
+function EditableTextElement(
+  {
+    element,
+    scaleFactor,
+    delta,
+    setDelta,
+    isSelected,
+    parentRef,
+  }: EditableTextElementProps,
+): JSX.Element {
   const dispatch = useDispatch();
   const {
     selectElement,
@@ -27,7 +38,7 @@ function EditableTextElement({ element, scaleFactor, isSelected, parentRef }: Ed
   const ref = useRef(null);
 
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef);
-  const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
+  useElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements);
 
   useDoubleClick(ref, () => {
     const newValue = prompt('Enter new value', element.value);
@@ -53,7 +64,7 @@ function EditableTextElement({ element, scaleFactor, isSelected, parentRef }: Ed
         width: element.dimensions.width,
         height: element.dimensions.height,
         userSelect: 'none',
-        transform: `translate(${delta.x}px, ${delta.y}px)`,
+        transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined,
       }}
       ref={ref}
     >

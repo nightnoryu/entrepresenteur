@@ -26,19 +26,7 @@ export function getTrianglePoints(element: PrimitiveElement): string {
   return `${firstPoint} ${secondPoint} ${thirdPoint}`;
 }
 
-export function getSelectedSVGElementProperties(element: SlideElement, isSelected: boolean) {
-  return isSelected ? {
-    fill: '#2a8ec8',
-    stroke: '#1563c8',
-    fillOpacity: '0.3',
-    strokeOpacity: '0.3',
-  } : {
-    fillOpacity: '0',
-    strokeOpacity: '0',
-  };
-}
-
-export function getResizeAnchorProperties(element: SlideElement) {
+export function getResizeAnchorProperties(element: SlideElement): Position & Dimensions {
   return {
     x: element.position.x + element.dimensions.width - 5,
     y: element.position.y + element.dimensions.height - 5,
