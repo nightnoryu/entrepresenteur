@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { PrimitiveElement, PrimitiveType } from '../../../../../model/types';
+import { Position, PrimitiveElement, PrimitiveType } from '../../../../../model/types';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import useElementDragAndDrop from '../../../../../hooks/dragAndDrop/useSlideElementDragAndDrop';
@@ -17,6 +17,8 @@ import styles from '../EditableElement.module.css';
 type EditablePrimitiveElementProps = {
   element: PrimitiveElement;
   scaleFactor: number;
+  delta: Position;
+  setDelta: (position: Position) => void;
   isSelected: boolean;
   parentRef: React.RefObject<DocumentAndElementEventHandlers>;
 }
@@ -25,6 +27,8 @@ function EditablePrimitiveElement(
   {
     element,
     scaleFactor,
+    delta,
+    setDelta,
     isSelected,
     parentRef,
   }: EditablePrimitiveElementProps,
@@ -37,7 +41,7 @@ function EditablePrimitiveElement(
 
   const ref = useRef(null);
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef, resizeAnchorRef);
-  const delta = useElementDragAndDrop(ref, element, scaleFactor, moveElements);
+  useElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements);
 
   const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
 
@@ -52,7 +56,7 @@ function EditablePrimitiveElement(
           height={dimensions.height}
           fill={element.fill}
           stroke={element.stroke}
-          style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
+          style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
           ref={isSelected ? undefined : ref}
         />
       );
@@ -77,7 +81,7 @@ function EditablePrimitiveElement(
           ry={properties.ry}
           fill={element.fill}
           stroke={element.stroke}
-          style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
+          style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
           ref={isSelected ? undefined : ref}
         />
       );
