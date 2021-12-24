@@ -1,6 +1,12 @@
 import { BackgroundType, Dimensions, Position, PrimitiveElement, Slide, SlideElement } from '../model/types';
 
-export function getSlideBackgroundStyle(slide: Slide) {
+type SlideBackgroundStyle = {
+  backgroundColor: string;
+} | {
+  backgroundImage: string;
+};
+
+export function getSlideBackgroundStyle(slide: Slide): SlideBackgroundStyle {
   return slide.background.type == BackgroundType.SOLID
     ? {
       backgroundColor: slide.background.color,
@@ -10,7 +16,14 @@ export function getSlideBackgroundStyle(slide: Slide) {
     };
 }
 
-export function calculateEllipseProperties(element: PrimitiveElement) {
+type EllipseProperties = {
+  cx: number;
+  cy: number;
+  rx: number;
+  ry: number;
+};
+
+export function calculateEllipseProperties(element: PrimitiveElement): EllipseProperties {
   return {
     cx: element.position.x + element.dimensions.width / 2,
     cy: element.position.y + element.dimensions.height / 2,
