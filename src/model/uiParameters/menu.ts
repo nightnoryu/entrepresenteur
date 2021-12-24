@@ -150,6 +150,37 @@ export function getRibbonMenuItems(
             },
           ],
         },
+        {
+          type: MenuItemType.Submenu,
+          label: 'Move',
+          icon: 'low_priority',
+          items: [
+            {
+              type: MenuItemType.MenuButton,
+              label: 'Up',
+              action: () => console.log('Up'),
+              icon: 'arrow_upward',
+            },
+            {
+              type: MenuItemType.MenuButton,
+              label: 'Down',
+              action: () => console.log('Down'),
+              icon: 'arrow_downward',
+            },
+            {
+              type: MenuItemType.MenuButton,
+              label: 'To beginning',
+              action: () => console.log('To beginning'),
+              icon: 'vertical_align_top',
+            },
+            {
+              type: MenuItemType.MenuButton,
+              label: 'To end',
+              action: () => console.log('To end'),
+              icon: 'vertical_align_bottom',
+            },
+          ],
+        },
       ],
     },
     {
