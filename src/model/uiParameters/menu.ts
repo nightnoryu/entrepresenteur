@@ -20,6 +20,8 @@ export function getRibbonMenuItems(
   redo: MenuAction,
   startDemonstrationFromStart: MenuAction,
   startDemonstration: MenuAction,
+  moveSlidesToBeginning: MenuAction,
+  moveSlidesToEnd: MenuAction,
 ): DropdownMenuItemType[] {
   return [
     {
@@ -170,13 +172,13 @@ export function getRibbonMenuItems(
             {
               type: MenuItemType.MenuButton,
               label: 'To beginning',
-              action: () => console.log('To beginning'),
+              action: moveSlidesToBeginning,
               icon: 'vertical_align_top',
             },
             {
               type: MenuItemType.MenuButton,
               label: 'To end',
-              action: () => console.log('To end'),
+              action: moveSlidesToEnd,
               icon: 'vertical_align_bottom',
             },
           ],
