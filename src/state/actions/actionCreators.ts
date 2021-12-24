@@ -224,6 +224,38 @@ export function setFirstCurrentSlide() {
   };
 }
 
+export function moveSlidesUp() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.MOVE_SLIDES_UP,
+    });
+  };
+}
+
+export function moveSlidesDown() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.MOVE_SLIDES_DOWN,
+    });
+  };
+}
+
+export function moveSlidesToBeginning() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.MOVE_SLIDES_TO_BEGINNING,
+    });
+  };
+}
+
+export function moveSlidesToEnd() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.MOVE_SLIDES_TO_END,
+    });
+  };
+}
+
 export function addText(position: Position, dimensions: Dimensions, value: string) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({

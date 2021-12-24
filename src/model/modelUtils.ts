@@ -99,6 +99,19 @@ export function getCurrentSlideIndex(editor: Editor): number {
   );
 }
 
+export function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
+  return {
+    ...editor,
+    presentation: {
+      ...editor.presentation,
+      slides: slideIDs.flatMap(
+        slideID =>
+          editor.presentation.slides.find(slide => slide.id === slideID) || [],
+      ),
+    },
+  };
+}
+
 export function saveState(editor: Editor, newEditor: Editor): Editor {
   if (editor !== newEditor) {
     const historyState = {

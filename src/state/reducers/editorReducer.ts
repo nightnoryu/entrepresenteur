@@ -7,6 +7,8 @@ import {
   addSlide,
   addText,
   moveElements,
+  moveSlidesToBeginning,
+  moveSlidesToEnd,
   nextSlide,
   openPresentation,
   previousSlide,
@@ -81,6 +83,10 @@ function editorReducer(state = initialState, action: Action): Editor {
     return selectSlide(state, action.payload);
   case ActionType.SET_FIRST_CURRENT_SLIDE:
     return setFirstCurrentSlide(state);
+  case ActionType.MOVE_SLIDES_TO_BEGINNING:
+    return moveSlidesToBeginning(state);
+  case ActionType.MOVE_SLIDES_TO_END:
+    return moveSlidesToEnd(state);
   case ActionType.ADD_TEXT:
     return addText(state, action.payload);
   case ActionType.ADD_IMAGE:
