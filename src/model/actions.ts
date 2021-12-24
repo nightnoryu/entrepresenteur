@@ -653,7 +653,3 @@ export function stopDemonstration(editor: Editor): Editor {
     isDemonstrating: false,
   };
 }
-
-export function exportPresentation(presentation: Presentation): void {
-  // TODO: implement
-}

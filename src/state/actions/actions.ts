@@ -53,6 +53,7 @@ export const STATEFUL_ACTIONS = [
 
 type Action = {
   type: ActionType;
+  // eslint-disable-next-line
   payload?: any;
 }
 

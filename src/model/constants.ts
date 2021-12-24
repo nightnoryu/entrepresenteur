@@ -30,6 +30,7 @@ export const DEFAULT_TEXT_COLOR = '#000000';
 export const DEFAULT_TEXT_SIZE = 44;
 
 export const DEFAULT_IMAGE_WIDTH = SLIDE_WIDTH / 2;
+export const DEFAULT_IMAGE_HEIGHT = SLIDE_WIDTH / 2;
 
 export const DEFAULT_PRIMITIVE_DIMENSIONS: Dimensions = {
   width: 200,
