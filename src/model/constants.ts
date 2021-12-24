@@ -2,6 +2,7 @@ import { Dimensions, Position } from './types';
 
 // Editor
 export const MAX_HISTORY_ENTRIES = 50;
+export const PRESENTATION_EXTENSION = '.entrepresenteur.json';
 
 // Presentation
 

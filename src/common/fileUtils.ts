@@ -1,10 +1,16 @@
 import { Dimensions, Presentation } from '../model/types';
-import { DEFAULT_IMAGE_HEIGHT, DEFAULT_IMAGE_WIDTH } from '../model/constants';
+import { DEFAULT_IMAGE_HEIGHT, DEFAULT_IMAGE_WIDTH, PRESENTATION_EXTENSION } from '../model/constants';
 
-function openFile(): Promise<File> {
+enum FileTypes {
+  IMAGES = 'image/*',
+  PRESENTATIONS = '.json',
+}
+
+function openFile(types: FileTypes): Promise<File> {
   return new Promise(resolve => {
     const input = document.createElement('input');
     input.type = 'file';
+    input.accept = types;
 
     input.addEventListener('change', (event: Event) => {
       const target = event.target as HTMLInputElement;
@@ -25,7 +31,7 @@ export function savePresentationJSON(presentation: Presentation, filename: strin
 
   const link = document.createElement('a');
   link.href = url;
-  link.download = filename + '.json';
+  link.download = filename + PRESENTATION_EXTENSION;
 
   link.click();
   URL.revokeObjectURL(url);
@@ -33,7 +39,7 @@ export function savePresentationJSON(presentation: Presentation, filename: strin
 
 export function openPresentationJSON(): Promise<Presentation> {
   return new Promise((resolve, reject) => {
-    openFile()
+    openFile(FileTypes.PRESENTATIONS)
       .then(file => {
         const reader = new FileReader();
 
@@ -55,7 +61,7 @@ export function openPresentationJSON(): Promise<Presentation> {
 
 export function openImageBase64(): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
-    openFile()
+    openFile(FileTypes.IMAGES)
       .then(file => {
         const reader = new FileReader();
 
