@@ -99,6 +99,12 @@ export function getCurrentSlideIndex(editor: Editor): number {
   );
 }
 
+export function getUnselectedSlideIDs(editor: Editor): UUID[] {
+  return editor.presentation.slides.flatMap(
+    slide => !editor.selections.selectedSlideIDs.includes(slide.id) ? slide.id : [],
+  );
+}
+
 export function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
   return {
     ...editor,
