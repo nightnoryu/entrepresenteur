@@ -38,6 +38,8 @@ type AppDispatchProps = {
   removeElements: () => void;
   startDemonstrationFromStart: () => void;
   startDemonstration: () => void;
+  moveSlidesToBeginning: () => void;
+  moveSlidesToEnd: () => void;
 };
 
 function App(
@@ -60,6 +62,8 @@ function App(
     removeElements,
     startDemonstrationFromStart,
     startDemonstration,
+    moveSlidesToBeginning,
+    moveSlidesToEnd,
   }: AppProps,
 ): JSX.Element {
   useConfirmLeaving();
@@ -90,6 +94,8 @@ function App(
     redo,
     startDemonstrationFromStart,
     startDemonstration,
+    moveSlidesToBeginning,
+    moveSlidesToEnd,
   );
 
   return (
@@ -178,6 +184,9 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
       actionCreators.startDemonstration()(dispatch);
     },
     startDemonstration: () => actionCreators.startDemonstration()(dispatch),
+
+    moveSlidesToBeginning: () => actionCreators.moveSlidesToBeginning()(dispatch),
+    moveSlidesToEnd: () => actionCreators.moveSlidesToEnd()(dispatch),
   };
 }
 
