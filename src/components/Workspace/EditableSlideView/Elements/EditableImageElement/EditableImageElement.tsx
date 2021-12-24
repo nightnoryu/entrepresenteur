@@ -55,27 +55,27 @@ function EditableImageElement(
       />
       {
         isSelected &&
-          <rect
-              x={element.position.x}
-              y={element.position.y}
-              width={dimensions.width}
-              height={dimensions.height}
-              fill="#2a8ec8"
-              stroke="#1563c8"
-              fillOpacity="0.3"
-              strokeOpacity="0.3"
-              style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
-              ref={isSelected ? ref : undefined}
-          />
+        <rect
+          x={element.position.x}
+          y={element.position.y}
+          width={dimensions.width}
+          height={dimensions.height}
+          fill="#2a8ec8"
+          stroke="#1563c8"
+          fillOpacity="0.3"
+          strokeOpacity="0.3"
+          style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
+          ref={isSelected ? ref : undefined}
+        />
       }
       {
         isSelected &&
-          <rect
-              ref={resizeAnchorRef}
-              {...getResizeAnchorProperties(element)}
-              className={styles.resizeAnchor}
-              style={{ transform: `translate(${resizeAnchorDelta.x}px, ${resizeAnchorDelta.y}px)` }}
-          />
+        <rect
+          ref={resizeAnchorRef}
+          {...getResizeAnchorProperties(element)}
+          className={styles.resizeAnchor}
+          style={{ transform: `translate(${resizeAnchorDelta.x}px, ${resizeAnchorDelta.y}px)` }}
+        />
       }
     </>
   );
