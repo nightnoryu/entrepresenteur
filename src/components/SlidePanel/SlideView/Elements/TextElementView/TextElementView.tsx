@@ -18,6 +18,7 @@ function TextElementView({ element }: TextElementViewProps): JSX.Element {
         fontSize: element.size,
         width: element.dimensions.width,
         height: element.dimensions.height,
+        userSelect: 'none',
       }}
     >
       {element.value}
