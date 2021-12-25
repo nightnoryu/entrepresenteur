@@ -20,6 +20,10 @@ export function getRibbonMenuItems(
   redo: MenuAction,
   startDemonstrationFromStart: MenuAction,
   startDemonstration: MenuAction,
+  moveSlidesUp: MenuAction,
+  moveSlidesDown: MenuAction,
+  moveSlidesToBeginning: MenuAction,
+  moveSlidesToEnd: MenuAction,
 ): DropdownMenuItemType[] {
   return [
     {
@@ -147,6 +151,37 @@ export function getRibbonMenuItems(
               label: 'Image',
               action: setSlideBackgroundImage,
               icon: 'image',
+            },
+          ],
+        },
+        {
+          type: MenuItemType.Submenu,
+          label: 'Move',
+          icon: 'low_priority',
+          items: [
+            {
+              type: MenuItemType.MenuButton,
+              label: 'Up',
+              action: moveSlidesUp,
+              icon: 'arrow_upward',
+            },
+            {
+              type: MenuItemType.MenuButton,
+              label: 'Down',
+              action: moveSlidesDown,
+              icon: 'arrow_downward',
+            },
+            {
+              type: MenuItemType.MenuButton,
+              label: 'To beginning',
+              action: moveSlidesToBeginning,
+              icon: 'vertical_align_top',
+            },
+            {
+              type: MenuItemType.MenuButton,
+              label: 'To end',
+              action: moveSlidesToEnd,
+              icon: 'vertical_align_bottom',
             },
           ],
         },

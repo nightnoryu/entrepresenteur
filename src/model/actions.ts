@@ -1,11 +1,14 @@
 import { BackgroundType, Dimensions, Editor, ElementType, Position, Presentation, PrimitiveType } from './types';
 import { generateUUID, UUID } from './uuid';
 import {
+  changeSlidesOrder,
   concatWithSelectedSlideElements,
   createEditor,
   createNewSlide,
   getCurrentSlideIndex,
+  getUnselectedSlideIDs,
   isCurrentSlide,
+  moveElementInArray,
   moveElementOnTop,
   selectNearestUnselectedSlide,
 } from './modelUtils';
@@ -73,19 +76,6 @@ export function removeSlides(editor: Editor): Editor {
   };
 }
 
-export function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
-  return {
-    ...editor,
-    presentation: {
-      ...editor.presentation,
-      slides: slideIDs.flatMap(
-        slideID =>
-          editor.presentation.slides.find(slide => slide.id === slideID) || [],
-      ),
-    },
-  };
-}
-
 export function setCurrentSlide(editor: Editor, slideID: UUID): Editor {
   return {
     ...editor,
@@ -118,6 +108,56 @@ export function setFirstCurrentSlide(editor: Editor): Editor {
       selectedElementIDs: [],
     },
   };
+}
+
+export function moveSlidesUp(editor: Editor): Editor {
+  if (editor.selections.selectedSlideIDs.length !== 1) {
+    return editor;
+  }
+
+  const selectedSlideID = editor.selections.selectedSlideIDs[0];
+  const oldIndex = editor.presentation.slides.findIndex(slide => slide.id === selectedSlideID);
+
+  if (oldIndex === 0) {
+    return editor;
+  }
+  const newIndex = oldIndex - 1;
+
+  const slideIDs = editor.presentation.slides.map(slide => slide.id);
+  const newSlideOrder = moveElementInArray(slideIDs, oldIndex, newIndex);
+
+  return changeSlidesOrder(editor, newSlideOrder);
+}
+
+export function moveSlidesDown(editor: Editor): Editor {
+  if (editor.selections.selectedSlideIDs.length !== 1) {
+    return editor;
+  }
+
+  const selectedSlideID = editor.selections.selectedSlideIDs[0];
+  const oldIndex = editor.presentation.slides.findIndex(slide => slide.id === selectedSlideID);
+
+  if (oldIndex === editor.presentation.slides.length - 1) {
+    return editor;
+  }
+  const newIndex = oldIndex + 1;
+
+  const slideIDs = editor.presentation.slides.map(slide => slide.id);
+  const newSlideOrder = moveElementInArray(slideIDs, oldIndex, newIndex);
+
+  return changeSlidesOrder(editor, newSlideOrder);
+}
+
+export function moveSlidesToBeginning(editor: Editor): Editor {
+  const newSlideOrder = editor.selections.selectedSlideIDs.concat(getUnselectedSlideIDs(editor));
+
+  return changeSlidesOrder(editor, newSlideOrder);
+}
+
+export function moveSlidesToEnd(editor: Editor): Editor {
+  const newSlideOrder = getUnselectedSlideIDs(editor).concat(editor.selections.selectedSlideIDs);
+
+  return changeSlidesOrder(editor, newSlideOrder);
 }
 
 export function nextSlide(editor: Editor): Editor {

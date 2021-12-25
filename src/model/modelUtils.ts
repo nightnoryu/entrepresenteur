@@ -2,6 +2,17 @@ import { BackgroundType, Editor, Presentation, Slide, SlideElement } from './typ
 import { generateUUID, UUID } from './uuid';
 import { DEFAULT_PRESENTATION_NAME, DEFAULT_SLIDE_BACKGROUND, MAX_HISTORY_ENTRIES } from './constants';
 
+export function moveElementInArray<T>(
+  collection: T[],
+  oldIndex: number,
+  newIndex: number,
+): T[] {
+  const newCollection = collection.slice();
+  newCollection.splice(newIndex, 0, newCollection.splice(oldIndex, 1)[0]);
+
+  return newCollection;
+}
+
 export function createNewSlide(): Slide {
   return {
     id: generateUUID(),
@@ -97,6 +108,25 @@ export function getCurrentSlideIndex(editor: Editor): number {
       : savedIndex,
     -1,
   );
+}
+
+export function getUnselectedSlideIDs(editor: Editor): UUID[] {
+  return editor.presentation.slides.flatMap(
+    slide => !editor.selections.selectedSlideIDs.includes(slide.id) ? slide.id : [],
+  );
+}
+
+export function changeSlidesOrder(editor: Editor, slideIDs: UUID[]): Editor {
+  return {
+    ...editor,
+    presentation: {
+      ...editor.presentation,
+      slides: slideIDs.flatMap(
+        slideID =>
+          editor.presentation.slides.find(slide => slide.id === slideID) || [],
+      ),
+    },
+  };
 }
 
 export function saveState(editor: Editor, newEditor: Editor): Editor {
