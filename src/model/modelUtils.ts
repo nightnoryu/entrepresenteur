@@ -2,6 +2,17 @@ import { BackgroundType, Editor, Presentation, Slide, SlideElement } from './typ
 import { generateUUID, UUID } from './uuid';
 import { DEFAULT_PRESENTATION_NAME, DEFAULT_SLIDE_BACKGROUND, MAX_HISTORY_ENTRIES } from './constants';
 
+export function moveElementInArray<T>(
+  collection: T[],
+  oldIndex: number,
+  newIndex: number,
+): T[] {
+  const newCollection = collection.slice();
+  newCollection.splice(newIndex, 0, newCollection.splice(oldIndex, 1)[0]);
+
+  return newCollection;
+}
+
 export function createNewSlide(): Slide {
   return {
     id: generateUUID(),
