@@ -9,7 +9,6 @@ function useScaleFactorForDragAndDrop<T extends Element>(
 
   const onResize = () => {
     if (ref?.current) {
-      console.log('resized');
       setScaleFactor(SLIDE_WIDTH / ref.current.getBoundingClientRect().width);
     }
   };
