@@ -8,6 +8,7 @@ import {
   getCurrentSlideIndex,
   getUnselectedSlideIDs,
   isCurrentSlide,
+  moveElementInArray,
   moveElementOnTop,
   selectNearestUnselectedSlide,
 } from './modelUtils';
@@ -110,11 +111,41 @@ export function setFirstCurrentSlide(editor: Editor): Editor {
 }
 
 export function moveSlidesUp(editor: Editor): Editor {
-  return editor;
+  if (editor.selections.selectedSlideIDs.length !== 1) {
+    return editor;
+  }
+
+  const selectedSlideID = editor.selections.selectedSlideIDs[0];
+  const oldIndex = editor.presentation.slides.findIndex(slide => slide.id === selectedSlideID);
+
+  if (oldIndex === 0) {
+    return editor;
+  }
+  const newIndex = oldIndex - 1;
+
+  const slideIDs = editor.presentation.slides.map(slide => slide.id);
+  const newSlideOrder = moveElementInArray(slideIDs, oldIndex, newIndex);
+
+  return changeSlidesOrder(editor, newSlideOrder);
 }
 
 export function moveSlidesDown(editor: Editor): Editor {
-  return editor;
+  if (editor.selections.selectedSlideIDs.length !== 1) {
+    return editor;
+  }
+
+  const selectedSlideID = editor.selections.selectedSlideIDs[0];
+  const oldIndex = editor.presentation.slides.findIndex(slide => slide.id === selectedSlideID);
+
+  if (oldIndex === editor.presentation.slides.length - 1) {
+    return editor;
+  }
+  const newIndex = oldIndex + 1;
+
+  const slideIDs = editor.presentation.slides.map(slide => slide.id);
+  const newSlideOrder = moveElementInArray(slideIDs, oldIndex, newIndex);
+
+  return changeSlidesOrder(editor, newSlideOrder);
 }
 
 export function moveSlidesToBeginning(editor: Editor): Editor {
