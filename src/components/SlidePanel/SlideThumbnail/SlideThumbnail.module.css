@@ -1,4 +1,4 @@
-.slidethumbnail
+.slideThumbnail
 {
   width: 90%;
   height: 16%;
@@ -11,20 +11,23 @@
   background: #fdf9f8;
 }
 
-.slidethumbnail:hover
+.slideThumbnail:hover
 {
   background: #f4f0ef;
 }
 
-.slideindex
+.slideIndex
 {
   font-size: 1.2em;
   color: black;
   margin-left: -13px;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   -webkit-user-select: none;
 }
 
-.slideview
+.slideView
 {
   margin-top: -3%;
   width: 85%;
