@@ -17,7 +17,7 @@ function SlideThumbnail({ slide, index, isSelected, onClick }: SlideThumbnailPro
 
   return (
     <div
-      className={styles.slidethumbnail}
+      className={styles.slideThumbnail}
       onClick={(event) => {
         if (onClick) {
           onClick(event);
@@ -27,8 +27,8 @@ function SlideThumbnail({ slide, index, isSelected, onClick }: SlideThumbnailPro
         border: '2px solid blue',
       } : {}}
     >
-      <span className={styles.slideindex}>{index}</span>
-      <div className={styles.slideview}>
+      <span className={styles.slideIndex}>{index}</span>
+      <div className={styles.slideView}>
         <SlideView slide={displayedSlide} />
       </div>
     </div>
