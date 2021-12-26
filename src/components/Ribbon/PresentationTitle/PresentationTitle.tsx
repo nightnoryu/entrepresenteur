@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state';
 import styles from './PresentationTitle.module.css';
 import { RootState } from '../../../state/reducers';
+import { BASE_WINDOW_TITLE, WINDOW_TITLE_SEPARATOR } from '../../../model/constants';
 
 type PresentationTitleProps = {
   title: string;
@@ -34,6 +35,11 @@ function PresentationTitle({ title }: PresentationTitleProps): JSX.Element {
   const onFocus = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.currentTarget.select();
   };
+
+  useEffect(() => {
+    document.title = title + WINDOW_TITLE_SEPARATOR + BASE_WINDOW_TITLE;
+  }, [title]);
+
 
   return (
     <input

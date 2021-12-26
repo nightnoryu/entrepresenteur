@@ -1,8 +1,12 @@
 import { Dimensions, Position } from './types';
 
+// Page
+export const BASE_WINDOW_TITLE = 'Entrepresenteur';
+export const WINDOW_TITLE_SEPARATOR = ' • ';
+
 // Editor
-export const MAX_HISTORY_ENTRIES = 50;
 export const PRESENTATION_EXTENSION = '.entrepresenteur.json';
+export const MAX_HISTORY_ENTRIES = 50;
 
 // Presentation
 
