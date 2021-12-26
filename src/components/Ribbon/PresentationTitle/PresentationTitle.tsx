@@ -38,6 +38,9 @@ function PresentationTitle({ title }: PresentationTitleProps): JSX.Element {
 
   useEffect(() => {
     document.title = title + WINDOW_TITLE_SEPARATOR + BASE_WINDOW_TITLE;
+    if (title !== editingValue) {
+      setEditingValue(title);
+    }
   }, [title]);
 
 
