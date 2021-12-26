@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Position, PrimitiveElement, PrimitiveType } from '../../../../../model/types';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import useElementDragAndDrop from '../../../../../hooks/dragAndDrop/useSlideElementDragAndDrop';
+import useElementDragAndDrop from '../../../../../hooks/slideElements/useSlideElementDragAndDrop';
 import { actionCreators } from '../../../../../state';
 import {
   calculateEllipseProperties,
@@ -10,8 +10,8 @@ import {
   getResizeAnchorTranslateDelta,
   getTrianglePoints,
 } from '../../../../../common/componentsUtils';
-import useSlideElementActions from '../../../../../hooks/useSlideElementActions';
-import useSlideElementResize from '../../../../../hooks/useSlideElementResize';
+import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
+import useSlideElementResize from '../../../../../hooks/slideElements/useSlideElementResize';
 import styles from '../EditableElement.module.css';
 
 type EditablePrimitiveElementProps = {

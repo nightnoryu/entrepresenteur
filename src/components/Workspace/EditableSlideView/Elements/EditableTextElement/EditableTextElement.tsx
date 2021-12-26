@@ -3,9 +3,9 @@ import { Position, TextElement } from '../../../../../model/types';
 import { useDispatch } from 'react-redux';
 import { actionCreators } from '../../../../../state';
 import { bindActionCreators } from 'redux';
-import useElementDragAndDrop from '../../../../../hooks/dragAndDrop/useSlideElementDragAndDrop';
+import useElementDragAndDrop from '../../../../../hooks/slideElements/useSlideElementDragAndDrop';
 import useDoubleClick from '../../../../../hooks/mouse/useDoubleClick';
-import useSlideElementActions from '../../../../../hooks/useSlideElementActions';
+import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
 
 type EditableTextElementProps = {
   element: TextElement;
