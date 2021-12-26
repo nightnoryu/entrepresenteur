@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Dimensions, Position, SlideElement } from '../model/types';
-import useDragAndDrop from './dragAndDrop/useDragAndDrop';
-import { actionCreators } from '../state';
+import { Dimensions, Position, SlideElement } from '../../model/types';
+import useDragAndDrop from '../dragAndDrop/useDragAndDrop';
+import { actionCreators } from '../../state';
 
 function useSlideElementResize(
   ref: React.RefObject<SVGRectElement>,

@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import styles from '../EditableElement.module.css';
 import { actionCreators } from '../../../../../state';
 import { useDispatch } from 'react-redux';
-import useSlideElementDragAndDrop from '../../../../../hooks/dragAndDrop/useSlideElementDragAndDrop';
-import useSlideElementActions from '../../../../../hooks/useSlideElementActions';
-import useSlideElementResize from '../../../../../hooks/useSlideElementResize';
+import useSlideElementDragAndDrop from '../../../../../hooks/slideElements/useSlideElementDragAndDrop';
+import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
+import useSlideElementResize from '../../../../../hooks/slideElements/useSlideElementResize';
 import { getResizeAnchorProperties, getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
 
 type EditableImageElementProps = {
