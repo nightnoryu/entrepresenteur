@@ -66,7 +66,7 @@ function EditablePrimitiveElement(
           points={getTrianglePoints({ ...element, dimensions })}
           fill={element.fill}
           stroke={element.stroke}
-          style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
+          style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
           ref={isSelected ? undefined : ref}
         />
       );
