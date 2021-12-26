@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
 import { Position, SlideElement } from '../../model/types';
-import useDragAndDrop from './useDragAndDrop';
+import useDragAndDrop from '../dragAndDrop/useDragAndDrop';
 import Action from '../../state/actions/actions';
 
 function useElementDragAndDrop<T extends SVGElement>(

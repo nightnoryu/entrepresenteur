@@ -1,11 +1,11 @@
 import React from 'react';
-import useEventListener from './useEventListener';
-import useOnClickOutside from './mouse/useOnClickOutside';
+import useEventListener from '../useEventListener';
+import useOnClickOutside from '../mouse/useOnClickOutside';
 import {
   selectElement as selectElementCreator,
   unselectElement as unselectElementCreator,
-} from '../state/actions/actionCreators';
-import { SlideElement } from '../model/types';
+} from '../../state/actions/actionCreators';
+import { SlideElement } from '../../model/types';
 
 function useSlideElementActions<T extends SVGElement>(
   ref: React.RefObject<T>,
