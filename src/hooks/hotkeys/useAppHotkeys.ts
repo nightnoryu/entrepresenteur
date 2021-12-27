@@ -2,8 +2,7 @@ import useHotkeyCtrl from './useHotkeyCtrl';
 import useHotkey from './useHotkey';
 
 type HotkeyAction = () => void;
-
-function useAppHotkeys(
+type HotkeyActions = {
   newPresentation: HotkeyAction,
   openPresentation: HotkeyAction,
   savePresentation: HotkeyAction,
@@ -11,16 +10,18 @@ function useAppHotkeys(
   redo: HotkeyAction,
   nextSlide: HotkeyAction,
   previousSlide: HotkeyAction,
-): void {
-  useHotkeyCtrl('s', savePresentation);
-  useHotkeyCtrl('o', openPresentation);
-  useHotkeyCtrl('m', newPresentation);
+};
 
-  useHotkeyCtrl('z', undo);
-  useHotkeyCtrl('y', redo);
+function useAppHotkeys<T extends HotkeyActions>(actions: T): void {
+  useHotkeyCtrl('s', actions.savePresentation);
+  useHotkeyCtrl('o', actions.openPresentation);
+  useHotkeyCtrl('m', actions.newPresentation);
 
-  useHotkey('ArrowRight', nextSlide);
-  useHotkey('ArrowLeft', previousSlide);
+  useHotkeyCtrl('z', actions.undo);
+  useHotkeyCtrl('y', actions.redo);
+
+  useHotkey('ArrowRight', actions.nextSlide);
+  useHotkey('ArrowLeft', actions.previousSlide);
 }
 
 export default useAppHotkeys;
