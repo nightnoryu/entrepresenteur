@@ -44,65 +44,15 @@ type AppDispatchProps = {
   moveSlidesToEnd: () => void;
 };
 
-function App(
-  {
-    presentation,
-    openPresentation,
-    newPresentation,
-    savePresentation,
-    undo,
-    redo,
-    addText,
-    addImage,
-    addPrimitive,
-    addSlide,
-    removeSlides,
-    nextSlide,
-    previousSlide,
-    setSlideBackgroundImage,
-    setSlideBackgroundColor,
-    removeElements,
-    startDemonstrationFromStart,
-    startDemonstration,
-    moveSlidesUp,
-    moveSlidesDown,
-    moveSlidesToBeginning,
-    moveSlidesToEnd,
-  }: AppProps,
-): JSX.Element {
+function App(props: AppProps): JSX.Element {
   useConfirmLeaving();
 
-  useAppHotkeys(
-    newPresentation,
-    openPresentation,
-    savePresentation(presentation),
-    undo,
-    redo,
-    nextSlide,
-    previousSlide,
-  );
-
-  const menuItems = getRibbonMenuItems(
-    newPresentation,
-    openPresentation,
-    savePresentation(presentation),
-    addText,
-    addImage,
-    addPrimitive,
-    addSlide,
-    removeSlides,
-    setSlideBackgroundImage,
-    setSlideBackgroundColor,
-    removeElements,
-    undo,
-    redo,
-    startDemonstrationFromStart,
-    startDemonstration,
-    moveSlidesUp,
-    moveSlidesDown,
-    moveSlidesToBeginning,
-    moveSlidesToEnd,
-  );
+  const actions = {
+    ...props,
+    savePresentation: props.savePresentation(props.presentation),
+  };
+  useAppHotkeys(actions);
+  const menuItems = getRibbonMenuItems(actions);
 
   return (
     <div className="app">

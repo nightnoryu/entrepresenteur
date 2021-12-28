@@ -4,7 +4,7 @@ import { PrimitiveType } from '../types';
 type MenuAction = () => void;
 type AddPrimitiveMenuAction = (type: PrimitiveType) => void;
 
-export function getRibbonMenuItems(
+type MenuActions = {
   newPresentation: MenuAction,
   openPresentation: MenuAction,
   savePresentation: MenuAction,
@@ -12,7 +12,7 @@ export function getRibbonMenuItems(
   addImage: MenuAction,
   addPrimitive: AddPrimitiveMenuAction,
   addSlide: MenuAction,
-  removeSlide: MenuAction,
+  removeSlides: MenuAction,
   setSlideBackgroundImage: MenuAction,
   setSlideBackgroundColor: MenuAction,
   removeElements: MenuAction,
@@ -24,7 +24,9 @@ export function getRibbonMenuItems(
   moveSlidesDown: MenuAction,
   moveSlidesToBeginning: MenuAction,
   moveSlidesToEnd: MenuAction,
-): DropdownMenuItemType[] {
+};
+
+export function getRibbonMenuItems<T extends MenuActions>(actions: T): DropdownMenuItemType[] {
   return [
     {
       label: 'File',
@@ -32,19 +34,19 @@ export function getRibbonMenuItems(
         {
           type: MenuItemType.MenuButton,
           label: 'New',
-          action: newPresentation,
+          action: actions.newPresentation,
           icon: 'add',
         },
         {
           type: MenuItemType.MenuButton,
           label: 'Open',
-          action: openPresentation,
+          action: actions.openPresentation,
           icon: 'upload',
         },
         {
           type: MenuItemType.MenuButton,
           label: 'Download',
-          action: savePresentation,
+          action: actions.savePresentation,
           icon: 'download',
         },
         {
@@ -61,19 +63,19 @@ export function getRibbonMenuItems(
         {
           type: MenuItemType.MenuButton,
           label: 'Undo',
-          action: undo,
+          action: actions.undo,
           icon: 'undo',
         },
         {
           type: MenuItemType.MenuButton,
           label: 'Redo',
-          action: redo,
+          action: actions.redo,
           icon: 'redo',
         },
         {
           type: MenuItemType.MenuButton,
           label: 'Delete',
-          action: removeElements,
+          action: actions.removeElements,
           icon: 'delete',
         },
       ],
@@ -84,13 +86,13 @@ export function getRibbonMenuItems(
         {
           type: MenuItemType.MenuButton,
           label: 'Image',
-          action: addImage,
+          action: actions.addImage,
           icon: 'image',
         },
         {
           type: MenuItemType.MenuButton,
           label: 'Text',
-          action: addText,
+          action: actions.addText,
           icon: 'text_fields',
         },
         {
@@ -101,19 +103,19 @@ export function getRibbonMenuItems(
             {
               type: MenuItemType.MenuButton,
               label: 'Rectangle',
-              action: () => addPrimitive(PrimitiveType.RECTANGLE),
+              action: () => actions.addPrimitive(PrimitiveType.RECTANGLE),
               icon: 'rectangle',
             },
             {
               type: MenuItemType.MenuButton,
               label: 'Triangle',
-              action: () => addPrimitive(PrimitiveType.TRIANGLE),
+              action: () => actions.addPrimitive(PrimitiveType.TRIANGLE),
               icon: 'change_history',
             },
             {
               type: MenuItemType.MenuButton,
               label: 'Ellipse',
-              action: () => addPrimitive(PrimitiveType.ELLIPSE),
+              action: () => actions.addPrimitive(PrimitiveType.ELLIPSE),
               icon: 'circle',
             },
           ],
@@ -126,13 +128,13 @@ export function getRibbonMenuItems(
         {
           type: MenuItemType.MenuButton,
           label: 'New',
-          action: addSlide,
+          action: actions.addSlide,
           icon: 'add_box',
         },
         {
           type: MenuItemType.MenuButton,
           label: 'Delete',
-          action: removeSlide,
+          action: actions.removeSlides,
           icon: 'remove_circle_outline',
         },
         {
@@ -143,13 +145,13 @@ export function getRibbonMenuItems(
             {
               type: MenuItemType.MenuButton,
               label: 'Color',
-              action: setSlideBackgroundColor,
+              action: actions.setSlideBackgroundColor,
               icon: 'format_color_fill',
             },
             {
               type: MenuItemType.MenuButton,
               label: 'Image',
-              action: setSlideBackgroundImage,
+              action: actions.setSlideBackgroundImage,
               icon: 'image',
             },
           ],
@@ -162,25 +164,25 @@ export function getRibbonMenuItems(
             {
               type: MenuItemType.MenuButton,
               label: 'Up',
-              action: moveSlidesUp,
+              action: actions.moveSlidesUp,
               icon: 'arrow_upward',
             },
             {
               type: MenuItemType.MenuButton,
               label: 'Down',
-              action: moveSlidesDown,
+              action: actions.moveSlidesDown,
               icon: 'arrow_downward',
             },
             {
               type: MenuItemType.MenuButton,
               label: 'To beginning',
-              action: moveSlidesToBeginning,
+              action: actions.moveSlidesToBeginning,
               icon: 'vertical_align_top',
             },
             {
               type: MenuItemType.MenuButton,
               label: 'To end',
-              action: moveSlidesToEnd,
+              action: actions.moveSlidesToEnd,
               icon: 'vertical_align_bottom',
             },
           ],
@@ -193,13 +195,13 @@ export function getRibbonMenuItems(
         {
           type: MenuItemType.MenuButton,
           label: 'From start',
-          action: startDemonstrationFromStart,
+          action: actions.startDemonstrationFromStart,
           icon: 'restart_alt',
         },
         {
           type: MenuItemType.MenuButton,
           label: 'From current slide',
-          action: startDemonstration,
+          action: actions.startDemonstration,
           icon: 'play_arrow',
         },
       ],
