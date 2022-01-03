@@ -6,6 +6,7 @@ import { actionCreators } from '../../../../state';
 import { ElementType, PrimitiveElement } from '../../../../model/types';
 import { RootState } from '../../../../state/reducers';
 import { isCurrentElement, isCurrentSlide } from '../../../../model/modelUtils';
+import { pickColor } from '../../../../common/fileUtils';
 
 type PrimitivePropertiesPanelProps = {
   currentElement?: PrimitiveElement;
@@ -15,15 +16,19 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
   const dispatch = useDispatch();
   const { setPrimitiveFillColor, setPrimitiveStrokeColor } = bindActionCreators(actionCreators, dispatch);
 
-  const onFillColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onFillColorPick = () => {
     if (currentElement) {
-      setPrimitiveFillColor(currentElement.id, event.currentTarget.value);
+      pickColor()
+        .then(color => setPrimitiveFillColor(currentElement.id, color))
+        .catch(error => alert(error));
     }
   };
 
-  const onStrokeColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onStrokeColorPick = () => {
     if (currentElement) {
-      setPrimitiveStrokeColor(currentElement.id, event.currentTarget.value);
+      pickColor()
+        .then(color => setPrimitiveStrokeColor(currentElement.id, color))
+        .catch(error => alert(error));
     }
   };
 
@@ -34,7 +39,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
         <input
           type="color"
           defaultValue={currentElement?.fill}
-          onInput={onFillColorChange}
+          onClick={onFillColorPick}
         />
       </li>
 
@@ -43,7 +48,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
         <input
           type="color"
           defaultValue={currentElement?.stroke}
-          onInput={onStrokeColorChange}
+          onClick={onStrokeColorPick}
         />
       </li>
     </ul>
