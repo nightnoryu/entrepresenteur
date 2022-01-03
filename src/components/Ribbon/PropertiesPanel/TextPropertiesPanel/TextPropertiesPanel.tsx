@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { RootState } from '../../../../state/reducers';
 import { isCurrentElement, isCurrentSlide } from '../../../../model/modelUtils';
 import { ElementType, TextElement } from '../../../../model/types';
+import { pickColor } from '../../../../common/fileUtils';
 
 type TextPropertiesPanelProps = {
   currentElement?: TextElement;
@@ -31,9 +32,11 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
     }
   };
 
-  const onColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onColorPick = () => {
     if (currentElement) {
-      setTextColor(currentElement.id, event.currentTarget.value);
+      pickColor()
+        .then(color => setTextColor(currentElement.id, color))
+        .catch(error => alert(error));
     }
   };
 
@@ -80,7 +83,7 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
         <input
           type="color"
           defaultValue={currentElement?.color}
-          onInput={onColorChange}
+          onClick={onColorPick}
         />
       </li>
     </ul>
