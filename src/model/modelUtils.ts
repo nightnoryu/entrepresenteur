@@ -1,4 +1,4 @@
-import { BackgroundType, Editor, Presentation, Slide, SlideElement } from './types';
+import { BackgroundType, Editor, Font, Presentation, Slide, SlideElement } from './types';
 import { generateUUID, UUID } from './uuid';
 import { DEFAULT_PRESENTATION_NAME, DEFAULT_SLIDE_BACKGROUND, MAX_HISTORY_ENTRIES } from './constants';
 
@@ -44,6 +44,38 @@ export function createEditor(presentation: Presentation): Editor {
     },
     isDemonstrating: false,
   };
+}
+
+export function mapFontToString(font: Font): string {
+  switch (font) {
+  case Font.ARIAL:
+    return 'Arial';
+  case Font.VERDANA:
+    return 'Verdana';
+  case Font.CALIBRI:
+    return 'Calibri';
+  case Font.TIMES:
+    return 'Times';
+  case Font.CONSOLAS:
+    return 'Consolas';
+  }
+}
+
+export function tryMapStringToFont(str: string): Font {
+  switch (str) {
+  case 'Arial':
+    return Font.ARIAL;
+  case 'Verdana':
+    return Font.VERDANA;
+  case 'Calibri':
+    return Font.CALIBRI;
+  case 'Times':
+    return Font.TIMES;
+  case 'Consolas':
+    return Font.CONSOLAS;
+  default:
+    throw new Error('Unknown font');
+  }
 }
 
 export function concatWithSelectedSlideElements(

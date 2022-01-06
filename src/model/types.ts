@@ -16,6 +16,14 @@ export enum ElementType {
   PRIMITIVE,
 }
 
+export enum Font {
+  ARIAL,
+  VERDANA,
+  CALIBRI,
+  TIMES,
+  CONSOLAS,
+}
+
 export type SlideElement = TextElement | ImageElement | PrimitiveElement;
 
 export type GenericSlideElement = {
@@ -29,7 +37,7 @@ export type TextElement = GenericSlideElement & {
   type: ElementType.TEXT;
   value: string;
   size: number;
-  font: string;
+  font: Font;
   color: string;
 };
 
