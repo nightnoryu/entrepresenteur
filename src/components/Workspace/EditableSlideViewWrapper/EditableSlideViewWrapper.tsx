@@ -18,10 +18,12 @@ function EditableSlideViewWrapper({ isDemonstrating }: EditableSlideViewWrapperP
   const ref = useRef<HTMLDivElement>(null);
   useFullscreen(ref, isDemonstrating, stopDemonstration);
 
-
   return (
     <div className={styles.wrapper} ref={ref}>
       <EditableSlideView />
+      {
+        isDemonstrating && <div className={styles.overlay} />
+      }
     </div>
   );
 }
