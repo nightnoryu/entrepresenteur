@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import useElementDragAndDrop from '../../../../../hooks/slideElements/useSlideElementDragAndDrop';
 import useDoubleClick from '../../../../../hooks/mouse/useDoubleClick';
 import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
+import { mapFontToString } from '../../../../../model/modelUtils';
 
 type EditableTextElementProps = {
   element: TextElement;
@@ -59,7 +60,7 @@ function EditableTextElement(
       dominantBaseline="hanging"
       textAnchor="left"
       style={{
-        fontFamily: element.font,
+        fontFamily: mapFontToString(element.font),
         fontSize: element.size,
         width: element.dimensions.width,
         height: element.dimensions.height,

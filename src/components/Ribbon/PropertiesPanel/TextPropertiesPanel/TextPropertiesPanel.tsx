@@ -5,7 +5,7 @@ import { connect, useDispatch } from 'react-redux';
 import { actionCreators } from '../../../../state';
 import { bindActionCreators } from 'redux';
 import { RootState } from '../../../../state/reducers';
-import { isCurrentElement, isCurrentSlide } from '../../../../model/modelUtils';
+import { isCurrentElement, isCurrentSlide, mapFontToString, tryMapStringToFont } from '../../../../model/modelUtils';
 import { ElementType, TextElement } from '../../../../model/types';
 import { pickColor } from '../../../../common/fileUtils';
 
@@ -21,7 +21,7 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
 
   const onFontChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (currentElement) {
-      setTextFont(currentElement.id, event.currentTarget.value);
+      setTextFont(currentElement.id, tryMapStringToFont(event.currentTarget.value));
     }
   };
 
@@ -46,7 +46,7 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
         <select
           name="font"
           className={styles.fontSelection}
-          value={currentElement?.font}
+          value={currentElement?.font ? mapFontToString(currentElement.font) : undefined}
           onChange={onFontChange}
         >
           {textProps.fonts.map(fontOption => (

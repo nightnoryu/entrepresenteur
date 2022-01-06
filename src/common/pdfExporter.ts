@@ -1,13 +1,14 @@
 import { ElementType, Presentation, Slide } from '../model/types';
 import jsPDF from 'jspdf';
 import { SLIDE_HEIGHT, SLIDE_WIDTH } from '../model/constants';
+import { mapFontToString } from '../model/modelUtils';
 
 function fillSlidePage(pdf: jsPDF, slide: Slide): void {
   slide.elements.map(element => {
     switch (element.type) {
     case ElementType.TEXT:
       pdf
-        .setFont(element.font)
+        .setFont(mapFontToString(element.font))
         .setFontSize(element.size)
         .text(element.value, element.position.x, element.position.y);
       break;

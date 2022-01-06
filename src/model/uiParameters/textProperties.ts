@@ -5,9 +5,9 @@ export function getTextProperties(): TextProperties {
     fonts: [
       'Arial',
       'Verdana',
-      'Comic Sans MS',
-      'Consolas',
       'Calibri',
+      'Times',
+      'Consolas',
     ],
     sizes: [
       13,
