@@ -17,11 +17,9 @@ export enum ElementType {
 }
 
 export enum Font {
-  ARIAL,
-  VERDANA,
-  CALIBRI,
+  HELVETICA,
   TIMES,
-  CONSOLAS,
+  COURIER,
 }
 
 export type SlideElement = TextElement | ImageElement | PrimitiveElement;

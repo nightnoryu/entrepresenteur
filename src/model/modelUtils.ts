@@ -48,31 +48,23 @@ export function createEditor(presentation: Presentation): Editor {
 
 export function mapFontToString(font: Font): string {
   switch (font) {
-  case Font.ARIAL:
-    return 'Arial';
-  case Font.VERDANA:
-    return 'Verdana';
-  case Font.CALIBRI:
-    return 'Calibri';
+  case Font.HELVETICA:
+    return 'Helvetica';
   case Font.TIMES:
     return 'Times';
-  case Font.CONSOLAS:
-    return 'Consolas';
+  case Font.COURIER:
+    return 'Courier';
   }
 }
 
 export function tryMapStringToFont(str: string): Font {
   switch (str) {
-  case 'Arial':
-    return Font.ARIAL;
-  case 'Verdana':
-    return Font.VERDANA;
-  case 'Calibri':
-    return Font.CALIBRI;
+  case 'Helvetica':
+    return Font.HELVETICA;
   case 'Times':
     return Font.TIMES;
-  case 'Consolas':
-    return Font.CONSOLAS;
+  case 'Courier':
+    return Font.COURIER;
   default:
     throw new Error('Unknown font');
   }

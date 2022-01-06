@@ -30,7 +30,7 @@ export const DEFAULT_TEXT_DIMENSIONS: Dimensions = {
   width: 0,
   height: 0,
 };
-export const DEFAULT_TEXT_FONT = Font.VERDANA;
+export const DEFAULT_TEXT_FONT = Font.HELVETICA;
 export const DEFAULT_TEXT_COLOR = '#000000';
 export const DEFAULT_TEXT_SIZE = 44;
 
