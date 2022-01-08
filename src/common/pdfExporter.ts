@@ -124,7 +124,6 @@ function addRectangle(pdf: jsPDF, element: PrimitiveElement): void {
 }
 
 function addTriangle(pdf: jsPDF, element: PrimitiveElement): void {
-  // FIXME: triangles are invisible
   const points = calculateTrianglePoints(element);
   pdf
     .path([
@@ -143,7 +142,8 @@ function addTriangle(pdf: jsPDF, element: PrimitiveElement): void {
       {
         op: 'h',
       },
-    ]);
+    ])
+    .fillStroke();
 }
 
 function addEllipse(pdf: jsPDF, element: PrimitiveElement): void {
