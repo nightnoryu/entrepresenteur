@@ -33,10 +33,27 @@ export function calculateEllipseProperties(element: PrimitiveElement): EllipsePr
 }
 
 export function getTrianglePoints(element: PrimitiveElement): string {
-  const firstPoint = `${element.position.x},${element.position.y + element.dimensions.height}`;
-  const secondPoint = `${element.position.x + element.dimensions.width / 2},${element.position.y}`;
-  const thirdPoint = `${element.position.x + element.dimensions.width},${element.position.y + element.dimensions.height}`;
-  return `${firstPoint} ${secondPoint} ${thirdPoint}`;
+  const points = calculateTrianglePoints(element);
+
+  return points
+    .map(point => `${point.x},${point.y}`)
+    .join(' ');
+}
+
+export function calculateTrianglePoints(element: PrimitiveElement): [Position, Position, Position] {
+  const firstPoint = {
+    x: element.position.x,
+    y: element.position.y + element.dimensions.height,
+  };
+  const secondPoint = {
+    x: element.position.x + element.dimensions.width / 2,
+    y: element.position.y,
+  };
+  const thirdPoint = {
+    x: element.position.x + element.dimensions.width,
+    y: element.position.y + element.dimensions.height,
+  };
+  return [firstPoint, secondPoint, thirdPoint];
 }
 
 export function getResizeAnchorProperties(element: SlideElement): Position & Dimensions {
