@@ -93,7 +93,6 @@ export function pickColor(): Promise<string> {
     input.addEventListener('change', (event: Event) => {
       const target = event.target as HTMLInputElement;
       if (target?.value) {
-        console.log(target.value);
         resolve(target.value);
       }
     });
