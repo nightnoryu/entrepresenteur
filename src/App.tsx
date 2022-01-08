@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from './state';
 import { Presentation, PrimitiveType } from './model/types';
 import { RootState } from './state/reducers';
+import exportPresentationPDF from './common/pdfExporter';
 import { getRibbonMenuItems } from './model/uiParameters/menu';
 import Workspace from './components/Workspace/Workspace';
 import useAppHotkeys from './hooks/hotkeys/useAppHotkeys';
@@ -24,6 +25,7 @@ type AppDispatchProps = {
   openPresentation: () => void;
   newPresentation: () => void;
   savePresentation: (presentation: Presentation) => () => void;
+  exportPresentation: (presentation: Presentation) => () => void;
   undo: () => void;
   redo: () => void;
   addText: () => void;
@@ -50,6 +52,7 @@ function App(props: AppProps): JSX.Element {
   const actions = {
     ...props,
     savePresentation: props.savePresentation(props.presentation),
+    exportPresentation: props.exportPresentation(props.presentation),
   };
   useAppHotkeys(actions);
   const menuItems = getRibbonMenuItems(actions);
@@ -92,6 +95,12 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
     savePresentation: (presentation: Presentation) => {
       return () => {
         savePresentationJSON(presentation, presentation.title);
+      };
+    },
+
+    exportPresentation: (presentation: Presentation) => {
+      return () => {
+        exportPresentationPDF(presentation, presentation.title);
       };
     },
 

@@ -3,11 +3,9 @@ import { TextProperties } from '../../components/Ribbon/PropertiesPanel/TextProp
 export function getTextProperties(): TextProperties {
   return {
     fonts: [
-      'Arial',
-      'Verdana',
-      'Comic Sans MS',
-      'Consolas',
-      'Calibri',
+      'Helvetica',
+      'Times',
+      'Courier',
     ],
     sizes: [
       13,

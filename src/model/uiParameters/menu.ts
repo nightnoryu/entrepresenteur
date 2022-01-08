@@ -8,6 +8,7 @@ type MenuActions = {
   newPresentation: MenuAction,
   openPresentation: MenuAction,
   savePresentation: MenuAction,
+  exportPresentation: MenuAction,
   addText: MenuAction,
   addImage: MenuAction,
   addPrimitive: AddPrimitiveMenuAction,
@@ -52,7 +53,7 @@ export function getRibbonMenuItems<T extends MenuActions>(actions: T): DropdownM
         {
           type: MenuItemType.MenuButton,
           label: 'Export',
-          action: () => console.log('Export'),
+          action: actions.exportPresentation,
           icon: 'picture_as_pdf',
         },
       ],
