@@ -1,7 +1,18 @@
-import { ElementType, ImageElement, Presentation, PrimitiveElement, Slide, TextElement } from '../model/types';
+import {
+  Background,
+  BackgroundType,
+  ElementType,
+  ImageElement,
+  Presentation,
+  PrimitiveElement,
+  PrimitiveType,
+  Slide,
+  TextElement,
+} from '../model/types';
 import jsPDF from 'jspdf';
 import { SLIDE_HEIGHT, SLIDE_WIDTH } from '../model/constants';
 import { mapFontToString } from '../model/modelUtils';
+import { calculateEllipseProperties, calculateTrianglePoints } from './componentsUtils';
 
 function exportPresentationPDF(presentation: Presentation, filename: string): void {
   if (presentation.slides.length === 0) {
@@ -33,6 +44,8 @@ function initializeDocument(title: string): jsPDF {
 }
 
 function fillSlidePage(pdf: jsPDF, slide: Slide): void {
+  setBackground(pdf, slide.background);
+
   slide.elements.map(element => {
     switch (element.type) {
     case ElementType.TEXT:
@@ -44,10 +57,24 @@ function fillSlidePage(pdf: jsPDF, slide: Slide): void {
     case ElementType.PRIMITIVE:
       addPrimitive(pdf, element);
       break;
-    default:
-      break;
     }
   });
+}
+
+function setBackground(pdf: jsPDF, background: Background): void {
+  if (background.type === BackgroundType.SOLID) {
+    pdf
+      .setFillColor(background.color)
+      .rect(0, 0, SLIDE_WIDTH, SLIDE_HEIGHT, 'DF');
+  } else {
+    pdf.addImage({
+      imageData: background.src,
+      x: 0,
+      y: 0,
+      width: SLIDE_WIDTH,
+      height: SLIDE_HEIGHT,
+    });
+  }
 }
 
 function addText(pdf: jsPDF, element: TextElement): void {
@@ -69,7 +96,60 @@ function addImage(pdf: jsPDF, element: ImageElement): void {
 }
 
 function addPrimitive(pdf: jsPDF, element: PrimitiveElement): void {
-  console.log('Primitive');
+  setPrimitiveStyling(pdf, element);
+
+  switch (element.primitiveType) {
+  case PrimitiveType.RECTANGLE:
+    addRectangle(pdf, element);
+    break;
+  case PrimitiveType.TRIANGLE:
+    addTriangle(pdf, element);
+    break;
+  case PrimitiveType.ELLIPSE:
+    addEllipse(pdf, element);
+    break;
+  }
+}
+
+function setPrimitiveStyling(pdf: jsPDF, element: PrimitiveElement): void {
+  pdf
+    .setFillColor(element.fill)
+    .setDrawColor(element.stroke)
+    .setLineWidth(1);
+}
+
+function addRectangle(pdf: jsPDF, element: PrimitiveElement): void {
+  pdf
+    .rect(element.position.x, element.position.y, element.dimensions.width, element.dimensions.height, 'DF');
+}
+
+function addTriangle(pdf: jsPDF, element: PrimitiveElement): void {
+  // FIXME: triangles are invisible
+  const points = calculateTrianglePoints(element);
+  pdf
+    .path([
+      {
+        op: 'm',
+        c: [points[0].x, points[0].y],
+      },
+      {
+        op: 'l',
+        c: [points[1].x, points[1].y],
+      },
+      {
+        op: 'l',
+        c: [points[2].x, points[2].y],
+      },
+      {
+        op: 'h',
+      },
+    ]);
+}
+
+function addEllipse(pdf: jsPDF, element: PrimitiveElement): void {
+  const properties = calculateEllipseProperties(element);
+  pdf
+    .ellipse(properties.cx, properties.cy, properties.rx, properties.ry, 'DF');
 }
 
 export default exportPresentationPDF;
