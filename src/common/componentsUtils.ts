@@ -1,4 +1,12 @@
-import { BackgroundType, Dimensions, Position, PrimitiveElement, Slide, SlideElement } from '../model/types';
+import {
+  BackgroundType,
+  Dimensions,
+  Position,
+  PrimitiveElement,
+  PrimitiveStrokeStyle,
+  Slide,
+  SlideElement,
+} from '../model/types';
 
 type SlideBackgroundStyle = {
   backgroundColor: string;
@@ -76,4 +84,15 @@ export function getResizeAnchorTranslateDelta(
       y: dimensions.height - element.dimensions.height,
     }
     : delta;
+}
+
+export function getPrimitiveStrokeStyle(style: PrimitiveStrokeStyle): string | undefined {
+  switch (style) {
+  case PrimitiveStrokeStyle.SOLID:
+    return undefined;
+  case PrimitiveStrokeStyle.DASHED:
+    return '20,10';
+  case PrimitiveStrokeStyle.DOT_DASHED:
+    return '20,10,5,10';
+  }
 }
