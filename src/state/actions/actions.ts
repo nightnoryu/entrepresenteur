@@ -3,6 +3,8 @@ export enum ActionType {
   NEW_PRESENTATION,
   CHANGE_PRESENTATION_TITLE,
   SET_TEXT_VALUE,
+  TOGGLE_BOLD_TEXT,
+  TOGGLE_ITALIC_TEXT,
   SET_TEXT_FONT,
   SET_TEXT_SIZE,
   SET_TEXT_COLOR,
@@ -37,6 +39,8 @@ export enum ActionType {
 
 export const STATEFUL_ACTIONS = [
   ActionType.SET_TEXT_VALUE,
+  ActionType.TOGGLE_BOLD_TEXT,
+  ActionType.TOGGLE_ITALIC_TEXT,
   ActionType.SET_TEXT_FONT,
   ActionType.SET_TEXT_SIZE,
   ActionType.SET_TEXT_COLOR,

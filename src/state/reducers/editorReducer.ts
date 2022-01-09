@@ -32,6 +32,8 @@ import {
   setTextValue,
   startDemonstration,
   stopDemonstration,
+  toggleBoldText,
+  toggleItalicText,
   unselectElement,
 } from '../../model/actions';
 
@@ -47,6 +49,10 @@ function editorReducer(state = initialState, action: Action): Editor {
     return setPresentationTitle(state, action.payload);
   case ActionType.SET_TEXT_VALUE:
     return setTextValue(state, action.payload);
+  case ActionType.TOGGLE_BOLD_TEXT:
+    return toggleBoldText(state, action.payload);
+  case ActionType.TOGGLE_ITALIC_TEXT:
+    return toggleItalicText(state, action.payload);
   case ActionType.SET_TEXT_FONT:
     return setTextFont(state, action.payload);
   case ActionType.SET_TEXT_SIZE:

@@ -41,6 +41,24 @@ export function setTextValue(elementID: UUID, value: string) {
   };
 }
 
+export function toggleBoldText(elementID: UUID) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.TOGGLE_BOLD_TEXT,
+      payload: elementID,
+    });
+  };
+}
+
+export function toggleItalicText(elementID: UUID) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.TOGGLE_ITALIC_TEXT,
+      payload: elementID,
+    });
+  };
+}
+
 export function setTextFont(elementID: UUID, font: TextFont) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
