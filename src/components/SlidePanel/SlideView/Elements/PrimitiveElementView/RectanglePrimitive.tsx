@@ -16,6 +16,7 @@ function RectanglePrimitive({ element }: RectanglePrimitiveProps): JSX.Element {
       fill={element.fill}
       stroke={element.stroke}
       strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
+      strokeWidth={element.strokeSize}
     />
   );
 }
