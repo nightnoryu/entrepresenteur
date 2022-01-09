@@ -43,4 +43,8 @@ export const DEFAULT_PRIMITIVE_DIMENSIONS: Dimensions = {
 };
 export const DEFAULT_PRIMITIVE_FILL = '#ffffff';
 export const DEFAULT_PRIMITIVE_STROKE = '#000000';
+
 export const DEFAULT_PRIMITIVE_STROKE_STYLE = PrimitiveStrokeStyle.SOLID;
+export const STROKE_STYLE_SOLID = undefined;
+export const STROKE_STYLE_DASHED = [20, 10];
+export const STROKE_STYLE_DOT_DASHED = [20, 10, 5, 10];
