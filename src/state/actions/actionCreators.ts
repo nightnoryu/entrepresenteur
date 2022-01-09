@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import Action, { ActionType } from './actions';
 import { UUID } from '../../model/uuid';
-import { Dimensions, Position, Presentation, PrimitiveType, TextFont } from '../../model/types';
+import { Dimensions, Position, Presentation, PrimitiveStrokeStyle, PrimitiveType, TextFont } from '../../model/types';
 
 export function openPresentation(presentation: Presentation) {
   return (dispatch: Dispatch<Action>): void => {
@@ -119,7 +119,7 @@ export function setPrimitiveStrokeColor(elementID: UUID, stroke: string) {
   };
 }
 
-export function setPrimitiveStrokeStyle(elementID: UUID, strokeStyle: string) {
+export function setPrimitiveStrokeStyle(elementID: UUID, strokeStyle: PrimitiveStrokeStyle) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
       type: ActionType.SET_PRIMITIVE_STROKE_STYLE,
