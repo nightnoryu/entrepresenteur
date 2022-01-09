@@ -6,6 +6,7 @@ import useElementDragAndDrop from '../../../../../hooks/slideElements/useSlideEl
 import { actionCreators } from '../../../../../state';
 import {
   calculateEllipseProperties,
+  getPrimitiveStrokeStyle,
   getResizeAnchorProperties,
   getResizeAnchorTranslateDelta,
   getTrianglePoints,
@@ -56,6 +57,7 @@ function EditablePrimitiveElement(
           height={dimensions.height}
           fill={element.fill}
           stroke={element.stroke}
+          strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
           style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
           ref={isSelected ? undefined : ref}
         />
@@ -66,6 +68,7 @@ function EditablePrimitiveElement(
           points={getTrianglePoints({ ...element, dimensions })}
           fill={element.fill}
           stroke={element.stroke}
+          strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
           style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
           ref={isSelected ? undefined : ref}
         />
@@ -81,6 +84,7 @@ function EditablePrimitiveElement(
           ry={properties.ry}
           fill={element.fill}
           stroke={element.stroke}
+          strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
           style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
           ref={isSelected ? undefined : ref}
         />
