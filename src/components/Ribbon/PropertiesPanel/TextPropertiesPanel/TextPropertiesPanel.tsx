@@ -15,7 +15,13 @@ type TextPropertiesPanelProps = {
 
 function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.Element {
   const dispatch = useDispatch();
-  const { setTextFont, setTextSize, setTextColor } = bindActionCreators(actionCreators, dispatch);
+  const {
+    toggleBoldText,
+    toggleItalicText,
+    setTextFont,
+    setTextSize,
+    setTextColor,
+  } = bindActionCreators(actionCreators, dispatch);
 
   const textProps = getTextProperties();
 
@@ -29,6 +35,18 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
     if (currentElement) {
       const size = parseInt(event.currentTarget.value);
       setTextSize(currentElement.id, size);
+    }
+  };
+
+  const onToggleBold = () => {
+    if (currentElement) {
+      toggleBoldText(currentElement.id);
+    }
+  };
+
+  const onToggleItalic = () => {
+    if (currentElement) {
+      toggleItalicText(currentElement.id);
     }
   };
 
@@ -76,6 +94,14 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
             </option>
           ))}
         </select>
+      </li>
+
+      <li className={styles.panelElement}>
+        <button onClick={onToggleBold}>Bold</button>
+      </li>
+
+      <li className={styles.panelElement}>
+        <button onClick={onToggleItalic}>Italic</button>
       </li>
 
       <li className={styles.panelElement}>
