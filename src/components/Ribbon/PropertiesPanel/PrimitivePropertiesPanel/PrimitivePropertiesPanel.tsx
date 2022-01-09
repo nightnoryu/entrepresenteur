@@ -5,8 +5,14 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../../state';
 import { ElementType, PrimitiveElement } from '../../../../model/types';
 import { RootState } from '../../../../state/reducers';
-import { isCurrentElement, isCurrentSlide } from '../../../../model/modelUtils';
+import {
+  isCurrentElement,
+  isCurrentSlide,
+  mapStrokeStyleToString,
+  tryMapStringToStrokeStyle,
+} from '../../../../model/modelUtils';
 import { pickColor } from '../../../../common/fileUtils';
+import { getPrimitiveProperties } from '../../../../model/uiParameters/primitiveProperties';
 
 type PrimitivePropertiesPanelProps = {
   currentElement?: PrimitiveElement;
@@ -14,7 +20,13 @@ type PrimitivePropertiesPanelProps = {
 
 function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelProps): JSX.Element {
   const dispatch = useDispatch();
-  const { setPrimitiveFillColor, setPrimitiveStrokeColor } = bindActionCreators(actionCreators, dispatch);
+  const {
+    setPrimitiveFillColor,
+    setPrimitiveStrokeColor,
+    setPrimitiveStrokeStyle,
+  } = bindActionCreators(actionCreators, dispatch);
+
+  const primitiveProperties = getPrimitiveProperties();
 
   const onFillColorPick = () => {
     if (currentElement) {
@@ -29,6 +41,12 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
       pickColor()
         .then(color => setPrimitiveStrokeColor(currentElement.id, color))
         .catch(error => alert(error));
+    }
+  };
+
+  const onStrokeStyleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (currentElement) {
+      setPrimitiveStrokeStyle(currentElement.id, tryMapStringToStrokeStyle(event.currentTarget.value));
     }
   };
 
@@ -50,6 +68,24 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
           defaultValue={currentElement?.stroke}
           onClick={onStrokeColorPick}
         />
+      </li>
+
+      <li className={styles.panelElement}>
+        Stroke style
+        <select
+          name="strokeStyle"
+          value={currentElement?.strokeStyle ? mapStrokeStyleToString(currentElement.strokeStyle) : undefined}
+          onChange={onStrokeStyleChange}
+        >
+          {primitiveProperties.strokeStyles.map(strokeStyle => (
+            <option
+              key={strokeStyle}
+              value={strokeStyle}
+            >
+              {strokeStyle}
+            </option>
+          ))}
+        </select>
       </li>
     </ul>
   );

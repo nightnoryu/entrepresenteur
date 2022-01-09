@@ -1,4 +1,4 @@
-import { BackgroundType, Editor, Presentation, Slide, SlideElement, TextFont } from './types';
+import { BackgroundType, Editor, Presentation, PrimitiveStrokeStyle, Slide, SlideElement, TextFont } from './types';
 import { generateUUID, UUID } from './uuid';
 import { DEFAULT_PRESENTATION_NAME, DEFAULT_SLIDE_BACKGROUND, MAX_HISTORY_ENTRIES } from './constants';
 
@@ -67,6 +67,30 @@ export function tryMapStringToFont(str: string): TextFont {
     return TextFont.COURIER;
   default:
     throw new Error('Unknown font');
+  }
+}
+
+export function mapStrokeStyleToString(style: PrimitiveStrokeStyle): string {
+  switch (style) {
+  case PrimitiveStrokeStyle.SOLID:
+    return 'Solid';
+  case PrimitiveStrokeStyle.DASHED:
+    return 'Dashed';
+  case PrimitiveStrokeStyle.DOT_DASHED:
+    return 'Dot-dashed';
+  }
+}
+
+export function tryMapStringToStrokeStyle(str: string): PrimitiveStrokeStyle {
+  switch (str) {
+  case 'Solid':
+    return PrimitiveStrokeStyle.SOLID;
+  case 'Dashed':
+    return PrimitiveStrokeStyle.DASHED;
+  case 'Dot-dashed':
+    return PrimitiveStrokeStyle.DOT_DASHED;
+  default:
+    throw new Error('Unknown stroke style');
   }
 }
 
