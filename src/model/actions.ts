@@ -5,6 +5,7 @@ import {
   ElementType,
   Position,
   Presentation,
+  PrimitiveStrokeStyle,
   PrimitiveType,
   TextFont,
 } from './types';
@@ -24,6 +25,7 @@ import {
 import {
   DEFAULT_PRIMITIVE_FILL,
   DEFAULT_PRIMITIVE_STROKE,
+  DEFAULT_PRIMITIVE_STROKE_STYLE,
   DEFAULT_TEXT_COLOR,
   DEFAULT_TEXT_FONT,
   DEFAULT_TEXT_SIZE,
@@ -544,6 +546,7 @@ export function addPrimitive(
           dimensions,
           fill: DEFAULT_PRIMITIVE_FILL,
           stroke: DEFAULT_PRIMITIVE_STROKE,
+          strokeStyle: DEFAULT_PRIMITIVE_STROKE_STYLE,
         },
       ),
     },
@@ -610,6 +613,39 @@ export function setPrimitiveStrokeColor(
                 ? {
                   ...element,
                   stroke,
+                }
+                : element,
+            ),
+          }
+          : slide,
+      ),
+    },
+  };
+}
+
+export function setPrimitiveStrokeStyle(
+  editor: Editor, {
+    elementID,
+    strokeStyle,
+  }: {
+    elementID: UUID;
+    strokeStyle: PrimitiveStrokeStyle;
+  },
+): Editor {
+  return {
+    ...editor,
+    presentation: {
+      ...editor.presentation,
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
+              element.type === ElementType.PRIMITIVE &&
+              element.id === elementID
+                ? {
+                  ...element,
+                  strokeStyle,
                 }
                 : element,
             ),
