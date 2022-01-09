@@ -119,6 +119,18 @@ export function setPrimitiveStrokeColor(elementID: UUID, stroke: string) {
   };
 }
 
+export function setPrimitiveStrokeStyle(elementID: UUID, strokeStyle: string) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_PRIMITIVE_STROKE_STYLE,
+      payload: {
+        elementID,
+        strokeStyle,
+      },
+    });
+  };
+}
+
 export function selectElement(elementID: UUID) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
