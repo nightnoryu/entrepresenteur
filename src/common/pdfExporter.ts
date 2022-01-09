@@ -121,7 +121,7 @@ function setPrimitiveStyling(pdf: jsPDF, element: PrimitiveElement): void {
     .setFillColor(element.fill)
     .setDrawColor(element.stroke)
     .setLineDashPattern(getLineDashPattern(element.strokeStyle), 0)
-    .setLineWidth(1);
+    .setLineWidth(element.strokeSize);
 }
 
 function getLineDashPattern(style: PrimitiveStrokeStyle): number[] {
