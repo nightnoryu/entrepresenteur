@@ -36,6 +36,8 @@ export type TextElement = GenericSlideElement & {
   value: string;
   size: number;
   font: TextFont;
+  isBold: boolean;
+  isItalic: boolean;
   color: string;
 };
 

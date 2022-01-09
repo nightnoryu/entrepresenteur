@@ -285,6 +285,8 @@ export function addText(
           value,
           size: DEFAULT_TEXT_SIZE,
           font: DEFAULT_TEXT_FONT,
+          isBold: false,
+          isItalic: false,
           color: DEFAULT_TEXT_COLOR,
         },
       ),
@@ -315,6 +317,56 @@ export function setTextValue(
                 ? {
                   ...element,
                   value,
+                }
+                : element,
+            ),
+          }
+          : slide,
+      ),
+    },
+  };
+}
+
+export function toggleBoldText(editor: Editor, elementID: UUID): Editor {
+  return {
+    ...editor,
+    presentation: {
+      ...editor.presentation,
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
+              element.type === ElementType.TEXT &&
+              element.id === elementID
+                ? {
+                  ...element,
+                  isBold: !element.isBold,
+                }
+                : element,
+            ),
+          }
+          : slide,
+      ),
+    },
+  };
+}
+
+export function toggleItalicText(editor: Editor, elementID: UUID): Editor {
+  return {
+    ...editor,
+    presentation: {
+      ...editor.presentation,
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
+              element.type === ElementType.TEXT &&
+              element.id === elementID
+                ? {
+                  ...element,
+                  isItalic: !element.isItalic,
                 }
                 : element,
             ),
