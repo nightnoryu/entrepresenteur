@@ -25,6 +25,7 @@ import {
 import {
   DEFAULT_PRIMITIVE_FILL,
   DEFAULT_PRIMITIVE_STROKE,
+  DEFAULT_PRIMITIVE_STROKE_SIZE,
   DEFAULT_PRIMITIVE_STROKE_STYLE,
   DEFAULT_TEXT_COLOR,
   DEFAULT_TEXT_FONT,
@@ -547,6 +548,7 @@ export function addPrimitive(
           fill: DEFAULT_PRIMITIVE_FILL,
           stroke: DEFAULT_PRIMITIVE_STROKE,
           strokeStyle: DEFAULT_PRIMITIVE_STROKE_STYLE,
+          strokeSize: DEFAULT_PRIMITIVE_STROKE_SIZE,
         },
       ),
     },
@@ -646,6 +648,39 @@ export function setPrimitiveStrokeStyle(
                 ? {
                   ...element,
                   strokeStyle,
+                }
+                : element,
+            ),
+          }
+          : slide,
+      ),
+    },
+  };
+}
+
+export function setPrimitiveStrokeSize(
+  editor: Editor, {
+    elementID,
+    strokeSize,
+  }: {
+    elementID: UUID;
+    strokeSize: number;
+  },
+): Editor {
+  return {
+    ...editor,
+    presentation: {
+      ...editor.presentation,
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
+              element.type === ElementType.PRIMITIVE &&
+              element.id === elementID
+                ? {
+                  ...element,
+                  strokeSize,
                 }
                 : element,
             ),
