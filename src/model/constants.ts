@@ -1,4 +1,4 @@
-import { Dimensions, Position, TextFont } from './types';
+import { Dimensions, Position, PrimitiveStrokeStyle, TextFont } from './types';
 
 // Page
 export const BASE_WINDOW_TITLE = 'Entrepresenteur';
@@ -43,3 +43,4 @@ export const DEFAULT_PRIMITIVE_DIMENSIONS: Dimensions = {
 };
 export const DEFAULT_PRIMITIVE_FILL = '#ffffff';
 export const DEFAULT_PRIMITIVE_STROKE = '#000000';
+export const DEFAULT_PRIMITIVE_STROKE_STYLE = PrimitiveStrokeStyle.SOLID;
