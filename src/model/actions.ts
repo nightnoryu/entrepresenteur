@@ -271,6 +271,8 @@ export function addText(
     value: string;
   },
 ): Editor {
+  const elementID = generateUUID();
+
   return {
     ...editor,
     presentation: {
@@ -278,7 +280,7 @@ export function addText(
       slides: concatWithSelectedSlideElements(
         editor,
         {
-          id: generateUUID(),
+          id: elementID,
           type: ElementType.TEXT,
           position,
           dimensions,
@@ -290,6 +292,10 @@ export function addText(
           color: DEFAULT_TEXT_COLOR,
         },
       ),
+    },
+    selections: {
+      ...editor.selections,
+      selectedElementIDs: [elementID],
     },
   };
 }
@@ -487,6 +493,8 @@ export function addImage(
     src: string,
   },
 ): Editor {
+  const elementID = generateUUID();
+
   return {
     ...editor,
     presentation: {
@@ -494,13 +502,17 @@ export function addImage(
       slides: concatWithSelectedSlideElements(
         editor,
         {
-          id: generateUUID(),
+          id: elementID,
           type: ElementType.IMAGE,
           position,
           dimensions,
           src,
         },
       ),
+    },
+    selections: {
+      ...editor.selections,
+      selectedElementIDs: [elementID],
     },
   };
 }
@@ -516,6 +528,8 @@ export function addPrimitive(
     primitiveType: PrimitiveType,
   },
 ): Editor {
+  const elementID = generateUUID();
+
   return {
     ...editor,
     presentation: {
@@ -523,7 +537,7 @@ export function addPrimitive(
       slides: concatWithSelectedSlideElements(
         editor,
         {
-          id: generateUUID(),
+          id: elementID,
           type: ElementType.PRIMITIVE,
           primitiveType,
           position,
@@ -532,6 +546,10 @@ export function addPrimitive(
           stroke: DEFAULT_PRIMITIVE_STROKE,
         },
       ),
+    },
+    selections: {
+      ...editor.selections,
+      selectedElementIDs: [elementID],
     },
   };
 }
