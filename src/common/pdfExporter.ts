@@ -5,12 +5,13 @@ import {
   ImageElement,
   Presentation,
   PrimitiveElement,
+  PrimitiveStrokeStyle,
   PrimitiveType,
   Slide,
   TextElement,
 } from '../model/types';
 import jsPDF from 'jspdf';
-import { SLIDE_HEIGHT, SLIDE_WIDTH } from '../model/constants';
+import { SLIDE_HEIGHT, SLIDE_WIDTH, STROKE_STYLE_DASHED, STROKE_STYLE_DOT_DASHED } from '../model/constants';
 import { mapFontToString } from '../model/modelUtils';
 import { calculateEllipseProperties, calculateTrianglePoints } from './componentsUtils';
 
@@ -119,7 +120,19 @@ function setPrimitiveStyling(pdf: jsPDF, element: PrimitiveElement): void {
   pdf
     .setFillColor(element.fill)
     .setDrawColor(element.stroke)
+    .setLineDashPattern(getLineDashPattern(element.strokeStyle), 0)
     .setLineWidth(1);
+}
+
+function getLineDashPattern(style: PrimitiveStrokeStyle): number[] {
+  switch (style) {
+  case PrimitiveStrokeStyle.SOLID:
+    return [];
+  case PrimitiveStrokeStyle.DASHED:
+    return STROKE_STYLE_DASHED;
+  case PrimitiveStrokeStyle.DOT_DASHED:
+    return STROKE_STYLE_DOT_DASHED;
+  }
 }
 
 function addRectangle(pdf: jsPDF, element: PrimitiveElement): void {
