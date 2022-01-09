@@ -64,6 +64,7 @@ export type PrimitiveElement = GenericSlideElement & {
   fill: string;
   stroke: string;
   strokeStyle: PrimitiveStrokeStyle,
+  strokeSize: number;
 };
 
 export enum BackgroundType {
