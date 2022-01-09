@@ -80,7 +80,11 @@ function setBackground(pdf: jsPDF, background: Background): void {
 function addText(pdf: jsPDF, element: TextElement): void {
   pdf
     .setTextColor(element.color)
-    .setFont(mapFontToString(element.font))
+    .setFont(
+      mapFontToString(element.font),
+      element.isItalic ? 'italic' : '',
+      element.isBold ? 'bold' : undefined,
+    )
     .setFontSize(element.size)
     .text(element.value, element.position.x, element.position.y);
 }
