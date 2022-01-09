@@ -131,6 +131,18 @@ export function setPrimitiveStrokeStyle(elementID: UUID, strokeStyle: PrimitiveS
   };
 }
 
+export function setPrimitiveStrokeSize(elementID: UUID, strokeSize: number) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_PRIMITIVE_STROKE_SIZE,
+      payload: {
+        elementID,
+        strokeSize,
+      },
+    });
+  };
+}
+
 export function selectElement(elementID: UUID) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
