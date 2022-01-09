@@ -1,4 +1,4 @@
-import { Dimensions, Font, Position } from './types';
+import { Dimensions, Position, TextFont } from './types';
 
 // Page
 export const BASE_WINDOW_TITLE = 'Entrepresenteur';
@@ -30,7 +30,7 @@ export const DEFAULT_TEXT_DIMENSIONS: Dimensions = {
   width: 0,
   height: 0,
 };
-export const DEFAULT_TEXT_FONT = Font.HELVETICA;
+export const DEFAULT_TEXT_FONT = TextFont.HELVETICA;
 export const DEFAULT_TEXT_COLOR = '#000000';
 export const DEFAULT_TEXT_SIZE = 44;
 
