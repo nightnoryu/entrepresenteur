@@ -1,4 +1,13 @@
-import { BackgroundType, Dimensions, Editor, ElementType, Font, Position, Presentation, PrimitiveType } from './types';
+import {
+  BackgroundType,
+  Dimensions,
+  Editor,
+  ElementType,
+  Position,
+  Presentation,
+  PrimitiveType,
+  TextFont,
+} from './types';
 import { generateUUID, UUID } from './uuid';
 import {
   changeSlidesOrder,
@@ -322,7 +331,7 @@ export function setTextFont(
     font,
   }: {
     elementID: UUID;
-    font: Font;
+    font: TextFont;
   },
 ): Editor {
   return {

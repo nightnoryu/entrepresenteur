@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import Action, { ActionType } from './actions';
 import { UUID } from '../../model/uuid';
-import { Dimensions, Font, Position, Presentation, PrimitiveType } from '../../model/types';
+import { Dimensions, Position, Presentation, PrimitiveType, TextFont } from '../../model/types';
 
 export function openPresentation(presentation: Presentation) {
   return (dispatch: Dispatch<Action>): void => {
@@ -41,7 +41,7 @@ export function setTextValue(elementID: UUID, value: string) {
   };
 }
 
-export function setTextFont(elementID: UUID, font: Font) {
+export function setTextFont(elementID: UUID, font: TextFont) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
       type: ActionType.SET_TEXT_FONT,

@@ -16,7 +16,7 @@ export enum ElementType {
   PRIMITIVE,
 }
 
-export enum Font {
+export enum TextFont {
   HELVETICA,
   TIMES,
   COURIER,
@@ -35,7 +35,7 @@ export type TextElement = GenericSlideElement & {
   type: ElementType.TEXT;
   value: string;
   size: number;
-  font: Font;
+  font: TextFont;
   color: string;
 };
 

@@ -1,4 +1,4 @@
-import { BackgroundType, Editor, Font, Presentation, Slide, SlideElement } from './types';
+import { BackgroundType, Editor, Presentation, Slide, SlideElement, TextFont } from './types';
 import { generateUUID, UUID } from './uuid';
 import { DEFAULT_PRESENTATION_NAME, DEFAULT_SLIDE_BACKGROUND, MAX_HISTORY_ENTRIES } from './constants';
 
@@ -46,25 +46,25 @@ export function createEditor(presentation: Presentation): Editor {
   };
 }
 
-export function mapFontToString(font: Font): string {
+export function mapFontToString(font: TextFont): string {
   switch (font) {
-  case Font.HELVETICA:
+  case TextFont.HELVETICA:
     return 'Helvetica';
-  case Font.TIMES:
+  case TextFont.TIMES:
     return 'Times';
-  case Font.COURIER:
+  case TextFont.COURIER:
     return 'Courier';
   }
 }
 
-export function tryMapStringToFont(str: string): Font {
+export function tryMapStringToFont(str: string): TextFont {
   switch (str) {
   case 'Helvetica':
-    return Font.HELVETICA;
+    return TextFont.HELVETICA;
   case 'Times':
-    return Font.TIMES;
+    return TextFont.TIMES;
   case 'Courier':
-    return Font.COURIER;
+    return TextFont.COURIER;
   default:
     throw new Error('Unknown font');
   }
