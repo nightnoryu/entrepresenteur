@@ -24,6 +24,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
     setPrimitiveFillColor,
     setPrimitiveStrokeColor,
     setPrimitiveStrokeStyle,
+    setPrimitiveStrokeSize,
   } = bindActionCreators(actionCreators, dispatch);
 
   const primitiveProperties = getPrimitiveProperties();
@@ -47,6 +48,13 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
   const onStrokeStyleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (currentElement) {
       setPrimitiveStrokeStyle(currentElement.id, tryMapStringToStrokeStyle(event.currentTarget.value));
+    }
+  };
+
+  const onStrokeSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (currentElement) {
+      const size = parseInt(event.currentTarget.value);
+      setPrimitiveStrokeSize(currentElement.id, size);
     }
   };
 
@@ -83,6 +91,24 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
               value={strokeStyle}
             >
               {strokeStyle}
+            </option>
+          ))}
+        </select>
+      </li>
+
+      <li className={styles.panelElement}>
+        Stroke size
+        <select
+          name="strokeSize"
+          value={currentElement?.strokeSize ? currentElement.strokeSize : undefined}
+          onChange={onStrokeSizeChange}
+        >
+          {primitiveProperties.strokeSizes.map(strokeSize => (
+            <option
+              key={strokeSize}
+              value={strokeSize}
+            >
+              {strokeSize}
             </option>
           ))}
         </select>
