@@ -24,6 +24,7 @@ import {
   setPresentationTitle,
   setPrimitiveFillColor,
   setPrimitiveStrokeColor,
+  setPrimitiveStrokeStyle,
   setSlideBackgroundColor,
   setSlideBackgroundImage,
   setTextColor,
@@ -63,6 +64,8 @@ function editorReducer(state = initialState, action: Action): Editor {
     return setPrimitiveFillColor(state, action.payload);
   case ActionType.SET_PRIMITIVE_STROKE_COLOR:
     return setPrimitiveStrokeColor(state, action.payload);
+  case ActionType.SET_PRIMITIVE_STROKE_STYLE:
+    return setPrimitiveStrokeStyle(state, action.payload);
   case ActionType.SELECT_ELEMENT:
     return selectElement(state, action.payload);
   case ActionType.UNSELECT_ELEMENT:
