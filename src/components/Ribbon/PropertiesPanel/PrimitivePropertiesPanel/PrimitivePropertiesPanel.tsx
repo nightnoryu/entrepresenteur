@@ -5,8 +5,14 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../../state';
 import { ElementType, PrimitiveElement } from '../../../../model/types';
 import { RootState } from '../../../../state/reducers';
-import { isCurrentElement, isCurrentSlide } from '../../../../model/modelUtils';
+import {
+  isCurrentElement,
+  isCurrentSlide,
+  mapStrokeStyleToString,
+  tryMapStringToStrokeStyle,
+} from '../../../../model/modelUtils';
 import { pickColor } from '../../../../common/fileUtils';
+import { getPrimitiveProperties } from '../../../../model/uiParameters/primitiveProperties';
 
 type PrimitivePropertiesPanelProps = {
   currentElement?: PrimitiveElement;
@@ -14,7 +20,14 @@ type PrimitivePropertiesPanelProps = {
 
 function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelProps): JSX.Element {
   const dispatch = useDispatch();
-  const { setPrimitiveFillColor, setPrimitiveStrokeColor } = bindActionCreators(actionCreators, dispatch);
+  const {
+    setPrimitiveFillColor,
+    setPrimitiveStrokeColor,
+    setPrimitiveStrokeStyle,
+    setPrimitiveStrokeSize,
+  } = bindActionCreators(actionCreators, dispatch);
+
+  const primitiveProperties = getPrimitiveProperties();
 
   const onFillColorPick = () => {
     if (currentElement) {
@@ -29,6 +42,19 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
       pickColor()
         .then(color => setPrimitiveStrokeColor(currentElement.id, color))
         .catch(error => alert(error));
+    }
+  };
+
+  const onStrokeStyleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (currentElement) {
+      setPrimitiveStrokeStyle(currentElement.id, tryMapStringToStrokeStyle(event.currentTarget.value));
+    }
+  };
+
+  const onStrokeSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (currentElement) {
+      const size = parseInt(event.currentTarget.value);
+      setPrimitiveStrokeSize(currentElement.id, size);
     }
   };
 
@@ -50,6 +76,42 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
           defaultValue={currentElement?.stroke}
           onClick={onStrokeColorPick}
         />
+      </li>
+
+      <li className={styles.panelElement}>
+        Stroke style
+        <select
+          name="strokeStyle"
+          value={currentElement?.strokeStyle ? mapStrokeStyleToString(currentElement.strokeStyle) : undefined}
+          onChange={onStrokeStyleChange}
+        >
+          {primitiveProperties.strokeStyles.map(strokeStyle => (
+            <option
+              key={strokeStyle}
+              value={strokeStyle}
+            >
+              {strokeStyle}
+            </option>
+          ))}
+        </select>
+      </li>
+
+      <li className={styles.panelElement}>
+        Stroke size
+        <select
+          name="strokeSize"
+          value={currentElement?.strokeSize ? currentElement.strokeSize : undefined}
+          onChange={onStrokeSizeChange}
+        >
+          {primitiveProperties.strokeSizes.map(strokeSize => (
+            <option
+              key={strokeSize}
+              value={strokeSize}
+            >
+              {strokeSize}
+            </option>
+          ))}
+        </select>
       </li>
     </ul>
   );

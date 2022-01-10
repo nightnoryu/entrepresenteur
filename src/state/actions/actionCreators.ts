@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import Action, { ActionType } from './actions';
 import { UUID } from '../../model/uuid';
-import { Dimensions, Font, Position, Presentation, PrimitiveType } from '../../model/types';
+import { Dimensions, Position, Presentation, PrimitiveStrokeStyle, PrimitiveType, TextFont } from '../../model/types';
 
 export function openPresentation(presentation: Presentation) {
   return (dispatch: Dispatch<Action>): void => {
@@ -41,7 +41,25 @@ export function setTextValue(elementID: UUID, value: string) {
   };
 }
 
-export function setTextFont(elementID: UUID, font: Font) {
+export function toggleBoldText(elementID: UUID) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.TOGGLE_BOLD_TEXT,
+      payload: elementID,
+    });
+  };
+}
+
+export function toggleItalicText(elementID: UUID) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.TOGGLE_ITALIC_TEXT,
+      payload: elementID,
+    });
+  };
+}
+
+export function setTextFont(elementID: UUID, font: TextFont) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
       type: ActionType.SET_TEXT_FONT,
@@ -96,6 +114,30 @@ export function setPrimitiveStrokeColor(elementID: UUID, stroke: string) {
       payload: {
         elementID,
         stroke,
+      },
+    });
+  };
+}
+
+export function setPrimitiveStrokeStyle(elementID: UUID, strokeStyle: PrimitiveStrokeStyle) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_PRIMITIVE_STROKE_STYLE,
+      payload: {
+        elementID,
+        strokeStyle,
+      },
+    });
+  };
+}
+
+export function setPrimitiveStrokeSize(elementID: UUID, strokeSize: number) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_PRIMITIVE_STROKE_SIZE,
+      payload: {
+        elementID,
+        strokeSize,
       },
     });
   };

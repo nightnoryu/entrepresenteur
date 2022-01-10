@@ -24,6 +24,8 @@ import {
   setPresentationTitle,
   setPrimitiveFillColor,
   setPrimitiveStrokeColor,
+  setPrimitiveStrokeSize,
+  setPrimitiveStrokeStyle,
   setSlideBackgroundColor,
   setSlideBackgroundImage,
   setTextColor,
@@ -32,6 +34,8 @@ import {
   setTextValue,
   startDemonstration,
   stopDemonstration,
+  toggleBoldText,
+  toggleItalicText,
   unselectElement,
 } from '../../model/actions';
 
@@ -47,6 +51,10 @@ function editorReducer(state = initialState, action: Action): Editor {
     return setPresentationTitle(state, action.payload);
   case ActionType.SET_TEXT_VALUE:
     return setTextValue(state, action.payload);
+  case ActionType.TOGGLE_BOLD_TEXT:
+    return toggleBoldText(state, action.payload);
+  case ActionType.TOGGLE_ITALIC_TEXT:
+    return toggleItalicText(state, action.payload);
   case ActionType.SET_TEXT_FONT:
     return setTextFont(state, action.payload);
   case ActionType.SET_TEXT_SIZE:
@@ -57,6 +65,10 @@ function editorReducer(state = initialState, action: Action): Editor {
     return setPrimitiveFillColor(state, action.payload);
   case ActionType.SET_PRIMITIVE_STROKE_COLOR:
     return setPrimitiveStrokeColor(state, action.payload);
+  case ActionType.SET_PRIMITIVE_STROKE_STYLE:
+    return setPrimitiveStrokeStyle(state, action.payload);
+  case ActionType.SET_PRIMITIVE_STROKE_SIZE:
+    return setPrimitiveStrokeSize(state, action.payload);
   case ActionType.SELECT_ELEMENT:
     return selectElement(state, action.payload);
   case ActionType.UNSELECT_ELEMENT:

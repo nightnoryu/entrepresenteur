@@ -16,10 +16,22 @@ export enum ElementType {
   PRIMITIVE,
 }
 
-export enum Font {
+export enum PrimitiveType {
+  RECTANGLE,
+  ELLIPSE,
+  TRIANGLE,
+}
+
+export enum TextFont {
   HELVETICA,
   TIMES,
   COURIER,
+}
+
+export enum PrimitiveStrokeStyle {
+  SOLID,
+  DASHED,
+  DOT_DASHED,
 }
 
 export type SlideElement = TextElement | ImageElement | PrimitiveElement;
@@ -35,7 +47,9 @@ export type TextElement = GenericSlideElement & {
   type: ElementType.TEXT;
   value: string;
   size: number;
-  font: Font;
+  font: TextFont;
+  isBold: boolean;
+  isItalic: boolean;
   color: string;
 };
 
@@ -44,17 +58,13 @@ export type ImageElement = GenericSlideElement & {
   src: string;
 };
 
-export enum PrimitiveType {
-  RECTANGLE,
-  ELLIPSE,
-  TRIANGLE,
-}
-
 export type PrimitiveElement = GenericSlideElement & {
   type: ElementType.PRIMITIVE;
   primitiveType: PrimitiveType;
   fill: string;
   stroke: string;
+  strokeStyle: PrimitiveStrokeStyle,
+  strokeSize: number;
 };
 
 export enum BackgroundType {

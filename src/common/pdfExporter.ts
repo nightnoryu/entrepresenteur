@@ -5,12 +5,13 @@ import {
   ImageElement,
   Presentation,
   PrimitiveElement,
+  PrimitiveStrokeStyle,
   PrimitiveType,
   Slide,
   TextElement,
 } from '../model/types';
 import jsPDF from 'jspdf';
-import { SLIDE_HEIGHT, SLIDE_WIDTH } from '../model/constants';
+import { SLIDE_HEIGHT, SLIDE_WIDTH, STROKE_STYLE_DASHED, STROKE_STYLE_DOT_DASHED } from '../model/constants';
 import { mapFontToString } from '../model/modelUtils';
 import { calculateEllipseProperties, calculateTrianglePoints } from './componentsUtils';
 
@@ -80,7 +81,11 @@ function setBackground(pdf: jsPDF, background: Background): void {
 function addText(pdf: jsPDF, element: TextElement): void {
   pdf
     .setTextColor(element.color)
-    .setFont(mapFontToString(element.font))
+    .setFont(
+      mapFontToString(element.font),
+      element.isItalic ? 'italic' : '',
+      element.isBold ? 'bold' : undefined,
+    )
     .setFontSize(element.size)
     .text(element.value, element.position.x, element.position.y);
 }
@@ -115,7 +120,19 @@ function setPrimitiveStyling(pdf: jsPDF, element: PrimitiveElement): void {
   pdf
     .setFillColor(element.fill)
     .setDrawColor(element.stroke)
-    .setLineWidth(1);
+    .setLineDashPattern(getLineDashPattern(element.strokeStyle), 0)
+    .setLineWidth(element.strokeSize);
+}
+
+function getLineDashPattern(style: PrimitiveStrokeStyle): number[] {
+  switch (style) {
+  case PrimitiveStrokeStyle.SOLID:
+    return [];
+  case PrimitiveStrokeStyle.DASHED:
+    return STROKE_STYLE_DASHED;
+  case PrimitiveStrokeStyle.DOT_DASHED:
+    return STROKE_STYLE_DOT_DASHED;
+  }
 }
 
 function addRectangle(pdf: jsPDF, element: PrimitiveElement): void {

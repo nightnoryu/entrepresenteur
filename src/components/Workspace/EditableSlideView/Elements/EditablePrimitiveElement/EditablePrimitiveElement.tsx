@@ -6,6 +6,7 @@ import useElementDragAndDrop from '../../../../../hooks/slideElements/useSlideEl
 import { actionCreators } from '../../../../../state';
 import {
   calculateEllipseProperties,
+  getPrimitiveStrokeStyle,
   getResizeAnchorProperties,
   getResizeAnchorTranslateDelta,
   getTrianglePoints,
@@ -56,6 +57,8 @@ function EditablePrimitiveElement(
           height={dimensions.height}
           fill={element.fill}
           stroke={element.stroke}
+          strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
+          strokeWidth={element.strokeSize}
           style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
           ref={isSelected ? undefined : ref}
         />
@@ -66,6 +69,8 @@ function EditablePrimitiveElement(
           points={getTrianglePoints({ ...element, dimensions })}
           fill={element.fill}
           stroke={element.stroke}
+          strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
+          strokeWidth={element.strokeSize}
           style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
           ref={isSelected ? undefined : ref}
         />
@@ -81,6 +86,8 @@ function EditablePrimitiveElement(
           ry={properties.ry}
           fill={element.fill}
           stroke={element.stroke}
+          strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
+          strokeWidth={element.strokeSize}
           style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
           ref={isSelected ? undefined : ref}
         />
@@ -95,10 +102,10 @@ function EditablePrimitiveElement(
       {
         isSelected &&
         <rect
-          x={element.position.x}
-          y={element.position.y}
-          width={dimensions.width}
-          height={dimensions.height}
+          x={element.position.x - element.strokeSize}
+          y={element.position.y - element.strokeSize}
+          width={dimensions.width + element.strokeSize}
+          height={dimensions.height + element.strokeSize}
           fill="#2a8ec8"
           stroke="#1563c8"
           fillOpacity="0.3"

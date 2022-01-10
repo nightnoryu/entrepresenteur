@@ -15,6 +15,8 @@ function TextElementView({ element }: TextElementViewProps): JSX.Element {
       dominantBaseline="hanging"
       textAnchor="left"
       style={{
+        fontWeight: element.isBold ? 'bold' : undefined,
+        fontStyle: element.isItalic ? 'italic' : undefined,
         fontFamily: mapFontToString(element.font),
         fontSize: element.size,
         width: element.dimensions.width,

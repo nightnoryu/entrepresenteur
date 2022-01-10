@@ -1,4 +1,14 @@
-import { BackgroundType, Dimensions, Editor, ElementType, Font, Position, Presentation, PrimitiveType } from './types';
+import {
+  BackgroundType,
+  Dimensions,
+  Editor,
+  ElementType,
+  Position,
+  Presentation,
+  PrimitiveStrokeStyle,
+  PrimitiveType,
+  TextFont,
+} from './types';
 import { generateUUID, UUID } from './uuid';
 import {
   changeSlidesOrder,
@@ -15,6 +25,8 @@ import {
 import {
   DEFAULT_PRIMITIVE_FILL,
   DEFAULT_PRIMITIVE_STROKE,
+  DEFAULT_PRIMITIVE_STROKE_SIZE,
+  DEFAULT_PRIMITIVE_STROKE_STYLE,
   DEFAULT_TEXT_COLOR,
   DEFAULT_TEXT_FONT,
   DEFAULT_TEXT_SIZE,
@@ -262,6 +274,8 @@ export function addText(
     value: string;
   },
 ): Editor {
+  const elementID = generateUUID();
+
   return {
     ...editor,
     presentation: {
@@ -269,16 +283,22 @@ export function addText(
       slides: concatWithSelectedSlideElements(
         editor,
         {
-          id: generateUUID(),
+          id: elementID,
           type: ElementType.TEXT,
           position,
           dimensions,
           value,
           size: DEFAULT_TEXT_SIZE,
           font: DEFAULT_TEXT_FONT,
+          isBold: false,
+          isItalic: false,
           color: DEFAULT_TEXT_COLOR,
         },
       ),
+    },
+    selections: {
+      ...editor.selections,
+      selectedElementIDs: [elementID],
     },
   };
 }
@@ -316,13 +336,63 @@ export function setTextValue(
   };
 }
 
+export function toggleBoldText(editor: Editor, elementID: UUID): Editor {
+  return {
+    ...editor,
+    presentation: {
+      ...editor.presentation,
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
+              element.type === ElementType.TEXT &&
+              element.id === elementID
+                ? {
+                  ...element,
+                  isBold: !element.isBold,
+                }
+                : element,
+            ),
+          }
+          : slide,
+      ),
+    },
+  };
+}
+
+export function toggleItalicText(editor: Editor, elementID: UUID): Editor {
+  return {
+    ...editor,
+    presentation: {
+      ...editor.presentation,
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
+              element.type === ElementType.TEXT &&
+              element.id === elementID
+                ? {
+                  ...element,
+                  isItalic: !element.isItalic,
+                }
+                : element,
+            ),
+          }
+          : slide,
+      ),
+    },
+  };
+}
+
 export function setTextFont(
   editor: Editor, {
     elementID,
     font,
   }: {
     elementID: UUID;
-    font: Font;
+    font: TextFont;
   },
 ): Editor {
   return {
@@ -426,6 +496,8 @@ export function addImage(
     src: string,
   },
 ): Editor {
+  const elementID = generateUUID();
+
   return {
     ...editor,
     presentation: {
@@ -433,13 +505,17 @@ export function addImage(
       slides: concatWithSelectedSlideElements(
         editor,
         {
-          id: generateUUID(),
+          id: elementID,
           type: ElementType.IMAGE,
           position,
           dimensions,
           src,
         },
       ),
+    },
+    selections: {
+      ...editor.selections,
+      selectedElementIDs: [elementID],
     },
   };
 }
@@ -455,6 +531,8 @@ export function addPrimitive(
     primitiveType: PrimitiveType,
   },
 ): Editor {
+  const elementID = generateUUID();
+
   return {
     ...editor,
     presentation: {
@@ -462,15 +540,21 @@ export function addPrimitive(
       slides: concatWithSelectedSlideElements(
         editor,
         {
-          id: generateUUID(),
+          id: elementID,
           type: ElementType.PRIMITIVE,
           primitiveType,
           position,
           dimensions,
           fill: DEFAULT_PRIMITIVE_FILL,
           stroke: DEFAULT_PRIMITIVE_STROKE,
+          strokeStyle: DEFAULT_PRIMITIVE_STROKE_STYLE,
+          strokeSize: DEFAULT_PRIMITIVE_STROKE_SIZE,
         },
       ),
+    },
+    selections: {
+      ...editor.selections,
+      selectedElementIDs: [elementID],
     },
   };
 }
@@ -531,6 +615,72 @@ export function setPrimitiveStrokeColor(
                 ? {
                   ...element,
                   stroke,
+                }
+                : element,
+            ),
+          }
+          : slide,
+      ),
+    },
+  };
+}
+
+export function setPrimitiveStrokeStyle(
+  editor: Editor, {
+    elementID,
+    strokeStyle,
+  }: {
+    elementID: UUID;
+    strokeStyle: PrimitiveStrokeStyle;
+  },
+): Editor {
+  return {
+    ...editor,
+    presentation: {
+      ...editor.presentation,
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
+              element.type === ElementType.PRIMITIVE &&
+              element.id === elementID
+                ? {
+                  ...element,
+                  strokeStyle,
+                }
+                : element,
+            ),
+          }
+          : slide,
+      ),
+    },
+  };
+}
+
+export function setPrimitiveStrokeSize(
+  editor: Editor, {
+    elementID,
+    strokeSize,
+  }: {
+    elementID: UUID;
+    strokeSize: number;
+  },
+): Editor {
+  return {
+    ...editor,
+    presentation: {
+      ...editor.presentation,
+      slides: editor.presentation.slides.map(slide =>
+        isCurrentSlide(slide, editor.selections.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: slide.elements.map(element =>
+              element.type === ElementType.PRIMITIVE &&
+              element.id === elementID
+                ? {
+                  ...element,
+                  strokeSize,
                 }
                 : element,
             ),

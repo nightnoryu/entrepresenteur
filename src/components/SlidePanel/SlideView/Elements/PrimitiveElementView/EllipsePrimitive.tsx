@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrimitiveElement } from '../../../../../model/types';
-import { calculateEllipseProperties } from '../../../../../common/componentsUtils';
+import { calculateEllipseProperties, getPrimitiveStrokeStyle } from '../../../../../common/componentsUtils';
 
 type EllipsePrimitiveProps = {
   element: PrimitiveElement;
@@ -17,6 +17,8 @@ function EllipsePrimitive({ element }: EllipsePrimitiveProps): JSX.Element {
       ry={properties.ry}
       fill={element.fill}
       stroke={element.stroke}
+      strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
+      strokeWidth={element.strokeSize}
     />
   );
 }
