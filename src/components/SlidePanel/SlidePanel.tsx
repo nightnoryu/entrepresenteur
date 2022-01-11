@@ -25,7 +25,7 @@ function SlidePanel({ slides, selectedSlideIDs }: SlidePanelProps): JSX.Element 
 
   return (
     <div
-      className={styles.slidepanel}
+      className={styles.slidePanel}
       ref={ref}
       tabIndex={1}
     >
