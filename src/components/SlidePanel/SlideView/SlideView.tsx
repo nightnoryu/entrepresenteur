@@ -17,7 +17,7 @@ function SlideView({ slide }: SlideViewProps): JSX.Element {
   return (
     <svg
       viewBox={`0 0 ${SLIDE_WIDTH} ${SLIDE_HEIGHT}`}
-      className={styles.slideview}
+      className={styles.slideView}
       style={slideBackgroundStyle}
     >
       {slide.elements.map(element => {
