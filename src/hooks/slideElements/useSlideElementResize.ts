@@ -25,10 +25,19 @@ function useSlideElementResize(
       height: scaleFactor * (event.pageY - startPos.y),
     };
 
-    setDimensions({
+    const newDimensions = {
       width: dimensions.width + delta.width,
       height: dimensions.height + delta.height,
-    });
+    };
+
+    if (newDimensions.width < 0) {
+      newDimensions.width = 0;
+    }
+    if (newDimensions.height < 0) {
+      newDimensions.height = 0;
+    }
+
+    setDimensions(newDimensions);
   };
 
   const onFinish = () => {
