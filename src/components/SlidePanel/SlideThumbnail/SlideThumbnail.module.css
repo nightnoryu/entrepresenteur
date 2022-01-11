@@ -29,7 +29,6 @@
 
 .slideView
 {
-  margin-top: -3%;
   width: 85%;
   height: auto;
   border: 1px solid #000000;
@@ -37,8 +36,7 @@
 
   position: relative;
   left: 50%;
-  top: 40%;
+  top: 37%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  -webkit-user-select: none;
 }
