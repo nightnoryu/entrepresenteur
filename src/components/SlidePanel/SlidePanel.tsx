@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import styles from './SlidePanel.module.css';
 import { UUID } from '../../model/uuid';
 import { Slide } from '../../model/types';
-import SlideThumbnail from './SlideThumbnail/SlideThumbnail';
+import SlideEntry from './SlideEntry/SlideEntry';
 import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../state';
@@ -30,7 +30,7 @@ function SlidePanel({ slides, selectedSlideIDs }: SlidePanelProps): JSX.Element 
       tabIndex={1}
     >
       {slides.map((slide, i) => (
-        <SlideThumbnail
+        <SlideEntry
           key={slide.id}
           slide={slide}
           index={i + 1}

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../SlideView/SlideView';
 import { Slide } from '../../../model/types';
-import styles from './SlideThumbnail.module.css';
+import styles from './SlideEntry.module.css';
 import SlideView from '../SlideView/SlideView';
 import { createNewSlide } from '../../../model/modelUtils';
 
@@ -12,12 +12,12 @@ type SlideThumbnailProps = {
   onClick?: (event: React.MouseEvent) => void;
 };
 
-function SlideThumbnail({ slide, index, isSelected, onClick }: SlideThumbnailProps): JSX.Element {
+function SlideEntry({ slide, index, isSelected, onClick }: SlideThumbnailProps): JSX.Element {
   const displayedSlide = slide || createNewSlide();
 
   return (
     <div
-      className={styles.slideThumbnail}
+      className={styles.slideEntry}
       onClick={(event) => {
         if (onClick) {
           onClick(event);
@@ -35,4 +35,4 @@ function SlideThumbnail({ slide, index, isSelected, onClick }: SlideThumbnailPro
   );
 }
 
-export default SlideThumbnail;
+export default SlideEntry;

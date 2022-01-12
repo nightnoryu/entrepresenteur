@@ -1,4 +1,4 @@
-.slideThumbnail
+.slideEntry
 {
   width: 90%;
   height: 16%;
@@ -11,7 +11,7 @@
   background: #fdf9f8;
 }
 
-.slideThumbnail:hover
+.slideEntry:hover
 {
   background: #f4f0ef;
 }
