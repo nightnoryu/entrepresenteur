@@ -27,7 +27,7 @@ function SlideEntry({ slide, index, isSelected, onClick }: SlideThumbnailProps):
         border: '2px solid blue',
       } : {}}
     >
-      <span className={styles.slideIndex}>{index}</span>
+      <div className={styles.slideIndex}>{index}</div>
       <div className={styles.slideView}>
         <SlideView slide={displayedSlide} />
       </div>
