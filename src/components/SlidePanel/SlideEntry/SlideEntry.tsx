@@ -23,12 +23,25 @@ function SlideEntry({ slide, index, isSelected, onClick }: SlideThumbnailProps):
           onClick(event);
         }
       }}
-      style={isSelected ? {
-        border: '2px solid blue',
-      } : {}}
+      style={{
+        backgroundColor: isSelected ? '#fdf7e6' : undefined,
+      }}
     >
-      <div className={styles.slideIndex}>{index}</div>
-      <div className={styles.slideView}>
+      <div
+        className={styles.slideIndex}
+        style={{
+          fontWeight: isSelected ? 'bold' : undefined,
+        }}
+      >
+        {index}
+      </div>
+
+      <div
+        className={styles.slideView}
+        style={{
+          borderColor: isSelected ? '#eda912' : undefined,
+        }}
+      >
         <SlideView slide={displayedSlide} />
       </div>
     </div>
