@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, Position, SlideElement } from '../../model/types';
 import useDragAndDrop from '../dragAndDrop/useDragAndDrop';
 import { actionCreators } from '../../state';
@@ -48,6 +48,10 @@ function useSlideElementResize(
   };
 
   useDragAndDrop(ref, onStart, onMove, onFinish);
+
+  useEffect(() => {
+    setDimensions(element.dimensions);
+  }, [element.dimensions]);
 
   return dimensions;
 }
