@@ -109,6 +109,7 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
         Color
         <input
           type="color"
+          className={styles.colorPicker}
           defaultValue={currentElement?.color}
           ref={colorPickerRef}
         />

@@ -66,6 +66,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
         Fill
         <input
           type="color"
+          className={styles.colorPicker}
           defaultValue={currentElement?.fill}
           ref={fillColorPickerRef}
         />
@@ -75,6 +76,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
         Stroke
         <input
           type="color"
+          className={styles.colorPicker}
           defaultValue={currentElement?.stroke}
           ref={strokeColorPickerRef}
         />
