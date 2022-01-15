@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import styles from './EditableTextElement.module.css';
 import { Position, TextElement } from '../../../../../model/types';
 import { useDispatch } from 'react-redux';
 import { actionCreators } from '../../../../../state';
@@ -33,7 +34,6 @@ function EditableTextElement(
     unselectElement,
     moveElements,
     setTextValue,
-    removeElements,
   } = bindActionCreators(actionCreators, dispatch);
 
   const ref = useRef(null);
@@ -41,39 +41,55 @@ function EditableTextElement(
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef);
   useElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements);
 
+  const [editing, setEditing] = useState(false);
   useDoubleClick(ref, () => {
-    const newValue = prompt('Enter new value', element.value);
-    if (newValue !== null) {
-      if (newValue === '') {
-        removeElements();
-      }
-
-      setTextValue(element.id, newValue);
-    }
+    setEditing(true);
   });
 
-  return (
-    <text
-      x={element.position.x}
-      y={element.position.y}
-      fill={element.color}
-      dominantBaseline="hanging"
-      textAnchor="left"
-      style={{
-        fontWeight: element.isBold ? 'bold' : undefined,
-        fontStyle: element.isItalic ? 'italic' : undefined,
-        fontFamily: mapFontToString(element.font),
-        fontSize: element.size,
-        width: element.dimensions.width,
-        height: element.dimensions.height,
-        userSelect: 'none',
-        transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined,
-      }}
-      ref={ref}
-    >
-      {element.value}
-    </text>
-  );
+  return !editing
+    ? (
+      <text
+        x={element.position.x}
+        y={element.position.y}
+        fill={element.color}
+        dominantBaseline="hanging"
+        textAnchor="left"
+        style={{
+          fontWeight: element.isBold ? 'bold' : undefined,
+          fontStyle: element.isItalic ? 'italic' : undefined,
+          fontFamily: mapFontToString(element.font),
+          fontSize: element.size,
+          width: element.dimensions.width,
+          height: element.dimensions.height,
+          userSelect: 'none',
+          transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined,
+        }}
+        ref={ref}
+      >
+        {element.value}
+      </text>
+    )
+    : (
+      <foreignObject
+        x={element.position.x}
+        y={element.position.y}
+        width={200}
+        height={200}
+        className={styles.textWrapper}
+      >
+        <input
+          type="text"
+          value={element.value}
+          className={styles.textInput}
+          style={{
+            fontWeight: element.isBold ? 'bold' : undefined,
+            fontStyle: element.isItalic ? 'italic' : undefined,
+            fontFamily: mapFontToString(element.font),
+            fontSize: element.size,
+          }}
+        />
+      </foreignObject>
+    );
 }
 
 export default EditableTextElement;
