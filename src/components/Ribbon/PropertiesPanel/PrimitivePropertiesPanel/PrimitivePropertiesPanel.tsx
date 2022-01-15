@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styles from './PrimitivePropertiesPanel.module.css';
 import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,8 +11,8 @@ import {
   mapStrokeStyleToString,
   tryMapStringToStrokeStyle,
 } from '../../../../model/modelUtils';
-import { pickColor } from '../../../../common/fileUtils';
 import { getPrimitiveProperties } from '../../../../model/uiParameters/primitiveProperties';
+import useEventListener from '../../../../hooks/useEventListener';
 
 type PrimitivePropertiesPanelProps = {
   currentElement?: PrimitiveElement;
@@ -29,21 +29,23 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
 
   const primitiveProperties = getPrimitiveProperties();
 
-  const onFillColorPick = () => {
+  const fillColorPickerRef = useRef<HTMLInputElement>(null);
+  const onFillColorChange = (event: Event) => {
+    const target = event.currentTarget as HTMLInputElement;
     if (currentElement) {
-      pickColor()
-        .then(color => setPrimitiveFillColor(currentElement.id, color))
-        .catch(error => alert(error));
+      setPrimitiveFillColor(currentElement.id, target.value);
     }
   };
+  useEventListener('change', onFillColorChange, fillColorPickerRef);
 
-  const onStrokeColorPick = () => {
+  const strokeColorPickerRef = useRef<HTMLInputElement>(null);
+  const onStrokeColorChange = (event: Event) => {
+    const target = event.currentTarget as HTMLInputElement;
     if (currentElement) {
-      pickColor()
-        .then(color => setPrimitiveStrokeColor(currentElement.id, color))
-        .catch(error => alert(error));
+      setPrimitiveStrokeColor(currentElement.id, target.value);
     }
   };
+  useEventListener('change', onStrokeColorChange, strokeColorPickerRef);
 
   const onStrokeStyleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (currentElement) {
@@ -65,7 +67,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
         <input
           type="color"
           defaultValue={currentElement?.fill}
-          onClick={onFillColorPick}
+          ref={fillColorPickerRef}
         />
       </li>
 
@@ -74,7 +76,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
         <input
           type="color"
           defaultValue={currentElement?.stroke}
-          onClick={onStrokeColorPick}
+          ref={strokeColorPickerRef}
         />
       </li>
 
