@@ -19,7 +19,7 @@ function PresentationTitle({ title }: PresentationTitleProps): JSX.Element {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => setEditingValue(event.currentTarget.value);
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' || event.key === 'Escape') {
       event.currentTarget.blur();
     }
   };
