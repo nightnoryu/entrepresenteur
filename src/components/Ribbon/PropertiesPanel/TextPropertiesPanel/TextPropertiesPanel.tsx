@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styles from './TextPropertiesPanel.module.css';
 import { getTextProperties } from '../../../../model/uiParameters/textProperties';
 import { connect, useDispatch } from 'react-redux';
@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { RootState } from '../../../../state/reducers';
 import { isCurrentElement, isCurrentSlide, mapFontToString, tryMapStringToFont } from '../../../../model/modelUtils';
 import { ElementType, TextElement } from '../../../../model/types';
-import { pickColor } from '../../../../common/fileUtils';
+import useEventListener from '../../../../hooks/useEventListener';
 
 type TextPropertiesPanelProps = {
   currentElement?: TextElement;
@@ -50,13 +50,14 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
     }
   };
 
-  const onColorPick = () => {
+  const colorPickerRef = useRef<HTMLInputElement>(null);
+  const onColorChange = (event: Event) => {
+    const target = event.currentTarget as HTMLInputElement;
     if (currentElement) {
-      pickColor()
-        .then(color => setTextColor(currentElement.id, color))
-        .catch(error => alert(error));
+      setTextColor(currentElement.id, target.value);
     }
   };
+  useEventListener('change', onColorChange, colorPickerRef);
 
   return (
     <ul className={styles.textPropertiesPanel}>
@@ -109,7 +110,7 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
         <input
           type="color"
           defaultValue={currentElement?.color}
-          onClick={onColorPick}
+          ref={colorPickerRef}
         />
       </li>
     </ul>
