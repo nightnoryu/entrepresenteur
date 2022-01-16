@@ -1,12 +1,14 @@
 import { TextProperties } from '../../components/Ribbon/PropertiesPanel/TextPropertiesPanel/TextPropertiesPanelTypes';
+import { TextFont } from '../types';
+import { mapFontToString } from '../modelUtils';
 
 export function getTextProperties(): TextProperties {
   return {
     fonts: [
-      'Helvetica',
-      'Times',
-      'Courier',
-    ],
+      TextFont.SERIF,
+      // TextFont.SANS_SERIF,
+      // TextFont.MONOSPACE,
+    ].map(mapFontToString),
     sizes: [
       13,
       15,

@@ -11,6 +11,10 @@ import {
   TextElement,
 } from '../model/types';
 import jsPDF from 'jspdf';
+import './fonts/Noto Serif-normal';
+import './fonts/Noto Serif-bold';
+import './fonts/Noto Serif-italic';
+import './fonts/Noto Serif-bolditalic';
 import { SLIDE_HEIGHT, SLIDE_WIDTH, STROKE_STYLE_DASHED, STROKE_STYLE_DOT_DASHED } from '../model/constants';
 import { mapFontToString } from '../model/modelUtils';
 import { calculateEllipseProperties, calculateTrianglePoints } from './componentsUtils';
@@ -83,7 +87,7 @@ function addText(pdf: jsPDF, element: TextElement): void {
     .setTextColor(element.color)
     .setFont(
       mapFontToString(element.font),
-      element.isItalic ? 'italic' : '',
+      element.isItalic ? 'italic' : 'normal',
       element.isBold ? 'bold' : undefined,
     )
     .setFontSize(element.size)
