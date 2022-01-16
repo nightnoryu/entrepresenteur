@@ -1,3 +1,5 @@
+### Build ###
+
 FROM node:16-alpine as build
 
 WORKDIR /app
@@ -8,9 +10,13 @@ RUN yarn install --frozen-lockfile
 COPY . /app
 RUN npm run build
 
+### Server setup ###
+
 FROM nginx:1.16.0-alpine
 
 COPY --from=build /app/build /usr/share/nginx/html
 
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+COPY ~conf/nginx/default.conf.template /etc/nginx/conf.d/default.conf.template
+COPY ~conf/nginx/nginx.conf /etc/nginx/nginx.conf
+
+CMD /bin/bash "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
