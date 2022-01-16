@@ -24,7 +24,7 @@ export enum PrimitiveType {
 
 export enum TextFont {
   SERIF,
-  // SANS_SERIF,
+  SANS_SERIF,
   // MONOSPACE,
 }
 

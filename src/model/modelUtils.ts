@@ -50,6 +50,8 @@ export function mapFontToString(font: TextFont): string {
   switch (font) {
   case TextFont.SERIF:
     return 'Noto Serif';
+  case TextFont.SANS_SERIF:
+    return 'Roboto';
   }
 }
 
@@ -57,6 +59,8 @@ export function tryMapStringToFont(str: string): TextFont {
   switch (str) {
   case 'Noto Serif':
     return TextFont.SERIF;
+  case 'Roboto':
+    return TextFont.SANS_SERIF;
   default:
     throw new Error('Unknown font');
   }
