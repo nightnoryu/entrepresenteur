@@ -2,8 +2,8 @@ FROM node:16
 
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm ci --only=production
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 
 COPY . /app
 RUN npm run build
