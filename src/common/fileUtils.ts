@@ -2,12 +2,23 @@ import { Dimensions, Presentation } from '../model/types';
 import { DEFAULT_IMAGE_HEIGHT, DEFAULT_IMAGE_WIDTH, PRESENTATION_EXTENSION } from '../model/constants';
 
 enum FileTypes {
-  IMAGES = 'image/*',
+  IMAGES = '.jpg,.jpeg,.png,.gif',
   PRESENTATIONS = '.json',
 }
 
+function getFileExtension(name: string): string {
+  const ext = name.split('.').pop();
+  return '.' + ext;
+}
+
+function isCorrectFiletype(name: string, types: FileTypes): boolean {
+  const typesList = types.split(',');
+  const ext = getFileExtension(name);
+  return typesList.includes(ext);
+}
+
 function openFile(types: FileTypes): Promise<File> {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = types;
@@ -15,7 +26,12 @@ function openFile(types: FileTypes): Promise<File> {
     input.addEventListener('change', (event: Event) => {
       const target = event.target as HTMLInputElement;
       if (target?.files) {
-        resolve(target.files[0]);
+        const file = target.files[0];
+        if (isCorrectFiletype(file.name, types)) {
+          resolve(file);
+        } else {
+          reject('Invalid file type');
+        }
       }
     });
 
@@ -55,7 +71,8 @@ export function openPresentationJSON(): Promise<Presentation> {
         });
 
         reader.readAsText(file, 'UTF-8');
-      });
+      })
+      .catch(error => reject(error));
   });
 }
 
@@ -81,7 +98,8 @@ export function openImageBase64(): Promise<HTMLImageElement> {
         });
 
         reader.readAsDataURL(file);
-      });
+      })
+      .catch(error => reject(error));
   });
 }
 
