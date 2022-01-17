@@ -48,23 +48,23 @@ export function createEditor(presentation: Presentation): Editor {
 
 export function mapFontToString(font: TextFont): string {
   switch (font) {
-  case TextFont.HELVETICA:
-    return 'Helvetica';
-  case TextFont.TIMES:
-    return 'Times';
-  case TextFont.COURIER:
-    return 'Courier';
+  case TextFont.SERIF:
+    return 'Noto Serif';
+  case TextFont.SANS_SERIF:
+    return 'Roboto';
+  case TextFont.MONOSPACE:
+    return 'IBM Plex Mono';
   }
 }
 
 export function tryMapStringToFont(str: string): TextFont {
   switch (str) {
-  case 'Helvetica':
-    return TextFont.HELVETICA;
-  case 'Times':
-    return TextFont.TIMES;
-  case 'Courier':
-    return TextFont.COURIER;
+  case 'Noto Serif':
+    return TextFont.SERIF;
+  case 'Roboto':
+    return TextFont.SANS_SERIF;
+  case 'IBM Plex Mono':
+    return TextFont.MONOSPACE;
   default:
     throw new Error('Unknown font');
   }

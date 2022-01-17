@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Entrepresenteur",
+  "name": "Entrepresenteur: simple presentation maker",
   "icons": [
     {
       "src": "favicon.ico",

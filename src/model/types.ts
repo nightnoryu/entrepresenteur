@@ -23,9 +23,9 @@ export enum PrimitiveType {
 }
 
 export enum TextFont {
-  HELVETICA,
-  TIMES,
-  COURIER,
+  SERIF,
+  SANS_SERIF,
+  MONOSPACE,
 }
 
 export enum PrimitiveStrokeStyle {
