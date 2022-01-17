@@ -7,7 +7,7 @@ export function getTextProperties(): TextProperties {
     fonts: [
       TextFont.SERIF,
       TextFont.SANS_SERIF,
-      // TextFont.MONOSPACE,
+      TextFont.MONOSPACE,
     ].map(mapFontToString),
     sizes: [
       13,

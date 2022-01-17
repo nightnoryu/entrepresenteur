@@ -52,6 +52,8 @@ export function mapFontToString(font: TextFont): string {
     return 'Noto Serif';
   case TextFont.SANS_SERIF:
     return 'Roboto';
+  case TextFont.MONOSPACE:
+    return 'IBM Plex Mono';
   }
 }
 
@@ -61,6 +63,8 @@ export function tryMapStringToFont(str: string): TextFont {
     return TextFont.SERIF;
   case 'Roboto':
     return TextFont.SANS_SERIF;
+  case 'IBM Plex Mono':
+    return TextFont.MONOSPACE;
   default:
     throw new Error('Unknown font');
   }
