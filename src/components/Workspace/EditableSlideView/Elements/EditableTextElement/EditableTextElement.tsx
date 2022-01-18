@@ -125,10 +125,10 @@ function EditableTextElement(
     )
     : (
       <foreignObject
-        x={element.position.x}
-        y={element.position.y}
-        width={element.dimensions.width}
-        height={element.dimensions.height}
+        x={element.position.x - 2}
+        y={element.position.y - 2}
+        width={element.dimensions.width - 2}
+        height={element.dimensions.height - 2}
         className={styles.textWrapper}
       >
         <textarea
