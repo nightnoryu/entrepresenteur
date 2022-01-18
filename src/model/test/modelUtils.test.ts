@@ -3,28 +3,30 @@ import { BackgroundType } from '../types';
 import { DEFAULT_PRESENTATION_TITLE, DEFAULT_SLIDE_BACKGROUND } from '../constants';
 
 describe('Model utils', () => {
-  it('createNewSlide', () => {
+  test('createNewSlide', () => {
     const slide = createNewSlide();
 
     expect(slide.background).toEqual({
       type: BackgroundType.SOLID,
       color: DEFAULT_SLIDE_BACKGROUND,
     });
-    expect(slide.elements.length).toEqual(0);
+    expect(slide.elements).toHaveLength(0);
   });
 
-  it('createNewPresentation', () => {
+
+  test('createNewPresentation', () => {
     const presentation = createNewPresentation();
 
     expect(presentation.title).toEqual(DEFAULT_PRESENTATION_TITLE);
-    expect(presentation.slides.length).toEqual(1);
+    expect(presentation.slides).toHaveLength(1);
   });
 
-  it('createEditor', () => {
+
+  test('createEditor', () => {
     const editor = createEditor(createNewPresentation());
 
-    expect(editor.selections.selectedElementIDs.length).toEqual(0);
-    expect(editor.selections.selectedSlideIDs.length).toEqual(1);
+    expect(editor.selections.selectedElementIDs).toHaveLength(0);
+    expect(editor.selections.selectedSlideIDs).toHaveLength(1);
     expect(editor.selections.selectedSlideIDs[0]).toEqual(editor.presentation.slides[0].id);
 
     expect(editor.history).toEqual({
@@ -34,4 +36,10 @@ describe('Model utils', () => {
 
     expect(editor.isDemonstrating).toEqual(false);
   });
+
+
+  test.todo('selectNearestUnselectedSlide');
+
+
+  test.todo('saveState');
 });
