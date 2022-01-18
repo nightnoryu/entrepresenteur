@@ -8,6 +8,7 @@ import useElementDragAndDrop from '../../../../../hooks/slideElements/useSlideEl
 import useDoubleClick from '../../../../../hooks/mouse/useDoubleClick';
 import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
 import { mapFontToString } from '../../../../../model/modelUtils';
+import useOnClickOutside from '../../../../../hooks/mouse/useOnClickOutside';
 
 type EditableTextElementProps = {
   element: TextElement;
@@ -78,6 +79,11 @@ function EditableTextElement(
       setEditingValue(element.value);
     }
   }, [element.value]);
+
+  useOnClickOutside(textareaRef, () => {
+    textareaRef.current?.blur();
+    setEditing(false);
+  }, undefined, parentRef);
 
   return !editing
     ? (
