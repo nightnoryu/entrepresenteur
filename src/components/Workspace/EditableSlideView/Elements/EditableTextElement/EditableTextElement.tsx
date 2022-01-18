@@ -9,6 +9,8 @@ import useDoubleClick from '../../../../../hooks/mouse/useDoubleClick';
 import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
 import { mapFontToString } from '../../../../../model/modelUtils';
 import useOnClickOutside from '../../../../../hooks/mouse/useOnClickOutside';
+import useSlideElementResize from '../../../../../hooks/slideElements/useSlideElementResize';
+import { getResizeAnchorProperties, getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
 
 type EditableTextElementProps = {
   element: TextElement;
@@ -33,13 +35,17 @@ function EditableTextElement(
   const {
     selectElement,
     unselectElement,
+    resizeElement,
     moveElements,
     setTextValue,
   } = bindActionCreators(actionCreators, dispatch);
 
-  const ref = useRef(null);
+  const resizeAnchorRef = useRef(null);
+  const dimensions = useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
+  const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
 
-  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef);
+  const ref = useRef(null);
+  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef, resizeAnchorRef);
   useElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -91,8 +97,8 @@ function EditableTextElement(
         <text
           x={element.position.x}
           y={element.position.y}
-          width={element.dimensions.width}
-          height={element.dimensions.height}
+          width={dimensions.width}
+          height={dimensions.height}
           fill={element.color}
           dominantBaseline="hanging"
           textAnchor="left"
@@ -112,8 +118,8 @@ function EditableTextElement(
         <rect
           x={element.position.x}
           y={element.position.y}
-          width={element.dimensions.width}
-          height={element.dimensions.height}
+          width={dimensions.width}
+          height={dimensions.height}
           fill="#2a8ec8"
           stroke="#1563c8"
           fillOpacity={isSelected ? '0.3' : '0'}
@@ -121,6 +127,16 @@ function EditableTextElement(
           style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
           ref={ref}
         />
+
+        {
+          isSelected &&
+          <rect
+            ref={resizeAnchorRef}
+            {...getResizeAnchorProperties(element)}
+            className={styles.resizeAnchor}
+            style={{ transform: `translate(${resizeAnchorDelta.x}px, ${resizeAnchorDelta.y}px)` }}
+          />
+        }
       </>
     )
     : (
