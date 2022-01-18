@@ -12,4 +12,7 @@
   padding: 0;
 
   resize: none;
+
+  background-color: transparent;
+  border: 2px dashed #000000;
 }
