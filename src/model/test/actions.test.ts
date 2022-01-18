@@ -1,41 +1,48 @@
 import { createEditor, createNewPresentation } from '../modelUtils';
 import { addSlide, removeSlides, setCurrentSlide, setFirstCurrentSlide, setPresentationTitle } from '../actions';
+import { Editor } from '../types';
 
-const mockEditor = createEditor(createNewPresentation());
-const mockTitle = 'Mock title';
+describe('Model actions', () => {
+  let editor: Editor;
+  const mockTitle = 'Mock title';
 
-test('setPresentationTitle', () => {
-  const editor = setPresentationTitle(mockEditor, mockTitle);
+  beforeEach(() => {
+    editor = createEditor(createNewPresentation());
+  });
 
-  expect(editor.presentation.title).toEqual(mockTitle);
-});
+  it('setPresentationTitle', () => {
+    editor = setPresentationTitle(editor, mockTitle);
 
-test('addSlide', () => {
-  const editor = addSlide(mockEditor);
+    expect(editor.presentation.title).toEqual(mockTitle);
+  });
 
-  expect(editor.presentation.slides.length).toEqual(2);
-  expect(editor.selections.selectedSlideIDs.length).toEqual(1);
-  expect(editor.selections.selectedSlideIDs[0]).toEqual(editor.presentation.slides[1].id);
-});
+  it('addSlide', () => {
+    editor = addSlide(editor);
 
-test('setFirstCurrentSlide', () => {
-  const editor = setFirstCurrentSlide(addSlide(addSlide(mockEditor)));
+    expect(editor.presentation.slides.length).toEqual(2);
+    expect(editor.selections.selectedSlideIDs.length).toEqual(1);
+    expect(editor.selections.selectedSlideIDs[0]).toEqual(editor.presentation.slides[1].id);
+  });
 
-  expect(editor.selections.selectedSlideIDs[0]).toEqual(editor.presentation.slides[0].id);
-});
+  it('setFirstCurrentSlide', () => {
+    editor = setFirstCurrentSlide(addSlide(addSlide(editor)));
 
-test('removeSlides', () => {
-  const editor = removeSlides(addSlide(mockEditor));
+    expect(editor.selections.selectedSlideIDs[0]).toEqual(editor.presentation.slides[0].id);
+  });
 
-  expect(editor.presentation.slides.length).toEqual(1);
-  expect(editor.selections.selectedSlideIDs.length).toEqual(1);
-  expect(editor.selections.selectedSlideIDs[0]).toEqual(editor.presentation.slides[0].id);
-});
+  it('removeSlides', () => {
+    editor = removeSlides(addSlide(editor));
 
-test('setCurrentSlide', () => {
-  const initialEditor = addSlide(mockEditor);
-  const editor = setCurrentSlide(initialEditor, initialEditor.presentation.slides[0].id);
+    expect(editor.presentation.slides.length).toEqual(1);
+    expect(editor.selections.selectedSlideIDs.length).toEqual(1);
+    expect(editor.selections.selectedSlideIDs[0]).toEqual(editor.presentation.slides[0].id);
+  });
 
-  expect(editor.selections.selectedSlideIDs.length).toEqual(1);
-  expect(editor.selections.selectedSlideIDs[0]).toEqual(editor.presentation.slides[0].id);
+  it('setCurrentSlide', () => {
+    editor = addSlide(editor);
+    editor = setCurrentSlide(editor, editor.presentation.slides[0].id);
+
+    expect(editor.selections.selectedSlideIDs.length).toEqual(1);
+    expect(editor.selections.selectedSlideIDs[0]).toEqual(editor.presentation.slides[0].id);
+  });
 });
