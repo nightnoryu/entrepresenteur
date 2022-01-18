@@ -108,10 +108,7 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
     redo: () => actionCreators.redo()(dispatch),
 
     addText: () => {
-      const text = prompt('Enter text') || '';
-      if (text !== '') {
-        actionCreators.addText(DEFAULT_ELEMENT_POSITION, DEFAULT_TEXT_DIMENSIONS, text)(dispatch);
-      }
+      actionCreators.addText(DEFAULT_ELEMENT_POSITION, DEFAULT_TEXT_DIMENSIONS, '')(dispatch);
     },
 
     addImage: () => {

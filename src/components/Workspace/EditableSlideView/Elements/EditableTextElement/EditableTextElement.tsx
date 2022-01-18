@@ -85,6 +85,11 @@ function EditableTextElement(
       setEditingValue(element.value);
     }
   }, [element.value]);
+  useEffect(() => {
+    if (element.value === '') {
+      setEditing(true);
+    }
+  }, [element.value]);
 
   useOnClickOutside(textareaRef, () => {
     textareaRef.current?.blur();
