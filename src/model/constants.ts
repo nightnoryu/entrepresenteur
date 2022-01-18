@@ -10,7 +10,7 @@ export const MAX_HISTORY_ENTRIES = 50;
 
 // Presentation
 
-export const DEFAULT_PRESENTATION_NAME = 'New Presentation';
+export const DEFAULT_PRESENTATION_TITLE = 'New Presentation';
 
 // Slides
 
