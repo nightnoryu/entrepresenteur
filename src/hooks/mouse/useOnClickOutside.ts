@@ -3,7 +3,7 @@ import useEventListener from '../useEventListener';
 
 type Handler = (event: MouseEvent) => void;
 
-function useOnClickOutside<T extends SVGElement>(
+function useOnClickOutside<T extends Node>(
   ref: React.RefObject<T>,
   handler: Handler,
   includedElements?: React.RefObject<Node>[],
