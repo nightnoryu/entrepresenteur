@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
-COPY . /app
+COPY . .
 RUN yarn run build
 
 ### Server setup ###
