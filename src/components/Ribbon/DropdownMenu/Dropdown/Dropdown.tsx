@@ -26,11 +26,11 @@ function Dropdown({ label, items, isVisible, onClick }: DropdownMenuItemProps): 
 
       {
         isVisible &&
-          <ul className={styles.dropdownList}>
-            {items.map(item => (
-              <DropdownItem key={item.label} item={item} onClick={onClick} />
-            ))}
-          </ul>
+        <ul className={styles.dropdownList}>
+          {items.map(item => (
+            <DropdownItem key={item.label} item={item} onItemClick={onClick} />
+          ))}
+        </ul>
       }
     </div>
   );
