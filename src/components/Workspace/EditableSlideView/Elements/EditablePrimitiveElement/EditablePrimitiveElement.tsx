@@ -102,10 +102,10 @@ function EditablePrimitiveElement(
       {
         isSelected &&
         <rect
-          x={element.position.x - element.strokeSize}
-          y={element.position.y - element.strokeSize}
-          width={dimensions.width + element.strokeSize}
-          height={dimensions.height + element.strokeSize}
+          x={element.position.x - element.strokeSize / 2}
+          y={element.position.y - element.strokeSize / 2}
+          width={dimensions.width + element.strokeSize / 2}
+          height={dimensions.height + element.strokeSize / 2}
           fill="#2a8ec8"
           stroke="#1563c8"
           fillOpacity="0.3"
