@@ -43,11 +43,9 @@ function PresentationTitle({ title }: PresentationTitleProps): JSX.Element {
     }
   }, [title]);
 
-
   return (
     <input
       type="text"
-      aria-label="Presentation Title"
       className={styles.title}
       value={editingValue}
       onChange={onChange}
