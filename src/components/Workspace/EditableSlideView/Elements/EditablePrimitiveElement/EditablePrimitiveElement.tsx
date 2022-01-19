@@ -60,7 +60,7 @@ function EditablePrimitiveElement(
           strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
           strokeWidth={element.strokeSize}
           style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
-          ref={isSelected ? undefined : ref}
+          ref={ref}
         />
       );
     case PrimitiveType.TRIANGLE:
@@ -72,7 +72,7 @@ function EditablePrimitiveElement(
           strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
           strokeWidth={element.strokeSize}
           style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
-          ref={isSelected ? undefined : ref}
+          ref={ref}
         />
       );
     case PrimitiveType.ELLIPSE: {
@@ -89,7 +89,7 @@ function EditablePrimitiveElement(
           strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
           strokeWidth={element.strokeSize}
           style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
-          ref={isSelected ? undefined : ref}
+          ref={ref}
         />
       );
     }
@@ -110,8 +110,7 @@ function EditablePrimitiveElement(
           stroke="#1563c8"
           fillOpacity="0.3"
           strokeOpacity="0.3"
-          style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
-          ref={isSelected ? ref : undefined}
+          style={{ transform: `translate(${delta.x}px, ${delta.y}px)`, pointerEvents: 'none' }}
         />
       }
       {

@@ -51,7 +51,7 @@ function EditableImageElement(
         preserveAspectRatio="none"
         onDragStart={e => e.preventDefault()}
         style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
-        ref={isSelected ? undefined : ref}
+        ref={ref}
       />
       {
         isSelected &&
@@ -64,8 +64,7 @@ function EditableImageElement(
           stroke="#1563c8"
           fillOpacity="0.3"
           strokeOpacity="0.3"
-          style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
-          ref={isSelected ? ref : undefined}
+          style={{ transform: `translate(${delta.x}px, ${delta.y}px)`, pointerEvents: 'none' }}
         />
       }
       {
