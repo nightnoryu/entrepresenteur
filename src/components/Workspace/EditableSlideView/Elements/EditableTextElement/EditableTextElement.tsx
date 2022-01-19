@@ -8,9 +8,9 @@ import useSlideElementDragAndDrop from '../../../../../hooks/slideElements/useSl
 import useDoubleClick from '../../../../../hooks/mouse/useDoubleClick';
 import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
 import { mapFontToString } from '../../../../../model/modelUtils';
-import useOnClickOutside from '../../../../../hooks/mouse/useOnClickOutside';
 import useSlideElementResize from '../../../../../hooks/slideElements/useSlideElementResize';
 import { getResizeAnchorProperties, getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
+import useEventListener from '../../../../../hooks/useEventListener';
 
 type EditableTextElementProps = {
   element: TextElement;
@@ -47,7 +47,7 @@ function EditableTextElement(
 
   const ref = useRef(null);
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef);
-  useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements, setCurrentElement);
+  useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements, setCurrentElement, isSelected);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [editing, setEditing] = useState(false);
@@ -86,17 +86,20 @@ function EditableTextElement(
       setEditingValue(element.value);
     }
   }, [element.value]);
+
   useEffect(() => {
     if (element.value === '') {
       setEditing(true);
     }
   }, [element.value]);
 
-  useOnClickOutside(textareaRef, () => {
-    textareaRef.current?.blur();
-    setEditing(false);
-    unselectElement(element.id);
-  }, undefined, parentRef);
+  useEventListener('mousedown', event => {
+    if (event.target === parentRef?.current) {
+      textareaRef.current?.blur();
+      setEditing(false);
+      unselectElement(element.id);
+    }
+  });
 
   return !editing
     ? (

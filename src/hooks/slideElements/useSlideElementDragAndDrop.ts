@@ -12,6 +12,7 @@ function useSlideElementDragAndDrop<T extends SVGElement>(
   setDelta: (position: Position) => void,
   moveElements: (positionDiff: Position) => (dispatch: Dispatch<Action>) => void,
   setCurrentElement?: typeof setCurrentElementActionCreator,
+  isSelected?: boolean,
 ): void {
   let startPos: Position;
 
@@ -20,6 +21,10 @@ function useSlideElementDragAndDrop<T extends SVGElement>(
       x: event.pageX,
       y: event.pageY,
     };
+
+    if (isSelected !== undefined && !isSelected && !event.ctrlKey) {
+      setCurrentElement?.(element.id);
+    }
   };
 
   const onMove = (event: MouseEvent) => {
@@ -29,11 +34,9 @@ function useSlideElementDragAndDrop<T extends SVGElement>(
     });
   };
 
-  const onFinish = (event: MouseEvent) => {
+  const onFinish = () => {
     if (delta.x !== 0 && delta.y !== 0) {
       moveElements(delta);
-    } else if (!event.ctrlKey) {
-      setCurrentElement?.(element.id);
     }
     setDelta({ x: 0, y: 0 });
   };

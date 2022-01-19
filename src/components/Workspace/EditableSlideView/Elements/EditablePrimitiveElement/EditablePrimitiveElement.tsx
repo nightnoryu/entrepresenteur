@@ -48,7 +48,7 @@ function EditablePrimitiveElement(
 
   const ref = useRef(null);
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef);
-  useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements, setCurrentElement);
+  useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements, setCurrentElement, isSelected);
 
   const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
 
