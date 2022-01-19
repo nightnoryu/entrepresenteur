@@ -35,7 +35,7 @@ function EditableImageElement(
   const dimensions = useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
 
   const ref = useRef(null);
-  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef, resizeAnchorRef);
+  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef);
   useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements);
 
   const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);

@@ -1,6 +1,5 @@
 import React from 'react';
 import useEventListener from '../useEventListener';
-import useOnClickOutside from '../mouse/useOnClickOutside';
 import {
   selectElement as selectElementCreator,
   unselectElement as unselectElementCreator,
@@ -14,7 +13,6 @@ function useSlideElementActions<T extends SVGElement>(
   selectElement: typeof selectElementCreator,
   unselectElement: typeof unselectElementCreator,
   containerRef: React.RefObject<DocumentAndElementEventHandlers>,
-  resizeAnchorRef?: React.RefObject<T>,
 ): void {
   useEventListener('mousedown', () => {
     if (!isSelected) {
@@ -22,11 +20,11 @@ function useSlideElementActions<T extends SVGElement>(
     }
   }, ref);
 
-  useOnClickOutside(ref, event => {
-    if (isSelected && !event.ctrlKey) {
+  useEventListener('mousedown', e => {
+    if (e.target === containerRef.current) {
       unselectElement(element.id);
     }
-  }, resizeAnchorRef ? [resizeAnchorRef] : undefined, containerRef);
+  }, containerRef);
 }
 
 export default useSlideElementActions;

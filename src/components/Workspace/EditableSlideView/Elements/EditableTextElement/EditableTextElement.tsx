@@ -45,7 +45,7 @@ function EditableTextElement(
   const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
 
   const ref = useRef(null);
-  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef, resizeAnchorRef);
+  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef);
   useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
