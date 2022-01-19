@@ -3,7 +3,7 @@ import { Position, SlideElement } from '../../model/types';
 import useDragAndDrop from '../dragAndDrop/useDragAndDrop';
 import Action from '../../state/actions/actions';
 
-function useElementDragAndDrop<T extends SVGElement>(
+function useSlideElementDragAndDrop<T extends SVGElement>(
   ref: React.RefObject<T> | null,
   element: SlideElement,
   scaleFactor: number,
@@ -37,4 +37,4 @@ function useElementDragAndDrop<T extends SVGElement>(
   useDragAndDrop(ref, onStart, onMove, onFinish);
 }
 
-export default useElementDragAndDrop;
+export default useSlideElementDragAndDrop;

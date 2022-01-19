@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Position, PrimitiveElement, PrimitiveType } from '../../../../../model/types';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import useElementDragAndDrop from '../../../../../hooks/slideElements/useSlideElementDragAndDrop';
+import useSlideElementDragAndDrop from '../../../../../hooks/slideElements/useSlideElementDragAndDrop';
 import { actionCreators } from '../../../../../state';
 import {
   calculateEllipseProperties,
@@ -42,7 +42,7 @@ function EditablePrimitiveElement(
 
   const ref = useRef(null);
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef, resizeAnchorRef);
-  useElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements);
+  useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements);
 
   const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
 
@@ -60,7 +60,7 @@ function EditablePrimitiveElement(
           strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
           strokeWidth={element.strokeSize}
           style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
-          ref={isSelected ? undefined : ref}
+          ref={ref}
         />
       );
     case PrimitiveType.TRIANGLE:
@@ -72,7 +72,7 @@ function EditablePrimitiveElement(
           strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
           strokeWidth={element.strokeSize}
           style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
-          ref={isSelected ? undefined : ref}
+          ref={ref}
         />
       );
     case PrimitiveType.ELLIPSE: {
@@ -89,7 +89,7 @@ function EditablePrimitiveElement(
           strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
           strokeWidth={element.strokeSize}
           style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
-          ref={isSelected ? undefined : ref}
+          ref={ref}
         />
       );
     }
@@ -110,8 +110,7 @@ function EditablePrimitiveElement(
           stroke="#1563c8"
           fillOpacity="0.3"
           strokeOpacity="0.3"
-          style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
-          ref={isSelected ? ref : undefined}
+          style={{ transform: `translate(${delta.x}px, ${delta.y}px)`, pointerEvents: 'none' }}
         />
       }
       {
