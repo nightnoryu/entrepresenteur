@@ -4,7 +4,7 @@ import { Position, TextElement } from '../../../../../model/types';
 import { useDispatch } from 'react-redux';
 import { actionCreators } from '../../../../../state';
 import { bindActionCreators } from 'redux';
-import useElementDragAndDrop from '../../../../../hooks/slideElements/useSlideElementDragAndDrop';
+import useSlideElementDragAndDrop from '../../../../../hooks/slideElements/useSlideElementDragAndDrop';
 import useDoubleClick from '../../../../../hooks/mouse/useDoubleClick';
 import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
 import { mapFontToString } from '../../../../../model/modelUtils';
@@ -46,7 +46,7 @@ function EditableTextElement(
 
   const ref = useRef(null);
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef, resizeAnchorRef);
-  useElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements);
+  useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [editing, setEditing] = useState(false);

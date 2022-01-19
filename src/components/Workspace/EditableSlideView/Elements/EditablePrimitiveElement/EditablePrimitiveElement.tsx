@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Position, PrimitiveElement, PrimitiveType } from '../../../../../model/types';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import useElementDragAndDrop from '../../../../../hooks/slideElements/useSlideElementDragAndDrop';
+import useSlideElementDragAndDrop from '../../../../../hooks/slideElements/useSlideElementDragAndDrop';
 import { actionCreators } from '../../../../../state';
 import {
   calculateEllipseProperties,
@@ -42,7 +42,7 @@ function EditablePrimitiveElement(
 
   const ref = useRef(null);
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef, resizeAnchorRef);
-  useElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements);
+  useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements);
 
   const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
 
