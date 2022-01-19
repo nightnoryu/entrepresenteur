@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import '../SlideView/SlideView';
 import { Slide } from '../../../model/types';
 import styles from './SlideEntry.module.css';
@@ -15,6 +15,14 @@ type SlideThumbnailProps = {
 function SlideEntry({ slide, index, isSelected, onClick }: SlideThumbnailProps): JSX.Element {
   const displayedSlide = slide || createNewSlide();
 
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    ref.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+    });
+  }, []);
+
   return (
     <div
       className={styles.slideEntry}
@@ -26,6 +34,7 @@ function SlideEntry({ slide, index, isSelected, onClick }: SlideThumbnailProps):
       style={{
         backgroundColor: isSelected ? '#fdf7e6' : undefined,
       }}
+      ref={ref}
     >
       <div
         className={styles.slideIndex}
