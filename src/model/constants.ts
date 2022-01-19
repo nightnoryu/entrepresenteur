@@ -10,7 +10,7 @@ export const MAX_HISTORY_ENTRIES = 50;
 
 // Presentation
 
-export const DEFAULT_PRESENTATION_NAME = 'New Presentation';
+export const DEFAULT_PRESENTATION_TITLE = 'New Presentation';
 
 // Slides
 
@@ -27,8 +27,8 @@ export const DEFAULT_ELEMENT_POSITION: Position = {
 };
 
 export const DEFAULT_TEXT_DIMENSIONS: Dimensions = {
-  width: 0,
-  height: 0,
+  width: 400,
+  height: 100,
 };
 export const DEFAULT_TEXT_FONT = TextFont.SERIF;
 export const DEFAULT_TEXT_COLOR = '#000000';

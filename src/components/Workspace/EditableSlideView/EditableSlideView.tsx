@@ -6,10 +6,7 @@ import { SLIDE_HEIGHT, SLIDE_WIDTH } from '../../../model/constants';
 import { UUID } from '../../../model/uuid';
 import { RootState } from '../../../state/reducers';
 import { createNewSlide, isCurrentSlide } from '../../../model/modelUtils';
-import { connect, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../../state';
-import useHotkey from '../../../hooks/hotkeys/useHotkey';
+import { connect } from 'react-redux';
 import EditableImageElement from './Elements/EditableImageElement/EditableImageElement';
 import EditableTextElement from './Elements/EditableTextElement/EditableTextElement';
 import EditablePrimitiveElement from './Elements/EditablePrimitiveElement/EditablePrimitiveElement';
@@ -23,15 +20,9 @@ type EditableSlideViewProps = {
 function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps): JSX.Element {
   const slideBackgroundStyle = getSlideBackgroundStyle(slide);
 
-  const dispatch = useDispatch();
-  const { removeElements } = bindActionCreators(actionCreators, dispatch);
-
   const ref = useRef(null);
-  useHotkey('Delete', () => {
-    removeElements();
-  }, ref);
-
   const scaleFactor = useScaleFactorForDragAndDrop(ref);
+
   const [delta, setDelta] = useState({ x: 0, y: 0 });
 
   return (

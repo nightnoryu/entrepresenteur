@@ -16,24 +16,18 @@ function useDragAndDrop<T extends EventTarget>(
       return;
     }
 
-    if (onStart) {
-      onStart(event);
-    }
+    onStart?.(event);
 
     addEventListener('mousemove', onMouseMove);
     addEventListener('mouseup', onMouseUp);
   };
 
   const onMouseMove = (event: MouseEvent) => {
-    if (onMove) {
-      onMove(event);
-    }
+    onMove?.(event);
   };
 
   const onMouseUp = (event: MouseEvent) => {
-    if (savedOnFinish.current) {
-      savedOnFinish.current(event);
-    }
+    savedOnFinish.current?.(event);
 
     removeEventListener('mousemove', onMouseMove);
     removeEventListener('mouseup', onMouseUp);
@@ -44,14 +38,10 @@ function useDragAndDrop<T extends EventTarget>(
       savedOnFinish.current = onFinish;
     }
 
-    if (ref?.current) {
-      ref.current.addEventListener('mousedown', onMouseDown);
-    }
+    ref?.current?.addEventListener('mousedown', onMouseDown);
 
     return () => {
-      if (ref?.current) {
-        ref.current.removeEventListener('mousedown', onMouseDown);
-      }
+      ref?.current?.removeEventListener('mousedown', onMouseDown);
     };
   });
 }

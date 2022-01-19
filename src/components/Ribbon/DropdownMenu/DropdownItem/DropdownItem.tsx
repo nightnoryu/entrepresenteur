@@ -4,59 +4,61 @@ import { MenuItem, MenuItemType } from '../../RibbonTypes';
 
 type DropdownItemProps = {
   item: MenuItem;
-  onClick: () => void;
+  onItemClick: () => void;
 };
 
 // TODO: split menu button and menu submenu
 //       think about terminology (dropdown, dropdownItem, nestedDropdown, nestedDropdownItem)
-function DropdownItem({ item, onClick }: DropdownItemProps): JSX.Element {
+function DropdownItem({ item, onItemClick }: DropdownItemProps): JSX.Element {
   const [isNestedVisible, setIsNestedVisible] = useState(false);
+
+  const onClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    if (item.type === MenuItemType.MenuButton) {
+      item.action();
+      onItemClick();
+    } else {
+      setIsNestedVisible(!isNestedVisible);
+    }
+  };
 
   return (
     <li>
       <a
         href="#"
         className={styles.item}
-        onClick={event => {
-          event.preventDefault();
-          if (item.type === MenuItemType.MenuButton) {
-            item.action();
-            onClick();
-          } else {
-            setIsNestedVisible(!isNestedVisible);
-          }
-        }}
+        onClick={onClick}
       >
         {item.label}
         {
           item.icon &&
-            <span className={'material-icons md-18 ' + styles.itemIcon}>{item.icon}</span>
+          <span className={'material-icons ' + styles.itemIcon}>{item.icon}</span>
         }
       </a>
 
       {
         item.type === MenuItemType.Submenu && isNestedVisible &&
-          <ul className={styles.nested}>
-            {item.items.map(subItem => (
-              <li key={subItem.label}>
-                <a
-                  href="#"
-                  className={styles.subItem}
-                  onClick={event => {
-                    event.preventDefault();
-                    subItem.action();
-                    onClick();
-                  }}
-                >
-                  {subItem.label}
-                  {
-                    subItem.icon &&
-                      <span className={'material-icons md-18 ' + styles.subItemIcon}>{subItem.icon}</span>
-                  }
-                </a>
-              </li>
-            ))}
-          </ul>
+        <ul className={styles.nested}>
+          {item.items.map(subItem => (
+            <li key={subItem.label}>
+              <a
+                href="#"
+                className={styles.subItem}
+                onClick={event => {
+                  event.preventDefault();
+                  subItem.action();
+                  onItemClick();
+                }}
+              >
+                {subItem.label}
+                {
+                  subItem.icon &&
+                  <span className={'material-icons ' + styles.subItemIcon}>{subItem.icon}</span>
+                }
+              </a>
+            </li>
+          ))}
+        </ul>
       }
     </li>
   );

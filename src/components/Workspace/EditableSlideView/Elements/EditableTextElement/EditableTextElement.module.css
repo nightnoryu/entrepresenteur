@@ -1,0 +1,23 @@
+.textWrapper
+{
+  overflow: visible;
+}
+
+.textInput
+{
+  width: 100%;
+  height: 100%;
+
+  display: block;
+  padding: 0;
+
+  resize: none;
+
+  background-color: transparent;
+  border: 2px dashed #000000;
+}
+
+.resizeAnchor:hover
+{
+  cursor: se-resize;
+}

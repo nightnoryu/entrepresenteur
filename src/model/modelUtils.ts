@@ -1,6 +1,6 @@
 import { BackgroundType, Editor, Presentation, PrimitiveStrokeStyle, Slide, SlideElement, TextFont } from './types';
 import { generateUUID, UUID } from './uuid';
-import { DEFAULT_PRESENTATION_NAME, DEFAULT_SLIDE_BACKGROUND, MAX_HISTORY_ENTRIES } from './constants';
+import { DEFAULT_PRESENTATION_TITLE, DEFAULT_SLIDE_BACKGROUND, MAX_HISTORY_ENTRIES } from './constants';
 
 export function moveElementInArray<T>(
   collection: T[],
@@ -26,7 +26,7 @@ export function createNewSlide(): Slide {
 
 export function createNewPresentation(): Presentation {
   return {
-    title: DEFAULT_PRESENTATION_NAME,
+    title: DEFAULT_PRESENTATION_TITLE,
     slides: [createNewSlide()],
   };
 }

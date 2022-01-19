@@ -19,7 +19,7 @@ function PresentationTitle({ title }: PresentationTitleProps): JSX.Element {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => setEditingValue(event.currentTarget.value);
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' || event.key === 'Escape') {
       event.currentTarget.blur();
     }
   };
@@ -43,11 +43,9 @@ function PresentationTitle({ title }: PresentationTitleProps): JSX.Element {
     }
   }, [title]);
 
-
   return (
     <input
       type="text"
-      aria-label="Presentation Title"
       className={styles.title}
       value={editingValue}
       onChange={onChange}
