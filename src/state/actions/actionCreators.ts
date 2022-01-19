@@ -143,6 +143,15 @@ export function setPrimitiveStrokeSize(elementID: UUID, strokeSize: number) {
   };
 }
 
+export function setCurrentElement(elementID: UUID) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_CURRENT_ELEMENT,
+      payload: elementID,
+    });
+  };
+}
+
 export function selectElement(elementID: UUID) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({

@@ -29,14 +29,20 @@ function EditableImageElement(
   }: EditableImageElementProps,
 ): JSX.Element {
   const dispatch = useDispatch();
-  const { selectElement, unselectElement, moveElements, resizeElement } = bindActionCreators(actionCreators, dispatch);
+  const {
+    setCurrentElement,
+    selectElement,
+    unselectElement,
+    moveElements,
+    resizeElement,
+  } = bindActionCreators(actionCreators, dispatch);
 
   const resizeAnchorRef = useRef(null);
   const dimensions = useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
 
   const ref = useRef(null);
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef);
-  useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements);
+  useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements, setCurrentElement);
 
   const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
 

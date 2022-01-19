@@ -33,6 +33,7 @@ function EditableTextElement(
 ): JSX.Element {
   const dispatch = useDispatch();
   const {
+    setCurrentElement,
     selectElement,
     unselectElement,
     resizeElement,
@@ -46,7 +47,7 @@ function EditableTextElement(
 
   const ref = useRef(null);
   useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef);
-  useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements);
+  useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements, setCurrentElement);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [editing, setEditing] = useState(false);

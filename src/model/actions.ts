@@ -691,6 +691,27 @@ export function setPrimitiveStrokeSize(
   };
 }
 
+export function setCurrentElement(editor: Editor, elementID: UUID): Editor {
+  return {
+    ...editor,
+    selections: {
+      ...editor.selections,
+      selectedElementIDs: [elementID],
+    },
+    presentation: {
+      ...editor.presentation,
+      slides: editor.presentation.slides.map(
+        slide => isCurrentSlide(slide, editor.selections.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: moveElementOnTop(slide.elements, elementID),
+          }
+          : slide,
+      ),
+    },
+  };
+}
+
 export function selectElement(editor: Editor, elementID: UUID): Editor {
   return {
     ...editor,

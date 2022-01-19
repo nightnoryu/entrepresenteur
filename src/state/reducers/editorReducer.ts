@@ -19,6 +19,7 @@ import {
   resizeElement,
   selectElement,
   selectSlide,
+  setCurrentElement,
   setCurrentSlide,
   setFirstCurrentSlide,
   setPresentationTitle,
@@ -69,6 +70,8 @@ function editorReducer(state = initialState, action: Action): Editor {
     return setPrimitiveStrokeStyle(state, action.payload);
   case ActionType.SET_PRIMITIVE_STROKE_SIZE:
     return setPrimitiveStrokeSize(state, action.payload);
+  case ActionType.SET_CURRENT_ELEMENT:
+    return setCurrentElement(state, action.payload);
   case ActionType.SELECT_ELEMENT:
     return selectElement(state, action.payload);
   case ActionType.UNSELECT_ELEMENT:

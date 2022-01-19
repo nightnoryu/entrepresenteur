@@ -2,6 +2,7 @@ import React, { Dispatch } from 'react';
 import { Position, SlideElement } from '../../model/types';
 import useDragAndDrop from '../dragAndDrop/useDragAndDrop';
 import Action from '../../state/actions/actions';
+import { setCurrentElement as setCurrentElementActionCreator } from '../../state/actions/actionCreators';
 
 function useSlideElementDragAndDrop<T extends SVGElement>(
   ref: React.RefObject<T> | null,
@@ -10,6 +11,7 @@ function useSlideElementDragAndDrop<T extends SVGElement>(
   delta: Position,
   setDelta: (position: Position) => void,
   moveElements: (positionDiff: Position) => (dispatch: Dispatch<Action>) => void,
+  setCurrentElement?: typeof setCurrentElementActionCreator,
 ): void {
   let startPos: Position;
 
@@ -27,9 +29,11 @@ function useSlideElementDragAndDrop<T extends SVGElement>(
     });
   };
 
-  const onFinish = () => {
+  const onFinish = (event: MouseEvent) => {
     if (delta.x !== 0 && delta.y !== 0) {
       moveElements(delta);
+    } else if (!event.ctrlKey) {
+      setCurrentElement?.(element.id);
     }
     setDelta({ x: 0, y: 0 });
   };
