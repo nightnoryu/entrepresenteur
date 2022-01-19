@@ -94,6 +94,7 @@ function EditableTextElement(
   useOnClickOutside(textareaRef, () => {
     textareaRef.current?.blur();
     setEditing(false);
+    unselectElement(element.id);
   }, undefined, parentRef);
 
   return !editing
