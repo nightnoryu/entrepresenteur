@@ -1,8 +1,8 @@
-import React, { Dispatch } from 'react';
+import React from 'react';
 import { Position, SlideElement } from '../../model/types';
 import useDragAndDrop from '../dragAndDrop/useDragAndDrop';
-import Action from '../../state/actions/actions';
-import { setCurrentElement as setCurrentElementActionCreator } from '../../state/actions/actionCreators';
+import { actionCreators } from '../../state';
+import { bindActionCreators, Dispatch } from 'redux';
 
 function useSlideElementDragAndDrop<T extends SVGElement>(
   ref: React.RefObject<T> | null,
@@ -10,10 +10,11 @@ function useSlideElementDragAndDrop<T extends SVGElement>(
   scaleFactor: number,
   delta: Position,
   setDelta: (position: Position) => void,
-  moveElements: (positionDiff: Position) => (dispatch: Dispatch<Action>) => void,
-  setCurrentElement?: typeof setCurrentElementActionCreator,
-  isSelected?: boolean,
+  isSelected: boolean,
+  dispatch: Dispatch,
 ): void {
+  const { moveElements, setCurrentElement } = bindActionCreators(actionCreators, dispatch);
+
   let startPos: Position;
 
   const onStart = (event: MouseEvent) => {

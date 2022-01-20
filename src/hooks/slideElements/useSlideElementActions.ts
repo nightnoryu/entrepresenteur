@@ -1,10 +1,9 @@
 import React from 'react';
-import useEventListener from '../useEventListener';
 import { Dimensions, Position, SlideElement } from '../../model/types';
-import { bindActionCreators, Dispatch } from 'redux';
-import { actionCreators } from '../../state';
+import { Dispatch } from 'redux';
 import useSlideElementDragAndDrop from './useSlideElementDragAndDrop';
 import useSlideElementResize from './useSlideElementResize';
+import useSlideElementSelection from './useSlideElementSelection';
 
 function useSlideElementActions<T extends SVGElement>(
   element: SlideElement,
@@ -17,25 +16,13 @@ function useSlideElementActions<T extends SVGElement>(
   setDelta: (delta: Position) => void,
   dispatch: Dispatch,
 ): Dimensions {
-  const {
-    selectElement,
-    unselectElement,
-    moveElements,
-    setCurrentElement,
-    resizeElement,
-  } = bindActionCreators(actionCreators, dispatch);
-
-  useEventListener('mousedown', () => {
-    if (!isSelected) {
-      selectElement(element.id);
-    }
-  }, ref);
-
-  useEventListener('mousedown', e => {
-    if (e.target === containerRef.current) {
-      unselectElement(element.id);
-    }
-  }, containerRef);
+  useSlideElementSelection(
+    element.id,
+    ref,
+    containerRef,
+    isSelected,
+    dispatch,
+  );
 
   useSlideElementDragAndDrop(
     ref,
@@ -43,16 +30,15 @@ function useSlideElementActions<T extends SVGElement>(
     scaleFactor,
     delta,
     setDelta,
-    moveElements,
-    setCurrentElement,
     isSelected,
+    dispatch,
   );
 
   return useSlideElementResize(
     resizeAnchorRef,
     element,
     scaleFactor,
-    resizeElement,
+    dispatch,
   );
 }
 
