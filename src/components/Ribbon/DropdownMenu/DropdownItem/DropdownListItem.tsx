@@ -7,10 +7,7 @@ type DropdownItemProps = {
   onItemClick: () => void;
 };
 
-// TODO: split menu button and menu submenu
-//       think about terminology (dropdown, dropdownItem, nestedDropdown, nestedDropdownItem)
-//       #50
-function DropdownItem({ item, onItemClick }: DropdownItemProps): JSX.Element {
+function DropdownListItem({ item, onItemClick }: DropdownItemProps): JSX.Element {
   const [isNestedVisible, setIsNestedVisible] = useState(false);
 
   const onClick = (event: React.MouseEvent) => {
@@ -65,4 +62,4 @@ function DropdownItem({ item, onItemClick }: DropdownItemProps): JSX.Element {
   );
 }
 
-export default DropdownItem;
+export default DropdownListItem;

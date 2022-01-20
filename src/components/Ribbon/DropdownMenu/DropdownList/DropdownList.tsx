@@ -1,7 +1,7 @@
 import React from 'react';
 import { MenuItem } from '../../RibbonTypes';
-import styles from './Dropdown.module.css';
-import DropdownItem from '../DropdownItem/DropdownItem';
+import styles from './DropdownList.module.css';
+import DropdownListItem from '../DropdownItem/DropdownListItem';
 
 type DropdownMenuItemProps = {
   label: string;
@@ -10,11 +10,11 @@ type DropdownMenuItemProps = {
   isVisible: boolean;
 };
 
-function Dropdown({ label, items, isVisible, onClick }: DropdownMenuItemProps): JSX.Element {
+function DropdownList({ label, items, isVisible, onClick }: DropdownMenuItemProps): JSX.Element {
   return (
-    <div className={styles.item}>
+    <div className={styles.dropdownList}>
       <a
-        className={styles.itemLabel}
+        className={styles.listLabel}
         href="#"
         onClick={event => {
           event.preventDefault();
@@ -26,9 +26,9 @@ function Dropdown({ label, items, isVisible, onClick }: DropdownMenuItemProps): 
 
       {
         isVisible &&
-        <ul className={styles.dropdownList}>
+        <ul className={styles.listItems}>
           {items.map(item => (
-            <DropdownItem key={item.label} item={item} onItemClick={onClick} />
+            <DropdownListItem key={item.label} item={item} onItemClick={onClick} />
           ))}
         </ul>
       }
@@ -36,4 +36,4 @@ function Dropdown({ label, items, isVisible, onClick }: DropdownMenuItemProps): 
   );
 }
 
-export default Dropdown;
+export default DropdownList;

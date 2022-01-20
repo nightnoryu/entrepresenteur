@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { DropdownMenuItemType } from '../RibbonTypes';
 import styles from './DropdownMenu.module.css';
-import Dropdown from './Dropdown/Dropdown';
+import DropdownList from './DropdownList/DropdownList';
 import useOnClickOutside from '../../../hooks/mouse/useOnClickOutside';
 
 type DropdownMenuProps = {
@@ -18,9 +18,9 @@ function DropdownMenu({ menuItems }: DropdownMenuProps): JSX.Element {
   });
 
   return (
-    <div className={styles.menu} ref={ref}>
+    <div className={styles.dropdownMenu} ref={ref}>
       {menuItems.map((menuItem, index) => (
-        <Dropdown
+        <DropdownList
           key={index}
           label={menuItem.label}
           items={menuItem.items}

@@ -1,10 +1,10 @@
-.item
+.dropdownList
 {
   margin-right: 50px;
   margin-left: 10px;
 }
 
-.itemLabel
+.listLabel
 {
   color: #000000;
   padding: 2px;
@@ -13,13 +13,13 @@
   font-size: 1.2em;
 }
 
-.itemLabel:hover
+.listLabel:hover
 {
   cursor: pointer;
   background-color: #bebebe;
 }
 
-.dropdownList
+.listItems
 {
   list-style: none;
 
