@@ -4,11 +4,9 @@ import { Position, TextElement } from '../../../../../model/types';
 import { useDispatch } from 'react-redux';
 import { actionCreators } from '../../../../../state';
 import { bindActionCreators } from 'redux';
-import useSlideElementDragAndDrop from '../../../../../hooks/slideElements/useSlideElementDragAndDrop';
 import useDoubleClick from '../../../../../hooks/mouse/useDoubleClick';
 import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
 import { mapFontToString } from '../../../../../model/modelUtils';
-import useSlideElementResize from '../../../../../hooks/slideElements/useSlideElementResize';
 import { getResizeAnchorProperties, getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
 import useEventListener from '../../../../../hooks/useEventListener';
 
@@ -32,21 +30,24 @@ function EditableTextElement(
   }: EditableTextElementProps,
 ): JSX.Element {
   const dispatch = useDispatch();
-  const {
-    setCurrentElement,
-    unselectElement,
-    resizeElement,
-    moveElements,
-    setTextValue,
-  } = bindActionCreators(actionCreators, dispatch);
+  const { unselectElement, setTextValue } = bindActionCreators(actionCreators, dispatch);
 
   const resizeAnchorRef = useRef(null);
-  const dimensions = useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
-  const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
-
   const ref = useRef(null);
-  useSlideElementActions(element, ref, parentRef, isSelected, dispatch);
-  useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements, setCurrentElement, isSelected);
+
+  const dimensions = useSlideElementActions(
+    element,
+    ref,
+    resizeAnchorRef,
+    parentRef,
+    isSelected,
+    scaleFactor,
+    delta,
+    setDelta,
+    dispatch,
+  );
+
+  const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [editing, setEditing] = useState(false);

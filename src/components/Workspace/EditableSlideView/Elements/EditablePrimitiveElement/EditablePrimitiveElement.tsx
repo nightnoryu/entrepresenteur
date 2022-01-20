@@ -1,9 +1,6 @@
 import React, { useRef } from 'react';
 import { Position, PrimitiveElement, PrimitiveType } from '../../../../../model/types';
 import { useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import useSlideElementDragAndDrop from '../../../../../hooks/slideElements/useSlideElementDragAndDrop';
-import { actionCreators } from '../../../../../state';
 import {
   calculateEllipseProperties,
   getPrimitiveStrokeStyle,
@@ -12,7 +9,6 @@ import {
   getTrianglePoints,
 } from '../../../../../common/componentsUtils';
 import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
-import useSlideElementResize from '../../../../../hooks/slideElements/useSlideElementResize';
 import styles from '../EditableElement.module.css';
 
 type EditablePrimitiveElementProps = {
@@ -35,18 +31,21 @@ function EditablePrimitiveElement(
   }: EditablePrimitiveElementProps,
 ): JSX.Element {
   const dispatch = useDispatch();
-  const {
-    setCurrentElement,
-    moveElements,
-    resizeElement,
-  } = bindActionCreators(actionCreators, dispatch);
-
-  const resizeAnchorRef = useRef(null);
-  const dimensions = useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
 
   const ref = useRef(null);
-  useSlideElementActions(element, ref, parentRef, isSelected, dispatch);
-  useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements, setCurrentElement, isSelected);
+  const resizeAnchorRef = useRef(null);
+
+  const dimensions = useSlideElementActions(
+    element,
+    ref,
+    resizeAnchorRef,
+    parentRef,
+    isSelected,
+    scaleFactor,
+    delta,
+    setDelta,
+    dispatch,
+  );
 
   const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
 
@@ -79,15 +78,10 @@ function EditablePrimitiveElement(
           ref={ref}
         />
       );
-    case PrimitiveType.ELLIPSE: {
-      const properties = calculateEllipseProperties({ ...element, dimensions });
-
+    case PrimitiveType.ELLIPSE:
       return (
         <ellipse
-          cx={properties.cx}
-          cy={properties.cy}
-          rx={properties.rx}
-          ry={properties.ry}
+          {...calculateEllipseProperties({ ...element, dimensions })}
           fill={element.fill}
           stroke={element.stroke}
           strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
@@ -96,7 +90,6 @@ function EditablePrimitiveElement(
           ref={ref}
         />
       );
-    }
     }
   };
 

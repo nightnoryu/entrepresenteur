@@ -1,12 +1,8 @@
 import React, { useRef } from 'react';
 import { ImageElement, Position } from '../../../../../model/types';
-import { bindActionCreators } from 'redux';
 import styles from '../EditableElement.module.css';
-import { actionCreators } from '../../../../../state';
 import { useDispatch } from 'react-redux';
-import useSlideElementDragAndDrop from '../../../../../hooks/slideElements/useSlideElementDragAndDrop';
 import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
-import useSlideElementResize from '../../../../../hooks/slideElements/useSlideElementResize';
 import { getResizeAnchorProperties, getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
 
 type EditableImageElementProps = {
@@ -29,18 +25,21 @@ function EditableImageElement(
   }: EditableImageElementProps,
 ): JSX.Element {
   const dispatch = useDispatch();
-  const {
-    setCurrentElement,
-    moveElements,
-    resizeElement,
-  } = bindActionCreators(actionCreators, dispatch);
-
-  const resizeAnchorRef = useRef(null);
-  const dimensions = useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
 
   const ref = useRef(null);
-  useSlideElementActions(element, ref, parentRef, isSelected, dispatch);
-  useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements, setCurrentElement, isSelected);
+  const resizeAnchorRef = useRef(null);
+
+  const dimensions = useSlideElementActions(
+    element,
+    ref,
+    resizeAnchorRef,
+    parentRef,
+    isSelected,
+    scaleFactor,
+    delta,
+    setDelta,
+    dispatch,
+  );
 
   const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
 
