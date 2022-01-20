@@ -13,6 +13,6 @@ export function getPrimitiveProperties(): PrimitiveProperties {
       'Dashed',
       'Dot-dashed',
     ],
-    strokeSizes: range(5, 1),
+    strokeWidths: range(5, 1),
   };
 }

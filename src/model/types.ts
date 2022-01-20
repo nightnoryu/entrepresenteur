@@ -34,6 +34,12 @@ export enum PrimitiveStrokeStyle {
   DOT_DASHED,
 }
 
+export type PrimitiveStroke = {
+  color: string;
+  style: PrimitiveStrokeStyle;
+  width: number;
+};
+
 export type SlideElement = TextElement | ImageElement | PrimitiveElement;
 
 export type GenericSlideElement = {
@@ -62,9 +68,7 @@ export type PrimitiveElement = GenericSlideElement & {
   type: ElementType.PRIMITIVE;
   primitiveType: PrimitiveType;
   fill: string;
-  stroke: string;
-  strokeStyle: PrimitiveStrokeStyle,
-  strokeSize: number;
+  stroke: PrimitiveStroke;
 };
 
 export enum BackgroundType {

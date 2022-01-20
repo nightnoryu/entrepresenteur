@@ -1,4 +1,4 @@
-import { Dimensions, Position, PrimitiveStrokeStyle, TextFont } from './types';
+import { Dimensions, Position, PrimitiveStroke, PrimitiveStrokeStyle, TextFont } from './types';
 
 // Page
 
@@ -52,11 +52,12 @@ export const DEFAULT_PRIMITIVE_DIMENSIONS: Dimensions = {
   height: 200,
 };
 export const DEFAULT_PRIMITIVE_FILL = '#ffffff';
-export const DEFAULT_PRIMITIVE_STROKE = '#000000';
+export const DEFAULT_PRIMITIVE_STROKE: PrimitiveStroke = {
+  color: '#000000',
+  style: PrimitiveStrokeStyle.SOLID,
+  width: 1,
+};
 
-export const DEFAULT_PRIMITIVE_STROKE_STYLE = PrimitiveStrokeStyle.SOLID;
 export const STROKE_STYLE_SOLID = undefined;
 export const STROKE_STYLE_DASHED = [20, 10];
 export const STROKE_STYLE_DOT_DASHED = [20, 10, 5, 10];
-
-export const DEFAULT_PRIMITIVE_STROKE_SIZE = 1;

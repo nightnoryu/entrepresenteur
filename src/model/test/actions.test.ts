@@ -183,7 +183,7 @@ describe('Model actions', () => {
   test.todo('setPrimitiveStrokeStyle');
 
 
-  test.todo('setPrimitiveStrokeSize');
+  test.todo('setPrimitiveStrokeWidth');
 
 
   test.todo('selectElement');

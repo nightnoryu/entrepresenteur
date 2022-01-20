@@ -99,8 +99,8 @@ type CommonPrimitiveProperties = {
 export function getCommonPrimitiveProperties(element: PrimitiveElement): CommonPrimitiveProperties {
   return {
     fill: element.fill,
-    stroke: element.stroke,
-    strokeWidth: element.strokeSize,
-    strokeDasharray: getPrimitiveStrokeStyle(element.strokeStyle),
+    stroke: element.stroke.color,
+    strokeWidth: element.stroke.width,
+    strokeDasharray: getPrimitiveStrokeStyle(element.stroke.style),
   };
 }

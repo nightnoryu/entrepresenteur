@@ -24,7 +24,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
     setPrimitiveFillColor,
     setPrimitiveStrokeColor,
     setPrimitiveStrokeStyle,
-    setPrimitiveStrokeSize,
+    setPrimitiveStrokeWidth,
   } = bindActionCreators(actionCreators, dispatch);
 
   const primitiveProperties = getPrimitiveProperties();
@@ -53,10 +53,10 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
     }
   };
 
-  const onStrokeSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const onStrokeWidthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (currentElement) {
-      const size = parseInt(event.currentTarget.value);
-      setPrimitiveStrokeSize(currentElement.id, size);
+      const width = parseInt(event.currentTarget.value);
+      setPrimitiveStrokeWidth(currentElement.id, width);
     }
   };
 
@@ -77,7 +77,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
         <input
           type="color"
           className={styles.colorPicker}
-          defaultValue={currentElement?.stroke}
+          defaultValue={currentElement?.stroke.color}
           ref={strokeColorPickerRef}
         />
       </li>
@@ -85,8 +85,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
       <li className={styles.panelElement}>
         Stroke style
         <select
-          name="strokeStyle"
-          value={currentElement?.strokeStyle ? mapStrokeStyleToString(currentElement.strokeStyle) : undefined}
+          value={currentElement?.stroke.style ? mapStrokeStyleToString(currentElement.stroke.style) : undefined}
           onChange={onStrokeStyleChange}
         >
           {primitiveProperties.strokeStyles.map(strokeStyle => (
@@ -101,18 +100,17 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
       </li>
 
       <li className={styles.panelElement}>
-        Stroke size
+        Stroke width
         <select
-          name="strokeSize"
-          value={currentElement?.strokeSize ? currentElement.strokeSize : undefined}
-          onChange={onStrokeSizeChange}
+          value={currentElement?.stroke.width ? currentElement.stroke.width : undefined}
+          onChange={onStrokeWidthChange}
         >
-          {primitiveProperties.strokeSizes.map(strokeSize => (
+          {primitiveProperties.strokeWidths.map(strokeWidth => (
             <option
-              key={strokeSize}
-              value={strokeSize}
+              key={strokeWidth}
+              value={strokeWidth}
             >
-              {strokeSize}
+              {strokeWidth}
             </option>
           ))}
         </select>
