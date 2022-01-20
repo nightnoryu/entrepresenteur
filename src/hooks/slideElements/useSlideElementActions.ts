@@ -1,19 +1,18 @@
 import React from 'react';
 import useEventListener from '../useEventListener';
-import {
-  selectElement as selectElementCreator,
-  unselectElement as unselectElementCreator,
-} from '../../state/actions/actionCreators';
 import { SlideElement } from '../../model/types';
+import { bindActionCreators, Dispatch } from 'redux';
+import { actionCreators } from '../../state';
 
 function useSlideElementActions<T extends SVGElement>(
-  ref: React.RefObject<T>,
   element: SlideElement,
-  isSelected: boolean,
-  selectElement: typeof selectElementCreator,
-  unselectElement: typeof unselectElementCreator,
+  ref: React.RefObject<T>,
   containerRef: React.RefObject<DocumentAndElementEventHandlers>,
+  isSelected: boolean,
+  dispatch: Dispatch,
 ): void {
+  const { selectElement, unselectElement } = bindActionCreators(actionCreators, dispatch);
+
   useEventListener('mousedown', () => {
     if (!isSelected) {
       selectElement(element.id);

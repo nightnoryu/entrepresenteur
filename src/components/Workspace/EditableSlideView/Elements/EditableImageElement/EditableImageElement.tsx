@@ -31,8 +31,6 @@ function EditableImageElement(
   const dispatch = useDispatch();
   const {
     setCurrentElement,
-    selectElement,
-    unselectElement,
     moveElements,
     resizeElement,
   } = bindActionCreators(actionCreators, dispatch);
@@ -41,7 +39,7 @@ function EditableImageElement(
   const dimensions = useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
 
   const ref = useRef(null);
-  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef);
+  useSlideElementActions(element, ref, parentRef, isSelected, dispatch);
   useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements, setCurrentElement, isSelected);
 
   const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
