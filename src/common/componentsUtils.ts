@@ -88,3 +88,19 @@ export function getPrimitiveStrokeStyle(style: PrimitiveStrokeStyle): string | u
     return STROKE_STYLE_DOT_DASHED.join(',');
   }
 }
+
+type CommonPrimitiveProperties = {
+  fill: string,
+  stroke: string,
+  strokeWidth: number,
+  strokeDasharray: string | undefined,
+}
+
+export function getCommonPrimitiveProperties(element: PrimitiveElement): CommonPrimitiveProperties {
+  return {
+    fill: element.fill,
+    stroke: element.stroke,
+    strokeWidth: element.strokeSize,
+    strokeDasharray: getPrimitiveStrokeStyle(element.strokeStyle),
+  };
+}

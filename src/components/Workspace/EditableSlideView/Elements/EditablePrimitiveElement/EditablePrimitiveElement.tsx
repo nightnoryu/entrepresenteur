@@ -3,7 +3,7 @@ import { Position, PrimitiveElement, PrimitiveType } from '../../../../../model/
 import { useDispatch } from 'react-redux';
 import {
   calculateEllipseProperties,
-  getPrimitiveStrokeStyle,
+  getCommonPrimitiveProperties,
   getResizeAnchorTranslateDelta,
   getTrianglePointsAsPath,
 } from '../../../../../common/componentsUtils';
@@ -48,45 +48,37 @@ function EditablePrimitiveElement(
   );
 
   const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
+  const transform = isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined;
 
   const getPrimitiveElement = () => {
     switch (element.primitiveType) {
     case PrimitiveType.RECTANGLE:
       return (
         <rect
+          {...getCommonPrimitiveProperties(element)}
           x={element.position.x}
           y={element.position.y}
           width={dimensions.width}
           height={dimensions.height}
-          fill={element.fill}
-          stroke={element.stroke}
-          strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
-          strokeWidth={element.strokeSize}
-          style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
+          style={{ transform }}
           ref={ref}
         />
       );
     case PrimitiveType.TRIANGLE:
       return (
         <polygon
+          {...getCommonPrimitiveProperties(element)}
           points={getTrianglePointsAsPath({ ...element, dimensions })}
-          fill={element.fill}
-          stroke={element.stroke}
-          strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
-          strokeWidth={element.strokeSize}
-          style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
+          style={{ transform }}
           ref={ref}
         />
       );
     case PrimitiveType.ELLIPSE:
       return (
         <ellipse
+          {...getCommonPrimitiveProperties(element)}
           {...calculateEllipseProperties({ ...element, dimensions })}
-          fill={element.fill}
-          stroke={element.stroke}
-          strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
-          strokeWidth={element.strokeSize}
-          style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
+          style={{ transform }}
           ref={ref}
         />
       );
@@ -98,19 +90,18 @@ function EditablePrimitiveElement(
       {getPrimitiveElement()}
       {
         isSelected &&
-        <SelectedOverlay
-          element={element}
-          dimensions={dimensions}
-          delta={delta}
-        />
-      }
-      {
-        isSelected &&
-        <ResizeAnchor
-          element={element}
-          delta={resizeAnchorDelta}
-          ref={resizeAnchorRef}
-        />
+        <>
+          <SelectedOverlay
+            element={element}
+            dimensions={dimensions}
+            delta={delta}
+          />
+          <ResizeAnchor
+            element={element}
+            delta={resizeAnchorDelta}
+            ref={resizeAnchorRef}
+          />
+        </>
       }
     </>
   );

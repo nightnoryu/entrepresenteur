@@ -43,6 +43,7 @@ function EditableImageElement(
   );
 
   const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
+  const transform = isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined;
 
   return (
     <>
@@ -54,26 +55,23 @@ function EditableImageElement(
         height={dimensions.height}
         preserveAspectRatio="none"
         onDragStart={e => e.preventDefault()}
-        style={{
-          transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined,
-        }}
+        style={{ transform }}
         ref={ref}
       />
       {
         isSelected &&
-        <SelectedOverlay
-          element={element}
-          dimensions={dimensions}
-          delta={delta}
-        />
-      }
-      {
-        isSelected &&
-        <ResizeAnchor
-          element={element}
-          delta={resizeAnchorDelta}
-          ref={resizeAnchorRef}
-        />
+        <>
+          <SelectedOverlay
+            element={element}
+            dimensions={dimensions}
+            delta={delta}
+          />
+          <ResizeAnchor
+            element={element}
+            delta={resizeAnchorDelta}
+            ref={resizeAnchorRef}
+          />
+        </>
       }
     </>
   );
