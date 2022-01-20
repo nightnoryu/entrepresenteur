@@ -41,7 +41,7 @@ export function calculateEllipseProperties(element: PrimitiveElement): EllipsePr
   };
 }
 
-export function getTrianglePoints(element: PrimitiveElement): string {
+export function getTrianglePointsAsPath(element: PrimitiveElement): string {
   const points = calculateTrianglePoints(element);
 
   return points
@@ -63,15 +63,6 @@ export function calculateTrianglePoints(element: PrimitiveElement): [Position, P
     y: element.position.y + element.dimensions.height,
   };
   return [firstPoint, secondPoint, thirdPoint];
-}
-
-export function getResizeAnchorProperties(element: SlideElement): Position & Dimensions {
-  return {
-    x: element.position.x + element.dimensions.width - 5,
-    y: element.position.y + element.dimensions.height - 5,
-    width: 10,
-    height: 10,
-  };
 }
 
 export function getResizeAnchorTranslateDelta(

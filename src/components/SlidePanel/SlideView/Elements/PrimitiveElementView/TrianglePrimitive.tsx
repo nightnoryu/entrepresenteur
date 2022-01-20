@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrimitiveElement } from '../../../../../model/types';
-import { getPrimitiveStrokeStyle, getTrianglePoints } from '../../../../../common/componentsUtils';
+import { getPrimitiveStrokeStyle, getTrianglePointsAsPath } from '../../../../../common/componentsUtils';
 
 type TrianglePrimitiveProps = {
   element: PrimitiveElement;
@@ -9,7 +9,7 @@ type TrianglePrimitiveProps = {
 function TrianglePrimitive({ element }: TrianglePrimitiveProps): JSX.Element {
   return (
     <polygon
-      points={getTrianglePoints(element)}
+      points={getTrianglePointsAsPath(element)}
       fill={element.fill}
       stroke={element.stroke}
       strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}

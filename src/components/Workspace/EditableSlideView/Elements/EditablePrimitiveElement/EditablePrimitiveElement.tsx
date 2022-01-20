@@ -5,10 +5,11 @@ import {
   calculateEllipseProperties,
   getPrimitiveStrokeStyle,
   getResizeAnchorTranslateDelta,
-  getTrianglePoints,
+  getTrianglePointsAsPath,
 } from '../../../../../common/componentsUtils';
 import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
 import ResizeAnchor from '../../ResizeAnchor/ResizeAnchor';
+import SelectedOverlay from '../../SelectedOverlay/SelectedOverlay';
 
 type EditablePrimitiveElementProps = {
   element: PrimitiveElement;
@@ -68,7 +69,7 @@ function EditablePrimitiveElement(
     case PrimitiveType.TRIANGLE:
       return (
         <polygon
-          points={getTrianglePoints({ ...element, dimensions })}
+          points={getTrianglePointsAsPath({ ...element, dimensions })}
           fill={element.fill}
           stroke={element.stroke}
           strokeDasharray={getPrimitiveStrokeStyle(element.strokeStyle)}
@@ -97,16 +98,10 @@ function EditablePrimitiveElement(
       {getPrimitiveElement()}
       {
         isSelected &&
-        <rect
-          x={element.position.x - element.strokeSize / 2}
-          y={element.position.y - element.strokeSize / 2}
-          width={dimensions.width + element.strokeSize / 2}
-          height={dimensions.height + element.strokeSize / 2}
-          fill="#2a8ec8"
-          stroke="#1563c8"
-          fillOpacity="0.3"
-          strokeOpacity="0.3"
-          style={{ transform: `translate(${delta.x}px, ${delta.y}px)`, pointerEvents: 'none' }}
+        <SelectedOverlay
+          element={element}
+          dimensions={dimensions}
+          delta={delta}
         />
       }
       {

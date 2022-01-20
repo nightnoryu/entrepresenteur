@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
 import { getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
 import ResizeAnchor from '../../ResizeAnchor/ResizeAnchor';
+import SelectedOverlay from '../../SelectedOverlay/SelectedOverlay';
 
 type EditableImageElementProps = {
   element: ImageElement;
@@ -53,21 +54,17 @@ function EditableImageElement(
         height={dimensions.height}
         preserveAspectRatio="none"
         onDragStart={e => e.preventDefault()}
-        style={{ transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined }}
+        style={{
+          transform: isSelected ? `translate(${delta.x}px, ${delta.y}px)` : undefined,
+        }}
         ref={ref}
       />
       {
         isSelected &&
-        <rect
-          x={element.position.x}
-          y={element.position.y}
-          width={dimensions.width}
-          height={dimensions.height}
-          fill="#2a8ec8"
-          stroke="#1563c8"
-          fillOpacity="0.3"
-          strokeOpacity="0.3"
-          style={{ transform: `translate(${delta.x}px, ${delta.y}px)`, pointerEvents: 'none' }}
+        <SelectedOverlay
+          element={element}
+          dimensions={dimensions}
+          delta={delta}
         />
       }
       {
