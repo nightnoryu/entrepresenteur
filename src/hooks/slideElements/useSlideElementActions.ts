@@ -1,32 +1,45 @@
 import React from 'react';
-import useEventListener from '../useEventListener';
-import useOnClickOutside from '../mouse/useOnClickOutside';
-import {
-  selectElement as selectElementCreator,
-  unselectElement as unselectElementCreator,
-} from '../../state/actions/actionCreators';
-import { SlideElement } from '../../model/types';
+import { Dimensions, Position, SlideElement } from '../../model/types';
+import { Dispatch } from 'redux';
+import useSlideElementDragAndDrop from './useSlideElementDragAndDrop';
+import useSlideElementResize from './useSlideElementResize';
+import useSlideElementSelection from './useSlideElementSelection';
 
 function useSlideElementActions<T extends SVGElement>(
-  ref: React.RefObject<T>,
   element: SlideElement,
-  isSelected: boolean,
-  selectElement: typeof selectElementCreator,
-  unselectElement: typeof unselectElementCreator,
+  ref: React.RefObject<T>,
+  resizeAnchorRef: React.RefObject<SVGRectElement>,
   containerRef: React.RefObject<DocumentAndElementEventHandlers>,
-  resizeAnchorRef?: React.RefObject<T>,
-): void {
-  useEventListener('mousedown', () => {
-    if (!isSelected) {
-      selectElement(element.id);
-    }
-  }, ref);
+  isSelected: boolean,
+  scaleFactor: number,
+  delta: Position,
+  setDelta: (delta: Position) => void,
+  dispatch: Dispatch,
+): Dimensions {
+  useSlideElementSelection(
+    element.id,
+    ref,
+    containerRef,
+    isSelected,
+    dispatch,
+  );
 
-  useOnClickOutside(ref, event => {
-    if (isSelected && !event.ctrlKey) {
-      unselectElement(element.id);
-    }
-  }, resizeAnchorRef ? [resizeAnchorRef] : undefined, containerRef);
+  useSlideElementDragAndDrop(
+    ref,
+    element,
+    scaleFactor,
+    delta,
+    setDelta,
+    isSelected,
+    dispatch,
+  );
+
+  return useSlideElementResize(
+    resizeAnchorRef,
+    element,
+    scaleFactor,
+    dispatch,
+  );
 }
 
 export default useSlideElementActions;

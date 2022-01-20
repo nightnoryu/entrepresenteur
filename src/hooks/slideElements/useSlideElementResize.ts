@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Dimensions, Position, SlideElement } from '../../model/types';
 import useDragAndDrop from '../dragAndDrop/useDragAndDrop';
 import { actionCreators } from '../../state';
+import { bindActionCreators, Dispatch } from 'redux';
 
 function useSlideElementResize(
   ref: React.RefObject<SVGRectElement>,
   element: SlideElement,
   scaleFactor: number,
-  resizeElement: typeof actionCreators.resizeElement,
+  dispatch: Dispatch,
 ): Dimensions {
+  const { resizeElement } = bindActionCreators(actionCreators, dispatch);
+
   const [dimensions, setDimensions] = useState(element.dimensions);
   let startPos: Position;
 

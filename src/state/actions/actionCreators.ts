@@ -107,38 +107,47 @@ export function setPrimitiveFillColor(elementID: UUID, fill: string) {
   };
 }
 
-export function setPrimitiveStrokeColor(elementID: UUID, stroke: string) {
+export function setPrimitiveStrokeColor(elementID: UUID, color: string) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
       type: ActionType.SET_PRIMITIVE_STROKE_COLOR,
       payload: {
         elementID,
-        stroke,
+        color,
       },
     });
   };
 }
 
-export function setPrimitiveStrokeStyle(elementID: UUID, strokeStyle: PrimitiveStrokeStyle) {
+export function setPrimitiveStrokeStyle(elementID: UUID, style: PrimitiveStrokeStyle) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
       type: ActionType.SET_PRIMITIVE_STROKE_STYLE,
       payload: {
         elementID,
-        strokeStyle,
+        style,
       },
     });
   };
 }
 
-export function setPrimitiveStrokeSize(elementID: UUID, strokeSize: number) {
+export function setPrimitiveStrokeWidth(elementID: UUID, width: number) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
-      type: ActionType.SET_PRIMITIVE_STROKE_SIZE,
+      type: ActionType.SET_PRIMITIVE_STROKE_WIDTH,
       payload: {
         elementID,
-        strokeSize,
+        width,
       },
+    });
+  };
+}
+
+export function setCurrentElement(elementID: UUID) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_CURRENT_ELEMENT,
+      payload: elementID,
     });
   };
 }

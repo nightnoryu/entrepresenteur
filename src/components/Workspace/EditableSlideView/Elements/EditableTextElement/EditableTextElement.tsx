@@ -4,13 +4,12 @@ import { Position, TextElement } from '../../../../../model/types';
 import { useDispatch } from 'react-redux';
 import { actionCreators } from '../../../../../state';
 import { bindActionCreators } from 'redux';
-import useSlideElementDragAndDrop from '../../../../../hooks/slideElements/useSlideElementDragAndDrop';
 import useDoubleClick from '../../../../../hooks/mouse/useDoubleClick';
 import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
 import { mapFontToString } from '../../../../../model/modelUtils';
-import useOnClickOutside from '../../../../../hooks/mouse/useOnClickOutside';
-import useSlideElementResize from '../../../../../hooks/slideElements/useSlideElementResize';
-import { getResizeAnchorProperties, getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
+import { getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
+import useEventListener from '../../../../../hooks/useEventListener';
+import ResizeAnchor from '../../ResizeAnchor/ResizeAnchor';
 
 type EditableTextElementProps = {
   element: TextElement;
@@ -32,21 +31,24 @@ function EditableTextElement(
   }: EditableTextElementProps,
 ): JSX.Element {
   const dispatch = useDispatch();
-  const {
-    selectElement,
-    unselectElement,
-    resizeElement,
-    moveElements,
-    setTextValue,
-  } = bindActionCreators(actionCreators, dispatch);
+  const { unselectElement, setTextValue } = bindActionCreators(actionCreators, dispatch);
 
   const resizeAnchorRef = useRef(null);
-  const dimensions = useSlideElementResize(resizeAnchorRef, element, scaleFactor, resizeElement);
-  const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
-
   const ref = useRef(null);
-  useSlideElementActions(ref, element, isSelected, selectElement, unselectElement, parentRef, resizeAnchorRef);
-  useSlideElementDragAndDrop(ref, element, scaleFactor, delta, setDelta, moveElements);
+
+  const dimensions = useSlideElementActions(
+    element,
+    ref,
+    resizeAnchorRef,
+    parentRef,
+    isSelected,
+    scaleFactor,
+    delta,
+    setDelta,
+    dispatch,
+  );
+
+  const resizeAnchorDelta = getResizeAnchorTranslateDelta(element, delta, dimensions);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [editing, setEditing] = useState(false);
@@ -85,17 +87,20 @@ function EditableTextElement(
       setEditingValue(element.value);
     }
   }, [element.value]);
+
   useEffect(() => {
     if (element.value === '') {
       setEditing(true);
     }
   }, [element.value]);
 
-  useOnClickOutside(textareaRef, () => {
-    textareaRef.current?.blur();
-    setEditing(false);
-    unselectElement(element.id);
-  }, undefined, parentRef);
+  useEventListener('mousedown', event => {
+    if (event.target === parentRef?.current) {
+      textareaRef.current?.blur();
+      setEditing(false);
+      unselectElement(element.id);
+    }
+  });
 
   return !editing
     ? (
@@ -136,11 +141,10 @@ function EditableTextElement(
 
         {
           isSelected &&
-          <rect
+          <ResizeAnchor
+            element={element}
+            delta={resizeAnchorDelta}
             ref={resizeAnchorRef}
-            {...getResizeAnchorProperties(element)}
-            className={styles.resizeAnchor}
-            style={{ transform: `translate(${resizeAnchorDelta.x}px, ${resizeAnchorDelta.y}px)` }}
           />
         }
       </>

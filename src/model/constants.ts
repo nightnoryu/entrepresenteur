@@ -1,12 +1,22 @@
-import { Dimensions, Position, PrimitiveStrokeStyle, TextFont } from './types';
+import { Dimensions, Position, PrimitiveStroke, PrimitiveStrokeStyle, TextFont } from './types';
 
 // Page
+
 export const BASE_WINDOW_TITLE = 'Entrepresenteur';
 export const WINDOW_TITLE_SEPARATOR = ' • ';
 
 // Editor
+
 export const PRESENTATION_EXTENSION = '.entrepresenteur.json';
+
 export const MAX_HISTORY_ENTRIES = 50;
+
+export const SELECTED_OVERLAY_FILL = '#2a8ec8';
+export const SELECTED_OVERLAY_STROKE = '#1563c8';
+export const SELECTED_OVERLAY_OPACITY = 0.3;
+
+export const RESIZE_ANCHOR_WIDTH = 10;
+export const RESIZE_ANCHOR_HEIGHT = 10;
 
 // Presentation
 
@@ -42,11 +52,12 @@ export const DEFAULT_PRIMITIVE_DIMENSIONS: Dimensions = {
   height: 200,
 };
 export const DEFAULT_PRIMITIVE_FILL = '#ffffff';
-export const DEFAULT_PRIMITIVE_STROKE = '#000000';
+export const DEFAULT_PRIMITIVE_STROKE: PrimitiveStroke = {
+  color: '#000000',
+  style: PrimitiveStrokeStyle.SOLID,
+  width: 1,
+};
 
-export const DEFAULT_PRIMITIVE_STROKE_STYLE = PrimitiveStrokeStyle.SOLID;
 export const STROKE_STYLE_SOLID = undefined;
 export const STROKE_STYLE_DASHED = [20, 10];
 export const STROKE_STYLE_DOT_DASHED = [20, 10, 5, 10];
-
-export const DEFAULT_PRIMITIVE_STROKE_SIZE = 1;

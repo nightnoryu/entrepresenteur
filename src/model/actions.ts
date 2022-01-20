@@ -25,8 +25,6 @@ import {
 import {
   DEFAULT_PRIMITIVE_FILL,
   DEFAULT_PRIMITIVE_STROKE,
-  DEFAULT_PRIMITIVE_STROKE_SIZE,
-  DEFAULT_PRIMITIVE_STROKE_STYLE,
   DEFAULT_TEXT_COLOR,
   DEFAULT_TEXT_FONT,
   DEFAULT_TEXT_SIZE,
@@ -547,8 +545,6 @@ export function addPrimitive(
           dimensions,
           fill: DEFAULT_PRIMITIVE_FILL,
           stroke: DEFAULT_PRIMITIVE_STROKE,
-          strokeStyle: DEFAULT_PRIMITIVE_STROKE_STYLE,
-          strokeSize: DEFAULT_PRIMITIVE_STROKE_SIZE,
         },
       ),
     },
@@ -595,10 +591,10 @@ export function setPrimitiveFillColor(
 export function setPrimitiveStrokeColor(
   editor: Editor, {
     elementID,
-    stroke,
+    color,
   }: {
     elementID: UUID;
-    stroke: string;
+    color: string;
   },
 ): Editor {
   return {
@@ -614,7 +610,10 @@ export function setPrimitiveStrokeColor(
               element.id === elementID
                 ? {
                   ...element,
-                  stroke,
+                  stroke: {
+                    ...element.stroke,
+                    color,
+                  },
                 }
                 : element,
             ),
@@ -628,10 +627,10 @@ export function setPrimitiveStrokeColor(
 export function setPrimitiveStrokeStyle(
   editor: Editor, {
     elementID,
-    strokeStyle,
+    style,
   }: {
     elementID: UUID;
-    strokeStyle: PrimitiveStrokeStyle;
+    style: PrimitiveStrokeStyle;
   },
 ): Editor {
   return {
@@ -647,7 +646,10 @@ export function setPrimitiveStrokeStyle(
               element.id === elementID
                 ? {
                   ...element,
-                  strokeStyle,
+                  stroke: {
+                    ...element.stroke,
+                    style,
+                  },
                 }
                 : element,
             ),
@@ -658,13 +660,13 @@ export function setPrimitiveStrokeStyle(
   };
 }
 
-export function setPrimitiveStrokeSize(
+export function setPrimitiveStrokeWidth(
   editor: Editor, {
     elementID,
-    strokeSize,
+    width,
   }: {
     elementID: UUID;
-    strokeSize: number;
+    width: number;
   },
 ): Editor {
   return {
@@ -680,10 +682,34 @@ export function setPrimitiveStrokeSize(
               element.id === elementID
                 ? {
                   ...element,
-                  strokeSize,
+                  stroke: {
+                    ...element.stroke,
+                    width,
+                  },
                 }
                 : element,
             ),
+          }
+          : slide,
+      ),
+    },
+  };
+}
+
+export function setCurrentElement(editor: Editor, elementID: UUID): Editor {
+  return {
+    ...editor,
+    selections: {
+      ...editor.selections,
+      selectedElementIDs: [elementID],
+    },
+    presentation: {
+      ...editor.presentation,
+      slides: editor.presentation.slides.map(
+        slide => isCurrentSlide(slide, editor.selections.selectedSlideIDs)
+          ? {
+            ...slide,
+            elements: moveElementOnTop(slide.elements, elementID),
           }
           : slide,
       ),
