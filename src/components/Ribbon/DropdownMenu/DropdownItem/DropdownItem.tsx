@@ -9,6 +9,7 @@ type DropdownItemProps = {
 
 // TODO: split menu button and menu submenu
 //       think about terminology (dropdown, dropdownItem, nestedDropdown, nestedDropdownItem)
+//       #50
 function DropdownItem({ item, onItemClick }: DropdownItemProps): JSX.Element {
   const [isNestedVisible, setIsNestedVisible] = useState(false);
 
