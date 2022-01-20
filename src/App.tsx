@@ -3,9 +3,9 @@ import Ribbon from './components/Ribbon/Ribbon';
 import SlidePanel from './components/SlidePanel/SlidePanel';
 import styles from './App.module.css';
 import useConfirmLeaving from './hooks/useConfirmLeaving';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { actionCreators } from './state';
-import { Presentation, PrimitiveType } from './model/types';
+import { ColorScheme, Presentation, PrimitiveType } from './model/types';
 import { RootState } from './state/reducers';
 import exportPresentationPDF from './common/pdfExporter';
 import { getRibbonMenuItems } from './model/uiParameters/menu';
@@ -14,6 +14,8 @@ import useAppHotkeys from './hooks/hotkeys/useAppHotkeys';
 import { openImageBase64, openPresentationJSON, pickColor, savePresentationJSON, scaleImage } from './common/fileUtils';
 import { DEFAULT_ELEMENT_POSITION, DEFAULT_PRIMITIVE_DIMENSIONS, DEFAULT_TEXT_DIMENSIONS } from './model/constants';
 import Action from './state/actions/actions';
+import ThemeContext from './context/ThemeContext';
+import { DarkTheme, LightTheme } from './context/theme';
 
 type AppProps = AppStateProps & AppDispatchProps;
 
@@ -57,14 +59,18 @@ function App(props: AppProps): JSX.Element {
   useAppHotkeys(actions);
   const menuItems = getRibbonMenuItems(actions);
 
+  const colorScheme = useSelector((editor: RootState) => editor.colorScheme);
+
   return (
-    <div className="app">
-      <Ribbon menuItems={menuItems} />
-      <div className={styles.main}>
-        <SlidePanel />
-        <Workspace />
+    <ThemeContext.Provider value={colorScheme === ColorScheme.LIGHT ? LightTheme : DarkTheme}>
+      <div className="app">
+        <Ribbon menuItems={menuItems} />
+        <div className={styles.main}>
+          <SlidePanel />
+          <Workspace />
+        </div>
       </div>
-    </div>
+    </ThemeContext.Provider>
   );
 }
 
