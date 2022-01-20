@@ -13,13 +13,13 @@ import {
   startDemonstration,
   stopDemonstration,
 } from '../actions';
-import { BackgroundType, Editor } from '../types';
+import { BackgroundType, ColorScheme, Editor } from '../types';
 
 describe('Model actions', () => {
   let editor: Editor;
 
   beforeEach(() => {
-    editor = createEditor(createNewPresentation());
+    editor = createEditor(createNewPresentation(), ColorScheme.LIGHT);
   });
 
 

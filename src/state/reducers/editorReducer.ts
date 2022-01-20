@@ -1,4 +1,3 @@
-import { createEditor, createNewPresentation } from '../../model/modelUtils';
 import { Editor } from '../../model/types';
 import Action, { ActionType } from '../actions/actions';
 import {
@@ -11,6 +10,7 @@ import {
   moveSlidesToBeginning,
   moveSlidesToEnd,
   moveSlidesUp,
+  newPresentation,
   nextSlide,
   openPresentation,
   previousSlide,
@@ -36,18 +36,18 @@ import {
   startDemonstration,
   stopDemonstration,
   toggleBoldText,
+  toggleColorScheme,
   toggleItalicText,
   unselectElement,
 } from '../../model/actions';
+import getInitialState from '../initialState';
 
-const initialState = createEditor(createNewPresentation());
-
-function editorReducer(state = initialState, action: Action): Editor {
+function editorReducer(state = getInitialState(), action: Action): Editor {
   switch (action.type) {
   case ActionType.OPEN_PRESENTATION:
     return openPresentation(state, action.payload);
   case ActionType.NEW_PRESENTATION:
-    return createEditor(createNewPresentation());
+    return newPresentation(state);
   case ActionType.CHANGE_PRESENTATION_TITLE:
     return setPresentationTitle(state, action.payload);
   case ActionType.SET_TEXT_VALUE:
@@ -118,6 +118,8 @@ function editorReducer(state = initialState, action: Action): Editor {
     return startDemonstration(state);
   case ActionType.STOP_DEMONSTRATION:
     return stopDemonstration(state);
+  case ActionType.TOGGLE_COLOR_SCHEME:
+    return toggleColorScheme(state);
   default:
     return state;
   }

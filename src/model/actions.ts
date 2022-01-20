@@ -1,5 +1,6 @@
 import {
   BackgroundType,
+  ColorScheme,
   Dimensions,
   Editor,
   ElementType,
@@ -13,7 +14,7 @@ import { generateUUID, UUID } from './uuid';
 import {
   changeSlidesOrder,
   concatWithSelectedSlideElements,
-  createEditor,
+  createNewPresentation,
   createNewSlide,
   getCurrentSlideIndex,
   getUnselectedSlideIDs,
@@ -30,8 +31,36 @@ import {
   DEFAULT_TEXT_SIZE,
 } from './constants';
 
+export function newPresentation(editor: Editor): Editor {
+  const presentation = createNewPresentation();
+
+  return {
+    ...editor,
+    presentation,
+    selections: {
+      selectedSlideIDs: presentation.slides.length > 0 ? [presentation.slides[0].id] : [],
+      selectedElementIDs: [],
+    },
+    history: {
+      pastStates: [],
+      futureStates: [],
+    },
+  };
+}
+
 export function openPresentation(editor: Editor, presentation: Presentation): Editor {
-  return createEditor(presentation);
+  return {
+    ...editor,
+    presentation,
+    selections: {
+      selectedSlideIDs: presentation.slides.length > 0 ? [presentation.slides[0].id] : [],
+      selectedElementIDs: [],
+    },
+    history: {
+      pastStates: [],
+      futureStates: [],
+    },
+  };
 }
 
 export function setPresentationTitle(
@@ -867,5 +896,14 @@ export function stopDemonstration(editor: Editor): Editor {
   return {
     ...editor,
     isDemonstrating: false,
+  };
+}
+
+export function toggleColorScheme(editor: Editor): Editor {
+  return {
+    ...editor,
+    colorScheme: editor.colorScheme === ColorScheme.LIGHT
+      ? ColorScheme.DARK
+      : ColorScheme.LIGHT,
   };
 }

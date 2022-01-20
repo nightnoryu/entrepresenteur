@@ -38,6 +38,7 @@ export enum ActionType {
   REDO,
   START_DEMONSTRATION,
   STOP_DEMONSTRATION,
+  TOGGLE_COLOR_SCHEME,
 }
 
 export const STATEFUL_ACTIONS = [

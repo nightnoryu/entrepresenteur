@@ -377,3 +377,11 @@ export function stopDemonstration() {
     });
   };
 }
+
+export function toggleColorScheme() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.TOGGLE_COLOR_SCHEME,
+    });
+  };
+}

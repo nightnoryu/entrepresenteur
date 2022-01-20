@@ -1,4 +1,13 @@
-import { BackgroundType, Editor, Presentation, PrimitiveStrokeStyle, Slide, SlideElement, TextFont } from './types';
+import {
+  BackgroundType,
+  ColorScheme,
+  Editor,
+  Presentation,
+  PrimitiveStrokeStyle,
+  Slide,
+  SlideElement,
+  TextFont,
+} from './types';
 import { generateUUID, UUID } from './uuid';
 import { DEFAULT_PRESENTATION_TITLE, DEFAULT_SLIDE_BACKGROUND, MAX_HISTORY_ENTRIES } from './constants';
 
@@ -31,7 +40,7 @@ export function createNewPresentation(): Presentation {
   };
 }
 
-export function createEditor(presentation: Presentation): Editor {
+export function createEditor(presentation: Presentation, colorScheme: ColorScheme): Editor {
   return {
     presentation,
     selections: {
@@ -43,6 +52,7 @@ export function createEditor(presentation: Presentation): Editor {
       futureStates: [],
     },
     isDemonstrating: false,
+    colorScheme: colorScheme,
   };
 }
 
@@ -91,6 +101,26 @@ export function tryMapStringToStrokeStyle(str: string): PrimitiveStrokeStyle {
     return PrimitiveStrokeStyle.DOT_DASHED;
   default:
     throw new Error('Unknown stroke style');
+  }
+}
+
+export function mapColorSchemeToString(colorScheme: ColorScheme): string {
+  switch (colorScheme) {
+  case ColorScheme.LIGHT:
+    return 'light';
+  case ColorScheme.DARK:
+    return 'dark';
+  }
+}
+
+export function tryMapStringToColorScheme(str: string): ColorScheme {
+  switch (str) {
+  case 'light':
+    return ColorScheme.LIGHT;
+  case 'dark':
+    return ColorScheme.DARK;
+  default:
+    throw new Error('Unknown color scheme');
   }
 }
 
