@@ -4,12 +4,11 @@ import { useDispatch } from 'react-redux';
 import {
   calculateEllipseProperties,
   getPrimitiveStrokeStyle,
-  getResizeAnchorProperties,
   getResizeAnchorTranslateDelta,
   getTrianglePoints,
 } from '../../../../../common/componentsUtils';
 import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
-import styles from '../EditableElement.module.css';
+import ResizeAnchor from '../../ResizeAnchor/ResizeAnchor';
 
 type EditablePrimitiveElementProps = {
   element: PrimitiveElement;
@@ -112,11 +111,10 @@ function EditablePrimitiveElement(
       }
       {
         isSelected &&
-        <rect
+        <ResizeAnchor
+          element={element}
+          delta={resizeAnchorDelta}
           ref={resizeAnchorRef}
-          {...getResizeAnchorProperties(element)}
-          className={styles.resizeAnchor}
-          style={{ transform: `translate(${resizeAnchorDelta.x}px, ${resizeAnchorDelta.y}px)` }}
         />
       }
     </>

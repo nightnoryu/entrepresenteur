@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { ImageElement, Position } from '../../../../../model/types';
-import styles from '../EditableElement.module.css';
 import { useDispatch } from 'react-redux';
 import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
-import { getResizeAnchorProperties, getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
+import { getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
+import ResizeAnchor from '../../ResizeAnchor/ResizeAnchor';
 
 type EditableImageElementProps = {
   element: ImageElement;
@@ -72,11 +72,10 @@ function EditableImageElement(
       }
       {
         isSelected &&
-        <rect
+        <ResizeAnchor
+          element={element}
+          delta={resizeAnchorDelta}
           ref={resizeAnchorRef}
-          {...getResizeAnchorProperties(element)}
-          className={styles.resizeAnchor}
-          style={{ transform: `translate(${resizeAnchorDelta.x}px, ${resizeAnchorDelta.y}px)` }}
         />
       }
     </>

@@ -16,8 +16,3 @@
   background-color: transparent;
   border: 2px dashed #000000;
 }
-
-.resizeAnchor:hover
-{
-  cursor: se-resize;
-}

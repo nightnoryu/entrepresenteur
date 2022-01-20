@@ -7,8 +7,9 @@ import { bindActionCreators } from 'redux';
 import useDoubleClick from '../../../../../hooks/mouse/useDoubleClick';
 import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
 import { mapFontToString } from '../../../../../model/modelUtils';
-import { getResizeAnchorProperties, getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
+import { getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
 import useEventListener from '../../../../../hooks/useEventListener';
+import ResizeAnchor from '../../ResizeAnchor/ResizeAnchor';
 
 type EditableTextElementProps = {
   element: TextElement;
@@ -140,11 +141,10 @@ function EditableTextElement(
 
         {
           isSelected &&
-          <rect
+          <ResizeAnchor
+            element={element}
+            delta={resizeAnchorDelta}
             ref={resizeAnchorRef}
-            {...getResizeAnchorProperties(element)}
-            className={styles.resizeAnchor}
-            style={{ transform: `translate(${resizeAnchorDelta.x}px, ${resizeAnchorDelta.y}px)` }}
           />
         }
       </>
