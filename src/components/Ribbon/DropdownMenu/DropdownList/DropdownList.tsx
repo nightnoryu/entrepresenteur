@@ -24,14 +24,16 @@ function DropdownList({ label, items, isVisible, onClick }: DropdownMenuItemProp
         {label}
       </a>
 
-      {
-        isVisible &&
-        <ul className={styles.listItems}>
-          {items.map(item => (
-            <DropdownListItem key={item.label} item={item} onItemClick={onClick} />
-          ))}
-        </ul>
-      }
+      <ul
+        className={styles.listItems}
+        style={{
+          display: isVisible ? 'block' : 'none',
+        }}
+      >
+        {items.map(item => (
+          <DropdownListItem key={item.label} item={item} onItemClick={onClick} />
+        ))}
+      </ul>
     </div>
   );
 }

@@ -35,8 +35,13 @@ function DropdownListItem({ item, onItemClick }: DropdownItemProps): JSX.Element
       </a>
 
       {
-        item.type === MenuItemType.Submenu && isNestedVisible &&
-        <ul className={styles.nested}>
+        item.type === MenuItemType.Submenu &&
+        <ul
+          className={styles.nested}
+          style={{
+            display: isNestedVisible ? 'block' : 'none',
+          }}
+        >
           {item.items.map(subItem => (
             <li key={subItem.label}>
               <a
