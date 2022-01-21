@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import { Submenu } from '../../../RibbonTypes';
-import styles from './SubMenu.module.css';
+import styles from '../DropdownItem.module.css';
 
 type SubMenuProps = {
   menu: Submenu;
+  hideParent: () => void;
 }
 
-function SubMenu({ menu }: SubMenuProps): JSX.Element {
+function SubMenu({ menu, hideParent }: SubMenuProps): JSX.Element {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
     <li
       onMouseEnter={event => {
         event.preventDefault();
-        setIsVisible(!isVisible);
+        setIsVisible(true);
       }}
       onMouseLeave={event => {
         event.preventDefault();
-        setIsVisible(!isVisible);
+        setIsVisible(false);
       }}
     >
       <a href="#" className={styles.item}>
@@ -40,7 +41,8 @@ function SubMenu({ menu }: SubMenuProps): JSX.Element {
               className={styles.subItem}
               onClick={event => {
                 event.preventDefault();
-                setIsVisible(!isVisible);
+                hideParent();
+                setIsVisible(false);
                 subItem.action();
               }}
             >

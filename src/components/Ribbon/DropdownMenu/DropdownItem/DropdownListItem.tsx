@@ -14,7 +14,7 @@ function DropdownListItem({ item, hideParent }: DropdownItemProps): JSX.Element 
       <ActionButton item={item} hideParent={hideParent} />
     )
     : (
-      <SubMenu menu={item} />
+      <SubMenu menu={item} hideParent={hideParent} />
     );
 }
 
