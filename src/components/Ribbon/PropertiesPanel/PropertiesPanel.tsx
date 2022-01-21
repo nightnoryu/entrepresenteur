@@ -11,7 +11,6 @@ type PropertiesPanelProps = {
   selectedElementType?: ElementType;
 };
 
-
 function PropertiesPanel({ selectedElementType }: PropertiesPanelProps): JSX.Element {
   return (
     <div className={styles.propsPanel}>

@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { RootState } from '../../../../state/reducers';
 import { isCurrentElement, isCurrentSlide, mapFontToString, tryMapStringToFont } from '../../../../model/modelUtils';
 import { ElementType, TextElement } from '../../../../model/types';
-import useEventListener from '../../../../hooks/useEventListener';
+import useColorPicker from '../../../../hooks/propsPanels/useColorPicker';
 
 type TextPropertiesPanelProps = {
   currentElement?: TextElement;
@@ -51,13 +51,11 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
   };
 
   const colorPickerRef = useRef<HTMLInputElement>(null);
-  const onColorChange = (event: Event) => {
-    const target = event.currentTarget as HTMLInputElement;
+  useColorPicker(colorPickerRef, color => {
     if (currentElement) {
-      setTextColor(currentElement.id, target.value);
+      setTextColor(currentElement.id, color);
     }
-  };
-  useEventListener('change', onColorChange, colorPickerRef);
+  });
 
   return (
     <ul className={styles.textPropertiesPanel}>
@@ -107,12 +105,20 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
 
       <li className={styles.panelElement}>
         Color
-        <input
-          type="color"
-          className={styles.colorPicker}
-          defaultValue={currentElement?.color}
-          ref={colorPickerRef}
-        />
+        <span
+          className={styles.colorPickerWrapper}
+          onClick={() => colorPickerRef.current?.click()}
+          style={{
+            backgroundColor: currentElement?.color,
+          }}
+        >
+          <input
+            type="color"
+            className={styles.colorPicker}
+            defaultValue={currentElement?.color}
+            ref={colorPickerRef}
+          />
+        </span>
       </li>
     </ul>
   );

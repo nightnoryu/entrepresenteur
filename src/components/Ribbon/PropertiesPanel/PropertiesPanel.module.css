@@ -1,6 +1,28 @@
 .propsPanel
 {
-  height: calc(30% - 15px);
+  height: calc(30% - 16px);
+  margin-top: 10px;
 
-  margin-top: 5px;
+  border-top: 1px solid #cccccc;
+}
+
+.colorPickerWrapper
+{
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+
+  border: 1px solid #000000;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.colorPickerWrapper:hover
+{
+  cursor: pointer;
+}
+
+.colorPicker
+{
+  display: none;
 }
