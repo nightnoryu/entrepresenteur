@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state';
@@ -43,16 +43,36 @@ function PresentationTitle({ title }: PresentationTitleProps): JSX.Element {
     }
   }, [title]);
 
+  const placeholderRef = useRef<HTMLSpanElement>(null);
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    if (placeholderRef.current) {
+      setWidth(placeholderRef.current.getBoundingClientRect().width);
+    }
+  }, [editingValue, placeholderRef.current]);
+
   return (
-    <input
-      type="text"
-      className={styles.title}
-      value={editingValue}
-      onChange={onChange}
-      onKeyDown={onKeyDown}
-      onBlur={onBlur}
-      onFocus={onFocus}
-    />
+    <div className={styles.title}>
+      <span
+        className={styles.titlePlaceholder}
+        ref={placeholderRef}
+      >
+        {editingValue}
+      </span>
+      <input
+        type="text"
+        spellCheck="false"
+        className={styles.titleInput}
+        style={{
+          width: `${width}px`,
+        }}
+        value={editingValue}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        onBlur={onBlur}
+        onFocus={onFocus}
+      />
+    </div>
   );
 }
 

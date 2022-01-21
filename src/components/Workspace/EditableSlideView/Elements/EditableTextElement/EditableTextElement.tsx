@@ -162,6 +162,7 @@ function EditableTextElement(
           onChange={onChange}
           onKeyDown={onKeyDown}
           onBlur={onBlur}
+          spellCheck="true"
           className={styles.textInput}
           style={{
             fontWeight: element.isBold ? 'bold' : undefined,
