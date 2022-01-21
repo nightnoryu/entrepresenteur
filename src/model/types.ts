@@ -114,15 +114,9 @@ export type History = {
   futureStates: HistoryState[];
 };
 
-export enum ColorScheme {
-  LIGHT,
-  DARK,
-}
-
 export type Editor = {
   presentation: Presentation;
   selections: Selections;
   history: History;
   isDemonstrating: boolean;
-  colorScheme: ColorScheme;
 };
