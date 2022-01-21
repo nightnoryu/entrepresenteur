@@ -6,21 +6,23 @@ import DropdownListItem from '../DropdownItem/DropdownListItem';
 type DropdownMenuItemProps = {
   label: string;
   items: MenuItem[];
-  onClick: () => void;
+  onHover: () => void;
   isVisible: boolean;
 };
 
-function DropdownList({ label, items, isVisible, onClick }: DropdownMenuItemProps): JSX.Element {
+function DropdownList({ label, items, isVisible, onHover }: DropdownMenuItemProps): JSX.Element {
+  const onHoverHandler = (event: React.MouseEvent) => {
+    event.preventDefault();
+    onHover();
+  };
+
   return (
-    <div className={styles.dropdownList}>
-      <a
-        className={styles.listLabel}
-        href="#"
-        onClick={event => {
-          event.preventDefault();
-          onClick();
-        }}
-      >
+    <div
+      className={styles.dropdownList}
+      onMouseEnter={onHoverHandler}
+      onMouseLeave={onHoverHandler}
+    >
+      <a href="#" className={styles.listLabel} onClick={e => e.preventDefault()}>
         {label}
       </a>
 
@@ -31,7 +33,11 @@ function DropdownList({ label, items, isVisible, onClick }: DropdownMenuItemProp
         }}
       >
         {items.map(item => (
-          <DropdownListItem key={item.label} item={item} onItemClick={onClick} />
+          <DropdownListItem
+            key={item.label}
+            item={item}
+            onItemClick={onHover}
+          />
         ))}
       </ul>
     </div>
