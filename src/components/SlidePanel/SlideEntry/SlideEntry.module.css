@@ -52,7 +52,7 @@
 
 .slideEntry:hover .slideView
 {
-  border-color: #cccccc;
+  border-color: var(--neutral-color);
 }
 
 .slideViewSelected

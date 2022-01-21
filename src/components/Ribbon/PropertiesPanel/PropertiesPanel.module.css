@@ -3,7 +3,7 @@
   height: calc(30% - 16px);
   margin-top: 10px;
 
-  border-top: 1px solid #cccccc;
+  border-top: 1px solid var(--neutral-color);
 }
 
 .colorPickerWrapper
