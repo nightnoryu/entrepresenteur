@@ -15,6 +15,12 @@
   border-bottom-right-radius: 4px;
 }
 
+.slideEntrySelected
+{
+  composes: slideEntry;
+  background-color: var(--accent-color2);
+}
+
 .slideIndex
 {
   width: 11%;
@@ -28,6 +34,12 @@
   user-select: none;
 }
 
+.slideIndexSelected
+{
+  composes: slideIndex;
+  font-weight: bold;
+}
+
 .slideView
 {
   width: 80%;
@@ -36,6 +48,12 @@
   border-radius: 4px;
 
   overflow: hidden;
+}
+
+.slideViewSelected
+{
+  composes: slideView;
+  border-color: var(--accent-color1);
 }
 
 .slideEntry:hover .slideView

@@ -25,28 +25,14 @@ function SlideEntry({ slide, index, isSelected, onClick }: SlideThumbnailProps):
 
   return (
     <div
-      className={styles.slideEntry}
+      className={isSelected ? styles.slideEntrySelected : styles.slideEntry}
       onClick={onClick}
-      style={{
-        backgroundColor: isSelected ? '#e1f4ed' : undefined,
-      }}
       ref={ref}
     >
-      <div
-        className={styles.slideIndex}
-        style={{
-          fontWeight: isSelected ? 'bold' : undefined,
-        }}
-      >
+      <div className={isSelected ? styles.slideIndexSelected : styles.slideIndex}>
         {index}
       </div>
-
-      <div
-        className={styles.slideView}
-        style={{
-          borderColor: isSelected ? '#89e6b0' : undefined,
-        }}
-      >
+      <div className={isSelected ? styles.slideViewSelected : styles.slideView}>
         <SlideView slide={displayedSlide} />
       </div>
     </div>

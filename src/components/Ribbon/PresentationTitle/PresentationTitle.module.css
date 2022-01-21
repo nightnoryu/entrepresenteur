@@ -2,24 +2,24 @@
 {
   height: 30%;
 
-  margin-top: 5px;
+  margin: 5px;
   padding: 3px;
 
-  border: none;
-  border-radius: 5px;
+  border: 1px solid transparent;
 
   vertical-align: center;
   font: 1.5em 'Noto Sans', sans-serif;
 }
 
-.title:hover,
-.title:focus
+.title:hover
 {
-  background-color: #bebebe;
-  cursor: pointer;
+  border-color: #e5e5e5;
+  cursor: text;
 }
 
 .title:focus
 {
-  outline: #000000 solid 2px;
+  margin: 4px;
+  border: 2px solid #1a73e8;
+  border-radius: 4px;
 }
