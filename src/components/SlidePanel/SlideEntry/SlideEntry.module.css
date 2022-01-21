@@ -50,13 +50,18 @@
   overflow: hidden;
 }
 
+.slideEntry:hover .slideView
+{
+  border-color: #cccccc;
+}
+
 .slideViewSelected
 {
   composes: slideView;
   border-color: var(--accent-color1);
 }
 
-.slideEntry:hover .slideView
+.slideEntry:hover .slideViewSelected
 {
-  border-color: #cccccc;
+  border-color: var(--accent-color1);
 }
