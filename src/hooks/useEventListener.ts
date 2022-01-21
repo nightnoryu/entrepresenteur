@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 
-function useEventListener<T extends DocumentAndElementEventHandlers>(
-  eventName: keyof WindowEventMap,
-  handler: (e: Event) => void,
+function useEventListener<K extends keyof WindowEventMap, T extends DocumentAndElementEventHandlers>(
+  eventName: K,
+  handler: (e: WindowEventMap[K] | Event) => void,
   ref?: React.RefObject<T>,
 ): void {
-  const savedHandler = useRef<(e: Event) => void>();
+  const savedHandler = useRef<typeof handler>();
 
   useEffect(() => {
     const targetElement: T | Window = ref?.current || window;
@@ -17,10 +17,8 @@ function useEventListener<T extends DocumentAndElementEventHandlers>(
       savedHandler.current = handler;
     }
 
-    const eventListener = (e: Event) => {
-      if (savedHandler?.current) {
-        savedHandler.current(e);
-      }
+    const eventListener: typeof handler = event => {
+      savedHandler?.current?.(event);
     };
 
     targetElement.addEventListener(eventName, eventListener);
