@@ -6,21 +6,23 @@ import DropdownListItem from '../DropdownItem/DropdownListItem';
 type DropdownMenuItemProps = {
   label: string;
   items: MenuItem[];
-  onHover: () => void;
+  show: () => void;
+  hide: () => void;
   isVisible: boolean;
 };
 
-function DropdownList({ label, items, isVisible, onHover }: DropdownMenuItemProps): JSX.Element {
-  const onHoverHandler = (event: React.MouseEvent) => {
-    event.preventDefault();
-    onHover();
-  };
-
+function DropdownList({ label, items, isVisible, show, hide }: DropdownMenuItemProps): JSX.Element {
   return (
     <div
       className={styles.dropdownList}
-      onMouseEnter={onHoverHandler}
-      onMouseLeave={onHoverHandler}
+      onMouseEnter={event => {
+        event.preventDefault();
+        show();
+      }}
+      onMouseLeave={event => {
+        event.preventDefault();
+        hide();
+      }}
     >
       <a href="#" className={styles.listLabel} onClick={e => e.preventDefault()}>
         {label}
@@ -36,7 +38,7 @@ function DropdownList({ label, items, isVisible, onHover }: DropdownMenuItemProp
           <DropdownListItem
             key={item.label}
             item={item}
-            onItemClick={onHover}
+            hideParent={hide}
           />
         ))}
       </ul>

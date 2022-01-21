@@ -1,0 +1,24 @@
+.item
+{
+  composes: item from "../DropdownItem.module.css";
+}
+
+.itemIcon
+{
+  composes: itemIcon from "../DropdownItem.module.css";
+}
+
+.subItemIcon
+{
+  composes: subItemIcon from "../DropdownItem.module.css";
+}
+
+.nested
+{
+  composes: nested from "../DropdownItem.module.css";
+}
+
+.subItem
+{
+  composes: subItem from "../DropdownItem.module.css";
+}

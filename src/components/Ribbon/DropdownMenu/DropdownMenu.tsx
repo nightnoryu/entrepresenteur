@@ -25,9 +25,12 @@ function DropdownMenu({ menuItems }: DropdownMenuProps): JSX.Element {
           label={menuItem.label}
           items={menuItem.items}
           isVisible={visibility[index]}
-          onHover={() => {
-            setVisibility(visibility.map((isVisible, i) => i === index ? !isVisible : false));
-          }}
+          show={() =>
+            setVisibility(visibility.map((isVisible, i) => i === index))
+          }
+          hide={() =>
+            setVisibility(new Array(visibility.length).fill(false))
+          }
         />
       ))}
     </div>

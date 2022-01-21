@@ -1,70 +1,21 @@
-import React, { useState } from 'react';
-import styles from './DropdownItem.module.css';
+import React from 'react';
 import { MenuItem, MenuItemType } from '../../RibbonTypes';
+import ActionButton from './ActionButton/ActionButton';
+import SubMenu from './SubMenu/SubMenu';
 
 type DropdownItemProps = {
   item: MenuItem;
-  onItemClick: () => void;
+  hideParent: () => void;
 };
 
-function DropdownListItem({ item, onItemClick }: DropdownItemProps): JSX.Element {
-  const [isNestedVisible, setIsNestedVisible] = useState(false);
-
-  const onClick = (event: React.MouseEvent) => {
-    event.preventDefault();
-    if (item.type === MenuItemType.MenuButton) {
-      item.action();
-      onItemClick();
-    } else {
-      setIsNestedVisible(!isNestedVisible);
-    }
-  };
-
-  return (
-    <li>
-      <a
-        href="#"
-        className={styles.item}
-        onClick={onClick}
-      >
-        {item.label}
-        {
-          item.icon &&
-          <span className={'material-icons ' + styles.itemIcon}>{item.icon}</span>
-        }
-      </a>
-
-      {
-        item.type === MenuItemType.Submenu &&
-        <ul
-          className={styles.nested}
-          style={{
-            display: isNestedVisible ? 'block' : 'none',
-          }}
-        >
-          {item.items.map(subItem => (
-            <li key={subItem.label}>
-              <a
-                href="#"
-                className={styles.subItem}
-                onClick={event => {
-                  event.preventDefault();
-                  subItem.action();
-                  onItemClick();
-                }}
-              >
-                {subItem.label}
-                {
-                  subItem.icon &&
-                  <span className={'material-icons ' + styles.subItemIcon}>{subItem.icon}</span>
-                }
-              </a>
-            </li>
-          ))}
-        </ul>
-      }
-    </li>
-  );
+function DropdownListItem({ item, hideParent }: DropdownItemProps): JSX.Element {
+  return item.type === MenuItemType.MenuButton
+    ? (
+      <ActionButton item={item} hideParent={hideParent} />
+    )
+    : (
+      <SubMenu menu={item} />
+    );
 }
 
 export default DropdownListItem;
