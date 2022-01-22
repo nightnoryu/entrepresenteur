@@ -2,6 +2,7 @@ import React from 'react';
 import { MenuItem } from '../../RibbonTypes';
 import styles from './DropdownList.module.css';
 import DropdownListItem from '../DropdownItem/DropdownListItem';
+import { getVisibilityStyles } from '../../../../common/componentsUtils';
 
 type DropdownMenuItemProps = {
   label: string;
@@ -30,9 +31,7 @@ function DropdownList({ label, items, isVisible, show, hide }: DropdownMenuItemP
 
       <ul
         className={styles.listItems}
-        style={{
-          display: isVisible ? 'block' : 'none',
-        }}
+        style={getVisibilityStyles(isVisible)}
       >
         {items.map(item => (
           <DropdownListItem

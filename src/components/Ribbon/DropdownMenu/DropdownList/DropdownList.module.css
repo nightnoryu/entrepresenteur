@@ -33,4 +33,6 @@
   border-radius: 5px;
   font-family: 'Noto Sans', sans-serif;
   font-size: 1.1em;
+
+  transition: all 50ms linear;
 }
