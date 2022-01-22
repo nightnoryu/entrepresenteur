@@ -94,6 +94,13 @@ function EditableTextElement(
     }
   }, [element.value]);
 
+  useEffect(() => {
+    if (!isSelected) {
+      textareaRef.current?.blur();
+      setEditing(false);
+    }
+  }, [isSelected]);
+
   useEventListener('mousedown', event => {
     if (event.target === parentRef?.current) {
       textareaRef.current?.blur();
