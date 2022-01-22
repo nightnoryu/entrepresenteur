@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Submenu } from '../../../RibbonTypes';
 import styles from './SubMenu.module.css';
 import { getVisibilityStyles } from '../../../../../common/componentsUtils';
+import useElementDimensions from '../../../../../hooks/useElementDimensions';
 
 type SubMenuProps = {
   menu: Submenu;
@@ -10,6 +11,9 @@ type SubMenuProps = {
 
 function SubMenu({ menu, hideParent }: SubMenuProps): JSX.Element {
   const [isVisible, setIsVisible] = useState(false);
+
+  const itemRef = useRef<HTMLLIElement>(null);
+  const { width } = useElementDimensions(itemRef, []);
 
   return (
     <li
@@ -22,18 +26,14 @@ function SubMenu({ menu, hideParent }: SubMenuProps): JSX.Element {
         event.preventDefault();
         setIsVisible(false);
       }}
+      ref={itemRef}
     >
-      <a href="#" className={styles.item}>
-        {
-          menu.icon &&
-          <span className={'material-icons ' + styles.itemIcon}>{menu.icon}</span>
-        }
-        {menu.label}
-        <span className={styles.submenuArrow} />
-      </a>
       <ul
         className={styles.nested}
-        style={getVisibilityStyles(isVisible)}
+        style={{
+          ...getVisibilityStyles(isVisible),
+          left: `${width + 22}px`,
+        }}
       >
         {menu.items.map(subItem => (
           <li key={subItem.label} className={styles.itemWrapper}>
@@ -56,6 +56,14 @@ function SubMenu({ menu, hideParent }: SubMenuProps): JSX.Element {
           </li>
         ))}
       </ul>
+      <a href="#" className={styles.item}>
+        {
+          menu.icon &&
+          <span className={'material-icons ' + styles.itemIcon}>{menu.icon}</span>
+        }
+        {menu.label}
+        <span className={styles.submenuArrow} />
+      </a>
     </li>
   );
 }

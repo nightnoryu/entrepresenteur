@@ -1,6 +1,7 @@
 :root
 {
-  --shadow-color: rgba(12, 12, 12, 0.1);
+  --light-shadow-color: rgba(12, 12, 12, 0.1);
+  --shadow-color: rgba(60, 64, 67, .15);
   --accent-color1: #89e6b0;
   --accent-color2: #e1f4ed;
   --neutral-color: #cccccc;

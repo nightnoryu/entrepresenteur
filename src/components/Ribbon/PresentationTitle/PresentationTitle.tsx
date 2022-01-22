@@ -5,7 +5,7 @@ import { actionCreators } from '../../../state';
 import styles from './PresentationTitle.module.css';
 import { RootState } from '../../../state/reducers';
 import { BASE_WINDOW_TITLE, WINDOW_TITLE_SEPARATOR } from '../../../model/constants';
-import useElementWidth from '../../../hooks/useElementWidth';
+import useElementDimensions from '../../../hooks/useElementDimensions';
 
 type PresentationTitleProps = {
   title: string;
@@ -45,7 +45,7 @@ function PresentationTitle({ title }: PresentationTitleProps): JSX.Element {
   }, [title]);
 
   const placeholderRef = useRef<HTMLSpanElement>(null);
-  const width = useElementWidth(placeholderRef, [editingValue]);
+  const { width } = useElementDimensions(placeholderRef, [editingValue]);
 
   return (
     <div className={styles.title}>
