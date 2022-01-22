@@ -104,3 +104,20 @@ export function getCommonPrimitiveProperties(element: PrimitiveElement): CommonP
     strokeDasharray: getPrimitiveStrokeStyle(element.stroke.style),
   };
 }
+
+type VisibilityStyles = {
+  visibility: VisibilityState;
+  opacity: number;
+}
+
+export function getVisibilityStyles(isVisible: boolean): VisibilityStyles {
+  return isVisible
+    ? {
+      visibility: 'visible',
+      opacity: 1,
+    }
+    : {
+      visibility: 'hidden',
+      opacity: 0,
+    };
+}

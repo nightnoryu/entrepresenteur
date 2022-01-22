@@ -9,7 +9,7 @@ type SlideThumbnailProps = {
   slide: Slide;
   index: number;
   isSelected: boolean;
-  onClick?: (event: React.MouseEvent) => void;
+  onClick: (event: React.MouseEvent) => void;
 };
 
 function SlideEntry({ slide, index, isSelected, onClick }: SlideThumbnailProps): JSX.Element {
@@ -25,32 +25,14 @@ function SlideEntry({ slide, index, isSelected, onClick }: SlideThumbnailProps):
 
   return (
     <div
-      className={styles.slideEntry}
-      onClick={(event) => {
-        if (onClick) {
-          onClick(event);
-        }
-      }}
-      style={{
-        backgroundColor: isSelected ? '#fdf7e6' : undefined,
-      }}
+      className={isSelected ? styles.slideEntrySelected : styles.slideEntry}
+      onClick={onClick}
       ref={ref}
     >
-      <div
-        className={styles.slideIndex}
-        style={{
-          fontWeight: isSelected ? 'bold' : undefined,
-        }}
-      >
+      <div className={isSelected ? styles.slideIndexSelected : styles.slideIndex}>
         {index}
       </div>
-
-      <div
-        className={styles.slideView}
-        style={{
-          borderColor: isSelected ? '#eda912' : undefined,
-        }}
-      >
+      <div className={isSelected ? styles.slideViewSelected : styles.slideView}>
         <SlideView slide={displayedSlide} />
       </div>
     </div>

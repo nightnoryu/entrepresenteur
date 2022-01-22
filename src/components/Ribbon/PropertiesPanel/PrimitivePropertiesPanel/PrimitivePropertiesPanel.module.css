@@ -11,10 +11,12 @@
   margin: 0 10px 0;
 }
 
+.colorPickerWrapper
+{
+  composes: colorPickerWrapper from "../PropertiesPanel.module.css";
+}
+
 .colorPicker
 {
-  width: 30px;
-  height: 30px;
-
-  border: none;
+  composes: colorPicker from "../PropertiesPanel.module.css";
 }

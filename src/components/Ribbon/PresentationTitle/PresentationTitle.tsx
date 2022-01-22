@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state';
 import styles from './PresentationTitle.module.css';
 import { RootState } from '../../../state/reducers';
 import { BASE_WINDOW_TITLE, WINDOW_TITLE_SEPARATOR } from '../../../model/constants';
+import useElementDimensions from '../../../hooks/useElementDimensions';
 
 type PresentationTitleProps = {
   title: string;
@@ -43,16 +44,31 @@ function PresentationTitle({ title }: PresentationTitleProps): JSX.Element {
     }
   }, [title]);
 
+  const placeholderRef = useRef<HTMLSpanElement>(null);
+  const { width } = useElementDimensions(placeholderRef, [editingValue]);
+
   return (
-    <input
-      type="text"
-      className={styles.title}
-      value={editingValue}
-      onChange={onChange}
-      onKeyDown={onKeyDown}
-      onBlur={onBlur}
-      onFocus={onFocus}
-    />
+    <div className={styles.title}>
+      <span
+        className={styles.titlePlaceholder}
+        ref={placeholderRef}
+      >
+        {editingValue}
+      </span>
+      <input
+        type="text"
+        spellCheck="false"
+        className={styles.titleInput}
+        style={{
+          width: `${width}px`,
+        }}
+        value={editingValue}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        onBlur={onBlur}
+        onFocus={onFocus}
+      />
+    </div>
   );
 }
 

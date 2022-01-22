@@ -860,6 +860,10 @@ export function startDemonstration(editor: Editor): Editor {
   return {
     ...editor,
     isDemonstrating: true,
+    selections: {
+      ...editor.selections,
+      selectedElementIDs: [],
+    },
   };
 }
 

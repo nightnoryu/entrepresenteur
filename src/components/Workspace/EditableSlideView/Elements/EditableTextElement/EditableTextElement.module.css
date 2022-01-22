@@ -12,7 +12,10 @@
   padding: 0;
 
   resize: none;
+  white-space: nowrap;
+  overflow: hidden;
 
   background-color: transparent;
   border: 2px dashed #000000;
+  caret-color: #000000;
 }

@@ -1,25 +1,43 @@
 .title
 {
-  height: 30%;
+  position: relative;
+  height: 35%;
+}
 
-  margin-top: 5px;
+.titleInput
+{
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 5px;
   padding: 3px;
 
-  border: none;
-  border-radius: 5px;
+  color: transparent;
+  border: 1px solid transparent;
+  background: transparent;
+  caret-color: #000000;
 
   vertical-align: center;
-  font: 1.5em 'Noto Sans', sans-serif;
+  font: 1.4em 'Noto Sans', sans-serif;
 }
 
-.title:hover,
-.title:focus
+.titleInput:hover
 {
-  background-color: #bebebe;
-  cursor: pointer;
+  border-color: #e5e5e5;
+  cursor: text;
 }
 
-.title:focus
+.titleInput:focus
 {
-  outline: #000000 solid 2px;
+  margin: 4px;
+  border: 2px solid #1a73e8;
+  border-radius: 4px;
+}
+
+.titlePlaceholder
+{
+  composes: titleInput;
+  color: #000000;
+  white-space: pre;
+  pointer-events: none;
 }

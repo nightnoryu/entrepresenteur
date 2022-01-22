@@ -12,7 +12,7 @@ import {
   tryMapStringToStrokeStyle,
 } from '../../../../model/modelUtils';
 import { getPrimitiveProperties } from '../../../../model/uiParameters/primitiveProperties';
-import useEventListener from '../../../../hooks/useEventListener';
+import useColorPicker from '../../../../hooks/propsPanels/useColorPicker';
 
 type PrimitivePropertiesPanelProps = {
   currentElement?: PrimitiveElement;
@@ -30,22 +30,18 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
   const primitiveProperties = getPrimitiveProperties();
 
   const fillColorPickerRef = useRef<HTMLInputElement>(null);
-  const onFillColorChange = (event: Event) => {
-    const target = event.currentTarget as HTMLInputElement;
+  useColorPicker(fillColorPickerRef, color => {
     if (currentElement) {
-      setPrimitiveFillColor(currentElement.id, target.value);
+      setPrimitiveFillColor(currentElement.id, color);
     }
-  };
-  useEventListener('change', onFillColorChange, fillColorPickerRef);
+  });
 
   const strokeColorPickerRef = useRef<HTMLInputElement>(null);
-  const onStrokeColorChange = (event: Event) => {
-    const target = event.currentTarget as HTMLInputElement;
+  useColorPicker(strokeColorPickerRef, color => {
     if (currentElement) {
-      setPrimitiveStrokeColor(currentElement.id, target.value);
+      setPrimitiveStrokeColor(currentElement.id, color);
     }
-  };
-  useEventListener('change', onStrokeColorChange, strokeColorPickerRef);
+  });
 
   const onStrokeStyleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (currentElement) {
@@ -64,22 +60,38 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
     <ul className={styles.primitivePropertiesPanel}>
       <li className={styles.panelElement}>
         Fill
-        <input
-          type="color"
-          className={styles.colorPicker}
-          defaultValue={currentElement?.fill}
-          ref={fillColorPickerRef}
-        />
+        <span
+          className={styles.colorPickerWrapper}
+          onClick={() => fillColorPickerRef.current?.click()}
+          style={{
+            backgroundColor: currentElement?.fill,
+          }}
+        >
+          <input
+            type="color"
+            className={styles.colorPicker}
+            defaultValue={currentElement?.fill}
+            ref={fillColorPickerRef}
+          />
+        </span>
       </li>
 
       <li className={styles.panelElement}>
         Stroke
-        <input
-          type="color"
-          className={styles.colorPicker}
-          defaultValue={currentElement?.stroke.color}
-          ref={strokeColorPickerRef}
-        />
+        <span
+          className={styles.colorPickerWrapper}
+          onClick={() => strokeColorPickerRef.current?.click()}
+          style={{
+            backgroundColor: currentElement?.stroke.color,
+          }}
+        >
+          <input
+            type="color"
+            className={styles.colorPicker}
+            defaultValue={currentElement?.fill}
+            ref={strokeColorPickerRef}
+          />
+        </span>
       </li>
 
       <li className={styles.panelElement}>

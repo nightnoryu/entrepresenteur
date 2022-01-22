@@ -1,5 +1,15 @@
+:root
+{
+  --light-shadow-color: rgba(12, 12, 12, 0.1);
+  --shadow-color: rgba(60, 64, 67, .15);
+  --accent-color1: #89e6b0;
+  --accent-color2: #e1f4ed;
+  --neutral-color: #cccccc;
+  --border-color: #d1d1d1;
+}
+
 .main
 {
   display: flex;
-  height: 90vh;
+  height: 88vh;
 }
