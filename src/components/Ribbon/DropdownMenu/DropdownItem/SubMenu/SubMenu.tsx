@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Submenu } from '../../../RibbonTypes';
 import styles from './SubMenu.module.css';
+import { getVisibilityStyles } from '../../../../../common/componentsUtils';
 
 type SubMenuProps = {
   menu: Submenu;
@@ -30,9 +31,7 @@ function SubMenu({ menu, hideParent }: SubMenuProps): JSX.Element {
       </a>
       <ul
         className={styles.nested}
-        style={{
-          display: isVisible ? 'block' : 'none',
-        }}
+        style={getVisibilityStyles(isVisible)}
       >
         {menu.items.map(subItem => (
           <li key={subItem.label}>
