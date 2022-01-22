@@ -29,6 +29,7 @@ function SubMenu({ menu, hideParent }: SubMenuProps): JSX.Element {
           <span className={'material-icons ' + styles.itemIcon}>{menu.icon}</span>
         }
         {menu.label}
+        <span className={styles.submenuArrow}></span>
       </a>
       <ul
         className={styles.nested}
