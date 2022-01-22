@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Submenu } from '../../../RibbonTypes';
-import styles from '../DropdownItem.module.css';
+import styles from './SubMenu.module.css';
 
 type SubMenuProps = {
   menu: Submenu;

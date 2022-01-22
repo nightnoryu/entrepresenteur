@@ -1,14 +1,12 @@
 .item
 {
-  color: #000000;
+  composes: item from "../ActionButton/ActionButton.module.css";
 }
 
 .itemIcon,
 .subItemIcon
 {
-  vertical-align: bottom;
-
-  margin-left: 8px;
+  composes: itemIcon from "../ActionButton/ActionButton.module.css";
 }
 
 .nested

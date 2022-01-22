@@ -1,6 +1,6 @@
 import React from 'react';
 import { MenuButton } from '../../../RibbonTypes';
-import styles from '../DropdownItem.module.css';
+import styles from './ActionButton.module.css';
 
 type ActionButtonProps = {
   item: MenuButton;
