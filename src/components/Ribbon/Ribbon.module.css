@@ -3,3 +3,47 @@
   height: calc(12vh - 1px);
   border-bottom: 1px solid #000000;
 }
+
+.logo
+{
+  display: block;
+  float: right;
+
+  max-width: 65px;
+  height: auto;
+
+  margin: 10px;
+}
+
+.logo:hover
+{
+  animation: spin .7s ease-in-out;
+  -webkit-animation: spin .7s ease-in-out;
+}
+
+@keyframes spin
+{
+  from
+  {
+    transform: rotate(0deg);
+  }
+
+  to
+  {
+    transform: rotate(-360deg);
+  }
+}
+
+@-webkit-keyframes spin
+{
+
+  from
+  {
+    transform: rotate(0deg);
+  }
+
+  to
+  {
+    transform: rotate(-360deg);
+  }
+}
