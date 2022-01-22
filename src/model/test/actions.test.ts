@@ -1,6 +1,7 @@
 import { createEditor, createNewPresentation } from '../modelUtils';
 import {
   addSlide,
+  addText,
   nextSlide,
   previousSlide,
   removeSlides,
@@ -10,10 +11,23 @@ import {
   setPresentationTitle,
   setSlideBackgroundColor,
   setSlideBackgroundImage,
+  setTextColor,
+  setTextFont,
+  setTextSize,
+  setTextValue,
   startDemonstration,
   stopDemonstration,
+  toggleBoldText,
+  toggleItalicText,
 } from '../actions';
-import { BackgroundType, Editor } from '../types';
+import { BackgroundType, Editor, ElementType, TextElement, TextFont } from '../types';
+import {
+  DEFAULT_ELEMENT_POSITION,
+  DEFAULT_TEXT_COLOR,
+  DEFAULT_TEXT_DIMENSIONS,
+  DEFAULT_TEXT_FONT,
+  DEFAULT_TEXT_SIZE,
+} from '../constants';
 
 describe('Model actions', () => {
   let editor: Editor;
@@ -147,25 +161,118 @@ describe('Model actions', () => {
   test.todo('removeElements');
 
 
-  test.todo('addText');
+  test('addText', () => {
+    const mockValue = 'sneed';
+    editor = addText(editor, {
+      position: DEFAULT_ELEMENT_POSITION,
+      dimensions: DEFAULT_TEXT_DIMENSIONS,
+      value: mockValue,
+    });
+
+    expect(editor.presentation.slides[0].elements).toHaveLength(1);
+
+    const element = editor.presentation.slides[0].elements[0] as TextElement;
+
+    expect(element.type).toEqual(ElementType.TEXT);
+    expect(element.position).toEqual(DEFAULT_ELEMENT_POSITION);
+    expect(element.dimensions).toEqual(DEFAULT_TEXT_DIMENSIONS);
+
+    expect(element.value).toEqual(mockValue);
+    expect(element.font).toEqual(DEFAULT_TEXT_FONT);
+    expect(element.color).toEqual(DEFAULT_TEXT_COLOR);
+    expect(element.size).toEqual(DEFAULT_TEXT_SIZE);
+    expect(element.isBold).toEqual(false);
+    expect(element.isItalic).toEqual(false);
+
+    expect(editor.selections.selectedElementIDs).toHaveLength(1);
+    expect(editor.selections.selectedElementIDs[0]).toEqual(element.id);
+  });
 
 
-  test.todo('setTextValue');
+  describe('text operations', () => {
+    const mockValue = 'sneed';
+    let element: TextElement;
+
+    beforeEach(() => {
+      editor = addText(editor, {
+        position: DEFAULT_ELEMENT_POSITION,
+        dimensions: DEFAULT_TEXT_DIMENSIONS,
+        value: mockValue,
+      });
+
+      element = editor.presentation.slides[0].elements[0] as TextElement;
+    });
 
 
-  test.todo('toggleBoldText');
+    test('setTextValue', () => {
+      const newMockValue = 'feed and seed';
+      editor = setTextValue(editor, {
+        elementID: element.id,
+        value: newMockValue,
+      });
+
+      element = editor.presentation.slides[0].elements[0] as TextElement;
+      expect(element.value).toEqual(newMockValue);
+    });
 
 
-  test.todo('toggleItalicText');
+    test('toggleBoldText', () => {
+      editor = toggleBoldText(editor, element.id);
+      element = editor.presentation.slides[0].elements[0] as TextElement;
+      expect(element.isBold).toEqual(true);
+
+      editor = toggleBoldText(editor, element.id);
+      element = editor.presentation.slides[0].elements[0] as TextElement;
+      expect(element.isBold).toEqual(false);
+    });
 
 
-  test.todo('setTextFont');
+    test('toggleItalicText', () => {
+      editor = toggleItalicText(editor, element.id);
+      element = editor.presentation.slides[0].elements[0] as TextElement;
+      expect(element.isItalic).toEqual(true);
+
+      editor = toggleItalicText(editor, element.id);
+      element = editor.presentation.slides[0].elements[0] as TextElement;
+      expect(element.isItalic).toEqual(false);
+    });
 
 
-  test.todo('setTextSize');
+    test('setTextFont', () => {
+      const mockFont = TextFont.MONOSPACE;
+      editor = setTextFont(editor, {
+        elementID: element.id,
+        font: mockFont,
+      });
+
+      element = editor.presentation.slides[0].elements[0] as TextElement;
+      expect(element.font).toEqual(mockFont);
+    });
 
 
-  test.todo('setTextColor');
+    test('setTextSize', () => {
+      const mockSize = 69;
+      editor = setTextSize(editor, {
+        elementID: element.id,
+        size: mockSize,
+      });
+
+      element = editor.presentation.slides[0].elements[0] as TextElement;
+      expect(element.size).toEqual(mockSize);
+    });
+
+
+    test('setTextColor', () => {
+      const mockColor = '#ff00ff';
+      editor = setTextColor(editor, {
+        elementID: element.id,
+        color: mockColor,
+      });
+
+      element = editor.presentation.slides[0].elements[0] as TextElement;
+      expect(element.color).toEqual(mockColor);
+    });
+  });
 
 
   test.todo('addImage');

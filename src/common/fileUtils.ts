@@ -59,7 +59,7 @@ export function openPresentationJSON(): Promise<Presentation> {
       .then(file => {
         const reader = new FileReader();
 
-        reader.addEventListener('loadend', (event: ProgressEvent<FileReader>) => {
+        reader.onload = event => {
           if (event.target?.result) {
             try {
               const result = JSON.parse(event.target.result.toString());
@@ -68,7 +68,7 @@ export function openPresentationJSON(): Promise<Presentation> {
               reject('Invalid presentation format');
             }
           }
-        });
+        };
 
         reader.readAsText(file, 'UTF-8');
       })
@@ -76,31 +76,32 @@ export function openPresentationJSON(): Promise<Presentation> {
   });
 }
 
-export function openImageBase64(): Promise<HTMLImageElement> {
+export function loadFileAsImage(file: File): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
-    openFile(FileTypes.IMAGES)
-      .then(file => {
-        const reader = new FileReader();
+    const reader = new FileReader();
 
-        reader.addEventListener('loadend', (event: ProgressEvent<FileReader>) => {
-          if (event.target?.result) {
-            const image = new Image();
+    reader.onloadend = event => {
+      if (event.target?.result) {
+        const image = new Image();
 
-            image.addEventListener('load', () => {
-              resolve(image);
-            });
-            image.addEventListener('error', () => {
-              reject('Invalid image');
-            });
+        image.onload = () => {
+          resolve(image);
+        };
+        image.onerror = () => {
+          reject('Invalid image');
+        };
 
-            image.src = event.target.result.toString();
-          }
-        });
+        image.src = event.target.result.toString();
+      }
+    };
 
-        reader.readAsDataURL(file);
-      })
-      .catch(error => reject(error));
+    reader.readAsDataURL(file);
   });
+}
+
+export async function openImageBase64(): Promise<HTMLImageElement> {
+  const file = await openFile(FileTypes.IMAGES);
+  return await loadFileAsImage(file);
 }
 
 export function pickColor(): Promise<string> {
@@ -108,20 +109,23 @@ export function pickColor(): Promise<string> {
     const input = document.createElement('input');
     input.type = 'color';
 
-    input.addEventListener('change', (event: Event) => {
+    input.onchange = event => {
       const target = event.target as HTMLInputElement;
       if (target?.value) {
         resolve(target.value);
       }
-    });
+    };
 
     input.click();
   });
 }
 
-export function scaleImage(width: number, height: number): Dimensions {
-  const result = { width, height };
-  const aspectRatio = width / height;
+export function getScaledImageDimensions(image: HTMLImageElement): Dimensions {
+  const result = {
+    width: image.width,
+    height: image.height,
+  };
+  const aspectRatio = image.width / image.height;
 
   if (result.width > DEFAULT_IMAGE_WIDTH) {
     result.width = DEFAULT_IMAGE_WIDTH;

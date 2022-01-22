@@ -11,7 +11,13 @@ import exportPresentationPDF from './common/pdfExporter';
 import { getRibbonMenuItems } from './model/uiParameters/menu';
 import Workspace from './components/Workspace/Workspace';
 import useAppHotkeys from './hooks/hotkeys/useAppHotkeys';
-import { openImageBase64, openPresentationJSON, pickColor, savePresentationJSON, scaleImage } from './common/fileUtils';
+import {
+  getScaledImageDimensions,
+  openImageBase64,
+  openPresentationJSON,
+  pickColor,
+  savePresentationJSON,
+} from './common/fileUtils';
 import { DEFAULT_ELEMENT_POSITION, DEFAULT_PRIMITIVE_DIMENSIONS, DEFAULT_TEXT_DIMENSIONS } from './model/constants';
 import Action from './state/actions/actions';
 
@@ -113,7 +119,7 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
 
     addImage: () => {
       openImageBase64()
-        .then(image => actionCreators.addImage(DEFAULT_ELEMENT_POSITION, scaleImage(image.width, image.height), image.src)(dispatch))
+        .then(image => actionCreators.addImage(DEFAULT_ELEMENT_POSITION, getScaledImageDimensions(image), image.src)(dispatch))
         .catch(error => alert(error));
     },
 
