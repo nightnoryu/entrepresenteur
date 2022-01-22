@@ -8,7 +8,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
 
-  border: 1px solid black;
+  border: 1px solid var(--border-color);
   box-shadow: 0 1px 4px var(--shadow-color);
 }
 
