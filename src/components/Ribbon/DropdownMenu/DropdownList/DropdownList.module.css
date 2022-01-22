@@ -16,7 +16,7 @@
 .listLabel:hover
 {
   cursor: pointer;
-  background-color: #bebebe;
+  background-color: var(--neutral-color);
 }
 
 .listItems
