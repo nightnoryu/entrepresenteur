@@ -9,7 +9,7 @@ type ActionButtonProps = {
 
 function ActionButton({ item, hideParent }: ActionButtonProps): JSX.Element {
   return (
-    <li>
+    <li className={styles.itemWrapper}>
       <a
         href="#"
         className={styles.item}
@@ -19,11 +19,11 @@ function ActionButton({ item, hideParent }: ActionButtonProps): JSX.Element {
           item.action();
         }}
       >
-        {item.label}
         {
           item.icon &&
           <span className={'material-icons ' + styles.itemIcon}>{item.icon}</span>
         }
+        {item.label}
       </a>
     </li>
   );

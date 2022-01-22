@@ -13,6 +13,7 @@ function SubMenu({ menu, hideParent }: SubMenuProps): JSX.Element {
 
   return (
     <li
+      className={styles.itemWrapper}
       onMouseEnter={event => {
         event.preventDefault();
         setIsVisible(true);
@@ -23,18 +24,18 @@ function SubMenu({ menu, hideParent }: SubMenuProps): JSX.Element {
       }}
     >
       <a href="#" className={styles.item}>
-        {menu.label}
         {
           menu.icon &&
           <span className={'material-icons ' + styles.itemIcon}>{menu.icon}</span>
         }
+        {menu.label}
       </a>
       <ul
         className={styles.nested}
         style={getVisibilityStyles(isVisible)}
       >
         {menu.items.map(subItem => (
-          <li key={subItem.label}>
+          <li key={subItem.label} className={styles.itemWrapper}>
             <a
               href="#"
               className={styles.subItem}
@@ -45,11 +46,11 @@ function SubMenu({ menu, hideParent }: SubMenuProps): JSX.Element {
                 subItem.action();
               }}
             >
-              {subItem.label}
               {
                 subItem.icon &&
                 <span className={'material-icons ' + styles.subItemIcon}>{subItem.icon}</span>
               }
+              {subItem.label}
             </a>
           </li>
         ))}
