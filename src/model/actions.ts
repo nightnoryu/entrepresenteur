@@ -71,17 +71,23 @@ export function addSlide(editor: Editor): Editor {
 }
 
 export function removeSlides(editor: Editor): Editor {
+  const slide = createNewSlide();
+
   return {
     ...editor,
     presentation: {
       ...editor.presentation,
-      slides: editor.presentation.slides.filter(
-        slide => !editor.selections.selectedSlideIDs.includes(slide.id),
-      ),
+      slides: editor.presentation.slides.length > 1
+        ? editor.presentation.slides.filter(
+          slide => !editor.selections.selectedSlideIDs.includes(slide.id),
+        )
+        : [slide],
     },
     selections: {
       ...editor.selections,
-      selectedSlideIDs: selectNearestUnselectedSlide(editor),
+      selectedSlideIDs: editor.presentation.slides.length > 1
+        ? selectNearestUnselectedSlide(editor)
+        : [slide.id],
     },
   };
 }

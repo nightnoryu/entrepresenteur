@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Submenu } from '../../../RibbonTypes';
 import styles from './SubMenu.module.css';
 import { getVisibilityStyles } from '../../../../../common/componentsUtils';
-import useElementDimensions from '../../../../../hooks/useElementDimensions';
+import useElementWidth from '../../../../../hooks/useElementWidth';
 
 type SubMenuProps = {
   menu: Submenu;
@@ -13,7 +13,7 @@ function SubMenu({ menu, hideParent }: SubMenuProps): JSX.Element {
   const [isVisible, setIsVisible] = useState(false);
 
   const itemRef = useRef<HTMLLIElement>(null);
-  const { width } = useElementDimensions(itemRef, []);
+  const width = useElementWidth(itemRef);
 
   return (
     <li
