@@ -22,6 +22,7 @@ import {
   setCurrentElement,
   setCurrentSlide,
   setFirstCurrentSlide,
+  setLocale,
   setPresentationTitle,
   setPrimitiveFillColor,
   setPrimitiveStrokeColor,
@@ -117,6 +118,8 @@ function editorReducer(state = getInitialState(), action: Action): Editor {
     return startDemonstration(state);
   case ActionType.STOP_DEMONSTRATION:
     return stopDemonstration(state);
+  case ActionType.SET_LOCALE:
+    return setLocale(state, action.payload);
   default:
     return state;
   }

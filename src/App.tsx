@@ -5,7 +5,7 @@ import styles from './App.module.css';
 import useConfirmLeaving from './hooks/useConfirmLeaving';
 import { connect } from 'react-redux';
 import { actionCreators } from './state';
-import { Presentation, PrimitiveType } from './model/types';
+import { Locale, Presentation, PrimitiveType } from './model/types';
 import { RootState } from './state/reducers';
 import exportPresentationPDF from './common/pdfExporter';
 import { getRibbonMenuItems } from './model/uiParameters/menu';
@@ -21,6 +21,8 @@ import {
 import { DEFAULT_ELEMENT_POSITION, DEFAULT_PRIMITIVE_DIMENSIONS, DEFAULT_TEXT_DIMENSIONS } from './model/constants';
 import Action from './state/actions/actions';
 import useLocale from './hooks/useLocale';
+import { LOCALE_KEY } from './state/initialState';
+import { mapLocaleToString } from './model/modelUtils';
 
 type AppProps = AppStateProps & AppDispatchProps;
 
@@ -51,6 +53,8 @@ type AppDispatchProps = {
   moveSlidesDown: () => void;
   moveSlidesToBeginning: () => void;
   moveSlidesToEnd: () => void;
+  localeEN: () => void,
+  localeRU: () => void,
 };
 
 function App(props: AppProps): JSX.Element {
@@ -160,6 +164,15 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
     moveSlidesDown: () => actionCreators.moveSlidesDown()(dispatch),
     moveSlidesToBeginning: () => actionCreators.moveSlidesToBeginning()(dispatch),
     moveSlidesToEnd: () => actionCreators.moveSlidesToEnd()(dispatch),
+
+    localeEN: () => {
+      actionCreators.setLocale(Locale.EN_EN)(dispatch);
+      localStorage.setItem(LOCALE_KEY, mapLocaleToString(Locale.EN_EN));
+    },
+    localeRU: () => {
+      actionCreators.setLocale(Locale.RU_RU)(dispatch);
+      localStorage.setItem(LOCALE_KEY, mapLocaleToString(Locale.RU_RU));
+    },
   };
 }
 

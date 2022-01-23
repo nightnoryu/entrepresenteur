@@ -6,26 +6,28 @@ type MenuAction = () => void;
 type AddPrimitiveMenuAction = (type: PrimitiveType) => void;
 
 type MenuActions = {
-  newPresentation: MenuAction,
-  openPresentation: MenuAction,
-  savePresentation: MenuAction,
-  exportPresentation: MenuAction,
-  addText: MenuAction,
-  addImage: MenuAction,
-  addPrimitive: AddPrimitiveMenuAction,
-  addSlide: MenuAction,
-  removeSlides: MenuAction,
-  setSlideBackgroundImage: MenuAction,
-  setSlideBackgroundColor: MenuAction,
-  removeElements: MenuAction,
-  undo: MenuAction,
-  redo: MenuAction,
-  startDemonstrationFromStart: MenuAction,
-  startDemonstration: MenuAction,
-  moveSlidesUp: MenuAction,
-  moveSlidesDown: MenuAction,
-  moveSlidesToBeginning: MenuAction,
-  moveSlidesToEnd: MenuAction,
+  newPresentation: MenuAction;
+  openPresentation: MenuAction;
+  savePresentation: MenuAction;
+  exportPresentation: MenuAction;
+  addText: MenuAction;
+  addImage: MenuAction;
+  addPrimitive: AddPrimitiveMenuAction;
+  addSlide: MenuAction;
+  removeSlides: MenuAction;
+  setSlideBackgroundImage: MenuAction;
+  setSlideBackgroundColor: MenuAction;
+  removeElements: MenuAction;
+  undo: MenuAction;
+  redo: MenuAction;
+  startDemonstrationFromStart: MenuAction;
+  startDemonstration: MenuAction;
+  moveSlidesUp: MenuAction;
+  moveSlidesDown: MenuAction;
+  moveSlidesToBeginning: MenuAction;
+  moveSlidesToEnd: MenuAction;
+  localeEN: MenuAction;
+  localeRU: MenuAction;
 };
 
 export function getRibbonMenuItems<T extends MenuActions>(actions: T, locale: Locale): DropdownMenuItemType[] {
@@ -213,6 +215,21 @@ export function getRibbonMenuItems<T extends MenuActions>(actions: T, locale: Lo
           label: 'From current slide',
           action: actions.startDemonstration,
           icon: 'play_arrow',
+        },
+      ],
+    },
+    {
+      label: 'Language',
+      items: [
+        {
+          type: MenuItemType.ActionButton,
+          label: 'English',
+          action: actions.localeEN,
+        },
+        {
+          type: MenuItemType.ActionButton,
+          label: 'Russian',
+          action: actions.localeRU,
         },
       ],
     },

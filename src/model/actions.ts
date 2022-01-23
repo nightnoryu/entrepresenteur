@@ -3,6 +3,7 @@ import {
   Dimensions,
   Editor,
   ElementType,
+  Locale,
   Position,
   Presentation,
   PrimitiveStrokeStyle,
@@ -877,5 +878,12 @@ export function stopDemonstration(editor: Editor): Editor {
   return {
     ...editor,
     isDemonstrating: false,
+  };
+}
+
+export function setLocale(editor: Editor, locale: Locale): Editor {
+  return {
+    ...editor,
+    locale: locale,
   };
 }
