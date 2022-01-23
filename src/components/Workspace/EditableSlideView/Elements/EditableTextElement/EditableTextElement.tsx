@@ -59,7 +59,7 @@ function EditableTextElement(
   const [editing, setEditing] = useState(false);
   const [editingValue, setEditingValue] = useState(element.value);
 
-  useDoubleClick(ref, () => {
+  const onClick = useDoubleClick(() => {
     setEditing(true);
   });
   useEffect(() => {
@@ -146,6 +146,7 @@ function EditableTextElement(
           strokeOpacity={isSelected ? SELECTED_OVERLAY_OPACITY : '0'}
           style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
           ref={ref}
+          onClick={onClick}
         />
 
         {
