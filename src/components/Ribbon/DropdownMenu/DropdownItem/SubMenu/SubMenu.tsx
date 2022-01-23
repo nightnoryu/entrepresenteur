@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { Submenu } from '../../../RibbonTypes';
+import { SubMenuType } from '../../../RibbonTypes';
 import styles from './SubMenu.module.css';
 import { getVisibilityStyles } from '../../../../../common/componentsUtils';
 import useElementWidth from '../../../../../hooks/useElementWidth';
 
 type SubMenuProps = {
-  menu: Submenu;
+  menu: SubMenuType;
   hideParent: () => void;
 }
 

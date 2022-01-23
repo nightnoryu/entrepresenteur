@@ -3,23 +3,24 @@ export type DropdownMenuItemType = {
   items: MenuItem[];
 };
 
-export type MenuItem = MenuButton | Submenu;
+export type MenuItem = ActionButtonType | SubMenuType;
 
 export enum MenuItemType {
-  MenuButton,
-  Submenu,
+  ActionButton,
+  SubMenu,
 }
 
-export type MenuButton = {
-  type: MenuItemType.MenuButton;
+export type ActionButtonType = {
+  type: MenuItemType.ActionButton;
   label: string;
   action: () => void;
   icon?: string;
+  hotkey?: string;
 };
 
-export type Submenu = {
-  type: MenuItemType.Submenu;
+export type SubMenuType = {
+  type: MenuItemType.SubMenu;
   label: string;
-  items: MenuButton[];
+  items: ActionButtonType[];
   icon?: string;
 };

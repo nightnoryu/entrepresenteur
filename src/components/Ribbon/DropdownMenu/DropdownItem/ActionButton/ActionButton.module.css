@@ -27,3 +27,9 @@
 
   margin-right: 5px;
 }
+
+.hotkeyCaption
+{
+  margin-left: 5px;
+  color: var(--neutral-color);
+}

@@ -1,9 +1,9 @@
 import React from 'react';
-import { MenuButton } from '../../../RibbonTypes';
+import { ActionButtonType } from '../../../RibbonTypes';
 import styles from './ActionButton.module.css';
 
 type ActionButtonProps = {
-  item: MenuButton;
+  item: ActionButtonType;
   hideParent: () => void;
 }
 
@@ -23,6 +23,10 @@ function ActionButton({ item, hideParent }: ActionButtonProps): JSX.Element {
           <span className={'material-icons ' + styles.itemIcon}>{item.icon}</span>
         }
         {item.label}
+        {
+          item.hotkey &&
+          <span className={styles.hotkeyCaption}>{item.hotkey}</span>
+        }
       </a>
     </li>
   );
