@@ -6,8 +6,8 @@ type MenuAction = () => void;
 type AddPrimitiveMenuAction = (type: PrimitiveType) => void;
 
 type MenuActions = {
-  newPresentation: MenuAction;
-  openPresentation: MenuAction;
+  newPresentation: (locale: Locale) => void;
+  openPresentation: (locale: Locale) => void;
   savePresentation: MenuAction;
   exportPresentation: MenuAction;
   addText: MenuAction;
@@ -38,14 +38,14 @@ export function getRibbonMenuItems<T extends MenuActions>(actions: T, locale: Lo
         {
           type: MenuItemType.ActionButton,
           label: i18n_get(locale, 'menu.file.new'),
-          action: actions.newPresentation,
+          action: () => actions.newPresentation(locale),
           icon: 'add',
           hotkey: 'Ctrl+Shift+N',
         },
         {
           type: MenuItemType.ActionButton,
           label: i18n_get(locale, 'menu.file.open'),
-          action: actions.openPresentation,
+          action: () => actions.openPresentation(locale),
           icon: 'upload',
           hotkey: 'Ctrl+O',
         },

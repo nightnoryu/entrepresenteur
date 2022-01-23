@@ -23,6 +23,7 @@ import Action from './state/actions/actions';
 import useLocale from './hooks/useLocale';
 import { LOCALE_KEY } from './state/initialState';
 import { mapLocaleToString } from './model/modelUtils';
+import i18n_get from './i18n/i18n_get';
 
 type AppProps = AppStateProps & AppDispatchProps;
 
@@ -31,8 +32,8 @@ type AppStateProps = {
 };
 
 type AppDispatchProps = {
-  openPresentation: () => void;
-  newPresentation: () => void;
+  openPresentation: (locale: Locale) => void;
+  newPresentation: (locale: Locale) => void;
   savePresentation: (presentation: Presentation) => () => void;
   exportPresentation: (presentation: Presentation) => () => void;
   undo: () => void;
@@ -89,8 +90,8 @@ function mapStateToProps(state: RootState): AppStateProps {
 
 function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
   return {
-    openPresentation: () => {
-      const confirmed = confirm('Are you sure? All unsaved changes will be lost.');
+    openPresentation: (locale: Locale) => {
+      const confirmed = confirm(i18n_get(locale, 'prompt.changes'));
       if (confirmed) {
         openPresentationJSON()
           .then(presentation => actionCreators.openPresentation(presentation)(dispatch))
@@ -98,8 +99,8 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
       }
     },
 
-    newPresentation: () => {
-      const confirmed = confirm('Are you sure? All unsaved changes will be lost.');
+    newPresentation: (locale: Locale) => {
+      const confirmed = confirm(i18n_get(locale, 'prompt.changes'));
       if (confirmed) {
         actionCreators.newPresentation()(dispatch);
       }

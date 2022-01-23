@@ -37,6 +37,8 @@ const messages_ru_ru = new Map<string, string>([
   ['menu.language', 'Язык'],
   ['menu.language.en', 'Английский'],
   ['menu.language.ru', 'Русский'],
+
+  ['prompt.changes', 'Вы уверены? Все несохраненные изменения будут утеряны.'],
 ]);
 
 export default messages_ru_ru;

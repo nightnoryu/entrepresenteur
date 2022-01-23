@@ -37,6 +37,8 @@ const messages_en_en = new Map<string, string>([
   ['menu.language', 'Language'],
   ['menu.language.en', 'English'],
   ['menu.language.ru', 'Russian'],
+
+  ['prompt.changes', 'Are you sure? All unsaved changes will be lost.'],
 ]);
 
 export default messages_en_en;
