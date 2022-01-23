@@ -1,5 +1,6 @@
 import useHotkeyCtrl from './useHotkeyCtrl';
 import useHotkey from './useHotkey';
+import useHotkeyCtrlShift from './useHotkeyCtrlShift';
 
 type HotkeyAction = () => void;
 type HotkeyActions = {
@@ -15,7 +16,7 @@ type HotkeyActions = {
 function useAppHotkeys<T extends HotkeyActions>(actions: T): void {
   useHotkeyCtrl('s', actions.savePresentation);
   useHotkeyCtrl('o', actions.openPresentation);
-  useHotkeyCtrl('m', actions.newPresentation);
+  useHotkeyCtrlShift('n', actions.newPresentation);
 
   useHotkeyCtrl('z', actions.undo);
   useHotkeyCtrl('y', actions.redo);
