@@ -15,7 +15,9 @@ function useFullscreen(
         }
       }
     }
+  }, [isFullscreen]);
 
+  useEffect(() => {
     const onFullscreenChange = () => {
       if (!document.fullscreenElement) {
         onFullscreenExit();
@@ -27,7 +29,7 @@ function useFullscreen(
     return () => {
       document.removeEventListener('fullscreenchange', onFullscreenChange);
     };
-  }, [isFullscreen]);
+  });
 }
 
 export default useFullscreen;
