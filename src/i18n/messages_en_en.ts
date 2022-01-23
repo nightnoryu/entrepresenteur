@@ -39,6 +39,9 @@ const messages_en_en = new Map<string, string>([
   ['menu.language.ru', 'Russian'],
 
   ['prompt.changes', 'Are you sure? All unsaved changes will be lost.'],
+  ['prompt.invalid.file', 'Invalid file type'],
+  ['prompt.invalid.image', 'Invalid image format'],
+  ['prompt.invalid.presentation', 'Invalid presentation format'],
 ]);
 
 export default messages_en_en;

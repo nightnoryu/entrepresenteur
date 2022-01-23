@@ -3,19 +3,20 @@ import { Locale, PrimitiveType } from '../types';
 import i18n_get from '../../i18n/i18n_get';
 
 type MenuAction = () => void;
+type LocalizedAction = (locale: Locale) => void;
 type AddPrimitiveMenuAction = (type: PrimitiveType) => void;
 
 type MenuActions = {
-  newPresentation: (locale: Locale) => void;
-  openPresentation: (locale: Locale) => void;
+  newPresentation: LocalizedAction;
+  openPresentation: LocalizedAction;
   savePresentation: MenuAction;
   exportPresentation: MenuAction;
   addText: MenuAction;
-  addImage: MenuAction;
+  addImage: LocalizedAction;
   addPrimitive: AddPrimitiveMenuAction;
   addSlide: MenuAction;
   removeSlides: MenuAction;
-  setSlideBackgroundImage: MenuAction;
+  setSlideBackgroundImage: LocalizedAction;
   setSlideBackgroundColor: MenuAction;
   removeElements: MenuAction;
   undo: MenuAction;
@@ -96,7 +97,7 @@ export function getRibbonMenuItems<T extends MenuActions>(actions: T, locale: Lo
         {
           type: MenuItemType.ActionButton,
           label: i18n_get(locale, 'menu.insert.image'),
-          action: actions.addImage,
+          action: () => actions.addImage(locale),
           icon: 'image',
         },
         {
@@ -163,7 +164,7 @@ export function getRibbonMenuItems<T extends MenuActions>(actions: T, locale: Lo
             {
               type: MenuItemType.ActionButton,
               label: i18n_get(locale, 'menu.slide.background.image'),
-              action: actions.setSlideBackgroundImage,
+              action: () => actions.setSlideBackgroundImage(locale),
               icon: 'image',
             },
           ],

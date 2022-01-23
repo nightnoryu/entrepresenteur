@@ -39,6 +39,9 @@ const messages_ru_ru = new Map<string, string>([
   ['menu.language.ru', 'Русский'],
 
   ['prompt.changes', 'Вы уверены? Все несохраненные изменения будут утеряны.'],
+  ['prompt.invalid.file', 'Неверный формат файла'],
+  ['prompt.invalid.image', 'Неверный формат изображения'],
+  ['prompt.invalid.presentation', 'Неверный формат презентации'],
 ]);
 
 export default messages_ru_ru;

@@ -39,13 +39,13 @@ type AppDispatchProps = {
   undo: () => void;
   redo: () => void;
   addText: () => void;
-  addImage: () => void;
+  addImage: (locale: Locale) => void;
   addPrimitive: (type: PrimitiveType) => void;
   addSlide: () => void;
   removeSlides: () => void;
   nextSlide: () => void;
   previousSlide: () => void;
-  setSlideBackgroundImage: () => void;
+  setSlideBackgroundImage: (locale: Locale) => void;
   setSlideBackgroundColor: () => void;
   removeElements: () => void;
   startDemonstrationFromStart: () => void;
@@ -95,7 +95,7 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
       if (confirmed) {
         openPresentationJSON()
           .then(presentation => actionCreators.openPresentation(presentation)(dispatch))
-          .catch(error => alert(error));
+          .catch(errorMessageID => alert(i18n_get(locale, errorMessageID)));
       }
     },
 
@@ -125,10 +125,10 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
       actionCreators.addText(DEFAULT_ELEMENT_POSITION, DEFAULT_TEXT_DIMENSIONS, '')(dispatch);
     },
 
-    addImage: () => {
+    addImage: (locale: Locale) => {
       openImageBase64()
         .then(image => actionCreators.addImage(DEFAULT_ELEMENT_POSITION, getScaledImageDimensions(image), image.src)(dispatch))
-        .catch(error => alert(error));
+        .catch(errorMessageID => alert(i18n_get(locale, errorMessageID)));
     },
 
     addPrimitive: (type: PrimitiveType) => {
@@ -141,10 +141,10 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
     nextSlide: () => actionCreators.nextSlide()(dispatch),
     previousSlide: () => actionCreators.previousSlide()(dispatch),
 
-    setSlideBackgroundImage: () => {
+    setSlideBackgroundImage: (locale: Locale) => {
       openImageBase64()
         .then(image => actionCreators.setSlideBackgroundImage(image.src)(dispatch))
-        .catch(error => alert(error));
+        .catch(errorMessageID => alert(i18n_get(locale, errorMessageID)));
     },
 
     setSlideBackgroundColor: () => {
