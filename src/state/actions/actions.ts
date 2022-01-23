@@ -38,6 +38,7 @@ export enum ActionType {
   REDO,
   START_DEMONSTRATION,
   STOP_DEMONSTRATION,
+  SET_LOCALE,
 }
 
 export const STATEFUL_ACTIONS = [

@@ -114,9 +114,15 @@ export type History = {
   futureStates: HistoryState[];
 };
 
+export enum Locale {
+  EN_EN,
+  RU_RU
+}
+
 export type Editor = {
   presentation: Presentation;
   selections: Selections;
   history: History;
   isDemonstrating: boolean;
+  locale: Locale;
 };

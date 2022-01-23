@@ -1,27 +1,13 @@
-import { RefObject, useState } from 'react';
-import useEventListener from '../useEventListener';
+import React, { useCallback } from 'react';
 
-type Handler = (event: Event) => void;
+type Handler = (event: React.MouseEvent) => void;
 
-function useDoubleClick<T extends DocumentAndElementEventHandlers>(
-  ref: RefObject<T>,
-  onDoubleClick: Handler,
-  latency = 300,
-): void {
-  const [clickCount, setClickCount] = useState(0);
-
-  const handleClick = (event: Event) => {
-    setClickCount(clickCount + 1);
-
-    setTimeout(() => {
-      if (clickCount === 2) {
-        onDoubleClick(event);
-        setClickCount(0);
-      }
-    }, latency);
-  };
-
-  useEventListener('click', handleClick, ref);
+function useDoubleClick(handler: Handler): Handler {
+  return useCallback((event: React.MouseEvent) => {
+    if (event.detail % 2 === 0) {
+      handler(event);
+    }
+  }, [handler]);
 }
 
 export default useDoubleClick;

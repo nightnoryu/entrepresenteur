@@ -1,7 +1,15 @@
 import { Dispatch } from 'react';
 import Action, { ActionType } from './actions';
 import { UUID } from '../../model/uuid';
-import { Dimensions, Position, Presentation, PrimitiveStrokeStyle, PrimitiveType, TextFont } from '../../model/types';
+import {
+  Dimensions,
+  Locale,
+  Position,
+  Presentation,
+  PrimitiveStrokeStyle,
+  PrimitiveType,
+  TextFont,
+} from '../../model/types';
 
 export function openPresentation(presentation: Presentation) {
   return (dispatch: Dispatch<Action>): void => {
@@ -374,6 +382,15 @@ export function stopDemonstration() {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({
       type: ActionType.STOP_DEMONSTRATION,
+    });
+  };
+}
+
+export function setLocale(locale: Locale) {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.SET_LOCALE,
+      payload: locale,
     });
   };
 }

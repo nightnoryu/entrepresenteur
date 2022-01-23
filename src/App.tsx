@@ -5,7 +5,7 @@ import styles from './App.module.css';
 import useConfirmLeaving from './hooks/useConfirmLeaving';
 import { connect } from 'react-redux';
 import { actionCreators } from './state';
-import { Presentation, PrimitiveType } from './model/types';
+import { Locale, Presentation, PrimitiveType } from './model/types';
 import { RootState } from './state/reducers';
 import exportPresentationPDF from './common/pdfExporter';
 import { getRibbonMenuItems } from './model/uiParameters/menu';
@@ -20,6 +20,10 @@ import {
 } from './common/fileUtils';
 import { DEFAULT_ELEMENT_POSITION, DEFAULT_PRIMITIVE_DIMENSIONS, DEFAULT_TEXT_DIMENSIONS } from './model/constants';
 import Action from './state/actions/actions';
+import useLocale from './hooks/useLocale';
+import { LOCALE_KEY } from './state/initialState';
+import { mapLocaleToString } from './model/modelUtils';
+import i18n_get from './i18n/i18n_get';
 
 type AppProps = AppStateProps & AppDispatchProps;
 
@@ -28,20 +32,20 @@ type AppStateProps = {
 };
 
 type AppDispatchProps = {
-  openPresentation: () => void;
-  newPresentation: () => void;
+  openPresentation: (locale: Locale) => void;
+  newPresentation: (locale: Locale) => void;
   savePresentation: (presentation: Presentation) => () => void;
   exportPresentation: (presentation: Presentation) => () => void;
   undo: () => void;
   redo: () => void;
   addText: () => void;
-  addImage: () => void;
+  addImage: (locale: Locale) => void;
   addPrimitive: (type: PrimitiveType) => void;
   addSlide: () => void;
   removeSlides: () => void;
   nextSlide: () => void;
   previousSlide: () => void;
-  setSlideBackgroundImage: () => void;
+  setSlideBackgroundImage: (locale: Locale) => void;
   setSlideBackgroundColor: () => void;
   removeElements: () => void;
   startDemonstrationFromStart: () => void;
@@ -50,6 +54,8 @@ type AppDispatchProps = {
   moveSlidesDown: () => void;
   moveSlidesToBeginning: () => void;
   moveSlidesToEnd: () => void;
+  localeEN: () => void,
+  localeRU: () => void,
 };
 
 function App(props: AppProps): JSX.Element {
@@ -61,7 +67,9 @@ function App(props: AppProps): JSX.Element {
     exportPresentation: props.exportPresentation(props.presentation),
   };
   useAppHotkeys(actions);
-  const menuItems = getRibbonMenuItems(actions);
+
+  const locale = useLocale();
+  const menuItems = getRibbonMenuItems(actions, locale);
 
   return (
     <div className="app">
@@ -82,17 +90,17 @@ function mapStateToProps(state: RootState): AppStateProps {
 
 function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
   return {
-    openPresentation: () => {
-      const confirmed = confirm('Are you sure? All unsaved changes will be lost.');
+    openPresentation: (locale: Locale) => {
+      const confirmed = confirm(i18n_get(locale, 'prompt.changes'));
       if (confirmed) {
         openPresentationJSON()
           .then(presentation => actionCreators.openPresentation(presentation)(dispatch))
-          .catch(error => alert(error));
+          .catch(errorMessageID => alert(i18n_get(locale, errorMessageID)));
       }
     },
 
-    newPresentation: () => {
-      const confirmed = confirm('Are you sure? All unsaved changes will be lost.');
+    newPresentation: (locale: Locale) => {
+      const confirmed = confirm(i18n_get(locale, 'prompt.changes'));
       if (confirmed) {
         actionCreators.newPresentation()(dispatch);
       }
@@ -117,10 +125,10 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
       actionCreators.addText(DEFAULT_ELEMENT_POSITION, DEFAULT_TEXT_DIMENSIONS, '')(dispatch);
     },
 
-    addImage: () => {
+    addImage: (locale: Locale) => {
       openImageBase64()
         .then(image => actionCreators.addImage(DEFAULT_ELEMENT_POSITION, getScaledImageDimensions(image), image.src)(dispatch))
-        .catch(error => alert(error));
+        .catch(errorMessageID => alert(i18n_get(locale, errorMessageID)));
     },
 
     addPrimitive: (type: PrimitiveType) => {
@@ -133,10 +141,10 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
     nextSlide: () => actionCreators.nextSlide()(dispatch),
     previousSlide: () => actionCreators.previousSlide()(dispatch),
 
-    setSlideBackgroundImage: () => {
+    setSlideBackgroundImage: (locale: Locale) => {
       openImageBase64()
         .then(image => actionCreators.setSlideBackgroundImage(image.src)(dispatch))
-        .catch(error => alert(error));
+        .catch(errorMessageID => alert(i18n_get(locale, errorMessageID)));
     },
 
     setSlideBackgroundColor: () => {
@@ -157,6 +165,15 @@ function mapDispatchToProps(dispatch: Dispatch<Action>): AppDispatchProps {
     moveSlidesDown: () => actionCreators.moveSlidesDown()(dispatch),
     moveSlidesToBeginning: () => actionCreators.moveSlidesToBeginning()(dispatch),
     moveSlidesToEnd: () => actionCreators.moveSlidesToEnd()(dispatch),
+
+    localeEN: () => {
+      actionCreators.setLocale(Locale.EN_EN)(dispatch);
+      localStorage.setItem(LOCALE_KEY, mapLocaleToString(Locale.EN_EN));
+    },
+    localeRU: () => {
+      actionCreators.setLocale(Locale.RU_RU)(dispatch);
+      localStorage.setItem(LOCALE_KEY, mapLocaleToString(Locale.RU_RU));
+    },
   };
 }
 

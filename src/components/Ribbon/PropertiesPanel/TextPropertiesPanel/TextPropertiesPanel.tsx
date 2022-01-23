@@ -60,9 +60,10 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
   return (
     <ul className={styles.textPropertiesPanel}>
       <li className={styles.panelElement}>
+        Font
         <select
           name="font"
-          className={styles.fontSelection}
+          className={styles.selection}
           value={currentElement?.font ? mapFontToString(currentElement.font) : undefined}
           onChange={onFontChange}
         >
@@ -78,9 +79,10 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
       </li>
 
       <li className={styles.panelElement}>
+        Size
         <select
           name="size"
-          className={styles.sizeSelection}
+          className={styles.selection}
           value={currentElement?.size}
           onChange={onSizeChange}
         >
@@ -96,11 +98,11 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
       </li>
 
       <li className={styles.panelElement}>
-        <button onClick={onToggleBold}>Bold</button>
+        <button onClick={onToggleBold} className={styles.styleButton}>Bold</button>
       </li>
 
       <li className={styles.panelElement}>
-        <button onClick={onToggleItalic}>Italic</button>
+        <button onClick={onToggleItalic} className={styles.styleButton}>Italic</button>
       </li>
 
       <li className={styles.panelElement}>

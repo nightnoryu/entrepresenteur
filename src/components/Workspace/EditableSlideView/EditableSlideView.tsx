@@ -14,6 +14,8 @@ import EditablePrimitiveElement from './Elements/EditablePrimitiveElement/Editab
 import useScaleFactorForDragAndDrop from '../../../hooks/dragAndDrop/useScaleFactorForDragAndDrop';
 import { bindActionCreators } from 'redux';
 import { getScaledImageDimensions, loadFileAsImage } from '../../../common/fileUtils';
+import useLocale from '../../../hooks/useLocale';
+import i18n_get from '../../../i18n/i18n_get';
 
 type EditableSlideViewProps = {
   slide: Slide;
@@ -23,6 +25,7 @@ type EditableSlideViewProps = {
 function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps): JSX.Element {
   const dispatch = useDispatch();
   const { addImage } = bindActionCreators(actionCreators, dispatch);
+  const locale = useLocale();
 
   const slideBackgroundStyle = getSlideBackgroundStyle(slide);
 
@@ -41,7 +44,7 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
         if (file) {
           loadFileAsImage(file)
             .then(image => addImage(DEFAULT_ELEMENT_POSITION, getScaledImageDimensions(image), image.src))
-            .catch(error => alert(error));
+            .catch(errorMessageID => alert(i18n_get(locale, errorMessageID)));
         }
       }
 
@@ -50,7 +53,7 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
       if (file) {
         loadFileAsImage(file)
           .then(image => addImage(DEFAULT_ELEMENT_POSITION, getScaledImageDimensions(image), image.src))
-          .catch(error => alert(error));
+          .catch(errorMessageID => alert(i18n_get(locale, errorMessageID)));
       }
     }
   };
