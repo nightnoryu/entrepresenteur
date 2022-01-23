@@ -7,6 +7,7 @@ type HotkeyActions = {
   newPresentation: HotkeyAction,
   openPresentation: HotkeyAction,
   savePresentation: HotkeyAction,
+  addSlide: HotkeyAction,
   undo: HotkeyAction,
   redo: HotkeyAction,
   nextSlide: HotkeyAction,
@@ -21,6 +22,7 @@ function useAppHotkeys<T extends HotkeyActions>(actions: T): void {
   useHotkeyCtrl('z', actions.undo);
   useHotkeyCtrl('y', actions.redo);
 
+  useHotkeyCtrl('m', actions.addSlide);
   useHotkey('ArrowRight', actions.nextSlide);
   useHotkey('ArrowLeft', actions.previousSlide);
 }
