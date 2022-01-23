@@ -60,6 +60,7 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
   return (
     <ul className={styles.textPropertiesPanel}>
       <li className={styles.panelElement}>
+        Font
         <select
           name="font"
           className={styles.selection}
@@ -78,6 +79,7 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
       </li>
 
       <li className={styles.panelElement}>
+        Size
         <select
           name="size"
           className={styles.selection}
@@ -96,11 +98,11 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
       </li>
 
       <li className={styles.panelElement}>
-        <button onClick={onToggleBold}>Bold</button>
+        <button onClick={onToggleBold} className={styles.styleButton}>Bold</button>
       </li>
 
       <li className={styles.panelElement}>
-        <button onClick={onToggleItalic}>Italic</button>
+        <button onClick={onToggleItalic} className={styles.styleButton}>Italic</button>
       </li>
 
       <li className={styles.panelElement}>

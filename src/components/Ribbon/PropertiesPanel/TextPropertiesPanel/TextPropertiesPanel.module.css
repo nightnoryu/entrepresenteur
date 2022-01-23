@@ -51,6 +51,27 @@
   font-weight: normal;
 }
 
+.styleButton
+{
+  padding: 3px 6px 3px;
+
+  background: transparent;
+
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.styleButton:hover
+{
+  border-color: var(--shadow-color);
+}
+
+.styleButton:focus
+{
+  border-color: var(--accent-color1);
+  outline: none;
+}
+
 .colorPickerWrapper
 {
   composes: colorPickerWrapper from "../PropertiesPanel.module.css";
