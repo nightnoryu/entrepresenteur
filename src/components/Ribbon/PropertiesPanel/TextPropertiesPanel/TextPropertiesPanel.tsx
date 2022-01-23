@@ -62,7 +62,7 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
       <li className={styles.panelElement}>
         <select
           name="font"
-          className={styles.fontSelection}
+          className={styles.selection}
           value={currentElement?.font ? mapFontToString(currentElement.font) : undefined}
           onChange={onFontChange}
         >
@@ -80,7 +80,7 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
       <li className={styles.panelElement}>
         <select
           name="size"
-          className={styles.sizeSelection}
+          className={styles.selection}
           value={currentElement?.size}
           onChange={onSizeChange}
         >

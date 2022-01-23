@@ -1,14 +1,16 @@
 .primitivePropertiesPanel
 {
-  list-style: none;
-  display: flex;
-
-  font-family: 'Noto Sans', sans-serif;
+  composes: textPropertiesPanel from "../TextPropertiesPanel/TextPropertiesPanel.module.css";
 }
 
 .panelElement
 {
-  margin: 0 10px 0;
+  composes: panelElement from "../TextPropertiesPanel/TextPropertiesPanel.module.css";
+}
+
+.selection
+{
+  composes: selection from "../TextPropertiesPanel/TextPropertiesPanel.module.css";
 }
 
 .colorPickerWrapper
