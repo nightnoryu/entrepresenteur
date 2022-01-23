@@ -1,4 +1,5 @@
 import useHotkeyCtrl from './useHotkeyCtrl';
+import useHotkey from './useHotkey';
 
 type HotkeyAction = () => void;
 type HotkeyActions = {
@@ -19,9 +20,8 @@ function useAppHotkeys<T extends HotkeyActions>(actions: T): void {
   useHotkeyCtrl('z', actions.undo);
   useHotkeyCtrl('y', actions.redo);
 
-  // TODO: #104
-  // useHotkey('ArrowRight', actions.nextSlide);
-  // useHotkey('ArrowLeft', actions.previousSlide);
+  useHotkey('ArrowRight', actions.nextSlide);
+  useHotkey('ArrowLeft', actions.previousSlide);
 }
 
 export default useAppHotkeys;
