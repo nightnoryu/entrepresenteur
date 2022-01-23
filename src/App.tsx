@@ -20,6 +20,7 @@ import {
 } from './common/fileUtils';
 import { DEFAULT_ELEMENT_POSITION, DEFAULT_PRIMITIVE_DIMENSIONS, DEFAULT_TEXT_DIMENSIONS } from './model/constants';
 import Action from './state/actions/actions';
+import useLocale from './hooks/useLocale';
 
 type AppProps = AppStateProps & AppDispatchProps;
 
@@ -61,7 +62,9 @@ function App(props: AppProps): JSX.Element {
     exportPresentation: props.exportPresentation(props.presentation),
   };
   useAppHotkeys(actions);
-  const menuItems = getRibbonMenuItems(actions);
+
+  const locale = useLocale();
+  const menuItems = getRibbonMenuItems(actions, locale);
 
   return (
     <div className="app">

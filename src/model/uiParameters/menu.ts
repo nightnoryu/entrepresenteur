@@ -1,5 +1,6 @@
 import { DropdownMenuItemType, MenuItemType } from '../../components/Ribbon/RibbonTypes';
-import { PrimitiveType } from '../types';
+import { Locale, PrimitiveType } from '../types';
+import i18n_get from '../../i18n/i18n_get';
 
 type MenuAction = () => void;
 type AddPrimitiveMenuAction = (type: PrimitiveType) => void;
@@ -27,10 +28,10 @@ type MenuActions = {
   moveSlidesToEnd: MenuAction,
 };
 
-export function getRibbonMenuItems<T extends MenuActions>(actions: T): DropdownMenuItemType[] {
+export function getRibbonMenuItems<T extends MenuActions>(actions: T, locale: Locale): DropdownMenuItemType[] {
   return [
     {
-      label: 'File',
+      label: i18n_get(locale, 'menu.file'),
       items: [
         {
           type: MenuItemType.ActionButton,
@@ -62,7 +63,7 @@ export function getRibbonMenuItems<T extends MenuActions>(actions: T): DropdownM
       ],
     },
     {
-      label: 'Edit',
+      label: i18n_get(locale, 'menu.edit'),
       items: [
         {
           type: MenuItemType.ActionButton,
@@ -88,7 +89,7 @@ export function getRibbonMenuItems<T extends MenuActions>(actions: T): DropdownM
       ],
     },
     {
-      label: 'Insert',
+      label: i18n_get(locale, 'menu.insert'),
       items: [
         {
           type: MenuItemType.ActionButton,
@@ -130,7 +131,7 @@ export function getRibbonMenuItems<T extends MenuActions>(actions: T): DropdownM
       ],
     },
     {
-      label: 'Slide',
+      label: i18n_get(locale, 'menu.slide'),
       items: [
         {
           type: MenuItemType.ActionButton,
@@ -199,7 +200,7 @@ export function getRibbonMenuItems<T extends MenuActions>(actions: T): DropdownM
       ],
     },
     {
-      label: 'Demonstration',
+      label: i18n_get(locale, 'menu.demonstration'),
       items: [
         {
           type: MenuItemType.ActionButton,

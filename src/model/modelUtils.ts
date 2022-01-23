@@ -1,4 +1,13 @@
-import { BackgroundType, Editor, Presentation, PrimitiveStrokeStyle, Slide, SlideElement, TextFont } from './types';
+import {
+  BackgroundType,
+  Editor,
+  Locale,
+  Presentation,
+  PrimitiveStrokeStyle,
+  Slide,
+  SlideElement,
+  TextFont,
+} from './types';
 import { generateUUID, UUID } from './uuid';
 import { DEFAULT_PRESENTATION_TITLE, DEFAULT_SLIDE_BACKGROUND, MAX_HISTORY_ENTRIES } from './constants';
 
@@ -31,7 +40,7 @@ export function createNewPresentation(): Presentation {
   };
 }
 
-export function createEditor(presentation: Presentation): Editor {
+export function createEditor(presentation: Presentation, locale: Locale): Editor {
   return {
     presentation,
     selections: {
@@ -43,6 +52,7 @@ export function createEditor(presentation: Presentation): Editor {
       futureStates: [],
     },
     isDemonstrating: false,
+    locale: locale,
   };
 }
 
@@ -91,6 +101,26 @@ export function tryMapStringToStrokeStyle(str: string): PrimitiveStrokeStyle {
     return PrimitiveStrokeStyle.DOT_DASHED;
   default:
     throw new Error('Unknown stroke style');
+  }
+}
+
+export function mapLocaleToString(locale: Locale): string {
+  switch (locale) {
+  case Locale.EN_EN:
+    return 'en_en';
+  case Locale.RU_RU:
+    return 'ru_ru';
+  }
+}
+
+export function tryMapStringToLocale(str: string): Locale {
+  switch (str) {
+  case 'en_en':
+    return Locale.EN_EN;
+  case 'ru_ru':
+    return Locale.RU_RU;
+  default:
+    throw new Error('Unknown locale');
   }
 }
 

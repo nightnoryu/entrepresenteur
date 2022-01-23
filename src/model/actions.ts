@@ -31,7 +31,7 @@ import {
 } from './constants';
 
 export function openPresentation(editor: Editor, presentation: Presentation): Editor {
-  return createEditor(presentation);
+  return createEditor(presentation, editor.locale);
 }
 
 export function setPresentationTitle(
