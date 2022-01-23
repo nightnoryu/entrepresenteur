@@ -13,6 +13,7 @@
 .itemWrapper:hover
 {
   background-color: #f1f3f4;
+  cursor: pointer;
 }
 
 .itemIcon

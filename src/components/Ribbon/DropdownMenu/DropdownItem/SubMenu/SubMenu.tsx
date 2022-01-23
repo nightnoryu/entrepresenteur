@@ -36,17 +36,17 @@ function SubMenu({ menu, hideParent }: SubMenuProps): JSX.Element {
         }}
       >
         {menu.items.map(subItem => (
-          <li key={subItem.label} className={styles.itemWrapper}>
-            <a
-              href="#"
-              className={styles.subItem}
-              onClick={event => {
-                event.preventDefault();
-                hideParent();
-                setIsVisible(false);
-                subItem.action();
-              }}
-            >
+          <li
+            key={subItem.label}
+            className={styles.itemWrapper}
+            onClick={event => {
+              event.preventDefault();
+              hideParent();
+              setIsVisible(false);
+              subItem.action();
+            }}
+          >
+            <a href="#" className={styles.subItem}>
               {
                 subItem.icon &&
                 <span className={'material-icons ' + styles.subItemIcon}>{subItem.icon}</span>

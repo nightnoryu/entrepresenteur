@@ -9,16 +9,15 @@ type ActionButtonProps = {
 
 function ActionButton({ item, hideParent }: ActionButtonProps): JSX.Element {
   return (
-    <li className={styles.itemWrapper}>
-      <a
-        href="#"
-        className={styles.item}
-        onClick={event => {
-          event.preventDefault();
-          hideParent();
-          item.action();
-        }}
-      >
+    <li
+      className={styles.itemWrapper}
+      onClick={event => {
+        event.preventDefault();
+        hideParent();
+        item.action();
+      }}
+    >
+      <a href="#" className={styles.item}>
         {
           item.icon &&
           <span className={'material-icons ' + styles.itemIcon}>{item.icon}</span>
