@@ -1,5 +1,5 @@
 import { createEditor, createNewPresentation, createNewSlide } from '../modelUtils';
-import { BackgroundType } from '../types';
+import { BackgroundType, Locale } from '../types';
 import { DEFAULT_PRESENTATION_TITLE, DEFAULT_SLIDE_BACKGROUND } from '../constants';
 
 describe('Model utils', () => {
@@ -23,7 +23,7 @@ describe('Model utils', () => {
 
 
   test('createEditor', () => {
-    const editor = createEditor(createNewPresentation());
+    const editor = createEditor(createNewPresentation(), Locale.EN_EN);
 
     expect(editor.selections.selectedElementIDs).toHaveLength(0);
     expect(editor.selections.selectedSlideIDs).toHaveLength(1);
@@ -35,6 +35,7 @@ describe('Model utils', () => {
     });
 
     expect(editor.isDemonstrating).toEqual(false);
+    expect(editor.locale).toEqual(Locale.EN_EN);
   });
 
 
