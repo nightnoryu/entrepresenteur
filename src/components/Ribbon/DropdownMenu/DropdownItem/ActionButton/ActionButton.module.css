@@ -12,8 +12,13 @@
 
 .itemWrapper:hover
 {
-  background-color: #f1f3f4;
+  background-color: var(--neutral-color-desaturated);
   cursor: pointer;
+}
+
+.itemWrapper:active
+{
+  background-color: var(--accent-color2);
 }
 
 .itemIcon
