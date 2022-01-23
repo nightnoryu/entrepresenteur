@@ -37,28 +37,28 @@ export function getRibbonMenuItems<T extends MenuActions>(actions: T, locale: Lo
       items: [
         {
           type: MenuItemType.ActionButton,
-          label: 'New',
+          label: i18n_get(locale, 'menu.file.new'),
           action: actions.newPresentation,
           icon: 'add',
           hotkey: 'Ctrl+Shift+N',
         },
         {
           type: MenuItemType.ActionButton,
-          label: 'Open',
+          label: i18n_get(locale, 'menu.file.open'),
           action: actions.openPresentation,
           icon: 'upload',
           hotkey: 'Ctrl+O',
         },
         {
           type: MenuItemType.ActionButton,
-          label: 'Download',
+          label: i18n_get(locale, 'menu.file.download'),
           action: actions.savePresentation,
           icon: 'download',
           hotkey: 'Ctrl+S',
         },
         {
           type: MenuItemType.ActionButton,
-          label: 'Export',
+          label: i18n_get(locale, 'menu.file.export'),
           action: actions.exportPresentation,
           icon: 'picture_as_pdf',
         },
@@ -69,21 +69,21 @@ export function getRibbonMenuItems<T extends MenuActions>(actions: T, locale: Lo
       items: [
         {
           type: MenuItemType.ActionButton,
-          label: 'Undo',
+          label: i18n_get(locale, 'menu.edit.undo'),
           action: actions.undo,
           icon: 'undo',
           hotkey: 'Ctrl+Z',
         },
         {
           type: MenuItemType.ActionButton,
-          label: 'Redo',
+          label: i18n_get(locale, 'menu.edit.redo'),
           action: actions.redo,
           icon: 'redo',
           hotkey: 'Ctrl+Y',
         },
         {
           type: MenuItemType.ActionButton,
-          label: 'Delete',
+          label: i18n_get(locale, 'menu.edit.delete'),
           action: actions.removeElements,
           icon: 'delete',
           hotkey: 'Del',
@@ -95,36 +95,36 @@ export function getRibbonMenuItems<T extends MenuActions>(actions: T, locale: Lo
       items: [
         {
           type: MenuItemType.ActionButton,
-          label: 'Image',
+          label: i18n_get(locale, 'menu.insert.image'),
           action: actions.addImage,
           icon: 'image',
         },
         {
           type: MenuItemType.ActionButton,
-          label: 'Text',
+          label: i18n_get(locale, 'menu.insert.text'),
           action: actions.addText,
           icon: 'text_fields',
         },
         {
           type: MenuItemType.SubMenu,
-          label: 'Primitive',
+          label: i18n_get(locale, 'menu.insert.primitive'),
           icon: 'dashboard',
           items: [
             {
               type: MenuItemType.ActionButton,
-              label: 'Rectangle',
+              label: i18n_get(locale, 'menu.insert.primitive.rectangle'),
               action: () => actions.addPrimitive(PrimitiveType.RECTANGLE),
               icon: 'rectangle',
             },
             {
               type: MenuItemType.ActionButton,
-              label: 'Triangle',
+              label: i18n_get(locale, 'menu.insert.primitive.triangle'),
               action: () => actions.addPrimitive(PrimitiveType.TRIANGLE),
               icon: 'change_history',
             },
             {
               type: MenuItemType.ActionButton,
-              label: 'Ellipse',
+              label: i18n_get(locale, 'menu.insert.primitive.ellipse'),
               action: () => actions.addPrimitive(PrimitiveType.ELLIPSE),
               icon: 'circle',
             },
@@ -137,32 +137,32 @@ export function getRibbonMenuItems<T extends MenuActions>(actions: T, locale: Lo
       items: [
         {
           type: MenuItemType.ActionButton,
-          label: 'New',
+          label: i18n_get(locale, 'menu.slide.add'),
           action: actions.addSlide,
           icon: 'add_box',
           hotkey: 'Ctrl+M',
         },
         {
           type: MenuItemType.ActionButton,
-          label: 'Delete',
+          label: i18n_get(locale, 'menu.slide.delete'),
           action: actions.removeSlides,
           icon: 'remove_circle_outline',
           hotkey: 'Del',
         },
         {
           type: MenuItemType.SubMenu,
-          label: 'Background',
+          label: i18n_get(locale, 'menu.slide.background'),
           icon: 'wallpaper',
           items: [
             {
               type: MenuItemType.ActionButton,
-              label: 'Color',
+              label: i18n_get(locale, 'menu.slide.background.color'),
               action: actions.setSlideBackgroundColor,
               icon: 'format_color_fill',
             },
             {
               type: MenuItemType.ActionButton,
-              label: 'Image',
+              label: i18n_get(locale, 'menu.slide.background.image'),
               action: actions.setSlideBackgroundImage,
               icon: 'image',
             },
@@ -170,30 +170,30 @@ export function getRibbonMenuItems<T extends MenuActions>(actions: T, locale: Lo
         },
         {
           type: MenuItemType.SubMenu,
-          label: 'Move',
+          label: i18n_get(locale, 'menu.slide.move'),
           icon: 'low_priority',
           items: [
             {
               type: MenuItemType.ActionButton,
-              label: 'Up',
+              label: i18n_get(locale, 'menu.slide.move.up'),
               action: actions.moveSlidesUp,
               icon: 'arrow_upward',
             },
             {
               type: MenuItemType.ActionButton,
-              label: 'Down',
+              label: i18n_get(locale, 'menu.slide.move.down'),
               action: actions.moveSlidesDown,
               icon: 'arrow_downward',
             },
             {
               type: MenuItemType.ActionButton,
-              label: 'To beginning',
+              label: i18n_get(locale, 'menu.slide.move.beginning'),
               action: actions.moveSlidesToBeginning,
               icon: 'vertical_align_top',
             },
             {
               type: MenuItemType.ActionButton,
-              label: 'To end',
+              label: i18n_get(locale, 'menu.slide.move.end'),
               action: actions.moveSlidesToEnd,
               icon: 'vertical_align_bottom',
             },
@@ -206,29 +206,29 @@ export function getRibbonMenuItems<T extends MenuActions>(actions: T, locale: Lo
       items: [
         {
           type: MenuItemType.ActionButton,
-          label: 'From start',
+          label: i18n_get(locale, 'menu.demonstration.start'),
           action: actions.startDemonstrationFromStart,
           icon: 'restart_alt',
         },
         {
           type: MenuItemType.ActionButton,
-          label: 'From current slide',
+          label: i18n_get(locale, 'menu.demonstration.current'),
           action: actions.startDemonstration,
           icon: 'play_arrow',
         },
       ],
     },
     {
-      label: 'Language',
+      label: i18n_get(locale, 'menu.language'),
       items: [
         {
           type: MenuItemType.ActionButton,
-          label: 'English',
+          label: i18n_get(locale, 'menu.language.en'),
           action: actions.localeEN,
         },
         {
           type: MenuItemType.ActionButton,
-          label: 'Russian',
+          label: i18n_get(locale, 'menu.language.ru'),
           action: actions.localeRU,
         },
       ],
