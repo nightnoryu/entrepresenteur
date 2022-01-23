@@ -38,6 +38,7 @@
 {
   composes: slideIndex;
   font-weight: bold;
+  background-color: var(--accent-color2);
 }
 
 .slideView

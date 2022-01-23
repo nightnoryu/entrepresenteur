@@ -32,7 +32,7 @@ function SubMenu({ menu, hideParent }: SubMenuProps): JSX.Element {
         className={styles.nested}
         style={{
           ...getVisibilityStyles(isVisible),
-          left: `${width + 3}px`,
+          left: `${width + 5}px`,
         }}
       >
         {menu.items.map(subItem => (

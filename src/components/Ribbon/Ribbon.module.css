@@ -1,17 +1,17 @@
 .ribbon
 {
   height: calc(12vh - 1px);
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid #cccccc;
 }
 
 .logo
 {
   display: block;
   float: right;
-
   max-width: 65px;
   height: auto;
-
+  position: relative;
+  z-index: 1;
   margin: 10px;
 }
 
