@@ -13,13 +13,24 @@ type EditableSlideViewWrapperProps = {
 
 function EditableSlideViewWrapper({ isDemonstrating }: EditableSlideViewWrapperProps): JSX.Element {
   const dispatch = useDispatch();
-  const { stopDemonstration } = bindActionCreators(actionCreators, dispatch);
+  const { stopDemonstration, removeElements } = bindActionCreators(actionCreators, dispatch);
 
   const ref = useRef<HTMLDivElement>(null);
   useFullscreen(ref, isDemonstrating, stopDemonstration);
 
+  const onKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Delete') {
+      event.preventDefault();
+      removeElements();
+    }
+  };
+
   return (
-    <div className={styles.wrapper} ref={ref}>
+    <div
+      className={styles.wrapper}
+      ref={ref}
+      onKeyDown={onKeyDown}
+    >
       <EditableSlideView />
       {
         isDemonstrating && <div className={styles.overlay} />

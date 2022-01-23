@@ -68,6 +68,7 @@ function EditableTextElement(
   const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => setEditingValue(event.currentTarget.value);
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    event.stopPropagation();
     if (event.key === 'Enter' || event.key === 'Escape') {
       event.currentTarget.blur();
       setEditing(false);

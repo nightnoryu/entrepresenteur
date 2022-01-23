@@ -9,7 +9,7 @@ type DropdownItemProps = {
 };
 
 function DropdownListItem({ item, hideParent }: DropdownItemProps): JSX.Element {
-  return item.type === MenuItemType.MenuButton
+  return item.type === MenuItemType.ActionButton
     ? (
       <ActionButton item={item} hideParent={hideParent} />
     )
