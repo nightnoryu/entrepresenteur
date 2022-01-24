@@ -4,7 +4,6 @@ import { Dispatch } from 'redux';
 import useSlideElementDragAndDrop from './useSlideElementDragAndDrop';
 import useSlideElementResize from './useSlideElementResize';
 import useSlideElementSelection from './useSlideElementSelection';
-import useSlideElementClickOutside from './useSlideElementClickOutside';
 
 function useSlideElementActions<T extends SVGElement>(
   element: SlideElement,
@@ -34,8 +33,6 @@ function useSlideElementActions<T extends SVGElement>(
     isSelected,
     dispatch,
   );
-
-  useSlideElementClickOutside(element.id, containerRef, dispatch);
 
   return useSlideElementResize(
     resizeAnchorRef,
