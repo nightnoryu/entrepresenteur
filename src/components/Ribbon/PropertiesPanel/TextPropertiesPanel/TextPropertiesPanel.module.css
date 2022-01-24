@@ -9,8 +9,6 @@
 .panelElement
 {
   margin: 0 10px 0;
-  display: flex;
-  align-items: center;
 }
 
 .fontSelection,
@@ -24,7 +22,6 @@
 .colorPickerWrapper
 {
   composes: colorPickerWrapper from "../PropertiesPanel.module.css";
-  margin-left: 10px;
 }
 
 .colorPicker
