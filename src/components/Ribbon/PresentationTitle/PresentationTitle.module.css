@@ -10,14 +10,13 @@
   left: 0;
   top: 0;
   margin: 5px;
-  padding: 3px;
+  padding: 1px 3px 1px;
 
   color: transparent;
   border: 1px solid transparent;
   background: transparent;
   caret-color: #000000;
 
-  vertical-align: center;
   font: 1.4em 'Noto Sans', sans-serif;
 }
 
