@@ -10,6 +10,11 @@ import { mapFontToString } from '../../../../../model/modelUtils';
 import { getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
 import useEventListener from '../../../../../hooks/useEventListener';
 import ResizeAnchor from '../../ResizeAnchor/ResizeAnchor';
+import {
+  SELECTED_OVERLAY_FILL,
+  SELECTED_OVERLAY_OPACITY,
+  SELECTED_OVERLAY_STROKE,
+} from '../../../../../model/constants';
 
 type EditableTextElementProps = {
   element: TextElement;
@@ -54,7 +59,7 @@ function EditableTextElement(
   const [editing, setEditing] = useState(false);
   const [editingValue, setEditingValue] = useState(element.value);
 
-  useDoubleClick(ref, () => {
+  const onClick = useDoubleClick(() => {
     setEditing(true);
   });
   useEffect(() => {
@@ -84,14 +89,10 @@ function EditableTextElement(
   };
 
   useEffect(() => {
-    if (element.value !== editingValue) {
-      setEditingValue(element.value);
-    }
-  }, [element.value]);
-
-  useEffect(() => {
     if (element.value === '') {
       setEditing(true);
+    } else if (element.value !== editingValue) {
+      setEditingValue(element.value);
     }
   }, [element.value]);
 
@@ -139,12 +140,13 @@ function EditableTextElement(
           y={element.position.y}
           width={dimensions.width}
           height={dimensions.height}
-          fill="#2a8ec8"
-          stroke="#1563c8"
-          fillOpacity={isSelected ? '0.3' : '0'}
-          strokeOpacity={isSelected ? '0.3' : '0'}
+          fill={SELECTED_OVERLAY_FILL}
+          stroke={SELECTED_OVERLAY_STROKE}
+          fillOpacity={isSelected ? SELECTED_OVERLAY_OPACITY : '0'}
+          strokeOpacity={isSelected ? SELECTED_OVERLAY_OPACITY : '0'}
           style={{ transform: `translate(${delta.x}px, ${delta.y}px)` }}
           ref={ref}
+          onClick={onClick}
         />
 
         {

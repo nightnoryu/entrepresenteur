@@ -1,4 +1,4 @@
-import { Dimensions, Position, PrimitiveStroke, PrimitiveStrokeStyle, TextFont } from './types';
+import { Dimensions, Locale, Position, PrimitiveStroke, PrimitiveStrokeStyle, TextFont } from './types';
 
 // Page
 
@@ -8,8 +8,8 @@ export const WINDOW_TITLE_SEPARATOR = ' • ';
 // Editor
 
 export const PRESENTATION_EXTENSION = '.entrepresenteur.json';
-
 export const MAX_HISTORY_ENTRIES = 50;
+export const DEFAULT_LOCALE = Locale.EN_EN;
 
 export const SELECTED_OVERLAY_FILL = '#2a8ec8';
 export const SELECTED_OVERLAY_STROKE = '#1563c8';

@@ -1,13 +1,12 @@
 import editorReducer from './editorReducer';
 import { Editor } from '../../model/types';
 import Action, { ActionType, STATEFUL_ACTIONS } from '../actions/actions';
-import { createEditor, createNewPresentation, saveState } from '../../model/modelUtils';
+import { saveState } from '../../model/modelUtils';
 import { redo, undo } from '../../model/actions';
+import getInitialState from '../initialState';
 
 function undoable(reducer: typeof editorReducer): typeof editorReducer {
-  const initialState = createEditor(createNewPresentation());
-
-  return function (state = initialState, action: Action): Editor {
+  return function (state = getInitialState(), action: Action): Editor {
     switch (action.type) {
     case ActionType.UNDO:
       return undo(state);

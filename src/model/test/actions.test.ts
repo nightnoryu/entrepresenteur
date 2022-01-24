@@ -20,7 +20,7 @@ import {
   toggleBoldText,
   toggleItalicText,
 } from '../actions';
-import { BackgroundType, Editor, ElementType, TextElement, TextFont } from '../types';
+import { BackgroundType, Editor, ElementType, Locale, TextElement, TextFont } from '../types';
 import {
   DEFAULT_ELEMENT_POSITION,
   DEFAULT_TEXT_COLOR,
@@ -33,7 +33,7 @@ describe('Model actions', () => {
   let editor: Editor;
 
   beforeEach(() => {
-    editor = createEditor(createNewPresentation());
+    editor = createEditor(createNewPresentation(), Locale.EN_EN);
   });
 
 

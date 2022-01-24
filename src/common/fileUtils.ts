@@ -30,7 +30,7 @@ function openFile(types: FileTypes): Promise<File> {
         if (isCorrectFiletype(file.name, types)) {
           resolve(file);
         } else {
-          reject('Invalid file type');
+          reject('prompt.invalid.file');
         }
       }
     });
@@ -65,7 +65,7 @@ export function openPresentationJSON(): Promise<Presentation> {
               const result = JSON.parse(event.target.result.toString());
               resolve(result);
             } catch (e) {
-              reject('Invalid presentation format');
+              reject('prompt.invalid.presentation');
             }
           }
         };
@@ -88,7 +88,7 @@ export function loadFileAsImage(file: File): Promise<HTMLImageElement> {
           resolve(image);
         };
         image.onerror = () => {
-          reject('Invalid image');
+          reject('prompt.invalid.image');
         };
 
         image.src = event.target.result.toString();

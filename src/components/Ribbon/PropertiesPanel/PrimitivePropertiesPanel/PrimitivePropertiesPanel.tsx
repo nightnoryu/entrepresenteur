@@ -97,6 +97,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
       <li className={styles.panelElement}>
         Stroke style
         <select
+          className={styles.selection}
           value={currentElement?.stroke.style ? mapStrokeStyleToString(currentElement.stroke.style) : undefined}
           onChange={onStrokeStyleChange}
         >
@@ -114,6 +115,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
       <li className={styles.panelElement}>
         Stroke width
         <select
+          className={styles.selection}
           value={currentElement?.stroke.width ? currentElement.stroke.width : undefined}
           onChange={onStrokeWidthChange}
         >

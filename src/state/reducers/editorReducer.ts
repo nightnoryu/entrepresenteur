@@ -22,6 +22,7 @@ import {
   setCurrentElement,
   setCurrentSlide,
   setFirstCurrentSlide,
+  setLocale,
   setPresentationTitle,
   setPrimitiveFillColor,
   setPrimitiveStrokeColor,
@@ -39,15 +40,14 @@ import {
   toggleItalicText,
   unselectElement,
 } from '../../model/actions';
+import getInitialState from '../initialState';
 
-const initialState = createEditor(createNewPresentation());
-
-function editorReducer(state = initialState, action: Action): Editor {
+function editorReducer(state = getInitialState(), action: Action): Editor {
   switch (action.type) {
   case ActionType.OPEN_PRESENTATION:
     return openPresentation(state, action.payload);
   case ActionType.NEW_PRESENTATION:
-    return createEditor(createNewPresentation());
+    return createEditor(createNewPresentation(), state.locale);
   case ActionType.CHANGE_PRESENTATION_TITLE:
     return setPresentationTitle(state, action.payload);
   case ActionType.SET_TEXT_VALUE:
@@ -118,6 +118,8 @@ function editorReducer(state = initialState, action: Action): Editor {
     return startDemonstration(state);
   case ActionType.STOP_DEMONSTRATION:
     return stopDemonstration(state);
+  case ActionType.SET_LOCALE:
+    return setLocale(state, action.payload);
   default:
     return state;
   }
