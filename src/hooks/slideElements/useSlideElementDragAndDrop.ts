@@ -23,7 +23,7 @@ function useSlideElementDragAndDrop<T extends SVGElement>(
       y: event.pageY,
     };
 
-    if (isSelected !== undefined && !isSelected && !event.ctrlKey) {
+    if (!isSelected && !event.ctrlKey) {
       setCurrentElement?.(element.id);
     }
   };
