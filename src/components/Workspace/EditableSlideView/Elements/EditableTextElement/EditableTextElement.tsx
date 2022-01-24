@@ -33,7 +33,7 @@ function EditableTextElement(
   }: EditableTextElementProps,
 ): JSX.Element {
   const dispatch = useDispatch();
-  const { unselectElement, setTextValue } = bindActionCreators(actionCreators, dispatch);
+  const { setTextValue } = bindActionCreators(actionCreators, dispatch);
 
   const resizeAnchorRef = useRef(null);
   const ref = useRef(null);
