@@ -17,6 +17,7 @@ import { getScaledImageDimensions } from '../../../common/fileUtils';
 import useLocale from '../../../hooks/useLocale';
 import i18n_get from '../../../i18n/i18n_get';
 import useDropImageFile from '../../../hooks/useDropImageFile';
+import useEventListener from '../../../hooks/useEventListener';
 
 type EditableSlideViewProps = {
   slide: Slide;
@@ -25,7 +26,7 @@ type EditableSlideViewProps = {
 
 function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps): JSX.Element {
   const dispatch = useDispatch();
-  const { addImage } = bindActionCreators(actionCreators, dispatch);
+  const { addImage, unselectAll } = bindActionCreators(actionCreators, dispatch);
   const locale = useLocale();
 
   const slideBackgroundStyle = getSlideBackgroundStyle(slide);
@@ -39,6 +40,12 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
     image => addImage(DEFAULT_ELEMENT_POSITION, getScaledImageDimensions(image), image.src),
     errorMessageID => alert(i18n_get(locale, errorMessageID)),
   );
+
+  useEventListener('mousedown', event => {
+    if (event.target === ref.current) {
+      unselectAll();
+    }
+  });
 
   return (
     <svg
@@ -62,7 +69,6 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
             delta={delta}
             setDelta={setDelta}
             isSelected={isSelected}
-            parentRef={ref}
           />;
         case ElementType.TEXT:
           return <EditableTextElement
@@ -72,7 +78,6 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
             delta={delta}
             setDelta={setDelta}
             isSelected={isSelected}
-            parentRef={ref}
           />;
         case ElementType.PRIMITIVE:
           return <EditablePrimitiveElement
@@ -82,7 +87,6 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
             delta={delta}
             setDelta={setDelta}
             isSelected={isSelected}
-            parentRef={ref}
           />;
         }
       })}

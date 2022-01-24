@@ -38,6 +38,7 @@ import {
   stopDemonstration,
   toggleBoldText,
   toggleItalicText,
+  unselectAll,
   unselectElement,
 } from '../../model/actions';
 import getInitialState from '../initialState';
@@ -76,6 +77,8 @@ function editorReducer(state = getInitialState(), action: Action): Editor {
     return selectElement(state, action.payload);
   case ActionType.UNSELECT_ELEMENT:
     return unselectElement(state, action.payload);
+  case ActionType.UNSELECT_ALL:
+    return unselectAll(state);
   case ActionType.MOVE_ELEMENTS:
     return moveElements(state, action.payload);
   case ActionType.RESIZE_ELEMENT:

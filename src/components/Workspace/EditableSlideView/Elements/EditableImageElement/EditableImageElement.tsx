@@ -12,7 +12,6 @@ type EditableImageElementProps = {
   delta: Position;
   setDelta: (position: Position) => void;
   isSelected: boolean;
-  parentRef: React.RefObject<DocumentAndElementEventHandlers>;
 }
 
 function EditableImageElement(
@@ -22,7 +21,6 @@ function EditableImageElement(
     delta,
     setDelta,
     isSelected,
-    parentRef,
   }: EditableImageElementProps,
 ): JSX.Element {
   const dispatch = useDispatch();
@@ -34,7 +32,6 @@ function EditableImageElement(
     element,
     ref,
     resizeAnchorRef,
-    parentRef,
     isSelected,
     scaleFactor,
     delta,

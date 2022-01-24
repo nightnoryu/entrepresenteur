@@ -9,7 +9,6 @@ function useSlideElementActions<T extends SVGElement>(
   element: SlideElement,
   ref: React.RefObject<T>,
   resizeAnchorRef: React.RefObject<SVGRectElement>,
-  containerRef: React.RefObject<DocumentAndElementEventHandlers>,
   isSelected: boolean,
   scaleFactor: number,
   delta: Position,
@@ -19,7 +18,6 @@ function useSlideElementActions<T extends SVGElement>(
   useSlideElementSelection(
     element.id,
     ref,
-    containerRef,
     isSelected,
     dispatch,
   );

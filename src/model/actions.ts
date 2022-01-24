@@ -754,6 +754,16 @@ export function unselectElement(editor: Editor, elementID: UUID): Editor {
   };
 }
 
+export function unselectAll(editor: Editor): Editor {
+  return {
+    ...editor,
+    selections: {
+      ...editor.selections,
+      selectedElementIDs: [],
+    },
+  };
+}
+
 export function moveElements(
   editor: Editor,
   positionDiff: Position,

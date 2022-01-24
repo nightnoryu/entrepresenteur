@@ -178,6 +178,14 @@ export function unselectElement(elementID: UUID) {
   };
 }
 
+export function unselectAll() {
+  return (dispatch: Dispatch<Action>): void => {
+    dispatch({
+      type: ActionType.UNSELECT_ALL,
+    });
+  };
+}
+
 export function moveElements(positionDiff: Position) {
   return (dispatch: Dispatch<Action>): void => {
     dispatch({

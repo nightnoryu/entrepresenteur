@@ -17,7 +17,6 @@ type EditablePrimitiveElementProps = {
   delta: Position;
   setDelta: (position: Position) => void;
   isSelected: boolean;
-  parentRef: React.RefObject<DocumentAndElementEventHandlers>;
 }
 
 function EditablePrimitiveElement(
@@ -27,7 +26,6 @@ function EditablePrimitiveElement(
     delta,
     setDelta,
     isSelected,
-    parentRef,
   }: EditablePrimitiveElementProps,
 ): JSX.Element {
   const dispatch = useDispatch();
@@ -39,7 +37,6 @@ function EditablePrimitiveElement(
     element,
     ref,
     resizeAnchorRef,
-    parentRef,
     isSelected,
     scaleFactor,
     delta,

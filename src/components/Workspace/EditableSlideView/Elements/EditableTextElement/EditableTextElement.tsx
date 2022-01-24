@@ -8,7 +8,6 @@ import useDoubleClick from '../../../../../hooks/mouse/useDoubleClick';
 import useSlideElementActions from '../../../../../hooks/slideElements/useSlideElementActions';
 import { mapFontToString } from '../../../../../model/modelUtils';
 import { getResizeAnchorTranslateDelta } from '../../../../../common/componentsUtils';
-import useEventListener from '../../../../../hooks/useEventListener';
 import ResizeAnchor from '../../ResizeAnchor/ResizeAnchor';
 import {
   SELECTED_OVERLAY_FILL,
@@ -22,7 +21,6 @@ type EditableTextElementProps = {
   delta: Position;
   setDelta: (position: Position) => void;
   isSelected: boolean;
-  parentRef: React.RefObject<DocumentAndElementEventHandlers>;
 }
 
 function EditableTextElement(
@@ -32,7 +30,6 @@ function EditableTextElement(
     delta,
     setDelta,
     isSelected,
-    parentRef,
   }: EditableTextElementProps,
 ): JSX.Element {
   const dispatch = useDispatch();
@@ -45,7 +42,6 @@ function EditableTextElement(
     element,
     ref,
     resizeAnchorRef,
-    parentRef,
     isSelected,
     scaleFactor,
     delta,
@@ -102,14 +98,6 @@ function EditableTextElement(
       setEditing(false);
     }
   }, [isSelected]);
-
-  useEventListener('mousedown', event => {
-    if (event.target === parentRef?.current) {
-      textareaRef.current?.blur();
-      setEditing(false);
-      unselectElement(element.id);
-    }
-  });
 
   return !editing
     ? (
