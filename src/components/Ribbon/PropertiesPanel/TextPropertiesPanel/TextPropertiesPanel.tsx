@@ -1,13 +1,14 @@
 import React, { useRef } from 'react';
 import styles from './TextPropertiesPanel.module.css';
 import { getTextProperties } from '../../../../model/uiParameters/textProperties';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { actionCreators } from '../../../../state';
 import { bindActionCreators } from 'redux';
 import { RootState } from '../../../../state/reducers';
 import { isCurrentElement, isCurrentSlide, mapFontToString, tryMapStringToFont } from '../../../../model/modelUtils';
 import { ElementType, TextElement } from '../../../../model/types';
 import useColorPicker from '../../../../hooks/propsPanels/useColorPicker';
+import i18n_get from '../../../../i18n/i18n_get';
 
 type TextPropertiesPanelProps = {
   currentElement?: TextElement;
@@ -22,6 +23,7 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
     setTextSize,
     setTextColor,
   } = bindActionCreators(actionCreators, dispatch);
+  const locale = useSelector((editor: RootState) => editor.locale);
 
   const textProps = getTextProperties();
 
@@ -60,7 +62,7 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
   return (
     <ul className={styles.textPropertiesPanel}>
       <li className={styles.panelElement}>
-        Font
+        {i18n_get(locale, 'text.font')}
         <select
           name="font"
           className={styles.selection}
@@ -79,7 +81,7 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
       </li>
 
       <li className={styles.panelElement}>
-        Size
+        {i18n_get(locale, 'text.size')}
         <select
           name="size"
           className={styles.selection}
@@ -98,15 +100,15 @@ function TextPropertiesPanel({ currentElement }: TextPropertiesPanelProps): JSX.
       </li>
 
       <li className={styles.panelElement}>
-        <button onClick={onToggleBold} className={styles.styleButton}>Bold</button>
+        <button onClick={onToggleBold} className={styles.styleButton}>{i18n_get(locale, 'text.bold')}</button>
       </li>
 
       <li className={styles.panelElement}>
-        <button onClick={onToggleItalic} className={styles.styleButton}>Italic</button>
+        <button onClick={onToggleItalic} className={styles.styleButton}>{i18n_get(locale, 'text.italic')}</button>
       </li>
 
       <li className={styles.panelElement}>
-        Color
+        {i18n_get(locale, 'text.color')}
         <span
           className={styles.colorPickerWrapper}
           onClick={() => colorPickerRef.current?.click()}

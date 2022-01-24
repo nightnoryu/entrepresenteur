@@ -38,6 +38,12 @@ const messages_ru_ru = new Map<string, string>([
   ['menu.language.en', 'Английский'],
   ['menu.language.ru', 'Русский'],
 
+  ['text.font', 'Шрифт'],
+  ['text.size', 'Размер'],
+  ['text.bold', 'Полужирный'],
+  ['text.italic', 'Курсив'],
+  ['text.color', 'Цвет'],
+
   ['prompt.changes', 'Вы уверены? Все несохраненные изменения будут утеряны.'],
   ['prompt.invalid.file', 'Неверный формат файла'],
   ['prompt.invalid.image', 'Неверный формат изображения'],

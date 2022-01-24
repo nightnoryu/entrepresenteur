@@ -38,6 +38,12 @@ const messages_en_en = new Map<string, string>([
   ['menu.language.en', 'English'],
   ['menu.language.ru', 'Russian'],
 
+  ['text.font', 'Font'],
+  ['text.size', 'Size'],
+  ['text.bold', 'Bold'],
+  ['text.italic', 'Italic'],
+  ['text.color', 'Color'],
+
   ['prompt.changes', 'Are you sure? All unsaved changes will be lost.'],
   ['prompt.invalid.file', 'Invalid file type'],
   ['prompt.invalid.image', 'Invalid image format'],
