@@ -27,6 +27,10 @@ import { SLIDE_HEIGHT, SLIDE_WIDTH, STROKE_STYLE_DASHED, STROKE_STYLE_DOT_DASHED
 import { mapFontToString } from '../model/modelUtils';
 import { calculateEllipseProperties, calculateTrianglePoints } from './componentsUtils';
 
+const TEXT_MULTIPLIER_HORIZONTAL = 1.09;
+const TEXT_MULTIPLIER_VERTICAL = 1.05;
+const TEXT_OFFSET_FONT = 10;
+
 function exportPresentationPDF(presentation: Presentation, filename: string): void {
   if (presentation.slides.length === 0) {
     return;
@@ -98,8 +102,8 @@ function addText(pdf: jsPDF, element: TextElement): void {
       element.isItalic ? 'italic' : 'normal',
       element.isBold ? 'bold' : undefined,
     )
-    .setFontSize(element.size)
-    .text(element.value, element.position.x, element.position.y);
+    .setFontSize(element.size + TEXT_OFFSET_FONT)
+    .text(element.value, element.position.x * TEXT_MULTIPLIER_HORIZONTAL, element.position.y * TEXT_MULTIPLIER_VERTICAL);
 }
 
 function addImage(pdf: jsPDF, element: ImageElement): void {
