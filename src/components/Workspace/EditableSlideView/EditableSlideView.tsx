@@ -13,9 +13,10 @@ import EditableTextElement from './Elements/EditableTextElement/EditableTextElem
 import EditablePrimitiveElement from './Elements/EditablePrimitiveElement/EditablePrimitiveElement';
 import useScaleFactorForDragAndDrop from '../../../hooks/dragAndDrop/useScaleFactorForDragAndDrop';
 import { bindActionCreators } from 'redux';
-import { getScaledImageDimensions, loadFileAsImage } from '../../../common/fileUtils';
+import { getScaledImageDimensions } from '../../../common/fileUtils';
 import useLocale from '../../../hooks/useLocale';
 import i18n_get from '../../../i18n/i18n_get';
+import useDropImageFile from '../../../hooks/useDropImageFile';
 
 type EditableSlideViewProps = {
   slide: Slide;
@@ -34,29 +35,10 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
 
   const [delta, setDelta] = useState({ x: 0, y: 0 });
 
-  const onDrop = (event: React.DragEvent<SVGSVGElement>) => {
-    event.preventDefault();
-
-    if (event.dataTransfer.items && event.dataTransfer.items.length > 0) {
-      const item = event.dataTransfer.items[0];
-      if (item.kind === 'file') {
-        const file = item.getAsFile();
-        if (file) {
-          loadFileAsImage(file)
-            .then(image => addImage(DEFAULT_ELEMENT_POSITION, getScaledImageDimensions(image), image.src))
-            .catch(errorMessageID => alert(i18n_get(locale, errorMessageID)));
-        }
-      }
-
-    } else if (event.dataTransfer.files.length > 0) {
-      const file = event.dataTransfer.files[0];
-      if (file) {
-        loadFileAsImage(file)
-          .then(image => addImage(DEFAULT_ELEMENT_POSITION, getScaledImageDimensions(image), image.src))
-          .catch(errorMessageID => alert(i18n_get(locale, errorMessageID)));
-      }
-    }
-  };
+  const onDrop = useDropImageFile(
+    image => addImage(DEFAULT_ELEMENT_POSITION, getScaledImageDimensions(image), image.src),
+    errorMessageID => alert(i18n_get(locale, errorMessageID)),
+  );
 
   return (
     <svg
@@ -66,9 +48,7 @@ function EditableSlideView({ slide, selectedElementIDs }: EditableSlideViewProps
       ref={ref}
       tabIndex={0}
       onDrop={onDrop}
-      onDragOver={event => {
-        event.preventDefault();
-      }}
+      onDragOver={event => event.preventDefault()}
     >
       {slide.elements.map(element => {
         const isSelected = selectedElementIDs.includes(element.id);
