@@ -9,9 +9,9 @@ function range(size: number, startAt = 0): number[] {
 export function getPrimitiveProperties(): PrimitiveProperties {
   return {
     strokeStyles: [
-      'Solid',
-      'Dashed',
-      'Dot-dashed',
+      'primitive.stroke_style.solid',
+      'primitive.stroke_style.dashed',
+      'primitive.stroke_style.dot_dashed',
     ],
     strokeWidths: range(5, 1),
   };

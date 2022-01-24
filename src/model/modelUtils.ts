@@ -83,21 +83,21 @@ export function tryMapStringToFont(str: string): TextFont {
 export function mapStrokeStyleToString(style: PrimitiveStrokeStyle): string {
   switch (style) {
   case PrimitiveStrokeStyle.SOLID:
-    return 'Solid';
+    return 'primitive.stroke_style.solid';
   case PrimitiveStrokeStyle.DASHED:
-    return 'Dashed';
+    return 'primitive.stroke_style.dashed';
   case PrimitiveStrokeStyle.DOT_DASHED:
-    return 'Dot-dashed';
+    return 'primitive.stroke_style.dot_dashed';
   }
 }
 
 export function tryMapStringToStrokeStyle(str: string): PrimitiveStrokeStyle {
   switch (str) {
-  case 'Solid':
+  case  'primitive.stroke_style.solid':
     return PrimitiveStrokeStyle.SOLID;
-  case 'Dashed':
+  case  'primitive.stroke_style.dashed':
     return PrimitiveStrokeStyle.DASHED;
-  case 'Dot-dashed':
+  case 'primitive.stroke_style.dot_dashed':
     return PrimitiveStrokeStyle.DOT_DASHED;
   default:
     throw new Error('Unknown stroke style');

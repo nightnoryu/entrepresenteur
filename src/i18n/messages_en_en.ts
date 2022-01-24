@@ -44,6 +44,14 @@ const messages_en_en = new Map<string, string>([
   ['text.italic', 'Italic'],
   ['text.color', 'Color'],
 
+  ['primitive.fill', 'Fill'],
+  ['primitive.stroke', 'Stroke'],
+  ['primitive.stroke_style', 'Stroke style'],
+  ['primitive.stroke_style.solid', 'Solid'],
+  ['primitive.stroke_style.dashed', 'Dashed'],
+  ['primitive.stroke_style.dot_dashed', 'Dot-dashed'],
+  ['primitive.stroke_width', 'Stroke width'],
+
   ['prompt.changes', 'Are you sure? All unsaved changes will be lost.'],
   ['prompt.invalid.file', 'Invalid file type'],
   ['prompt.invalid.image', 'Invalid image format'],

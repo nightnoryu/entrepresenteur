@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import styles from './PrimitivePropertiesPanel.module.css';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../../state';
 import { ElementType, PrimitiveElement } from '../../../../model/types';
@@ -13,6 +13,7 @@ import {
 } from '../../../../model/modelUtils';
 import { getPrimitiveProperties } from '../../../../model/uiParameters/primitiveProperties';
 import useColorPicker from '../../../../hooks/propsPanels/useColorPicker';
+import i18n_get from '../../../../i18n/i18n_get';
 
 type PrimitivePropertiesPanelProps = {
   currentElement?: PrimitiveElement;
@@ -26,6 +27,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
     setPrimitiveStrokeStyle,
     setPrimitiveStrokeWidth,
   } = bindActionCreators(actionCreators, dispatch);
+  const locale = useSelector((editor: RootState) => editor.locale);
 
   const primitiveProperties = getPrimitiveProperties();
 
@@ -59,7 +61,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
   return (
     <ul className={styles.primitivePropertiesPanel}>
       <li className={styles.panelElement}>
-        Fill
+        {i18n_get(locale, 'primitive.fill')}
         <span
           className={styles.colorPickerWrapper}
           onClick={() => fillColorPickerRef.current?.click()}
@@ -77,7 +79,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
       </li>
 
       <li className={styles.panelElement}>
-        Stroke
+        {i18n_get(locale, 'primitive.stroke')}
         <span
           className={styles.colorPickerWrapper}
           onClick={() => strokeColorPickerRef.current?.click()}
@@ -95,7 +97,7 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
       </li>
 
       <li className={styles.panelElement}>
-        Stroke style
+        {i18n_get(locale, 'primitive.stroke_style')}
         <select
           className={styles.selection}
           value={currentElement?.stroke.style ? mapStrokeStyleToString(currentElement.stroke.style) : undefined}
@@ -106,14 +108,14 @@ function PrimitivePropertiesPanel({ currentElement }: PrimitivePropertiesPanelPr
               key={strokeStyle}
               value={strokeStyle}
             >
-              {strokeStyle}
+              {i18n_get(locale, strokeStyle)}
             </option>
           ))}
         </select>
       </li>
 
       <li className={styles.panelElement}>
-        Stroke width
+        {i18n_get(locale, 'primitive.stroke_width')}
         <select
           className={styles.selection}
           value={currentElement?.stroke.width ? currentElement.stroke.width : undefined}

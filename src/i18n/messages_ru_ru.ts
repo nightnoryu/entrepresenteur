@@ -44,6 +44,14 @@ const messages_ru_ru = new Map<string, string>([
   ['text.italic', 'Курсив'],
   ['text.color', 'Цвет'],
 
+  ['primitive.fill', 'Заливка'],
+  ['primitive.stroke', 'Обводка'],
+  ['primitive.stroke_style', 'Стиль обводки'],
+  ['primitive.stroke_style.solid', 'Сплошная'],
+  ['primitive.stroke_style.dashed', 'Пунктир'],
+  ['primitive.stroke_style.dot_dashed', 'Штрихпунктир'],
+  ['primitive.stroke_width', 'Ширина обводки'],
+
   ['prompt.changes', 'Вы уверены? Все несохраненные изменения будут утеряны.'],
   ['prompt.invalid.file', 'Неверный формат файла'],
   ['prompt.invalid.image', 'Неверный формат изображения'],
