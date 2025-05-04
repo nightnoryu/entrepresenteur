@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -o errexit
+
+USER_ID=$(id -u)
+
+docker run --rm --interactive --tty \
+  --volume "$PWD":"$PWD" \
+  --user "$USER_ID" \
+  -w "$PWD" \
+  node:16 \
+  yarn \
+  "$@"
