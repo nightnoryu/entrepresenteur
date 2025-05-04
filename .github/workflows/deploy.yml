@@ -1,4 +1,4 @@
-name: Heroku Continuous Deployment
+name: Build for GitHub Pages
 
 on:
   push:
@@ -6,13 +6,17 @@ on:
       - master
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.12.12
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "entrepresenteur"
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
-          usedocker: true
+          node-version: 16
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+      - run: git config user.name github-actions
+      - run: git config user.email github-actions@github.com
+      - run: git --work-tree build add --all
+      - run: git commit -m "Automatic Build and Deploy by GitHub Actions"
+      - run: git push origin HEAD:gh-pages --force
