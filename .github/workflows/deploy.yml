@@ -1,4 +1,4 @@
-name: Build for GitHub Pages
+name: react-build-for-github-pages
 
 on:
   push:
